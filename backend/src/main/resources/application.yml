@@ -18,3 +18,10 @@ spring:
     client:
       id: ${KAKAO_REST_API_KEY}
       secret: ${KAKAO_SECRET_KEY}
+
+  feign:
+    client:
+      config:
+        default:
+          connectTimeout: 5000
+          readTimeout: 5000
