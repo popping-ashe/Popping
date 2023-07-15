@@ -2,7 +2,7 @@ package com.ashe.popping.api.token.dto;
 
 import lombok.*;
 
-public class kakaoTokenDto {
+public class KakaoTokenDto {
 
 	@Builder
 	@Getter
