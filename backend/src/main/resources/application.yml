@@ -6,10 +6,15 @@ spring:
     url: jdbc:mariadb://${DB_HOST}:${DB_PORT}/${DB_NAME}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
-    
+
   jpa:
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
         format_sql: true
+
+  kakao:
+    client:
+      id: ${KAKAO_REST_API_KEY}
+      secret: ${KAKAO_SECRET_KEY}
