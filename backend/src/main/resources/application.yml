@@ -6,3 +6,30 @@ spring:
     url: jdbc:mariadb://${DB_HOST}:${DB_PORT}/${DB_NAME}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+
+kakao:
+  client:
+    id: ${KAKAO_REST_API_KEY}
+    secret: ${KAKAO_SECRET_KEY}
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+        errorDecoder: com.example.SimpleErrorDecoder
+        encoder: com.example.SimpleEncoder
+token:
+  secret: ${JWT_SECRET}
+  access-token-expiration-time: 900000 # 15분
+  refresh-token-expiration-time: 1209600000 # 2주
+
