@@ -28,5 +28,8 @@ feign:
         loggerLevel: full
         errorDecoder: com.example.SimpleErrorDecoder
         encoder: com.example.SimpleEncoder
-
+token:
+  secret: ${JWT_SECRET}
+  access-token-expiration-time: 900000 # 15분
+  refresh-token-expiration-time: 1209600000 # 2주
 
