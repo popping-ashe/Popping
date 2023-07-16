@@ -17,13 +17,10 @@ public class HealthController {
 	private final Environment environment;
 
 	@GetMapping()
-	public ResponseEntity<HealthResponseDto> checkHealth(){
-		HealthResponseDto healthResponseDto = HealthResponseDto.builder()
-			.health("ok")
-			.activeProfiles(Arrays.asList(environment.getActiveProfiles()))
-			.localServerPort(environment.getProperty("local.server.port"))
-			.serverPort(environment.getProperty("server.port"))
-			.build();
+	public ResponseEntity<HealthResponseDto> checkHealth() {
+		HealthResponseDto healthResponseDto = HealthResponseDto.of("ok", Arrays.asList(environment.getActiveProfiles()),
+			environment.getProperty("local.server.port"), environment.getProperty("server.port"));
+
 		return ResponseEntity.ok(healthResponseDto);
 	}
 

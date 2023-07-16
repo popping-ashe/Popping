@@ -12,4 +12,14 @@ public class HealthResponseDto {
 	private List<String> activeProfiles;
 	private String localServerPort;
 	private String serverPort;
+
+	public static HealthResponseDto of(String health, List<String> activeProfiles, String localServerPort,
+		String serverPort) {
+		return HealthResponseDto.builder()
+			.health(health)
+			.activeProfiles(activeProfiles)
+			.localServerPort(localServerPort)
+			.serverPort(serverPort)
+			.build();
+	}
 }
