@@ -29,6 +29,15 @@ public class MemberDto {
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	@AllArgsConstructor
+	public static class Request {
+		private String nickname;
+	}
+
+	@Builder
+	@Data
+	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+	@NoArgsConstructor(access = AccessLevel.PROTECTED)
+	@AllArgsConstructor
 	public static class Response {
 		private Long memberId;
 		private String nickname;
