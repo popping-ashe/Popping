@@ -5,6 +5,7 @@
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
+      content-class="my-dialog-content"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -77,5 +78,7 @@ export default {
 </script>
 
 <style>
-
+.my-dialog-content {
+  max-height : 80vh;
+}
 </style>
