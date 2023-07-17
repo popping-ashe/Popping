@@ -16,8 +16,8 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 @Entity
+@Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
