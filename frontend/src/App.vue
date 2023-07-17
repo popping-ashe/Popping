@@ -2,26 +2,24 @@
   <v-app>
     <v-main>
       <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height:100vh;">
-        <div class="container">
-          <router-link :to="{ name: 'MainView' }"><img src="../src/assets/컴퓨터.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
-          <br>
-          <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>
-          <br>
-          <router-link :to="{ name: 'MypageView' }">Mypage</router-link>
-          <br>
+        <div class="main">
+          <div class="container3">
+            <router-link :to="{ name: 'MainView' }"><img src="../src/assets/컴퓨터.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
+            <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>           
+            <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>          
+          </div>
           <router-view/>
         </div>
       </div>
 
       <div v-else style="width: 100vw; height: 100vh;  display: flex; justify-content: center; ">
         <div class="bgnewjeans" style="width:393px; height:100vh">
-          <div class="container2">
-            <router-link :to="{ name: 'MainView' }"><img src="../src/assets/컴퓨터.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
-            <br>
-            <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>
-            <br>
-            <router-link :to="{ name: 'MypageView' }">Mypage</router-link>
-            <br>
+          <div class="main">
+            <div class="container3">
+              <router-link :to="{ name: 'MainView' }"><img src="../src/assets/컴퓨터.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
+              <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>            
+              <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>
+            </div>
             <router-view/>
           </div>
         </div>
@@ -63,6 +61,8 @@ export default {
 
 <style scoped>
 .bgnewjeans{
+
+/* background: rgba(45, 216, 255, 0.505); */
 background: hsla(228, 100%, 84%, 1);
 
 background: linear-gradient(270deg, hsla(228, 100%, 84%, 1) 0%, hsla(201, 100%, 84%, 1) 7%, hsla(0, 0%, 100%, 1) 56%, hsla(0, 0%, 100%, 1) 88%, hsla(201, 100%, 84%, 1) 100%);
@@ -82,12 +82,5 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#ACBCFF", en
 .com-image.enlarged-image {
   transform: scale(1.2);
 }
-.container2 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
+
 </style>

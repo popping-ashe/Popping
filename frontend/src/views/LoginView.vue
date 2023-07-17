@@ -50,16 +50,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #a {
   animation: popping2 2s ease-in-out infinite alternate;
 }
 
-.body {
+/* .body {
   width: 100vw;
   height: 100vh;
-  
-}
+  justify-content: center;
+  align-items: center;
+} */
 
 .container {
   padding-left: 8%;
