@@ -1,25 +1,37 @@
 <template>
-  <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height:100vh;">
-    <div class="container2">
-      <router-link :to="{ name: 'MainView' }"><img src="../src/assets/컴퓨터.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
-      <br>
-      <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>
-      <br>
-      <router-link :to="{ name: 'MypageView' }">Mypage</router-link>
-      <br>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-main>
+      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height:100vh;">
+        <div class="container">
+          <router-link :to="{ name: 'MainView' }"><img src="../src/assets/컴퓨터.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
+          <br>
+          <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>
+          <br>
+          <router-link :to="{ name: 'MypageView' }">Mypage</router-link>
+          <br>
+          <router-view/>
+        </div>
+      </div>
 
-  <div v-else style="width: 100vw; height: 100vh; background-color: white; display: flex; justify-content: center;">
-    <div class="bgnewjeans" style="width:30vw; height:100vh">
-      <router-view/>
-
-    </div>
-  </div>
+      <div v-else style="width: 100vw; height: 100vh;  display: flex; justify-content: center; ">
+        <div class="bgnewjeans" style="width:393px; height:100vh">
+          <div class="container2">
+            <router-link :to="{ name: 'MainView' }"><img src="../src/assets/컴퓨터.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
+            <br>
+            <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>
+            <br>
+            <router-link :to="{ name: 'MypageView' }">Mypage</router-link>
+            <br>
+            <router-view/>
+          </div>
+        </div>
+      </div>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
+
 import MobileDetect from 'mobile-detect';
 export default {
   name: 'CloseBtn',
@@ -69,5 +81,13 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#ACBCFF", en
 }
 .com-image.enlarged-image {
   transform: scale(1.2);
+}
+.container2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 </style>

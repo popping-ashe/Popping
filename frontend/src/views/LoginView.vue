@@ -31,25 +31,19 @@
 export default {
   name: 'LoginView',
   methods: {
-     toggleImageSize(event) {
-      const image = event.target;
-      image.classList.toggle('enlarged-image');
-      setTimeout(() => {
-        image.classList.toggle('enlarged-image');
-      }, 300);
-    },
+    //버블 배경 애니메이션
+
+    //카카오 로그인
     kakaoLogin() {
-      this.$router.push({ name: 'MainView' });
-      // Vue.$kakao.login()
-      //   .then((response) => {
-      //     // const accessToken = response.access_token;
-      //     // 서버로 accessToken 전달..?
-      //     console.log(response)
-      //     this.$router.push({ name: 'main' });
+      //  Vue.$kakao.login()
+      //  .then((response) => {
+      //    const accessToken = response.access_token;
+      //    서버로 accessToken 전달..?
+      //    console.log(response)
+        this.$router.push({ name: 'MainView' });
       //   })
       //   .catch((error) => {
       //     console.error(error);
-      //     this.$router.push({ name: 'main' });
       //   });
     },
   },
