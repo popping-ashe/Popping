@@ -29,6 +29,8 @@
       </div>
     </div>
   </div>
+<!-- 메인 페이지 본인 여부 화면 -->
+
 </template>
 
 <script>
