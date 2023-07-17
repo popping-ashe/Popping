@@ -56,7 +56,7 @@ public class Message {
 		this.nickname = nickname;
 	}
 
-	public static Message from(MessageDto messageDto){
+	public static Message from(MessageDto messageDto) {
 		return Message.builder()
 			.state(messageDto.getState())
 			.content(messageDto.getContent())
