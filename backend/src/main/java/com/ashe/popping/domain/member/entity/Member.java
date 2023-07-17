@@ -21,7 +21,7 @@ import lombok.*;
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long memberId;
 
 	@Column(nullable=false, length=50)
 	private String nickname;
@@ -32,7 +32,7 @@ public class Member {
 	private String uuid;
 
 	@CreatedDate
-	private LocalDateTime regTime;
+	private LocalDateTime createdTime;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
