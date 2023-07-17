@@ -26,4 +26,8 @@ public class MessageService {
 	public List<Message> loadReceiveMessage(Long receiver) {
 		return messageRepository.findByReceiver(receiver);
 	}
+
+	public List<Message> loadSenderMessage(Long sender) {
+		return messageRepository.findBySender(sender);
+	}
 }
