@@ -1,5 +1,6 @@
 package com.ashe.popping.domain.message.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	public List<MessageDto> loadReceiveMessage(Long receiver) {
-		List<Message> messages = messageRepository.findByReceiver(receiver);
+		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeBefore(receiver, LocalDateTime.now());
 		return messages.stream()
 			.map(MessageDto::from)
 			.toList();
