@@ -27,10 +27,12 @@ public class MessageDto {
 	private String nickname;
 
 	@Builder
-	public MessageDto(Integer state, String content, LocalDateTime expirationTime, Long sender, Long receiver,
+	public MessageDto(Integer state, String content, LocalDateTime createTime, LocalDateTime expirationTime,
+		Long sender, Long receiver,
 		String nickname) {
 		this.state = state;
 		this.content = content;
+		this.createTime = createTime;
 		this.expirationTime = expirationTime;
 		this.sender = sender;
 		this.receiver = receiver;
@@ -41,6 +43,7 @@ public class MessageDto {
 		return MessageDto.builder()
 			.state(message.getState())
 			.content(message.getContent())
+			.createTime(message.getCreateTime())
 			.expirationTime(message.getExpirationTime())
 			.sender(message.getSender())
 			.receiver(message.getReceiver())
@@ -48,7 +51,7 @@ public class MessageDto {
 			.build();
 	}
 
-	public static MessageDto from(MessageApiDto.Request request){
+	public static MessageDto from(MessageApiDto.Request request) {
 		return MessageDto.builder()
 			.state(0)
 			.content(request.getContent())
