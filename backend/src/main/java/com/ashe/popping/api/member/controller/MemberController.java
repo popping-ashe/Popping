@@ -1,8 +1,5 @@
 package com.ashe.popping.api.member.controller;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,30 +18,28 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
-	
+
 	private final MemberService memberService;
 
 	@GetMapping("/{memberId}")
 	public ResponseEntity<MemberDto.Response> getMember(@PathVariable("memberId") Long memberId) {
 		MemberDto memberDto = memberService.getMemberByMemberId(memberId);
 
-		MemberDto.Response result = new ModelMapper().map(memberDto, MemberDto.Response.class);
+		MemberDto.Response response = MemberDto.Response.from(memberDto);
 
-		return ResponseEntity.status(HttpStatus.OK).body(result);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 	@PatchMapping("/{memberId}")
-	public ResponseEntity<MemberDto.Response> modifyMember(@PathVariable("memberId") Long memberId, @RequestBody MemberDto.Request member) {
-		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		MemberDto memberDto = mapper.map(member, MemberDto.class);
-		memberDto.setMemberId(memberId);
+	public ResponseEntity<MemberDto.Response> modifyMember(@PathVariable("memberId") Long memberId,
+		@RequestBody MemberDto.Request request) {
+		MemberDto memberDto = MemberDto.of(request, memberId);
 
-		memberService.updateMember(memberDto);
+		MemberDto result = memberService.updateMember(memberDto);
 
-		MemberDto.Response result = new ModelMapper().map(memberDto, MemberDto.Response.class);
+		MemberDto.Response response = MemberDto.Response.from(result);
 
-		return ResponseEntity.status(HttpStatus.OK).body(result);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 }
