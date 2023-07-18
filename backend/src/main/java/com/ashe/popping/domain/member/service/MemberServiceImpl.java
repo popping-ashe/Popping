@@ -46,6 +46,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public Optional<Member> findByKakaoId(String kakaoId) {
+		return memberRepository.findByKakaoId(kakaoId);
+	}
+
+	@Override
 	public MemberDto createMember(MemberDto memberDto) {
 		Member member = Member.from(memberDto);
 
