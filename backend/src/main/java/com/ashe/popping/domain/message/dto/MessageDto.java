@@ -53,7 +53,7 @@ public class MessageDto {
 
 	public static MessageDto from(MessageApiDto.Request request) {
 		return MessageDto.builder()
-			.state(0)
+			.state(MessageState.UNREAD.getCode())
 			.content(request.getContent())
 			.createTime(LocalDateTime.now())
 			.expirationTime(LocalDateTime.now().plusHours(request.getRetentionTime()))
