@@ -13,6 +13,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  data:
+    redis:
+      host: redis
+      port: 6379
+      password: devA509
 
 kakao:
   client:
@@ -32,4 +37,9 @@ token:
   secret: ${JWT_SECRET}
   access-token-expiration-time: 900000 # 15분
   refresh-token-expiration-time: 1209600000 # 2주
+
+logging:
+  level:
+    org.hibernate.type: trace # 콘솔창에 조건에 바인딩되는 값 및 조회 결과 출력
+    com.ashe.popping : debug
 
