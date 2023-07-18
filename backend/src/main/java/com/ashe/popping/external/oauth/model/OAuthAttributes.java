@@ -22,9 +22,8 @@ public class OAuthAttributes {
 			.build();
 	}
 
-	public Member toMemberEntity(Role role){
-		MemberDto memberDto = MemberDto.of(kakaoId, nickname, role);
-		return Member.from(memberDto);
+	public MemberDto toMemberDto(Role role){
+		return MemberDto.of(kakaoId, nickname, role);
 	}
 
 }
