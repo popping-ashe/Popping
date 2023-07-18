@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row class="setting">
     <v-dialog
       v-model="dialog"
       fullscreen
@@ -9,18 +9,19 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          color="primary"
-          dark
+          color="#C5CAE9"
+          width="10%"
           v-bind="attrs"
           v-on="on"
         >
-          Open Dialog
+          설정창
+          <!-- <img src="../assets/bubble.png" alt="bubble" class="bubble-image"> -->
         </v-btn>
       </template>
       <v-card>
         <v-toolbar
           dark
-          color="primary"
+          color="#C5CAE9"
         >
           <v-btn
             icon
@@ -48,12 +49,17 @@
           <v-subheader>User Controls</v-subheader>
           
         </v-list>
-        <v-divider></v-divider>
+        <v-divider>
+          ㅇㅇ
+        </v-divider>
         <v-list
           three-line
           subheader
         >
-          <v-subheader>General</v-subheader>
+          <v-subheader>닉네임 바꾸기</v-subheader>
+          <v-subheader>테마..? 배경화면 or 비눗방울 여러개</v-subheader>
+          <v-subheader>로그아웃..? 탈퇴?</v-subheader>
+          <v-subheader>크레딧 하나 넣고</v-subheader>
           
         </v-list>
       </v-card>
@@ -79,6 +85,13 @@ export default {
 
 <style>
 .my-dialog-content {
-  max-height : 80vh;
+  
+}
+.bubble-image {
+  height: 10%;
+  width: 10%;
+}
+.setting {
+  margin:2%
 }
 </style>

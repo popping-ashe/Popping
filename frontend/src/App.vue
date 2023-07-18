@@ -4,9 +4,9 @@
       <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height:100vh;">
         <div class="main">
           <div class="container3">
-            <router-link :to="{ name: 'MainView' }"><img src="../src/assets/컴퓨터.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
-            <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>           
-            <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>          
+            <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
+            <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/home.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>           
+            <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/chat.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>          
           </div>
           <router-view/>
         </div>
@@ -16,9 +16,9 @@
         <div class="bgnewjeans" style="width:393px; height:100vh">
           <div class="main">
             <div class="container3">
-              <router-link :to="{ name: 'MainView' }"><img src="../src/assets/컴퓨터.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
-              <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>            
-              <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/pen.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>
+              <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
+              <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/home.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>            
+              <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/chat.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>
             </div>
             <router-view/>
           </div>
@@ -30,32 +30,32 @@
 
 <script>
 
-import MobileDetect from 'mobile-detect';
-export default {
-  name: 'CloseBtn',
-  data: () => {
-    return {
-      isMobile: false,
-    };
-  },
-  methods: {
-     toggleImageSize(event) {
-      const image = event.target;
-      image.classList.toggle('enlarged-image');
-      setTimeout(() => {
-        image.classList.toggle('enlarged-image');
-      }, 300);
+  import MobileDetect from 'mobile-detect';
+  export default {
+    name: 'CloseBtn',
+    data: () => {
+      return {
+        isMobile: false,
+      };
     },
-  },
-  mounted() {
-    const md = new MobileDetect(window.navigator.userAgent);
-    if (md.mobile()) {
-      this.isMobile = true;
-    } else {
-      this.isMobile = false;
-    } 
-  },
-};
+    methods: {
+      toggleImageSize(event) {
+        const image = event.target;
+        image.classList.toggle('enlarged-image');
+        setTimeout(() => {
+          image.classList.toggle('enlarged-image');
+        }, 300);
+      },
+    },
+    created() {
+      const md = new MobileDetect(window.navigator.userAgent);
+      if (md.mobile()) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      } 
+    },
+  };
 </script>
 
 

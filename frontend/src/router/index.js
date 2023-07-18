@@ -6,6 +6,7 @@ import MypageView from '../views/MypageView.vue'
 
 
 
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,7 +16,7 @@ const routes = [
     component: MainView
   },
   {
-    path:'/login',
+    path:'/',
     name: 'LoginView',
     component: LoginView
   },
@@ -24,6 +25,7 @@ const routes = [
     name: 'MypageView',
     component: MypageView
   },
+
 ]
 
 const router = new VueRouter({
