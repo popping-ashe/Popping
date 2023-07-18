@@ -1,5 +1,7 @@
 package com.ashe.popping.external.oauth.kakao.dto;
 
+import com.ashe.popping.api.member.dto.MemberDto;
+import com.ashe.popping.domain.member.constant.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -33,4 +35,9 @@ public class KakaoMemberInfoResponseDto {
 		}
 
 	}
+
+	public MemberDto toMemberDto(Role role){
+		return MemberDto.of(kakaoId, kakaoAccount.getProfile().getNickname(), role);
+	}
+
 }

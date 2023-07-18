@@ -1,7 +1,7 @@
 package com.ashe.popping.external.oauth.kakao.service;
 
-import com.ashe.popping.external.oauth.model.OAuthAttributes;
+import com.ashe.popping.external.oauth.kakao.dto.KakaoMemberInfoResponseDto;
 
 public interface KakaoLoginApiService {
-	OAuthAttributes getMemberInfo(String accessToken);
+	KakaoMemberInfoResponseDto getMemberInfo(String accessToken);
 }
