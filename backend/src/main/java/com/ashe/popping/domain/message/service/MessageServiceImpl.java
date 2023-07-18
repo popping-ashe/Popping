@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MessageServiceImpl implements MessageService{
+public class MessageServiceImpl implements MessageService {
 
 	private final MessageRepository messageRepository;
 
@@ -26,7 +26,7 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	public List<MessageDto> loadReceiveMessage(Long receiver) {
-		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeBefore(receiver, LocalDateTime.now());
+		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeAfter(receiver, LocalDateTime.now());
 		return messages.stream()
 			.map(MessageDto::from)
 			.toList();
