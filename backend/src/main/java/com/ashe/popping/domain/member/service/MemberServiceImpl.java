@@ -46,7 +46,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Optional<Member> findByKakaoId(String kakaoId) {
+	public Optional<Member> getMemberByKakaoId(String kakaoId) {
 		return memberRepository.findByKakaoId(kakaoId);
 	}
 

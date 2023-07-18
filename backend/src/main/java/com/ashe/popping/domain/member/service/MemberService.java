@@ -14,5 +14,5 @@ public interface MemberService {
 
 	void validateDuplicateMember(MemberDto memberDto);
 
-	Optional<Member> findByKakaoId(String kakaoId);
+	Optional<Member> getMemberByKakaoId(String kakaoId);
 }
