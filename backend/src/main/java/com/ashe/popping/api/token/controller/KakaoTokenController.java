@@ -32,7 +32,7 @@ public class KakaoTokenController {
 		String contentType="application/x-www-form-urlencoded;charset=utf-8";
 		KakaoTokenDto.Request kakaoTokenRequestDto = KakaoTokenDto.Request.of(clientId, clientSecret, code);
 		KakaoTokenDto.Response kakaoToken = kakaoTokenClient.requestKakaoToken(contentType, kakaoTokenRequestDto);
-		OAuthAttributes kakaoMemberInfoResponseDto = kakaoLoginApiService.getMemberInfo(GrantType.BEARER.getType()+" "+kakaoToken.getAccessToken());
-		return "kakao token : "+kakaoToken+", "+kakaoMemberInfoResponseDto;
+		OAuthAttributes oAuthAttributes = kakaoLoginApiService.getMemberInfo(GrantType.BEARER.getType()+" "+kakaoToken.getAccessToken());
+		return "kakao token : "+kakaoToken+", "+oAuthAttributes;
 	}
 }
