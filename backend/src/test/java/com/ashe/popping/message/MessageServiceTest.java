@@ -52,6 +52,17 @@ public class MessageServiceTest {
 		}
 	}
 
+	@Test
+	@DisplayName("내가 보낸 메시지를 불러온다.")
+	void 보낸_메시지() {
+		테스트_메시지_넣기();
+		List<MessageDto> messages = messageService.loadSenderMessage(1L);
+		Assertions.assertThat(messages.size()).isEqualTo(6);
+		for (int i = 0; i < 6; i++) {
+			Assertions.assertThat(messages.get(i).getSender()).isEqualTo(1L);
+		}
+	}
+
 	void 테스트_메시지_넣기() {
 		for (int i = 1; i <= 5; i++) {
 			MessageDto messageDto = MessageDto.builder()
