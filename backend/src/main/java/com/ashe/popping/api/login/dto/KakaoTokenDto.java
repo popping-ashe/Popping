@@ -1,4 +1,4 @@
-package com.ashe.popping.api.token.dto;
+package com.ashe.popping.api.login.dto;
 
 import org.springframework.stereotype.Component;
 

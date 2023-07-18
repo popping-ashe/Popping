@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.ashe.popping.api.login.dto.KakaoTokenDto;
 import com.ashe.popping.api.member.dto.MemberDto;
 import com.ashe.popping.api.login.client.KakaoTokenClient;
-import com.ashe.popping.api.login.dto.KakaoTokenDto;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.service.MemberService;
