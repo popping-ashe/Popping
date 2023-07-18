@@ -35,6 +35,12 @@ public class MessageController {
 		return ResponseEntity.ok(toMessageResponse(messages));
 	}
 
+	@GetMapping("/{member_id}/received")
+	public ResponseEntity<List<MessageApiDto.Response>> getReceivedMessage(@PathVariable("member_id") Long memberId) {
+		List<MessageDto> messages = messageService.loadReceiveMessage(memberId);
+		return ResponseEntity.ok(toMessageResponse(messages));
+	}
+
 	private static List<MessageApiDto.Response> toMessageResponse(List<MessageDto> messages) {
 		return messages.stream()
 			.map(MessageApiDto.Response::from)
