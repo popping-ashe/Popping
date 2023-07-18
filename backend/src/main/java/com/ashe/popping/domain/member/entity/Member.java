@@ -36,7 +36,7 @@ public class Member {
 	private LocalDateTime lastVisitedTime;
 
 	@Column(nullable = false, unique = true)
-	private String uuid;
+	private String kakaoId;
 
 	@CreatedDate
 	private LocalDateTime createdTime;
@@ -49,7 +49,7 @@ public class Member {
 			.memberId(memberDto.getMemberId())
 			.nickname(memberDto.getNickname())
 			.lastVisitedTime(memberDto.getLastVisitedTime())
-			.uuid(memberDto.getUuid())
+			.kakaoId(memberDto.getKakaoId())
 			.createdTime(memberDto.getCreatedTime())
 			.role(memberDto.getRole())
 			.build();

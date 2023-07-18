@@ -19,7 +19,7 @@ public class MemberDto {
 	private Long memberId;
 	private String nickname;
 	private LocalDateTime lastVisitedTime;
-	private String uuid;
+	private String kakaoId;
 	private LocalDateTime createdTime;
 	private Role role;
 
@@ -34,7 +34,7 @@ public class MemberDto {
 			.memberId(member.getMemberId())
 			.nickname(member.getNickname())
 			.lastVisitedTime(member.getLastVisitedTime())
-			.uuid(member.getUuid())
+			.kakaoId(member.getKakaoId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
 			.build();
