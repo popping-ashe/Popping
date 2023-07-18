@@ -1,5 +1,6 @@
 package com.ashe.popping.external.oauth.model;
 
+import com.ashe.popping.api.member.dto.MemberDto;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.entity.Member;
 
@@ -13,14 +14,17 @@ import lombok.ToString;
 public class OAuthAttributes {
 	private String kakaoId;
 	private String nickname;
-	
 
-	public Member toMemberEntity(Role role){
-		return Member.builder()
+	public static OAuthAttributes of(String kakaoId, String nickname){
+		return OAuthAttributes.builder()
 			.kakaoId(kakaoId)
 			.nickname(nickname)
-			.role(role)
 			.build();
+	}
+
+	public Member toMemberEntity(Role role){
+		MemberDto memberDto = MemberDto.of(kakaoId, nickname, role);
+		return Member.from(memberDto);
 	}
 
 }

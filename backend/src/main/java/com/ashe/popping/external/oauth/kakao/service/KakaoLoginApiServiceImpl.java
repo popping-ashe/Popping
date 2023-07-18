@@ -25,10 +25,7 @@ public class KakaoLoginApiServiceImpl implements KakaoLoginApiService{
 		System.out.println("kakaoLoginApiServiceImpl: "+kakaoMemberInfoResponseDto);
 		KakaoMemberInfoResponseDto.KakaoAccount kakaoAccount = kakaoMemberInfoResponseDto.getKakaoAccount();
 
-		return OAuthAttributes.builder()
-			.kakaoId(kakaoMemberInfoResponseDto.getKakaoId())
-			.nickname(kakaoAccount.getProfile().getNickname())
-			.build();
+		return OAuthAttributes.of(kakaoMemberInfoResponseDto.getKakaoId(), kakaoAccount.getProfile().getNickname());
 	}
 
 }
