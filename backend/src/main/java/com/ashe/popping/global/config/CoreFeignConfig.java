@@ -14,12 +14,11 @@ import feign.form.spring.SpringFormEncoder;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@EnableFeignClients(basePackages = "com.ashe")
+@EnableFeignClients
 public class CoreFeignConfig {
 	@Bean
 	Encoder formEncoder(ObjectFactory<HttpMessageConverters> converters){
 		return new SpringFormEncoder(new SpringEncoder(converters));
-		// return new feign.form.FormEncoder();
 	}
 
 	@Bean
