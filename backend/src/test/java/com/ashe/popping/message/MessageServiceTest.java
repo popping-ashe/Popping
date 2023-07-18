@@ -71,7 +71,7 @@ public class MessageServiceTest {
 				.sender((long)i)
 				.receiver(1L)
 				.nickname("테스트" + i)
-				.expirationTime(LocalDateTime.now())
+				.expirationTime(LocalDateTime.now().minusDays(1L))
 				.build();
 			MessageDto message = messageService.saveMessage(messageDto);
 		}
@@ -82,7 +82,7 @@ public class MessageServiceTest {
 				.sender(1L)
 				.receiver((long)(i - 5))
 				.nickname("테스트" + i)
-				.expirationTime(LocalDateTime.now())
+				.expirationTime(LocalDateTime.now().plusDays(2L))
 				.build();
 			MessageDto message = messageService.saveMessage(messageDto);
 		}
