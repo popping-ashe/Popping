@@ -1,7 +1,8 @@
-package com.ashe.popping.api.member.dto;
+package com.ashe.popping.domain.member.dto;
 
 import java.time.LocalDateTime;
 
+import com.ashe.popping.api.member.dto.MemberApiDto;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.entity.Member;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -23,13 +24,13 @@ public class MemberDto {
 	private LocalDateTime createdTime;
 	private Role role;
 
-	public static MemberDto from(MemberDto.Request request) {
+	public static MemberDto from(Request request) {
 		return MemberDto.builder()
 			.nickname(request.getNickname())
 			.build();
 	}
 
-	public static MemberDto of(String kakaoId, String nickname, Role role){
+	public static MemberDto of(String kakaoId, String nickname, Role role) {
 		return MemberDto.builder()
 			.nickname(nickname)
 			.kakaoId(kakaoId)
@@ -48,7 +49,18 @@ public class MemberDto {
 			.build();
 	}
 
-	public static MemberDto of(MemberDto.Request request, Long memberId) {
+	public static MemberDto from(MemberApiDto memberApiDto) {
+		return MemberDto.builder()
+			.memberId(memberApiDto.getMemberId())
+			.nickname(memberApiDto.getNickname())
+			.lastVisitedTime(memberApiDto.getLastVisitedTime())
+			.kakaoId(memberApiDto.getKakaoId())
+			.createdTime(memberApiDto.getCreatedTime())
+			.role(memberApiDto.getRole())
+			.build();
+	}
+
+	public static MemberDto of(Request request, Long memberId) {
 		return MemberDto.builder()
 			.memberId(memberId)
 			.nickname(request.getNickname())

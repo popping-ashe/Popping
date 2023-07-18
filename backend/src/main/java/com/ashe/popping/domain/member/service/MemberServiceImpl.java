@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.ashe.popping.api.member.dto.MemberDto;
+import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.repository.MemberRepository;
 import com.ashe.popping.global.error.ErrorCode;
