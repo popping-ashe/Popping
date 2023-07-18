@@ -1,7 +1,7 @@
-package com.ashe.popping.api.token.service;
+package com.ashe.popping.api.login.service;
 
 import com.ashe.popping.global.jwt.dto.JwtTokenDto;
 
-public interface KakaoTokenService {
+public interface KakaoLoginService {
 	JwtTokenDto kakaoLogin(String code);
 }

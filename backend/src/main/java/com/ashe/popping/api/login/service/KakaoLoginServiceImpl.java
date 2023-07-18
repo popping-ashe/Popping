@@ -1,4 +1,4 @@
-package com.ashe.popping.api.token.service;
+package com.ashe.popping.api.login.service;
 
 import java.util.Optional;
 
@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ashe.popping.api.member.dto.MemberDto;
-import com.ashe.popping.api.token.client.KakaoTokenClient;
-import com.ashe.popping.api.token.dto.KakaoTokenDto;
+import com.ashe.popping.api.login.client.KakaoTokenClient;
+import com.ashe.popping.api.login.dto.KakaoTokenDto;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.service.MemberService;
-import com.ashe.popping.external.oauth.kakao.client.KakaoMemberInfoClient;
 import com.ashe.popping.external.oauth.kakao.dto.KakaoMemberInfoResponseDto;
 import com.ashe.popping.external.oauth.kakao.service.KakaoLoginApiService;
 import com.ashe.popping.global.jwt.contant.GrantType;
@@ -22,9 +21,8 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class KakaoTokenServiceImpl implements KakaoTokenService{
+public class KakaoLoginServiceImpl implements KakaoLoginService {
 	private final KakaoTokenClient kakaoTokenClient;
-	private final KakaoMemberInfoClient kakaoMemberInfoClient;
 	private final KakaoLoginApiService kakaoLoginApiService;
 	private final TokenManager tokenManager;
 	private final MemberService memberService;
