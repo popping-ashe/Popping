@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.ashe.popping.api.member.dto.MemberDto;
 import com.ashe.popping.domain.member.constant.Role;
+import com.ashe.popping.domain.member.dto.MemberDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
