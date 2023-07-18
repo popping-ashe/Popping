@@ -22,14 +22,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto getMemberByMemberId(Long memberId) {
-		Member member = memberRepository.findByMemberId(memberId);
+		Optional<Member> member = memberRepository.findByMemberId(memberId);
 
-		return MemberDto.from(member);
+		return MemberDto.from(member.get());
 	}
 
 	@Override
 	public MemberDto updateMember(MemberDto memberDto) {
-		Member member = memberRepository.findByMemberId(memberDto.getMemberId());
+		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
 
 		member.updateNickname(memberDto.getNickname());
 
