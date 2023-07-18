@@ -1,6 +1,10 @@
 package com.ashe.popping.api.message.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +27,18 @@ public class MessageController {
 	public ResponseEntity<MessageApiDto.Response> sendMessage(@RequestBody MessageApiDto.Request request) {
 		MessageDto messageDto = messageService.saveMessage(MessageDto.from(request));
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
+	}
+
+	@GetMapping("/{member_id}/sent")
+	public ResponseEntity<List<MessageApiDto.Response>> getSendMessages(@PathVariable("member_id") Long memberId) {
+		List<MessageDto> messages = messageService.loadSenderMessage(memberId);
+		System.out.println(messages);
+		return ResponseEntity.ok(toMessageResponse(messages));
+	}
+
+	private static List<MessageApiDto.Response> toMessageResponse(List<MessageDto> messages) {
+		return messages.stream()
+			.map(MessageApiDto.Response::from)
+			.toList();
 	}
 }
