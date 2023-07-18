@@ -29,6 +29,14 @@ public class MemberDto {
 			.build();
 	}
 
+	public static MemberDto of(String kakaoId, String nickname, Role role){
+		return MemberDto.builder()
+			.nickname(nickname)
+			.kakaoId(kakaoId)
+			.role(role)
+			.build();
+	}
+
 	public static MemberDto from(Member member) {
 		return MemberDto.builder()
 			.memberId(member.getMemberId())

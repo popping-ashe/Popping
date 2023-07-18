@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.ashe.popping.api.token.dto.KakaoTokenDto;
+import com.ashe.popping.global.config.CoreFeignConfig;
 
-
-@FeignClient(url = "https://kauth.kakao.com", name="kakaoTokenClient")
+@FeignClient(url = "https://kauth.kakao.com", contextId = "acessToken", name="kakaoTokenClient")
 public interface KakaoTokenClient {
 
 	@PostMapping(value = "/oauth/token", consumes="application/json")
