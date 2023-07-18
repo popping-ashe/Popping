@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
@@ -27,7 +28,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	@Transactional
 	public MemberDto updateMember(MemberDto memberDto) {
 		Member member = memberRepository.findByMemberId(memberDto.getMemberId());
 
@@ -43,6 +43,11 @@ public class MemberServiceImpl implements MemberService {
 		if (optionalMember.isPresent()) {
 			throw new BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER);
 		}
+	}
+
+	@Override
+	public Optional<Member> getMemberByKakaoId(String kakaoId) {
+		return memberRepository.findByKakaoId(kakaoId);
 	}
 
 	@Override
