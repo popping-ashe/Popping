@@ -37,43 +37,19 @@ public class TokenManager {
 	}
 
 	public String createAccessToken(Long memberId, Role role, Date expirationTime){
-		String accessToken = Jwts.builder()
-			.setSubject(TokenType.ACCESS.name())
-			.setIssuedAt(new Date())
-			.setExpiration(expirationTime)
-			.claim("memberId", memberId)
-			.claim("role", role)
-			.signWith(SignatureAlgorithm.HS512, tokenSecret.getBytes(StandardCharsets.UTF_8))
-			.setHeaderParam("typ", "JWT")
-			.compact();
-		return accessToken;
+		return createToken(TokenType.ACCESS.name(), memberId, role, expirationTime);
 	}
 
-	public String createRefreshToken(Long memberId, Date expirationTime){
-		String refreshToken = Jwts.builder()
-			.setSubject(TokenType.REFRESH.name())
-			.setIssuedAt(new Date())
-			.setExpiration(expirationTime)
-			.claim("memberId", memberId)
-			.signWith(SignatureAlgorithm.HS512, tokenSecret.getBytes(StandardCharsets.UTF_8))
-			.setHeaderParam("typ", "JWT")
-			.compact();
-
-		return refreshToken;
+	public String createRefreshToken(Long memberId, Role role, Date expirationTime){
+		return createToken(TokenType.REFRESH.name(), memberId, role, expirationTime);
 	}
 
 	public JwtTokenDto createJwtTokenDto(Long memberId, Role role){
 		Date accessTokenExpirationTime = createAccessTokenExpireTime();
 		Date refreshTokenExpirationTime = createRefreshTokenExpireTime();
 		String accessToken = createAccessToken(memberId, role, accessTokenExpirationTime);
-		String refreshToken = createRefreshToken(memberId, refreshTokenExpirationTime);
-		return JwtTokenDto.builder()
-			.grantType(GrantType.BEARER.getType())
-			.accessToken(accessToken)
-			.refreshToken(refreshToken)
-			.accessTokenExpireTime(accessTokenExpirationTime)
-			.refreshTokenExpireTime(refreshTokenExpirationTime)
-			.build();
+		String refreshToken = createRefreshToken(memberId, role, refreshTokenExpirationTime);
+		return JwtTokenDto.of(GrantType.BEARER.getType(), accessToken, accessTokenExpirationTime, refreshToken, refreshTokenExpirationTime);
 	}
 
 	public void validateToken(String token){
@@ -102,5 +78,16 @@ public class TokenManager {
 		return claims;
 	}
 
+	public String createToken(String tokenType, Long memberId, Role role, Date expirationTime){
+		return Jwts.builder()
+			.setSubject(tokenType)
+			.setIssuedAt(new Date())
+			.setExpiration(expirationTime)
+			.claim("role", role)
+			.claim("memberId", memberId)
+			.signWith(SignatureAlgorithm.HS512, tokenSecret.getBytes(StandardCharsets.UTF_8))
+			.setHeaderParam("typ", "JWT")
+			.compact();
+	}
 
-}
+ }
