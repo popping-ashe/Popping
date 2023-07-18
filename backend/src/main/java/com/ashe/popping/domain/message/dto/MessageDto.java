@@ -15,6 +15,8 @@ public class MessageDto {
 
 	private String content;
 
+	private LocalDateTime createTime;
+
 	private LocalDateTime expirationTime;
 
 	private Long sender;
@@ -34,7 +36,7 @@ public class MessageDto {
 		this.nickname = nickname;
 	}
 
-	public static MessageDto from(Message message){
+	public static MessageDto from(Message message) {
 		return MessageDto.builder()
 			.state(message.getState())
 			.content(message.getContent())
