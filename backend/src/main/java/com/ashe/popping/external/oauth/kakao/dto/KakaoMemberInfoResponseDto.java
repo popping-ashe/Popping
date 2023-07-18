@@ -1,4 +1,4 @@
-package com.ashe.popping.api.external.oauth.kakao.dto;
+package com.ashe.popping.external.oauth.kakao.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
