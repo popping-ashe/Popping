@@ -46,6 +46,9 @@
 <script>
 export default {
   name: 'MainView',
+  components:{
+
+  },
   data() {
     return {
       isLoggedIn: true, // 로그인 여부를 저장
@@ -116,14 +119,16 @@ export default {
     },
   },
   created() {
-    this.sortMessageByTimeLeft();
+    // this.sortMessageByTimeLeft();
+    this.createBubble();
+
   },
   
-  computed: {
-    messageCount() {
-      return this.messages.length;
-    },
-  },
+  // computed: {
+  //   messageCount() {
+  //     return this.messages.length;
+  //   },
+  // },
 }
 
 

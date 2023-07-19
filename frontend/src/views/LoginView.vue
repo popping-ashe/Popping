@@ -13,10 +13,28 @@
         <img src="../assets/popping-clay-N.png" alt="팝핑 이미지 6" class="popping-image" id="a">
         <img src="../assets/popping-clay-g2.png" alt="팝핑 이미지 7" class="popping-image">
       </div>
-
-      <div class="bubble animate__animated animate__bounceInUp">
-        <img src="../assets/bubble.png" alt="버블" class="bubble-image">
+        <!-- <div class="pointing-container animate__animated animate__fadeIn">
+          <img src="../assets/pointing.png" alt="버블" class="bubble-image pointing-image">
+        </div> -->
+      <div class="icon-box">
+        <div class="bubble-image1">
+          <img src="../assets/55.png" alt="버블" class="bubble-image1" style="width:20%;">
+        </div>
+        <div class="bubble animate__animated animate__bounceInUp">
+          <!-- <img src="../assets/bubble5.png" alt="버블" class="bubble-image" style="width:30%;"> -->
+          <img src="../assets/bubble9.png" alt="버블" class="bubble-image" @click="openhowto">
+        </div>
       </div>
+      <div class="touch-box">
+        <img src="../assets/touch-t.png" alt="touch" class="touch-image">
+        <img src="../assets/touch-o.png" alt="touch" class="touch-image">
+        <img src="../assets/touch-u.png" alt="touch" class="touch-image">
+        <img src="../assets/touch-c.png" alt="touch" class="touch-image">
+        <img src="../assets/touch-h.png" alt="touch" class="touch-image">
+        <img src="../assets/touch-1.png" alt="touch" class="touch-image" style="width:2.5%">
+        <img src="../assets/pointing.png" alt="버블" class="bubble-image pointing-image" style="width:10%">
+      </div>
+        <!-- <ClickMessage/> -->
     </div>
 
     <div class="kakao" @click="kakaoLogin">
@@ -27,9 +45,14 @@
 
 <script>
 // import Vue from 'vue';
+// import ClickMessage from '../components/ClickMessage.vue';
 
 export default {
   name: 'LoginView',
+  
+  components: {
+    // ClickMessage
+  },
   methods: {
     //버블 배경 애니메이션
 
@@ -76,6 +99,7 @@ export default {
   align-items: center;
   height: 100%;
   width: 100%;
+  
 }
 
 .popping-image {
@@ -85,6 +109,8 @@ export default {
   margin-right: 10px;
   animation: popping1 2s ease-in-out infinite alternate;
   margin: 0;
+  rotate: 90%;
+  filter:drop-shadow(2px 2px 6px rgb(154, 129, 230));
 }
 
 .bubble {
@@ -93,13 +119,26 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-top: 15%;
+  margin-top: 5%;
 }
 
 .bubble-image {
-  width: 100%;
+  width: 70%;
   height: 100%;
   animation: popping3 3s ease-in-out infinite alternate;
+  /* filter:drop-shadow(2px 2px 6px rgb(103, 145, 228)); */
+  
+}
+.bubble-image1 {
+  /* width: 70%; */
+  height: 100%;
+  animation: popping3 3s ease-in-out infinite alternate;
+  /* filter:drop-shadow(2px 2px 6px rgb(103, 145, 228)); */
+  z-index: 999;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   
 }
 
@@ -115,7 +154,38 @@ export default {
 }
 
 .kakao_image {
-  box-shadow: 2px 2px 4px darkgray;
+  /* box-shadow: 2px 2px 4px darkgray; */
+}
+.chat-image {
+  display: flex;
+  z-index: 3;
+  bottom: 50%;
+}
+.pointing-container {
+  position: relative;
+  top: 70%;
+  left: 45%;
+  transform: translate(-50%, 450%) rotate(45deg);
+}
+
+.pointing-image {
+  width: 20%; /* Adjust the size as needed */
+}
+
+.icon-box {
+  margin-top: 20%;
+}
+.touch-box{
+  z-index: 999;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  animation: popping4 3s ease-in-out infinite alternate;
+  /* margin-top: 5%; */
+}
+.touch-image{
+  width: 5%;
 }
 
 @keyframes popping1 {
@@ -148,6 +218,17 @@ export default {
   }
   50% {
     transform: scale(1) translateY(-15%);
+  }
+  100% {
+    transform: scale(1) translateY(0%);
+  }
+}
+@keyframes popping4 {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1) translateY(-50%);
   }
   100% {
     transform: scale(1) translateY(0%);

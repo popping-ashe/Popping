@@ -62,7 +62,7 @@
 <style scoped>
 .bgnewjeans{
 
-/* background: rgba(45, 216, 255, 0.505); */
+/* background: rgba(19, 127, 250, 0.53); */
 background: hsla(228, 100%, 84%, 1);
 
 background: linear-gradient(270deg, hsla(228, 100%, 84%, 1) 0%, hsla(201, 100%, 84%, 1) 7%, hsla(0, 0%, 100%, 1) 56%, hsla(0, 0%, 100%, 1) 88%, hsla(201, 100%, 84%, 1) 100%);
