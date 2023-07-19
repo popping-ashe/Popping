@@ -3,6 +3,7 @@ package com.ashe.popping.api.member.dto;
 import java.time.LocalDateTime;
 
 import com.ashe.popping.domain.member.constant.Role;
+import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-public class MemberDto {
+public class MemberApiDto {
 	private Long memberId;
 	private String nickname;
 	private LocalDateTime lastVisitedTime;
@@ -23,22 +24,22 @@ public class MemberDto {
 	private LocalDateTime createdTime;
 	private Role role;
 
-	public static MemberDto from(MemberDto.Request request) {
-		return MemberDto.builder()
+	public static MemberApiDto from(MemberApiDto.Request request) {
+		return MemberApiDto.builder()
 			.nickname(request.getNickname())
 			.build();
 	}
 
-	public static MemberDto of(String kakaoId, String nickname, Role role){
-		return MemberDto.builder()
+	public static MemberApiDto of(String kakaoId, String nickname, Role role) {
+		return MemberApiDto.builder()
 			.nickname(nickname)
 			.kakaoId(kakaoId)
 			.role(role)
 			.build();
 	}
 
-	public static MemberDto from(Member member) {
-		return MemberDto.builder()
+	public static MemberApiDto from(Member member) {
+		return MemberApiDto.builder()
 			.memberId(member.getMemberId())
 			.nickname(member.getNickname())
 			.lastVisitedTime(member.getLastVisitedTime())
@@ -48,8 +49,8 @@ public class MemberDto {
 			.build();
 	}
 
-	public static MemberDto of(MemberDto.Request request, Long memberId) {
-		return MemberDto.builder()
+	public static MemberApiDto of(MemberApiDto.Request request, Long memberId) {
+		return MemberApiDto.builder()
 			.memberId(memberId)
 			.nickname(request.getNickname())
 			.build();
