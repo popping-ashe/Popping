@@ -5,9 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.ashe.popping.global.jwt.service.TokenManager;
+import com.ashe.popping.global.redis.repository.RefreshTokenRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
+	private final RefreshTokenRepository refreshTokenRepository;
 	@Value("${token.access-token-expiration-time}")
 	private String accessTokenExpirationTime;
 
@@ -18,7 +23,8 @@ public class SecurityConfig {
 	private String tokenSecret;
 
 	@Bean
-	public TokenManager tokenManager(){
-		return new TokenManager(accessTokenExpirationTime, refreshTokenExpirationTime, tokenSecret);
+	public TokenManager tokenManager() {
+		return new TokenManager(refreshTokenRepository, accessTokenExpirationTime, refreshTokenExpirationTime,
+			tokenSecret);
 	}
 }
