@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ashe.popping.api.member.dto.MemberApiDto;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.service.MemberService;
+import com.ashe.popping.domain.message.service.MessageService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,12 +22,15 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 
 	private final MemberService memberService;
+	private final MessageService messageService;
 
 	@GetMapping("/{memberId}")
 	public ResponseEntity<MemberApiDto.Response> getMember(@PathVariable("memberId") Long memberId) {
 		MemberDto memberDto = memberService.getMemberByMemberId(memberId);
+		Long expireMessageCount = messageService.countExpireMessage(memberDto.getMemberId(),
+			memberDto.getLastVisitedTime());
 
-		MemberApiDto.Response response = MemberApiDto.Response.from(memberDto);
+		MemberApiDto.Response response = MemberApiDto.Response.of(memberDto, expireMessageCount);
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
