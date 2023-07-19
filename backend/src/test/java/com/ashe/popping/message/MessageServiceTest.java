@@ -56,7 +56,7 @@ public class MessageServiceTest {
 	@DisplayName("내가 보낸 메시지를 불러온다.")
 	void 보낸_메시지() {
 		테스트_메시지_넣기();
-		List<MessageDto> messages = messageService.loadSenderMessage(1L);
+		List<MessageDto> messages = messageService.loadSendMessage(1L);
 		Assertions.assertThat(messages.size()).isEqualTo(6);
 		for (int i = 0; i < 6; i++) {
 			Assertions.assertThat(messages.get(i).getSender()).isEqualTo(1L);

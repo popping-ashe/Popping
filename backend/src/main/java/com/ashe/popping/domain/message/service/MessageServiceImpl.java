@@ -32,7 +32,7 @@ public class MessageServiceImpl implements MessageService {
 			.toList();
 	}
 
-	public List<MessageDto> loadSenderMessage(Long sender) {
+	public List<MessageDto> loadSendMessage(Long sender) {
 		List<Message> messages = messageRepository.findBySender(sender);
 		return messages.stream()
 			.map(MessageDto::from)
