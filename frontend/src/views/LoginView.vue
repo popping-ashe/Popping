@@ -65,7 +65,7 @@ export default {
 .container {
   padding-left: 8%;
   padding-right: 10%;
-  margin-top: 10%;
+  margin-top: 15%;
   z-index: 1;
 }
 
