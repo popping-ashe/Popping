@@ -4,15 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum MessageState {
-	EXPIRED(-1, "만료됨"),
-	UNREAD(0, "안읽음"),
-	READ(1, "읽음");
+	EXPIRED("만료됨"),
+	UNREAD("안읽음"),
+	READ("읽음");
 
-	MessageState(int code, String message) {
-		this.code = code;
+	MessageState(String message) {
 		this.message = message;
 	}
 
-	private final int code;
 	private final String message;
 }

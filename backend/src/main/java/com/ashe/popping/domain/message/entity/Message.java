@@ -6,10 +6,13 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.ashe.popping.domain.message.dto.MessageDto;
+import com.ashe.popping.domain.message.dto.MessageState;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,8 +31,8 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long messageId;
 
-	@Column(nullable = false)
-	private Integer state;
+	@Enumerated(EnumType.STRING)
+	private MessageState state;
 
 	@Column(nullable = false)
 	private String content;
@@ -49,7 +52,7 @@ public class Message {
 	private String nickname;
 
 	@Builder
-	public Message(Integer state, String content, LocalDateTime expirationTime, Long sender, Long receiver,
+	public Message(MessageState state, String content, LocalDateTime expirationTime, Long sender, Long receiver,
 		String nickname) {
 		this.state = state;
 		this.content = content;
