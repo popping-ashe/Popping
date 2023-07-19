@@ -30,7 +30,7 @@ public class MessageController {
 	}
 
 	@GetMapping("/{member_id}/sent")
-	public ResponseEntity<List<MessageApiDto.Response>> getSendMessages(@PathVariable("member_id") Long memberId) {
+	public ResponseEntity<List<MessageApiDto.Response>> getSentMessages(@PathVariable("member_id") Long memberId) {
 		List<MessageDto> messages = messageService.loadSenderMessage(memberId);
 		return ResponseEntity.ok(toMessageResponse(messages));
 	}
