@@ -74,11 +74,20 @@ public class MemberApiDto {
 	public static class Response {
 		private Long memberId;
 		private String nickname;
+		private Long expiredMessageCount;
 
 		public static Response from(MemberDto memberDto) {
 			return Response.builder()
 				.memberId(memberDto.getMemberId())
 				.nickname(memberDto.getNickname())
+				.build();
+		}
+
+		public static Response of(MemberDto memberDto, Long expiredMessageCount) {
+			return Response.builder()
+				.memberId(memberDto.getMemberId())
+				.nickname(memberDto.getNickname())
+				.expiredMessageCount(expiredMessageCount)
 				.build();
 		}
 
