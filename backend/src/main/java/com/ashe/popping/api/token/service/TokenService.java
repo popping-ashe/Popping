@@ -1,4 +1,4 @@
-package com.ashe.popping.api.token;
+package com.ashe.popping.api.token.service;
 
 import java.util.Date;
 import java.util.Optional;
@@ -28,29 +28,32 @@ public class TokenService {
 
 	public AccessTokenResponseDto createAccessTokenByRefreshToken(String refreshToken) {
 		// 1. refreshToken으로 memberId 반환 받기
-		Claims tokenClaims = tokenManager.getTokenClaims(refreshToken);
-		Long memberId = Long.valueOf((Integer)tokenClaims.get("memberId"));
+		Long memberId = 0L;
+		try{
+			Claims tokenClaims = tokenManager.getTokenClaims(refreshToken);
+			memberId = Long.valueOf((Integer)tokenClaims.get("memberId"));
+		}catch(Exception e){
+			// 로그아웃 처리
+			throw new AuthenticationException(ErrorCode.REFRESH_TOKEN_EXPIRED); // 만료된 토큰
+		}
 		// 2. memberId로 refreshToken 레디스에서 가져오기
 		Optional<RefreshToken> refreshTokenDto = refreshTokenRepository.findRefreshTokenByMemberId(memberId);
-
-		if (refreshTokenDto.isEmpty()) {
-			// 만료된 토큰
-			throw new AuthenticationException(ErrorCode.REFRESH_TOKEN_EXPIRED);
+		System.out.println(refreshToken);
+		// 3. client로부터 받은 refreshToken과 Redis에 저장된 refreshToken을 비교하기.
+		// 받은 refreshToken과 비교
+		if (refreshTokenDto.get().getRefreshToken().equals(refreshToken)) {
+			MemberDto memberDto = memberService.getMemberByMemberId(memberId);
+			System.out.println(memberDto);
+			Date accessTokenExpireTime = tokenManager.createAccessTokenExpireTime();
+			String accessToken = tokenManager.createAccessToken(memberId, memberDto.getRole(),
+				accessTokenExpireTime);
+			return AccessTokenResponseDto.of(accessToken, accessTokenExpireTime);
 		} else {
-			// 받은 refreshToken과 비교
-			// refreshTokenDto
-			if (refreshTokenDto.get().getRefreshToken().equals(refreshToken)) {
-				MemberDto memberDto = memberService.getMemberByMemberId(memberId);
-				Date accessTokenExpireTime = tokenManager.createAccessTokenExpireTime();
-				String accessToken = tokenManager.createAccessToken(memberId, memberDto.getRole(),
-					accessTokenExpireTime);
-				return AccessTokenResponseDto.of(accessToken, accessTokenExpireTime);
-			} else {
-				// 다른 경우
-				// 악의적 이용 maybe 로그아웃
-				throw new AuthenticationException(ErrorCode.NOT_VALID_TOKEN);
-			}
+			// 다른 경우
+			// 악의적 이용 -> 로그아웃
+			throw new AuthenticationException(ErrorCode.NOT_VALID_TOKEN);
 		}
+
 	}
 
 }
