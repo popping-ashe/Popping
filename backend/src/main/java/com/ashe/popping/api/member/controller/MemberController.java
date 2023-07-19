@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ashe.popping.api.member.dto.MemberDto;
+import com.ashe.popping.api.member.dto.MemberApiDto;
+import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,22 +23,22 @@ public class MemberController {
 	private final MemberService memberService;
 
 	@GetMapping("/{memberId}")
-	public ResponseEntity<MemberDto.Response> getMember(@PathVariable("memberId") Long memberId) {
+	public ResponseEntity<MemberApiDto.Response> getMember(@PathVariable("memberId") Long memberId) {
 		MemberDto memberDto = memberService.getMemberByMemberId(memberId);
 
-		MemberDto.Response response = MemberDto.Response.from(memberDto);
+		MemberApiDto.Response response = MemberApiDto.Response.from(memberDto);
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 	@PatchMapping("/{memberId}")
-	public ResponseEntity<MemberDto.Response> modifyMember(@PathVariable("memberId") Long memberId,
-		@RequestBody MemberDto.Request request) {
-		MemberDto memberDto = MemberDto.of(request, memberId);
+	public ResponseEntity<MemberApiDto.Response> modifyMember(@PathVariable("memberId") Long memberId,
+		@RequestBody MemberApiDto.Request request) {
+		MemberApiDto memberApiDto = MemberApiDto.of(request, memberId);
 
-		MemberDto result = memberService.updateMember(memberDto);
+		MemberDto result = memberService.updateMember(MemberDto.from(memberApiDto));
 
-		MemberDto.Response response = MemberDto.Response.from(result);
+		MemberApiDto.Response response = MemberApiDto.Response.from(result);
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}

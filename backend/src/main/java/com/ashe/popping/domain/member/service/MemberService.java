@@ -2,7 +2,7 @@ package com.ashe.popping.domain.member.service;
 
 import java.util.Optional;
 
-import com.ashe.popping.api.member.dto.MemberDto;
+import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
 
 public interface MemberService {

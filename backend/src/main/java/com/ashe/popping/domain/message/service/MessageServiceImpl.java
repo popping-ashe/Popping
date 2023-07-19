@@ -1,5 +1,6 @@
 package com.ashe.popping.domain.message.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MessageServiceImpl implements MessageService{
+public class MessageServiceImpl implements MessageService {
 
 	private final MessageRepository messageRepository;
 
@@ -25,13 +26,13 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	public List<MessageDto> loadReceiveMessage(Long receiver) {
-		List<Message> messages = messageRepository.findByReceiver(receiver);
+		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeAfter(receiver, LocalDateTime.now());
 		return messages.stream()
 			.map(MessageDto::from)
 			.toList();
 	}
 
-	public List<MessageDto> loadSenderMessage(Long sender) {
+	public List<MessageDto> loadSendMessage(Long sender) {
 		List<Message> messages = messageRepository.findBySender(sender);
 		return messages.stream()
 			.map(MessageDto::from)
