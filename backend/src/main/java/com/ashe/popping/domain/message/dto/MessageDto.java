@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class MessageDto {
+	private Long messageId;
 
 	private MessageState state;
 
@@ -27,9 +28,9 @@ public class MessageDto {
 	private String nickname;
 
 	@Builder
-	public MessageDto(MessageState state, String content, LocalDateTime createTime, LocalDateTime expirationTime,
-		Long sender, Long receiver,
-		String nickname) {
+	public MessageDto(Long messageId, MessageState state, String content, LocalDateTime createTime,
+		LocalDateTime expirationTime, Long sender, Long receiver, String nickname) {
+		this.messageId = messageId;
 		this.state = state;
 		this.content = content;
 		this.createTime = createTime;
@@ -41,6 +42,7 @@ public class MessageDto {
 
 	public static MessageDto from(Message message) {
 		return MessageDto.builder()
+			.messageId(message.getMessageId())
 			.state(message.getState())
 			.content(message.getContent())
 			.createTime(message.getCreateTime())
