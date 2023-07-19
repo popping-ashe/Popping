@@ -14,4 +14,6 @@ public interface MessageService {
 	List<MessageDto> loadSendMessage(Long sender);
 
 	Long countExpireMessage(Long receiver, LocalDateTime lastVisitedTime);
+
+	MessageDto updateMessageStateToRead(Long messageId);
 }

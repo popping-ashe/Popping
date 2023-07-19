@@ -12,8 +12,10 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
 	List<Message> findBySender(Long sender);
 
-	List<Message> findByReceiverAndExpirationTimeAfter(Long receiver, LocalDateTime now);
+	List<Message> findByReceiverAndExpirationTimeAfterAndStateIs(Long receiver, LocalDateTime now, MessageState state);
 
 	Long countByReceiverAndExpirationTimeBetweenAndStateIsNot(Long receiver, LocalDateTime start, LocalDateTime end,
 		MessageState state);
+
+	Message findByMessageId(Long messageId);
 }
