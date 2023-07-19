@@ -12,10 +12,7 @@ import lombok.Getter;
 public class RefreshToken {
 
 	@Id
-	private String id;
-
 	private String refreshToken;
+	private Long memberId;
 
-	@Indexed
-	private String accessToken;
 }
