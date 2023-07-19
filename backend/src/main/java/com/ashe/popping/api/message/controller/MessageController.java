@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/messages")
 @RequiredArgsConstructor
 public class MessageController {
-	// 요청으로 몇시간 후 만료인지 시간이 들어옴...
 	private final MessageService messageService;
 
 	@PostMapping

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ashe.popping.domain.message.dto.MessageDto;
+import com.ashe.popping.domain.message.dto.MessageState;
 import com.ashe.popping.domain.message.repository.MessageRepository;
 import com.ashe.popping.domain.message.service.MessageService;
 
@@ -26,7 +27,7 @@ public class MessageServiceTest {
 	@DisplayName("메세지가 전송된다.")
 	void 메세지_전송() {
 		MessageDto messageDto = MessageDto.builder()
-			.state(-1)
+			.state(MessageState.UNREAD)
 			.content("하이하이~ 정훈이에염~")
 			.sender(null)
 			.receiver(1L)
@@ -38,7 +39,6 @@ public class MessageServiceTest {
 		Assertions.assertThat(message.getNickname()).isEqualTo("정훈이");
 		Assertions.assertThat(message.getReceiver()).isEqualTo(1L);
 		Assertions.assertThat(message.getSender()).isNull();
-		System.out.println(message.getContent());
 	}
 
 	@Test
@@ -63,28 +63,36 @@ public class MessageServiceTest {
 		}
 	}
 
+	@Test
+	@DisplayName("만료된 메시지의 갯수를 불러온다.")
+	void 만료된_메시지() {
+		테스트_메시지_넣기();
+		Long msgCount = messageService.countExpireMessage(1L, LocalDateTime.now().minusDays(2L));
+		Assertions.assertThat(msgCount).isEqualTo(5);
+	}
+
 	void 테스트_메시지_넣기() {
 		for (int i = 1; i <= 5; i++) {
 			MessageDto messageDto = MessageDto.builder()
-				.state(-1)
+				.state(MessageState.UNREAD)
 				.content("테스트 코드" + i)
 				.sender((long)i)
 				.receiver(1L)
 				.nickname("테스트" + i)
 				.expirationTime(LocalDateTime.now().minusDays(1L))
 				.build();
-			MessageDto message = messageService.saveMessage(messageDto);
+			messageService.saveMessage(messageDto);
 		}
 		for (int i = 6; i <= 10; i++) {
 			MessageDto messageDto = MessageDto.builder()
-				.state(-1)
+				.state(MessageState.UNREAD)
 				.content("테스트 코드" + i)
 				.sender(1L)
 				.receiver((long)(i - 5))
 				.nickname("테스트" + i)
 				.expirationTime(LocalDateTime.now().plusDays(2L))
 				.build();
-			MessageDto message = messageService.saveMessage(messageDto);
+			messageService.saveMessage(messageDto);
 		}
 	}
 }

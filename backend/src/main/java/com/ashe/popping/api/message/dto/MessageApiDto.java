@@ -33,15 +33,17 @@ public class MessageApiDto {
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 	public static class Response {
 		private String content;
+		private String state;
 		private Long receiver;
 		private String nickname;
 		private LocalDateTime createTime;
 		private LocalDateTime expirationTime;
 
 		@Builder
-		public Response(String content, Long receiver, String nickname, LocalDateTime createTime,
+		public Response(String content, String state, Long receiver, String nickname, LocalDateTime createTime,
 			LocalDateTime expirationTime) {
 			this.content = content;
+			this.state = state;
 			this.receiver = receiver;
 			this.nickname = nickname;
 			this.createTime = createTime;
@@ -51,6 +53,7 @@ public class MessageApiDto {
 		public static Response from(MessageDto messageDto) {
 			return Response.builder()
 				.content(messageDto.getContent())
+				.state(messageDto.getState().getMessage())
 				.receiver(messageDto.getReceiver())
 				.nickname(messageDto.getNickname())
 				.createTime(messageDto.getCreateTime())
