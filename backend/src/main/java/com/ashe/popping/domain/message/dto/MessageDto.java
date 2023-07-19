@@ -12,7 +12,7 @@ import lombok.Getter;
 @Builder
 public class MessageDto {
 
-	private Integer state;
+	private MessageState state;
 
 	private String content;
 
@@ -27,7 +27,7 @@ public class MessageDto {
 	private String nickname;
 
 	@Builder
-	public MessageDto(Integer state, String content, LocalDateTime createTime, LocalDateTime expirationTime,
+	public MessageDto(MessageState state, String content, LocalDateTime createTime, LocalDateTime expirationTime,
 		Long sender, Long receiver,
 		String nickname) {
 		this.state = state;
@@ -53,7 +53,7 @@ public class MessageDto {
 
 	public static MessageDto from(MessageApiDto.Request request) {
 		return MessageDto.builder()
-			.state(MessageState.UNREAD.getCode())
+			.state(MessageState.UNREAD)
 			.content(request.getContent())
 			.createTime(LocalDateTime.now())
 			.expirationTime(LocalDateTime.now().plusHours(request.getRetentionTime()))
