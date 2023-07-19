@@ -4,11 +4,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import com.ashe.popping.domain.member.constant.Role;
+import com.ashe.popping.domain.member.repository.MemberRepository;
 import com.ashe.popping.global.error.ErrorCode;
 import com.ashe.popping.global.error.exception.AuthenticationException;
 import com.ashe.popping.global.jwt.contant.GrantType;
 import com.ashe.popping.global.jwt.contant.TokenType;
 import com.ashe.popping.global.jwt.dto.JwtTokenDto;
+import com.ashe.popping.global.redis.dto.RefreshToken;
+import com.ashe.popping.global.redis.repository.RefreshTokenRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -21,6 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class TokenManager {
+
+	private final MemberRepository memberRepository;
+	private final RefreshTokenRepository refreshTokenRepository;
 
 	// application.yml에 설정한 값을 가져온다.
 	private final String accessTokenExpirationTime;
@@ -41,7 +47,10 @@ public class TokenManager {
 	}
 
 	public String createRefreshToken(Long memberId, Role role, Date expirationTime){
-		return createToken(TokenType.REFRESH.name(), memberId, role, expirationTime);
+		String refreshToken = createToken(TokenType.REFRESH.name(), memberId, role, expirationTime);
+		RefreshToken redisRefreshToken = new RefreshToken(refreshToken, memberId);
+		refreshTokenRepository.save(redisRefreshToken);
+		return refreshToken;
 	}
 
 	public JwtTokenDto createJwtTokenDto(Long memberId, Role role){
