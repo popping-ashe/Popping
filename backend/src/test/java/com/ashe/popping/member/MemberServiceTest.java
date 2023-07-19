@@ -55,5 +55,18 @@ public class MemberServiceTest {
 		Assertions.assertThat(memberDto.getRole()).isEqualTo(Role.USER);
 		Assertions.assertThat(memberDto.getKakaoId()).isEqualTo("kakaoid22");
 	}
-	
+
+	@Test
+	@DisplayName("회원 정보를 수정한다.")
+	void 회원_정보_수정() {
+		테스트_회원_넣기();
+		MemberDto memberDto = MemberDto.builder()
+			.memberId(3L)
+			.nickname("3번째회원닉네임바뀜")
+			.build();
+
+		memberService.updateMember(memberDto);
+		MemberDto result = memberService.getMemberByMemberId(3L);
+		Assertions.assertThat(memberDto.getNickname()).isEqualTo("3번째회원닉네임바뀜");
+	}
 }
