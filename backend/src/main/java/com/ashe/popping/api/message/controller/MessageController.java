@@ -29,14 +29,14 @@ public class MessageController {
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
 	}
 
-	@GetMapping("/{member_id}/sent")
-	public ResponseEntity<List<MessageApiDto.Response>> getSentMessages(@PathVariable("member_id") Long memberId) {
+	@GetMapping("/{memberId}/sent")
+	public ResponseEntity<List<MessageApiDto.Response>> getSentMessages(@PathVariable("memberId") Long memberId) {
 		List<MessageDto> messages = messageService.loadSendMessage(memberId);
 		return ResponseEntity.ok(toMessageResponse(messages));
 	}
 
-	@GetMapping("/{member_id}/received")
-	public ResponseEntity<List<MessageApiDto.Response>> getReceivedMessage(@PathVariable("member_id") Long memberId) {
+	@GetMapping("/{memberId}/received")
+	public ResponseEntity<List<MessageApiDto.Response>> getReceivedMessage(@PathVariable("memberId") Long memberId) {
 		List<MessageDto> messages = messageService.loadReceiveMessage(memberId);
 		return ResponseEntity.ok(toMessageResponse(messages));
 	}
