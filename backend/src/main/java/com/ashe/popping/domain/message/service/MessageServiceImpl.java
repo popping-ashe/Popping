@@ -29,7 +29,8 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public List<MessageDto> loadReceiveMessage(Long receiver) {
-		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeAfter(receiver, LocalDateTime.now());
+		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeAfterAndStateIs(receiver,
+			LocalDateTime.now(), MessageState.UNREAD);
 		return messages.stream()
 			.map(MessageDto::from)
 			.toList();
@@ -48,5 +49,12 @@ public class MessageServiceImpl implements MessageService {
 		return messageRepository
 			.countByReceiverAndExpirationTimeBetweenAndStateIsNot(receiver, lastVisitedTime, LocalDateTime.now(),
 				MessageState.READ);
+	}
+
+	@Override
+	public MessageDto updateMessageStateToRead(Long messageId) {
+		Message message = messageRepository.findByMessageId(messageId);
+		message.updateStateToRead();
+		return MessageDto.from(message);
 	}
 }

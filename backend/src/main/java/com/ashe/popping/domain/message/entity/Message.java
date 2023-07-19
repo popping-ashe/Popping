@@ -72,4 +72,8 @@ public class Message {
 			.nickname(messageDto.getNickname())
 			.build();
 	}
+
+	public void updateStateToRead() {
+		this.state = MessageState.READ;
+	}
 }
