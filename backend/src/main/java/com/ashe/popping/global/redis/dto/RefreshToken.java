@@ -1,18 +1,23 @@
 package com.ashe.popping.global.redis.dto;
 
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
+import org.springframework.data.annotation.Id;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @Getter
+@ToString
 public class RefreshToken {
 
 	@Id
-	private String refreshToken;
 	private Long memberId;
+
+	private String refreshToken;
+
+	public static RefreshToken of(Long memberId, String refreshToken) {
+		return new RefreshToken(memberId, refreshToken);
+	}
 
 }
