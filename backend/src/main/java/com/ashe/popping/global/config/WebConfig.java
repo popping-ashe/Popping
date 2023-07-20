@@ -9,8 +9,10 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.ashe.popping.global.interceptor.AuthenticationIntercepter;
 import com.ashe.popping.global.resolver.memberinfo.MemberInfoArgumentResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
+	private final AuthenticationIntercepter authenticationIntercepter;
 	private final ObjectMapper objectMapper;
 	private final MemberInfoArgumentResolver memberInfoArgumentResolver;
 
@@ -49,7 +52,15 @@ public class WebConfig implements WebMvcConfigurer {
 		return new MappingJackson2HttpMessageConverter(copy);
 	}
 
-	public void addArgumentResolver(List<HandlerMethodArgumentResolver> resolvers){
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(authenticationIntercepter)
+			.order(1)
+			.addPathPatterns("/**").excludePathPatterns("/access-token/issue", "/health",
+				"/oauth/kakao/callback", "/messages");
+	}
+
+	public void addArgumentResolver(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(memberInfoArgumentResolver);
 	}
 
