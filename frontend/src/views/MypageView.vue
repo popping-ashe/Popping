@@ -1,5 +1,6 @@
 <template>
-  <div class="frame">
+  <div class="frame" style="z-index: 0;">
+      <SentDetail v-if="showSentDetail"/>
     <div class="upper-bar">
       <div class="back-ellipse" @click="$router.push('/main')">
         <div class="back-emoji">
@@ -42,7 +43,7 @@
     <div class="sent-bubble-frame2">
       <div class="sent-message-frame">
         <!-- for문 -->
-        <div v-for="(article, index) in testList" :key="index" class="sent-message-box" @click="bubbleDetail(index)">
+        <div v-for="(article, index) in sentList" :key="index" class="sent-message-box" @click="sentDetail(index)">
           <div class="sent-message-ellipse">
             <div class="user-initial"><!-- 유저 아이디 첫글자 -->{{article.name.substr(0,1)}}</div>
           </div>
@@ -62,77 +63,35 @@
 
 <script>
 import SettingsPopupVue from '@/components/SettingsPopup.vue';
+import SentDetail from '@/components/SentDetail.vue'
 
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   name: 'MypageView',
   components : {
-    SettingsPopupVue
+    SettingsPopupVue,
+    SentDetail
   },
   data() {
     return {
       dialog: false,
-      testList : [
-        {
-          name : '김지은',
-          time : '07:59',
-          status : true,
-          context : '내용1내용1내용112312312312312321121'
-        },
-        {
-          name : '박민아',
-          time : '10:01',
-          status : true,
-          context : '내용2내용2내용2'
-        },
-        {
-          name : '박정은',
-          time : '12:31',
-          status : false,
-          context : '내용3 내용3 내용3'
-        },
-        {
-          name : '서동훈',
-          time : '14:36',
-          status : false,
-          context : '내용4 내용4 내용4'
-        },
-        {
-          name : '양정훈',
-          time : '17:51',
-          status : true,
-          context : '내용5 내용5 내용5'
-        },
-        {
-          name : '임준수',
-          time : '20:24',
-          status : false,
-          context : '내용6 내용6 내용6'
-        },
-        {
-          name : '김김김',
-          time : '21:30',
-          status : true,
-          context : '내용7 내용7 내용7'
-        },
-        {
-          name : '이이이',
-          time : '22:45',
-          status : false,
-          context : '내용8 내용8 내용'
-        },
-      ]
   
 };
   },
   methods: {
+    ...mapMutations(['SET_NEW_INDEX', 'SHOW_SENT_DETAIL']),
     closeDialog() {
       this.dialog = false;
     },
-    bubbleDetail(idx) {
-      console.log(idx)
+    sentDetail(idx) {
+      this.$store.commit('SET_NEW_INDEX', idx)
+      this.$store.commit('SHOW_SENT_DETAIL', !this.showSentDetail)
     }
-  }
+  },
+    computed: {
+    ...mapState(['sentList', 'detailIndex', 'showSentDetail'])
+    }
 }
 </script>
 

@@ -12,3 +12,5 @@ new Vue({
   vuetify, // 수정된 부분
   render: h => h(App)
 }).$mount('#app')
+
+window.Kakao.init("");

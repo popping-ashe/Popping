@@ -18,27 +18,38 @@
         </div> -->
       <div class="icon-box">
         <div class="bubble-image1">
+          <img src="../assets/smile.png" alt="버블" class="bubble-image1" style="width:20%; margin-top: 20%; margin-right:20%">
           <img src="../assets/55.png" alt="버블" class="bubble-image1" style="width:20%;">
+          <img src="../assets/sorry.png" alt="버블" class="bubble-image1" style="width:20%; margin-top: 20%; margin-left:20%">
         </div>
+
+        
         <div class="bubble animate__animated animate__bounceInUp">
           <!-- <img src="../assets/bubble5.png" alt="버블" class="bubble-image" style="width:30%;"> -->
           <img src="../assets/bubble9.png" alt="버블" class="bubble-image" @click="openhowto">
         </div>
-      </div>
-      <div class="touch-box">
-        <img src="../assets/touch-t.png" alt="touch" class="touch-image">
-        <img src="../assets/touch-o.png" alt="touch" class="touch-image">
-        <img src="../assets/touch-u.png" alt="touch" class="touch-image">
-        <img src="../assets/touch-c.png" alt="touch" class="touch-image">
-        <img src="../assets/touch-h.png" alt="touch" class="touch-image">
-        <img src="../assets/touch-1.png" alt="touch" class="touch-image" style="width:2.5%">
-        <img src="../assets/pointing.png" alt="버블" class="bubble-image pointing-image" style="width:10%">
+        <div class="bubble-image1">
+          <img src="../assets/lol.png" alt="버블" class="bubble-image1" style="width:20%; margin-right:10%">
+            <img src="../assets/touch-t.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-o.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-u.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-c.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-h.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-1.png" alt="touch" class="touch-image" style="width:2.5%; margin-right:10%">
+            <!-- <img src="../assets/pointing.png" alt="버블" class="bubble-image pointing-image" style="width:10%"> -->
+          <img src="../assets/hi.png" alt="버블" class="bubble-image1" style="width:20%;">
+          
+          <!-- <div class="touch-box"> -->
+          <!-- </div> -->
+        </div>
       </div>
         <!-- <ClickMessage/> -->
     </div>
 
-    <div class="kakao" @click="kakaoLogin">
+    <div class="kakao">
+      <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code">
       <img class="kakao_image" src="../assets/kakao_login.png" alt="">
+      </a>
     </div>
   </div>
 </template>
@@ -49,7 +60,6 @@
 
 export default {
   name: 'LoginView',
-  
   components: {
     // ClickMessage
   },
@@ -57,18 +67,33 @@ export default {
     //버블 배경 애니메이션
 
     //카카오 로그인
-    kakaoLogin() {
-      //  Vue.$kakao.login()
-      //  .then((response) => {
-      //    const accessToken = response.access_token;
-      //    서버로 accessToken 전달..?
-      //    console.log(response)
-        this.$router.push({ name: 'MainView' });
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
+    kakaologin() {
+      //앱키 추가 아직 안함
+      window.Kakao.Auth.login({
+        // url:'',
+        scope: "profile_image, account_email",
+        success: this.getKakaoAccount,
+      });
+      console.log()
     },
+    // getKakaoAccount() {
+    //   window.Kakao.API.request({
+    //     url: "/v2/user/me",
+    //     success: (res) => {
+    //       const kakao_account = res.kakao_account;
+    //       const ninkname = kakao_account.profile.ninkname;
+    //       const email = kakao_account.email;
+    //       console.log("ninkname", ninkname);
+    //       console.log("email", email);
+
+    //       alert("로그인 성공");
+    //     },
+    //     fail: (error) => {
+    //       console.log(error);
+    //     },
+    //   });
+    // },
+
   },
 };
 </script>
@@ -88,7 +113,7 @@ export default {
 .container {
   padding-left: 8%;
   padding-right: 10%;
-  margin-top: 15%;
+  margin-top: 5%;
   z-index: 1;
 }
 
@@ -119,7 +144,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-top: 5%;
+  /* margin-top: 5%; */
 }
 
 .bubble-image {
@@ -225,13 +250,13 @@ export default {
 }
 @keyframes popping4 {
   0% {
-    transform: scale(1) translateY(0);
+    opacity: 0;
   }
   50% {
-    transform: scale(1) translateY(-50%);
+    opacity: 1;
   }
   100% {
-    transform: scale(1) translateY(0%);
+    opacity: 0;
   }
 }
 

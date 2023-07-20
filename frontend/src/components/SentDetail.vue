@@ -1,7 +1,7 @@
 <template>
   <div class="message-frame">
-    <div class="hello">
-      {{ messages[detailIndex] }} <br>
+    <div class="window">
+      {{ sentList[detailIndex] }} <br>
     <button @click="closeDetail()">창 닫기</button>
     </div>
   </div>
@@ -11,16 +11,16 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'MessageDetail',
+  name: 'SentDetail',
   methods: {
     closeDetail() {
-      this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
+      this.$store.commit('SHOW_SENT_DETAIL', !this.showSentDetail)
 
     }
   },
 
   computed: {
-    ...mapState(['messages', 'detailIndex', 'showReceivedDetail'])
+    ...mapState(['sentList', 'detailIndex', 'showSentDetail'])
   }
 }
 </script>
@@ -38,10 +38,15 @@ export default {
   background: rgba(0, 0, 0, 0.3);
 }
 
-.hello {
+.window {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 51%;
+  width: 40%;
+  height:30%;
+  background: white;
   transform: translate(-50%, -50%);
+  border-radius: 45px;
+  box-shadow: 0px 0px 20px black;
 }
 </style>

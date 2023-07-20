@@ -1,5 +1,6 @@
 <template>
-  <div class="frame">
+  <div class="frame" style="z-index: 0;">
+        <MessageDetail class="message-detail" v-if="showReceivedDetail"/>
     <div class="upper-bar">
       <div class="share-ellipse">
         <div class="share-emoji">
@@ -20,21 +21,16 @@
 
     <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
     <div class="bubble-area">
-          <img
-      v-for="(bubble, index) in messageCount"
-      :key="index"
-      class="bubble"
-      src="../assets/bubble.png"
-      alt="Bubble"
-      :style="getBubbleStyle(index)"
-    />
+      <div v-for="(message, index) in messages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
+        <img class="bubble" @click="openDetail(index)" src="../assets/bubble.png">
+      </div>
       <!-- <img class="bubble1" src="../assets/bubble.png" alt="">
       <img class="bubble2" src="../assets/bubble.png" alt=""> -->
     </div>
 
     <div class="under-bar">
       <!-- 로그인 상태에 따라 동적으로 메세지 보내기 버튼 활성화/비활성화 -->
-      <div class="bubble-make-btn" v-if="isLoggedIn" @click="createBubble">
+      <div class="bubble-make-btn" v-if="isLoggedIn">
         <div>버블 만들기</div>
       </div>
     </div>
@@ -44,74 +40,51 @@
 
 
 <script>
+import MessageDetail from '@/components/MessageDetail.vue'
+import { mapMutations, mapState } from 'vuex'
+
 export default {
   name: 'MainView',
-  components:{
-
+  components: {
+    MessageDetail,
   },
   data() {
     return {
       isLoggedIn: true, // 로그인 여부를 저장
       username: 'USERNAME', // 로그인한 사용자 이름 변수명은 임의
-      messages: [
-        {
-          sentUser : '유저1',
-          context : '내용1',
-          timeLeft : '147',
-        },
-        {
-          sentUser : '유저2',
-          context : '내용2',
-          timeLeft : '42',
-        },
-        {
-          sentUser : '유저3',
-          context : '내용3',
-          timeLeft : '12',
-        },
-        {
-          sentUser : '유저4',
-          context : '내용4',
-          timeLeft : '3',
-        },
-        {
-          sentUser : '유저5',
-          context : '내용5',
-          timeLeft : '91',
-        },
-        {
-          sentUser : '유저6',
-          context : '내용6',
-          timeLeft : '132',
-        },
-        {
-          sentUser : '유저7',
-          context : '내용7',
-          timeLeft : '21',
-        },
-      ]      
+      randomBubbleSize: [],
+      randomX: [],
+      randomY: [],
     };
   },
   methods: {
-    createBubble() {
-      const randomLeft = Math.random() * 100; // Random left position (0 to 100%)
-      const randomTop = Math.random() * 100; // Random top position (0 to 100%)
-      const randomSize = Math.random() * 100 + 50; // Random size (50 to 150 pixels)
+    ...mapMutations('SET_NEW_INDEX'),
+    openDetail(idx) {
+      this.$store.commit('SET_NEW_INDEX', idx)
+      this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
+    },
+    generateRandomSizes() {
+        const minSize = 65; // Minimum bubble size (adjust as needed)
+        const maxSize = 135; // Maximum bubble size (adjust as needed)
 
-      // Create a new bubble image element
-      const bubbleImg = document.createElement('img');
-      bubbleImg.src = '../assets/bubble.png';
-      bubbleImg.alt = 'Bubble';
-      bubbleImg.className = 'bubble';
-      bubbleImg.style.position = 'absolute';
-      bubbleImg.style.left = `${randomLeft}%`;
-      bubbleImg.style.top = `${randomTop}%`;
-      bubbleImg.style.width = `${randomSize}px`;
-      bubbleImg.style.height = `${randomSize}px`;
+        for (let i = 0; i < this.messages.length; i++) {
+          const randomSize = Math.floor(Math.random() * (maxSize - minSize + 1) + minSize);
+          this.randomBubbleSize.push(randomSize + 'px');
+        }
+      },
+    generateRandomPosition() {
+      const minX = 0;
+      const maxX = 35;
+      const minY = 0;     // Y는 필요 없어짐!
+      const maxY = 3;
 
-      // Add the bubble image to the bubble-area
-      const bubbleArea = document.querySelector('.bubble-area');
-      bubbleArea.appendChild(bubbleImg);
+      for (let j = 0; j < this.messages.length; j++) {
+        const randomXPosition = Math.floor(Math.random() * (maxX - minX + 1 ) + minX);
+        this.randomX.push(randomXPosition + 'px');
+        const randomYPosition = Math.floor(Math.random() * (maxY - minY + 1 ) + minY);
+        this.randomY.push(randomYPosition + '%');
+      }
+
     },
 
     sortMessageByTimeLeft() {
@@ -119,22 +92,20 @@ export default {
     },
   },
   created() {
-    // this.sortMessageByTimeLeft();
-    this.createBubble();
-
+    this.sortMessageByTimeLeft();
+    this.generateRandomSizes();
+    this.generateRandomPosition();
   },
-  
-  // computed: {
-  //   messageCount() {
-  //     return this.messages.length;
-  //   },
-  // },
+  computed: {
+    ...mapState(['messages', 'detailIndex', 'showReceivedDetail'])
+  }
 }
 
 
 </script>
 
 <style scoped>
+
 
 /* iPhone 14 Pro - 1 */
 .icons {
@@ -232,34 +203,40 @@ export default {
 
 .bubble-area {
   position: absolute;
-  width: 100%;
-  height: 72.3%;
-  top: 14.4%;
+  width: 95%;
+  height: 67%;
+  top: 16.4%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow: scroll;
   }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .bubble {
-
-}
-
-.bubble1 {
   position: relative;
-  width: 123px;
-  left: 52px;
-  top: 41px;
+  width: 100%;
+  margin: 5px;
+  filter: drop-shadow(1px 1px 1px black);
+  animation-name: floating;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
 }
 
-.bubble2 {
-  position: absolute;
-  width: 78px;
-  left: 262px;
-  top: 80px;
+@keyframes floating {
+    0% { transform: translate(0,  0px); }
+    50%  { transform: translate(0, 15px); }
+    100%   { transform: translate(0, -0px); }   
 }
 
 .under-bar {
   position: absolute;
   width: 100%;
   height: 9.3%;
-  top: 78%;
+  top: 86%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -284,7 +261,4 @@ export default {
 .bubble-make-btn:hover {
   transition: all ease 0.4s;
 }
-</style>>
-
-
-
+</style>
