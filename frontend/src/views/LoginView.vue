@@ -13,39 +13,87 @@
         <img src="../assets/popping-clay-N.png" alt="팝핑 이미지 6" class="popping-image" id="a">
         <img src="../assets/popping-clay-g2.png" alt="팝핑 이미지 7" class="popping-image">
       </div>
+        <!-- <div class="pointing-container animate__animated animate__fadeIn">
+          <img src="../assets/pointing.png" alt="버블" class="bubble-image pointing-image">
+        </div> -->
+      <div class="icon-box">
+        <div class="bubble-image1">
+          <img src="../assets/smile.png" alt="버블" class="bubble-image1" style="width:20%; margin-top: 20%; margin-right:20%">
+          <img src="../assets/55.png" alt="버블" class="bubble-image1" style="width:20%;">
+          <img src="../assets/sorry.png" alt="버블" class="bubble-image1" style="width:20%; margin-top: 20%; margin-left:20%">
+        </div>
 
-      <div class="bubble animate__animated animate__bounceInUp">
-        <img src="../assets/bubble.png" alt="버블" class="bubble-image">
+        
+        <div class="bubble animate__animated animate__bounceInUp">
+          <!-- <img src="../assets/bubble5.png" alt="버블" class="bubble-image" style="width:30%;"> -->
+          <img src="../assets/bubble9.png" alt="버블" class="bubble-image" @click="openhowto">
+        </div>
+        <div class="bubble-image1">
+          <img src="../assets/lol.png" alt="버블" class="bubble-image1" style="width:20%; margin-right:10%">
+            <img src="../assets/touch-t.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-o.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-u.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-c.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-h.png" alt="touch" class="touch-image">
+            <img src="../assets/touch-1.png" alt="touch" class="touch-image" style="width:2.5%; margin-right:10%">
+            <!-- <img src="../assets/pointing.png" alt="버블" class="bubble-image pointing-image" style="width:10%"> -->
+          <img src="../assets/hi.png" alt="버블" class="bubble-image1" style="width:20%;">
+          
+          <!-- <div class="touch-box"> -->
+          <!-- </div> -->
+        </div>
       </div>
+        <!-- <ClickMessage/> -->
     </div>
 
-    <div class="kakao" @click="kakaoLogin">
+    <div class="kakao">
+      <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code">
       <img class="kakao_image" src="../assets/kakao_login.png" alt="">
+      </a>
     </div>
   </div>
 </template>
 
 <script>
 // import Vue from 'vue';
+// import ClickMessage from '../components/ClickMessage.vue';
 
 export default {
   name: 'LoginView',
+  components: {
+    // ClickMessage
+  },
   methods: {
     //버블 배경 애니메이션
 
     //카카오 로그인
-    kakaoLogin() {
-      //  Vue.$kakao.login()
-      //  .then((response) => {
-      //    const accessToken = response.access_token;
-      //    서버로 accessToken 전달..?
-      //    console.log(response)
-        this.$router.push({ name: 'MainView' });
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
+    kakaologin() {
+      //앱키 추가 아직 안함
+      window.Kakao.Auth.login({
+        // url:'',
+        scope: "profile_image, account_email",
+        success: this.getKakaoAccount,
+      });
+      console.log()
     },
+    // getKakaoAccount() {
+    //   window.Kakao.API.request({
+    //     url: "/v2/user/me",
+    //     success: (res) => {
+    //       const kakao_account = res.kakao_account;
+    //       const ninkname = kakao_account.profile.ninkname;
+    //       const email = kakao_account.email;
+    //       console.log("ninkname", ninkname);
+    //       console.log("email", email);
+
+    //       alert("로그인 성공");
+    //     },
+    //     fail: (error) => {
+    //       console.log(error);
+    //     },
+    //   });
+    // },
+
   },
 };
 </script>
@@ -65,7 +113,7 @@ export default {
 .container {
   padding-left: 8%;
   padding-right: 10%;
-  margin-top: 10%;
+  margin-top: 5%;
   z-index: 1;
 }
 
@@ -76,6 +124,7 @@ export default {
   align-items: center;
   height: 100%;
   width: 100%;
+  
 }
 
 .popping-image {
@@ -85,6 +134,8 @@ export default {
   margin-right: 10px;
   animation: popping1 2s ease-in-out infinite alternate;
   margin: 0;
+  rotate: 90%;
+  filter:drop-shadow(2px 2px 6px rgb(154, 129, 230));
 }
 
 .bubble {
@@ -93,13 +144,26 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-top: 15%;
+  /* margin-top: 5%; */
 }
 
 .bubble-image {
-  width: 100%;
+  width: 70%;
   height: 100%;
   animation: popping3 3s ease-in-out infinite alternate;
+  /* filter:drop-shadow(2px 2px 6px rgb(103, 145, 228)); */
+  
+}
+.bubble-image1 {
+  /* width: 70%; */
+  height: 100%;
+  animation: popping3 3s ease-in-out infinite alternate;
+  /* filter:drop-shadow(2px 2px 6px rgb(103, 145, 228)); */
+  z-index: 999;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   
 }
 
@@ -115,7 +179,38 @@ export default {
 }
 
 .kakao_image {
-  box-shadow: 2px 2px 4px darkgray;
+  /* box-shadow: 2px 2px 4px darkgray; */
+}
+.chat-image {
+  display: flex;
+  z-index: 3;
+  bottom: 50%;
+}
+.pointing-container {
+  position: relative;
+  top: 70%;
+  left: 45%;
+  transform: translate(-50%, 450%) rotate(45deg);
+}
+
+.pointing-image {
+  width: 20%; /* Adjust the size as needed */
+}
+
+.icon-box {
+  margin-top: 20%;
+}
+.touch-box{
+  z-index: 999;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  animation: popping4 3s ease-in-out infinite alternate;
+  /* margin-top: 5%; */
+}
+.touch-image{
+  width: 5%;
 }
 
 @keyframes popping1 {
@@ -151,6 +246,17 @@ export default {
   }
   100% {
     transform: scale(1) translateY(0%);
+  }
+}
+@keyframes popping4 {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
