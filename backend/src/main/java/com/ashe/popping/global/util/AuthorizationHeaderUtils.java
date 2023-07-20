@@ -13,8 +13,13 @@ public class AuthorizationHeaderUtils {
 			throw new AuthenticationException(ErrorCode.NOT_EXIST_AUTHORIZATION);
 		}
 		String[] authorizations = authorizationHeader.split(" ");
-		if (authorizations.length < 2 || (!GrantType.BEARER.getType().equals(authorizations[0]))) {
+		if (authorizationTypeCheck(authorizations)) {
 			throw new AuthenticationException(ErrorCode.NOT_VALID_BEARER_GRANT_TYPE);
 		}
 	}
+
+	private static boolean authorizationTypeCheck(String[] authorizations) {
+		return authorizations.length < 2 || (!GrantType.BEARER.getType().equals(authorizations[0]));
+	}
+
 }
