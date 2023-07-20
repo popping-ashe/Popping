@@ -50,6 +50,14 @@ public class TokenManager {
 		return refreshToken;
 	}
 
+	public String expireRefreshToken(Long memberId) {
+		String refreshToken = createToken(TokenType.REFRESH.name(), memberId, Role.USER,
+			new Date(System.currentTimeMillis()));
+		RefreshToken redisRefreshToken = new RefreshToken(memberId, refreshToken);
+		refreshTokenRepository.save(redisRefreshToken);
+		return refreshToken;
+	}
+
 	public JwtTokenDto createJwtTokenDto(Long memberId, Role role) {
 		Date accessTokenExpirationTime = createAccessTokenExpireTime();
 		Date refreshTokenExpirationTime = createRefreshTokenExpireTime();
