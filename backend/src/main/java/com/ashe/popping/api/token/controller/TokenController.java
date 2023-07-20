@@ -2,7 +2,6 @@ package com.ashe.popping.api.token.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ashe.popping.api.token.service.TokenService;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class TokenController {
 	private final TokenService tokenService;
 
