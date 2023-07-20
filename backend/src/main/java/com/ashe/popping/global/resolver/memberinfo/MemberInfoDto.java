@@ -11,11 +11,10 @@ public class MemberInfoDto {
 	private Long memberId;
 	private Role role;
 
-	public static MemberInfoDto of(Long memberId, String role){
+	public static MemberInfoDto of(Long memberId, String role) {
 		return MemberInfoDto.builder()
 			.memberId(memberId)
 			.role(Role.from(role))
 			.build();
 	}
 }
-// JwtToken을 생성하는 두가지 변수?

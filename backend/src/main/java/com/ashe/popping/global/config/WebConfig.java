@@ -60,7 +60,8 @@ public class WebConfig implements WebMvcConfigurer {
 				"/oauth/kakao/callback", "/messages");
 	}
 
-	public void addArgumentResolver(List<HandlerMethodArgumentResolver> resolvers) {
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(memberInfoArgumentResolver);
 	}
 
