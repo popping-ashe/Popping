@@ -29,16 +29,15 @@ public class TokenService {
 	public AccessTokenResponseDto createAccessTokenByRefreshToken(String refreshToken) {
 		// 1. refreshToken으로 memberId 반환 받기
 		Long memberId = 0L;
-		try{
+		try {
 			Claims tokenClaims = tokenManager.getTokenClaims(refreshToken);
 			memberId = Long.valueOf((Integer)tokenClaims.get("memberId"));
-		}catch(Exception e){
+		} catch (Exception e) {
 			// 로그아웃 처리
 			throw new AuthenticationException(ErrorCode.REFRESH_TOKEN_EXPIRED); // 만료된 토큰
 		}
 		// 2. memberId로 refreshToken 레디스에서 가져오기
 		Optional<RefreshToken> refreshTokenDto = refreshTokenRepository.findRefreshTokenByMemberId(memberId);
-		System.out.println(refreshToken);
 		// 3. client로부터 받은 refreshToken과 Redis에 저장된 refreshToken을 비교하기.
 		// 받은 refreshToken과 비교
 		if (refreshTokenDto.get().getRefreshToken().equals(refreshToken)) {
