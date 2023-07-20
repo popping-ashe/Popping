@@ -25,6 +25,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
 	@Modifying(clearAutomatically = true)
 	@Transactional
-	@Query("update Message set state = 'EXPIRED' where expirationTime <= :now")
+	@Query("update Message set state = 'EXPIRED' where expirationTime <= :now and state = 'UNREAD'")
 	int updateMessageStateToExpired(LocalDateTime now);
 }
