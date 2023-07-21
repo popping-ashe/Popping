@@ -12,6 +12,8 @@ public interface MemberService {
 
 	MemberDto updateNickname(MemberDto memberDto);
 
+	MemberDto updateLastVisitedTime(MemberDto memberDto);
+
 	void validateDuplicateMember(MemberDto memberDto);
 
 	Optional<Member> getMemberByKakaoId(String kakaoId);

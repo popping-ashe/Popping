@@ -37,6 +37,15 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public MemberDto updateLastVisitedTime(MemberDto memberDto) {
+		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
+
+		member.updateLastVisitedTime(memberDto.getLastVisitedTime());
+
+		return MemberDto.from(member);
+	}
+
+	@Override
 	public void validateDuplicateMember(MemberDto memberDto) {
 		Member member = Member.from(memberDto);
 		Optional<Member> optionalMember = memberRepository.findByKakaoId(member.getKakaoId());
