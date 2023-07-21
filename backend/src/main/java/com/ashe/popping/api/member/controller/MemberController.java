@@ -45,9 +45,11 @@ public class MemberController {
 		Long memberId = memberInfoDto.getMemberId();
 		MemberApiDto memberApiDto = MemberApiDto.of(request, memberId);
 
-		MemberDto result = memberService.updateMember(MemberDto.from(memberApiDto));
+		MemberDto memberDto = memberService.updateNickname(MemberDto.from(memberApiDto));
+		Long expireMessageCount = messageService.countExpireMessage(memberDto.getMemberId(),
+			memberDto.getLastVisitedTime());
 
-		MemberApiDto.Response response = MemberApiDto.Response.from(result);
+		MemberApiDto.Response response = MemberApiDto.Response.of(memberDto, expireMessageCount);
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
