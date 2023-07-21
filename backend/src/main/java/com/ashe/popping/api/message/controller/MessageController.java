@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ashe.popping.api.message.dto.MessageApiDto;
 import com.ashe.popping.domain.message.dto.MessageDto;
 import com.ashe.popping.domain.message.service.MessageService;
+import com.ashe.popping.global.resolver.memberinfo.MemberInfo;
+import com.ashe.popping.global.resolver.memberinfo.MemberInfoDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,14 +31,17 @@ public class MessageController {
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
 	}
 
-	@GetMapping("/{memberId}/sent")
-	public ResponseEntity<List<MessageApiDto.Response>> getSentMessages(@PathVariable("memberId") Long memberId) {
+	@GetMapping("/sent")
+	public ResponseEntity<List<MessageApiDto.Response>> getSentMessages(@MemberInfo MemberInfoDto
+		memberInfoDto) {
+		Long memberId = memberInfoDto.getMemberId();
 		List<MessageDto> messages = messageService.loadSendMessage(memberId);
 		return ResponseEntity.ok(toMessageResponse(messages));
 	}
 
-	@GetMapping("/{memberId}/received")
-	public ResponseEntity<List<MessageApiDto.Response>> getReceivedMessage(@PathVariable("memberId") Long memberId) {
+	@GetMapping("/received")
+	public ResponseEntity<List<MessageApiDto.Response>> getReceivedMessage(@MemberInfo MemberInfoDto memberInfoDto) {
+		Long memberId = memberInfoDto.getMemberId();
 		List<MessageDto> messages = messageService.loadReceiveMessage(memberId);
 		return ResponseEntity.ok(toMessageResponse(messages));
 	}
