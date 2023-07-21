@@ -28,10 +28,19 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberDto updateMember(MemberDto memberDto) {
+	public MemberDto updateNickname(MemberDto memberDto) {
 		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
 
 		member.updateNickname(memberDto.getNickname());
+
+		return MemberDto.from(member);
+	}
+
+	@Override
+	public MemberDto updateLastVisitedTime(MemberDto memberDto) {
+		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
+
+		member.updateLastVisitedTime(memberDto.getLastVisitedTime());
 
 		return MemberDto.from(member);
 	}

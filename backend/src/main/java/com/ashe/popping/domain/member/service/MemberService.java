@@ -10,7 +10,9 @@ public interface MemberService {
 
 	MemberDto getMemberByMemberId(Long memberId);
 
-	MemberDto updateMember(MemberDto memberDto);
+	MemberDto updateNickname(MemberDto memberDto);
+
+	MemberDto updateLastVisitedTime(MemberDto memberDto);
 
 	void validateDuplicateMember(MemberDto memberDto);
 
