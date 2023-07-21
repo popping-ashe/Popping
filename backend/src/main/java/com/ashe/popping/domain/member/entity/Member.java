@@ -58,4 +58,8 @@ public class Member {
 	public void updateNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
+	public void updateLastVisitedTime(LocalDateTime lastVisitedTime) {
+		this.lastVisitedTime = lastVisitedTime;
+	}
 }
