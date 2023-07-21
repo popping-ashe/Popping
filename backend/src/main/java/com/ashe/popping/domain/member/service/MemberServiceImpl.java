@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberDto updateMember(MemberDto memberDto) {
+	public MemberDto updateNickname(MemberDto memberDto) {
 		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
 
 		member.updateNickname(memberDto.getNickname());
