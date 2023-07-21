@@ -3,12 +3,14 @@ package com.ashe.popping.domain.member.entity;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Member {
