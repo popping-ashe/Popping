@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="mypage font-stardust">
-        MY PAGE
+        마이페이지
       </div>
       <div class="settings-ellipse">
         <div class="settings-emoji">
@@ -32,7 +32,7 @@
     <div class="sent-bubble-frame1">
       <div class="sent-bubble-text-frame">
         <div class="sent-bubble-text font-stardust">
-          보낸 BUBBLE 
+          보낸 버블 
         </div>
       <div class="selector-frame font-stardust">
         <div class="selector-read">읽음</div> | 
@@ -381,6 +381,8 @@ export default {
   width: 100%;
   height: 72px;
   text-align: center;
+  padding-right: 4px;
+  padding-left: 4px;
   
 }
 
@@ -388,14 +390,14 @@ export default {
   position: relative;
   width: 100%;
   height: 64px;
-
-  background: #FFFFFF;
-  border: 1px solid #000000;
+  background: rgba(255, 255, 255, 0.485);
+  box-shadow: 2px 2px 2px darkgrey;
   border-radius: 36px;
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
+  opacity: 100%;
 }
 
 .sent-message-ellipse {
@@ -406,8 +408,7 @@ export default {
   left: 14px;
 
   border-radius: 50%;
-  background: #D9D9D9;
-  border: 1px solid #000000;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;

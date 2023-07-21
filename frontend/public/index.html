@@ -12,9 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
     <style>
-      body {
-        height: calc(var(--vh, 1vh) * 100);
-      }
+
     </style>
   </head>
   <body>
@@ -30,13 +28,14 @@
     
     let customVH = window.innerHeight * 0.01
     document.documentElement.style.setProperty('--vh', customVH + 'px')
+    document.documentElement.style.setProperty('--vw', customVH*(393/852) + 'px')
     window.addEventListener('resize', () => {
       let customVH = window.innerHeight * 0.01
-      document.documentElement.style.setProperty(
-        '--vh',
-        customVH + 'px',
-      )
+      let customVW = customVH * 393/852
+      document.documentElement.style.setProperty('--vh', customVH + 'px')
+      document.documentElement.style.setProperty('--vw', customVW + 'px')
     })
+
   </script>
   <style>
 

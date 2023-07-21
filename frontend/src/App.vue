@@ -13,7 +13,7 @@
       </div>
 
       <div v-else style="width: 100vw; height: 100vh;  display: flex; justify-content: center; ">
-        <div class="bgnewjeans" style="width:393px; height:100vh">
+        <div class="bgnewjeans" style="width: calc(var(--vw, 1vw) * 110); height:100%">
           <div class="main">
             <!-- <div class="container3">
               <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
@@ -82,5 +82,4 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#ACBCFF", en
 .com-image.enlarged-image {
   transform: scale(1.2);
 }
-
 </style>
