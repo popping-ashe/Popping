@@ -1,5 +1,6 @@
 import router from "@/router";
-import { getUserInfo, kakaologin,getUserMessage } from "@/api/user";
+// import { kakaologin } from "@/api/user";
+import { getUserInfo, kakaologin } from "@/api/user";
 
 const userStore = {
   namespaced: true,
@@ -39,41 +40,57 @@ const userStore = {
         code,
         (response) => {
           if (response.status === 200) {
+            console.log(response)
             let accessToken = response.data["accessToken"];
-            // let refreshToken = response.data["refreshToken"];
+            let refreshToken = response.data["refreshToken"];
+            console.log(accessToken)
+            console.log(refreshToken)
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
             sessionStorage.setItem("access-token", accessToken);
-            // sessionStorage.setItem("refresh-token", refreshToken);
+            sessionStorage.setItem("refresh-token", refreshToken);
             getUserInfo(
               (response) => {
                 if (response.status == 200) {
                   commit("SET_USER_INFO", response.data);
                   console.log(response.data);
+                  console.log(this.state)
+                  // router.push({ name: "MainView" });
                 } else {
                   console.log("유저 정보 없음");
                 }
               },
               async (error) => {
-                console.log(
-                  "getUserInfo() error code [토큰 만료되어 사용 불가] ::: ",
-                  error.response.status
-                );
+                console.log(error);
+                // console.log(
+                //   "getUserInfo() error code [토큰 만료되어 사용 불가] ::: ",
+                //   error.response.status
+                // );
                 commit("SET_IS_VALID_TOKEN", false);
                 router.push({ name: "LoginView" });
               }
             );
-            getUserMessage(
-
-            )
-            router.push({ name: "MainView" });
+            // receivedUserMessage(
+              // (response) => {
+              //   if (response.status == 200) {
+              //     commit("SET_USER_INFO", response.data);
+              //     console.log(response.data);
+              //   } else {
+              //     console.log("메세지 없음");
+              //   }
+              // },
+              // async (error) => {
+              //   console.log(error);
+              //   router.push({ name: "LoginView" });
+              // }
+            // )
           } else {
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
             commit("SET_IS_VALID_TOKEN", false);
           }
-          router.push({ name: "LoginView" });
+          router.push({ name: "MainView" });
         },
         (error) => {
           console.log()

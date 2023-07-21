@@ -8,9 +8,10 @@
           <!-- <img src="../assets/홈.png" alt="홈" class="icons" > -->
         </div>
       </div>
-      <div class="username">
+      <div class="username font-stardust">
         <!-- 본인페이지 여부에 따라 표시 -->
-        {{ isLoggedIn ? username : '' }}
+        {{ isLoggedIn ? username : '' }}'s<br>
+        BUBBLE
       </div>
       <div class="mypage-ellipse" @click="$router.push('/mypage')">
         <div class="mypage-emoji">
@@ -30,7 +31,7 @@
 
     <div class="under-bar">
       <!-- 로그인 상태에 따라 동적으로 메세지 보내기 버튼 활성화/비활성화 -->
-      <div class="bubble-make-btn" v-if="isLoggedIn">
+      <div class="bubble-make-btn font-stardust" v-if="isLoggedIn">
         <div>버블 만들기</div>
       </div>
     </div>
@@ -51,7 +52,7 @@ export default {
   data() {
     return {
       isLoggedIn: true, // 로그인 여부를 저장
-      username: 'USERNAME', // 로그인한 사용자 이름 변수명은 임의
+      username: "임준수", // 로그인한 사용자 이름 변수명은 임의
       randomBubbleSize: [],
       randomX: [],
       randomY: [],
@@ -117,6 +118,7 @@ export default {
   position: relative;
   height: 100vh;
   width: 100%;
+  
   }
 
 .upper-bar {
@@ -127,6 +129,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   }
 
 .share-ellipse {
@@ -195,7 +198,7 @@ export default {
   align-items: center;
   text-align: center;
   letter-spacing: -0.32px;
-
+  font-family: '글씨체';
   color: #000000;
 
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
@@ -254,11 +257,15 @@ export default {
   justify-content: center;
   align-items: center;
   filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.25));
-
+  font-family: '글씨체';
   transition: all ease 0.4s;
   }
 
 .bubble-make-btn:hover {
   transition: all ease 0.4s;
+}
+
+.font-stardust{
+  font-family: 'Stardust'
 }
 </style>

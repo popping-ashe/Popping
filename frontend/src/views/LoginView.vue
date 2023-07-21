@@ -24,9 +24,10 @@
         </div>
 
         
-        <div class="bubble animate__animated animate__bounceInUp">
+        <div class="bubble1 animate__animated animate__bounceInUp">
           <!-- <img src="../assets/bubble5.png" alt="버블" class="bubble-image" style="width:30%;"> -->
-          <img src="../assets/bubble9.png" alt="버블" class="bubble-image" @click="openhowto">
+          <!-- <img src="../assets/bubble9.png" alt="버블" class="bubble-image" @click="openhowto"> -->
+          <label><input class="bubble" type="checkbox" name="dummy" value="on"></label>
         </div>
         <div class="bubble-image1">
           <img src="../assets/lol.png" alt="버블" class="bubble-image1" style="width:20%; margin-right:10%">
@@ -47,9 +48,9 @@
     </div>
 
     <div class="kakao">
-      <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code">
-      <img class="kakao_image" src="../assets/kakao_login.png" alt="">
-      </a>
+      <!-- <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"> -->
+      <img class="kakao_image" src="../assets/kakao_login.png" alt="" @click="kakaologin()">
+      <!-- </a> -->
     </div>
   </div>
 </template>
@@ -68,32 +69,9 @@ export default {
 
     //카카오 로그인
     kakaologin() {
-      //앱키 추가 아직 안함
-      window.Kakao.Auth.login({
-        // url:'',
-        scope: "profile_image, account_email",
-        success: this.getKakaoAccount,
-      });
+      location.href = "https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"
       console.log()
     },
-    // getKakaoAccount() {
-    //   window.Kakao.API.request({
-    //     url: "/v2/user/me",
-    //     success: (res) => {
-    //       const kakao_account = res.kakao_account;
-    //       const ninkname = kakao_account.profile.ninkname;
-    //       const email = kakao_account.email;
-    //       console.log("ninkname", ninkname);
-    //       console.log("email", email);
-
-    //       alert("로그인 성공");
-    //     },
-    //     fail: (error) => {
-    //       console.log(error);
-    //     },
-    //   });
-    // },
-
   },
 };
 </script>
@@ -138,7 +116,7 @@ export default {
   filter:drop-shadow(2px 2px 6px rgb(154, 129, 230));
 }
 
-.bubble {
+.bubble1 {
   z-index: 999;
   display: flex;
   flex-wrap: wrap;
@@ -264,5 +242,150 @@ export default {
   .kakao {
     bottom: 5%;
   }
+}
+
+
+label, .bubble {
+	display: block;
+	-webkit-tap-highlight-color: transparent;
+}
+label {
+	animation: float 4s ease-in-out infinite;
+}
+.bubble, .bubble:before, .bubble:after  {
+	transition-duration: 0.2s;
+}
+.bubble, .bubble:after {
+	border-radius: 100%;
+}
+.bubble {
+	background-image:
+		radial-gradient(8% 8% at 22% 28%,hsla(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%),
+		radial-gradient(8% 8% at 23% 27%,hsl(0,0%,100%) 45%,rgba(11, 104, 218, 0.09) 50%),
+		radial-gradient(8% 8% at 24% 26%,hsl(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%),
+		radial-gradient(8% 8% at 25% 25%,hsl(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%),
+		radial-gradient(8% 8% at 26% 24%,hsl(0,0%,100%) 45%,hsla(127, 90%, 45%, 0) 50%),
+		radial-gradient(8% 8% at 27% 23%,hsl(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%),
+		radial-gradient(8% 8% at 28% 22%,hsl(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%);
+	box-shadow:
+		0 -0.06em 0.1em hsla(0, 0%, 100%, 0) inset,
+		0 -0.15em 0.4em hsl(0, 0%, 100%,0) inset,
+		0 0.05em 0.05em hsl(0, 0%, 100%,0) inset,
+		0.05em 0 0.1em hsl(0,90%,100%,0) inset,
+		-0.05em 0 0.1em hsl(0,90%,100%,0) inset,
+		0 0.1em 0.4em hsl(0, 0%, 100%,0) inset;
+	cursor: pointer;
+	position: relative;
+	width: 14em;
+	height: 14em;
+	transform-style: preserve-3d;
+	transition-property: box-shadow, transform, width, height;
+	transition-timing-function: ease-in-out, ease-in-out, var(--bubbleTiming), var(--bubbleTiming);
+	will-change: transform;
+	-webkit-appearance: none;
+	appearance: none;
+	z-index: 0;
+  margin-bottom: 15%;
+}
+.bubble:before, .bubble:after {
+	content: "";
+	display: block;
+	position: absolute;
+	transition-timing-function: var(--bubbleTiming);
+}
+.bubble:before {
+	border-radius: 0.75em;
+	/* box-shadow:
+		0 0 0 0.5em hsl(0,0%,100%) inset; */
+	filter: drop-shadow(0.6em 0.6em 4px hsla(0,0%,0%,0.2));
+	top: 50%;
+	left: 50%;
+	width: 1.5em;
+	height: 1.5em;
+	transform: translate3d(-50%,-50%,-1px);
+	z-index: -1;
+}
+.bubble:after {
+	background:
+		radial-gradient(100% 100% at center,hsla(0,0%,0%,0) 35%,hsla(0,0%,0%,0.2) 48%,hsla(0,0%,0%,0) 50%);
+	filter: blur(4px);
+	top: 0.6em;
+	left: 0.6em;
+	width: 100%;
+	height: 100%;
+	transform: translate3d(0,0,-1px);
+	z-index: -2;
+}
+.bubble:focus, .bubble:hover {
+	transform: scale(1.1);
+	outline: none;
+}
+.bubble:focus:active, .bubble:hover:active {
+	width: 10em;
+	height: 10em;
+}
+.bubble:focus:before, .bubble:hover:before {
+	filter: drop-shadow(0.75em 0.75em 4px hsla(0,0%,0%,0.2));
+}
+.bubble:focus:after, .bubble:hover:after {
+	transform: translate3d(0.15em,0.15em,-1px);
+}
+.bubble:checked {
+  background-image:
+		radial-gradient(8% 8% at 22% 28%,hsla(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%),
+		radial-gradient(8% 8% at 23% 27%,hsl(0,0%,100%) 45%,rgba(163, 11, 218, 0.09) 50%),
+		radial-gradient(8% 8% at 24% 26%,hsl(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%),
+		radial-gradient(8% 8% at 25% 25%,hsl(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%),
+		radial-gradient(8% 8% at 26% 24%,hsl(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%),
+		radial-gradient(8% 8% at 27% 23%,hsl(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%),
+		radial-gradient(8% 8% at 28% 22%,hsl(0,0%,100%) 45%,hsla(0,0%,100%,0) 50%);
+	box-shadow:
+		0 -0.06em 0.1em hsla(0, 0%, 100%, 0) inset,
+		0 -0.15em 0.4em hsl(0,90%,100%,0) inset,
+		0 0.05em 0.05em hsl(0,90%,100%,0) inset,
+		0.05em 0 0.1em hsl(0,90%,100%,0) inset,
+		-0.05em 0 0.1em hsl(0,90%,100%,0) inset,
+		0 0.1em 0.4em hsl(0,90%,100%,0) inset;
+}
+.bubble:checked:before {
+	border-radius: 0.25em;
+	width: 0.5em;
+}
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	label {
+		animation: none;
+	}
+	.bubble, .bubble:before, .bubble:after {
+		transition-duration: 0s;
+	}
+	.bubble:focus, .bubble:hover {
+		transform: scale(1);
+	}
+	.bubble:focus:active, .bubble:hover:active {
+		width: 3em;
+		height: 3em;
+	}
+	.bubble:focus:before, .bubble:hover:before {
+		filter: drop-shadow(0.6em 0.6em 4px hsla(0,0%,0%,0.2));
+	}
+	.bubble:focus:after, .bubble:hover:after {
+		transform: translate3d(0,0,-1px);
+	}
+}
+/* Animations */
+@keyframes float {
+	from, to {
+		transform: translate(0,3%);
+	}
+	25% {
+		transform: translate(-3%,0);
+	}
+	50% {
+		transform: translate(0,-3%);
+	}
+	75% {
+		transform: translate(3%,0);
+	}
 }
 </style>
