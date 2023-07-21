@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +12,8 @@ import com.ashe.popping.api.member.dto.MemberApiDto;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.service.MemberService;
 import com.ashe.popping.domain.message.service.MessageService;
+import com.ashe.popping.global.resolver.memberinfo.MemberInfo;
+import com.ashe.popping.global.resolver.memberinfo.MemberInfoDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,8 +25,10 @@ public class MemberController {
 	private final MemberService memberService;
 	private final MessageService messageService;
 
-	@GetMapping("/{memberId}")
-	public ResponseEntity<MemberApiDto.Response> getMember(@PathVariable("memberId") Long memberId) {
+	@GetMapping("/me")
+	public ResponseEntity<MemberApiDto.Response> getMember(@MemberInfo MemberInfoDto
+		memberInfoDto) {
+		Long memberId = memberInfoDto.getMemberId();
 		MemberDto memberDto = memberService.getMemberByMemberId(memberId);
 		Long expireMessageCount = messageService.countExpireMessage(memberDto.getMemberId(),
 			memberDto.getLastVisitedTime());
@@ -35,9 +38,11 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
-	@PatchMapping("/{memberId}")
-	public ResponseEntity<MemberApiDto.Response> modifyMember(@PathVariable("memberId") Long memberId,
+	@PatchMapping("/me")
+	public ResponseEntity<MemberApiDto.Response> modifyMember(@MemberInfo MemberInfoDto
+		memberInfoDto,
 		@RequestBody MemberApiDto.Request request) {
+		Long memberId = memberInfoDto.getMemberId();
 		MemberApiDto memberApiDto = MemberApiDto.of(request, memberId);
 
 		MemberDto result = memberService.updateMember(MemberDto.from(memberApiDto));
