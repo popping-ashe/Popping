@@ -31,7 +31,7 @@ public class MessageController {
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
 	}
 
-	@GetMapping("/sent")
+	@GetMapping("/me/sent")
 	public ResponseEntity<List<MessageApiDto.Response>> getSentMessages(@MemberInfo MemberInfoDto
 		memberInfoDto) {
 		Long memberId = memberInfoDto.getMemberId();
@@ -39,7 +39,7 @@ public class MessageController {
 		return ResponseEntity.ok(toMessageResponse(messages));
 	}
 
-	@GetMapping("/received")
+	@GetMapping("/me/received")
 	public ResponseEntity<List<MessageApiDto.Response>> getReceivedMessage(@MemberInfo MemberInfoDto memberInfoDto) {
 		Long memberId = memberInfoDto.getMemberId();
 		List<MessageDto> messages = messageService.loadReceiveMessage(memberId);
