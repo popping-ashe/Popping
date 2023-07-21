@@ -27,6 +27,13 @@ public class MemberDto {
 			.build();
 	}
 
+	public static MemberDto of(Long memberId, LocalDateTime lastVisitedTime) {
+		return MemberDto.builder()
+			.memberId(memberId)
+			.lastVisitedTime(lastVisitedTime)
+			.build();
+	}
+
 	public static MemberDto from(MemberApiDto member) {
 		return MemberDto.builder()
 			.memberId(member.getMemberId())
