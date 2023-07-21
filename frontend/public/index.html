@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    <style>
+      body {
+        height: calc(var(--vh, 1vh) * 100);
+      }
+    </style>
   </head>
   <body>
     <noscript>
@@ -19,5 +24,35 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  <script>
+    
+    let customVH = window.innerHeight * 0.01
+    document.documentElement.style.setProperty('--vh', customVH + 'px')
+    window.addEventListener('resize', () => {
+      let customVH = window.innerHeight * 0.01
+      document.documentElement.style.setProperty(
+        '--vh',
+        customVH + 'px',
+      )
+    })
+  </script>
+  <style>
+
+@font-face {
+    font-family: 'Stardust';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+    font-weight: lighter;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HealthSet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/HealthsetGothicLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+  </style>
 </html>

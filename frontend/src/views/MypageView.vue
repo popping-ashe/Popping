@@ -7,8 +7,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
         </div>
       </div>
-      <div class="mypage">
-        MYPAGE
+      <div class="mypage font-stardust">
+        MY PAGE
       </div>
       <div class="settings-ellipse">
         <div class="settings-emoji">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="article-counts">
+    <div class="article-counts font-stardust">
       <div style="display: flex; justify-content: space-evenly">
       <div class="received-count">23</div>
       <div class="sent-count">31</div>
@@ -31,10 +31,10 @@
     </div>
     <div class="sent-bubble-frame1">
       <div class="sent-bubble-text-frame">
-        <div class="sent-bubble-text">
-          보낸 BUBBLE
+        <div class="sent-bubble-text font-stardust">
+          보낸 BUBBLE 
         </div>
-      <div class="selector-frame">
+      <div class="selector-frame font-stardust">
         <div class="selector-read">읽음</div> | 
         <div class="selector-unread">안읽음</div>
       </div>
@@ -44,10 +44,10 @@
       <div class="sent-message-frame">
         <!-- for문 -->
         <div v-for="(article, index) in sentList" :key="index" class="sent-message-box" @click="sentDetail(index)">
-          <div class="sent-message-ellipse">
-            <div class="user-initial"><!-- 유저 아이디 첫글자 -->{{article.name.substr(0,1)}}</div>
+          <div class="sent-message-ellipse font-stardust">
+            <div class="user-initial "><!-- 유저 아이디 첫글자 -->{{article.name.substr(0,1)}}</div>
           </div>
-          <div class="sent-bubble-info-frame">
+          <div class="sent-bubble-info-frame font-healthset">
             <div class="sent-time-status">
               <div style="margin-right: 5px;">{{ article.time }}</div>
               <div>{{ article.status ? '읽음' : '안읽음' }}</div>
@@ -99,6 +99,7 @@ export default {
 /* iPhone 14 Pro - 2 */
 
 .frame {
+  
   position: relative;
   height: 100vh;
   width: 100%;
@@ -163,8 +164,8 @@ export default {
   position: relative;
   width: 32px;
   height: 32px;
-  left: 12px;
-  top: 5px;
+  left: 10px;
+  top: 0px;
 }
 
 .mypage {
@@ -172,10 +173,10 @@ export default {
   height: 48px;
   justify-content: center;
 
-  font-family: 'Inter';
+
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 21px;
   /* or 105% */
   display: flex;
@@ -193,6 +194,7 @@ export default {
   width: 100%;
   height: 7%;
   top: 19%;
+  
 }
 
 .received-count{
@@ -200,7 +202,6 @@ export default {
   width: 33.3%;
   height: 30px;
 
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 25px;
@@ -216,7 +217,6 @@ export default {
   width: 33.3%;
   height: 30px;
 
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 25px;
@@ -225,6 +225,8 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
+
+
 }
 
 .unread-count {
@@ -232,7 +234,6 @@ export default {
   width: 33.4%;
   height: 30px;
 
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 25px;
@@ -241,6 +242,8 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
+
+
 }
 
 .received{
@@ -248,7 +251,6 @@ export default {
   width: 33.3%;
   height: 30px;
 
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -257,6 +259,9 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
+
+
+
 }
 
 .sent {
@@ -264,7 +269,6 @@ export default {
   width: 33.4%;
   height: 30px;
 
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -273,6 +277,8 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
+
+  
 }
 
 .unread {
@@ -280,7 +286,6 @@ export default {
   width: 33.3%;
   height: 30px;
 
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -304,12 +309,12 @@ export default {
   position: relative;
   width: 80%;
   height: 5%;
-  left: 2%;
+  left: 3%;
 
-  font-family: 'Inter';
+
   font-style: normal;
   font-weight: 500;
-  font-size: 23px;
+  font-size: 20px;
   line-height: 21px;
   /* or 117% */
 
@@ -323,10 +328,10 @@ export default {
   height: 5%;
   top: 100%;
   display: flex;
-  font-family: 'Inter';
+
   font-style: normal;
   font-weight: 400;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 21px;
   /* or 210% */
   display: flex;
@@ -355,6 +360,8 @@ export default {
   top: 34.6%;
   align-items: center;
   overflow: scroll;
+
+  font-family: '헬스셋';
 }
 
 ::-webkit-scrollbar {
@@ -374,6 +381,7 @@ export default {
   width: 100%;
   height: 72px;
   text-align: center;
+  
 }
 
 .sent-message-box {
@@ -406,8 +414,8 @@ export default {
 }
 
 .user-initial {
+  left: 3.1px;
   position: relative;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -424,13 +432,13 @@ export default {
 .sent-bubble-info-frame {
   position: relative;
   text-align: left;
-  left: 22px;
+  left: 24px;
   bottom: 2px;
 }
 
 .sent-time-status {
   display: flex;
-  font-family: 'Inter';
+
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -441,7 +449,7 @@ export default {
 
 .sent-bubble-context {
   height: 20px;
-  font-family: 'Inter';
+
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -454,6 +462,14 @@ export default {
   color: #000000;
   vertical-align: top;
   overflow: hidden;
+}
+
+.font-stardust{
+  font-family: 'Stardust'
+}
+
+.font-healthset{
+  font-family: 'HealthSet';
 }
 
 

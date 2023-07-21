@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <v-main>
-      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height:100vh;">
+      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100);">
         <div class="main">
-          <div class="container3">
+          <!-- <div class="container3">
             <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
             <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/home.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>           
             <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/chat.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>          
-          </div>
+          </div> -->
           <router-view/>
         </div>
       </div>
@@ -15,11 +15,11 @@
       <div v-else style="width: 100vw; height: 100vh;  display: flex; justify-content: center; ">
         <div class="bgnewjeans" style="width:393px; height:100vh">
           <div class="main">
-            <div class="container3">
+            <!-- <div class="container3">
               <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
               <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/home.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>            
               <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/chat.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>
-            </div>
+            </div> -->
             <router-view/>
           </div>
         </div>

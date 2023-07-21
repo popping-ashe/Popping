@@ -47,9 +47,9 @@
     </div>
 
     <div class="kakao">
-      <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code">
-      <img class="kakao_image" src="../assets/kakao_login.png" alt="">
-      </a>
+      <!-- <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"> -->
+      <img class="kakao_image" src="../assets/kakao_login.png" alt="" @click="kakaologin()">
+      <!-- </a> -->
     </div>
   </div>
 </template>
@@ -68,32 +68,9 @@ export default {
 
     //카카오 로그인
     kakaologin() {
-      //앱키 추가 아직 안함
-      window.Kakao.Auth.login({
-        // url:'',
-        scope: "profile_image, account_email",
-        success: this.getKakaoAccount,
-      });
+      location.href = "https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"
       console.log()
     },
-    // getKakaoAccount() {
-    //   window.Kakao.API.request({
-    //     url: "/v2/user/me",
-    //     success: (res) => {
-    //       const kakao_account = res.kakao_account;
-    //       const ninkname = kakao_account.profile.ninkname;
-    //       const email = kakao_account.email;
-    //       console.log("ninkname", ninkname);
-    //       console.log("email", email);
-
-    //       alert("로그인 성공");
-    //     },
-    //     fail: (error) => {
-    //       console.log(error);
-    //     },
-    //   });
-    // },
-
   },
 };
 </script>
