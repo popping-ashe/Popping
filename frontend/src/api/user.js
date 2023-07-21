@@ -9,7 +9,6 @@ async function kakaologin(code, success, fail) {
 async function getUserInfo( success, fail) {
   let token = "Bearer " + sessionStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
-  console.log(token)
   await api.get(`/members/1`).then(success).catch(fail);
 }
 

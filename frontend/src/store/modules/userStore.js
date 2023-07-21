@@ -56,7 +56,7 @@ const userStore = {
                   commit("SET_USER_INFO", response.data);
                   console.log(response.data);
                   console.log(this.state)
-                  router.push({ name: "MainView" });
+                  // router.push({ name: "MainView" });
                 } else {
                   console.log("유저 정보 없음");
                 }
@@ -85,13 +85,12 @@ const userStore = {
               //   router.push({ name: "LoginView" });
               // }
             // )
-            router.push({ name: "MainView" });
           } else {
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
             commit("SET_IS_VALID_TOKEN", false);
           }
-          router.push({ name: "LoginView" });
+          router.push({ name: "MainView" });
         },
         (error) => {
           console.log()
