@@ -39,7 +39,7 @@ public class MemberController {
 	}
 
 	@PatchMapping("/me")
-	public ResponseEntity<MemberApiDto.Response> modifyMember(@MemberInfo MemberInfoDto
+	public ResponseEntity<MemberApiDto.Response> modifyNickname(@MemberInfo MemberInfoDto
 		memberInfoDto,
 		@RequestBody MemberApiDto.Request request) {
 		Long memberId = memberInfoDto.getMemberId();
