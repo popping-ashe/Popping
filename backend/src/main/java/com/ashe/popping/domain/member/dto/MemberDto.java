@@ -42,6 +42,7 @@ public class MemberDto {
 			.nickname(member.getNickname())
 			.lastVisitedTime(member.getLastVisitedTime())
 			.kakaoId(member.getKakaoId())
+			.shareId(member.getMemberId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
 			.build();
@@ -53,6 +54,7 @@ public class MemberDto {
 			.nickname(member.getNickname())
 			.lastVisitedTime(member.getLastVisitedTime())
 			.kakaoId(member.getKakaoId())
+			.shareId(member.getShareId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
 			.build();
