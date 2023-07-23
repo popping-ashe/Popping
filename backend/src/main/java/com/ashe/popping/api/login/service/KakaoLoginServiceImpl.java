@@ -19,7 +19,9 @@ import com.ashe.popping.global.jwt.dto.JwtTokenDto;
 import com.ashe.popping.global.jwt.service.TokenManager;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class KakaoLoginServiceImpl implements KakaoLoginService {
@@ -73,7 +75,7 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 				oauthMember = memberService.createMember(oauthMember);
 				break;
 			}catch(Exception e){
-				System.out.println("중복 공유 아이디 생성");
+				log.info("중복 공유 아이디 생성", e);
 			}
 		}
 		return oauthMember;
