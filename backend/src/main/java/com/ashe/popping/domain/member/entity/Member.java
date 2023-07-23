@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -41,6 +42,9 @@ public class Member {
 	@Column(nullable = false, unique = true)
 	private String kakaoId;
 
+	@Column(nullable = false, unique = true)
+	private Long shareId;
+
 	@CreatedDate
 	private LocalDateTime createdTime;
 
@@ -53,6 +57,7 @@ public class Member {
 			.nickname(memberDto.getNickname())
 			.lastVisitedTime(memberDto.getLastVisitedTime())
 			.kakaoId(memberDto.getKakaoId())
+			.shareId(memberDto.getShareId())
 			.createdTime(memberDto.getCreatedTime())
 			.role(memberDto.getRole())
 			.build();
