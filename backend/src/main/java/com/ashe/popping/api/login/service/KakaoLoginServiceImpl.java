@@ -46,17 +46,8 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 
 		// 1. 신규 회원
 		if (optionalMember.isEmpty()) {
-			// 공유 url에 필요한 난수 생성
-			SecureRandom random = new SecureRandom();
-			MemberDto oauthMember;
-			while(true){
-				Long shareId = random.nextLong(1000000000, 10000000000L);
-				oauthMember = memberInfo.toMemberDto(Role.USER, shareId);
-				try{
-					oauthMember = memberService.createMember(oauthMember);
-					break;
-				}catch(Exception e){}
-			}
+			// 공유 url에 필요한 난수 생성 및 회원 생성
+			MemberDto oauthMember = makeShareId(memberInfo);
 			// 토큰 생성
 			jwtTokenDto = tokenManager.createJwtTokenDto(oauthMember.getMemberId(), oauthMember.getRole());
 		}
@@ -66,7 +57,25 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 			// 토큰 생성
 			jwtTokenDto = tokenManager.createJwtTokenDto(oauthMember.getMemberId(), oauthMember.getRole());
 		}
-		
+
 		return jwtTokenDto;
+
+
+	}
+	MemberDto makeShareId(KakaoMemberInfoResponseDto memberInfo){
+		SecureRandom random = new SecureRandom();
+		MemberDto oauthMember;
+
+		while(true){
+			Long shareId = random.nextLong(1000000000, 10000000000L);
+			oauthMember = memberInfo.toMemberDto(Role.USER, shareId);
+			try{
+				oauthMember = memberService.createMember(oauthMember);
+				break;
+			}catch(Exception e){
+				System.out.println("중복 공유 아이디 생성");
+			}
+		}
+		return oauthMember;
 	}
 }
