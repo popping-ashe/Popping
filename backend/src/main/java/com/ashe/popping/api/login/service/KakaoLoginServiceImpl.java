@@ -1,5 +1,6 @@
 package com.ashe.popping.api.login.service;
 
+import java.security.SecureRandom;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -45,8 +46,17 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 
 		// 1. 신규 회원
 		if (optionalMember.isEmpty()) {
-			MemberDto oauthMember = memberInfo.toMemberDto(Role.USER);
-			oauthMember = memberService.createMember(oauthMember);
+			// 공유 url에 필요한 난수 생성
+			SecureRandom random = new SecureRandom();
+			MemberDto oauthMember;
+			while(true){
+				Long shareId = random.nextLong(1000000000, 10000000000L);
+				oauthMember = memberInfo.toMemberDto(Role.USER, shareId);
+				try{
+					oauthMember = memberService.createMember(oauthMember);
+					break;
+				}catch(Exception e){}
+			}
 			// 토큰 생성
 			jwtTokenDto = tokenManager.createJwtTokenDto(oauthMember.getMemberId(), oauthMember.getRole());
 		}
@@ -56,6 +66,7 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 			// 토큰 생성
 			jwtTokenDto = tokenManager.createJwtTokenDto(oauthMember.getMemberId(), oauthMember.getRole());
 		}
+		
 		return jwtTokenDto;
 	}
 }
