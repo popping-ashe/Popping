@@ -38,6 +38,7 @@ public class MessageApiDto {
 		private String state;
 		private Long receiver;
 		private String nickname;
+		private String receiverNickname;
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 		private LocalDateTime createTime;
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
@@ -45,6 +46,7 @@ public class MessageApiDto {
 
 		@Builder
 		public Response(Long messageId, String content, String state, Long receiver, String nickname,
+			String receiverNickname,
 			LocalDateTime createTime,
 			LocalDateTime expirationTime) {
 			this.messageId = messageId;
@@ -52,6 +54,7 @@ public class MessageApiDto {
 			this.state = state;
 			this.receiver = receiver;
 			this.nickname = nickname;
+			this.receiverNickname = receiverNickname;
 			this.createTime = createTime;
 			this.expirationTime = expirationTime;
 		}
@@ -63,6 +66,7 @@ public class MessageApiDto {
 				.state(messageDto.getState().getMessage())
 				.receiver(messageDto.getReceiver())
 				.nickname(messageDto.getNickname())
+				.receiverNickname(messageDto.getReceiverNickname())
 				.createTime(messageDto.getCreateTime())
 				.expirationTime(messageDto.getExpirationTime())
 				.build();
