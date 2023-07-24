@@ -8,7 +8,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    detailIndex : 0,
     showReceivedDetail : false,
     showSentDetail : false,
     messages: [

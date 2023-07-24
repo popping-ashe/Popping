@@ -61,7 +61,11 @@
 
 <style scoped>
 .bgnewjeans{
-
+-webkit-user-select: none;  
+-moz-user-select: none;  
+-ms-user-select: none;  
+-o-user-select: none;  
+user-select: none;
 /* background: rgba(19, 127, 250, 0.53); */
 background: hsla(228, 100%, 84%, 1);
 

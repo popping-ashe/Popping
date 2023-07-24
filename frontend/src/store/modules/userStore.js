@@ -1,6 +1,6 @@
 import router from "@/router";
 // import { kakaologin } from "@/api/user";
-import { getUserInfo, kakaologin, sentUserMessage } from "@/api/user";
+import { getUserInfo, kakaologin, sentUserMessage, receivedUserMessage } from "@/api/user";
 
 
 const userStore = {
@@ -12,6 +12,7 @@ const userStore = {
     userInfo: null,
     isValidToken: false,
     sentmessages: null,
+    receivedmessages: null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -19,6 +20,9 @@ const userStore = {
     },
     checkSentMessages: function (state) {
       return state.sentmessages;
+    },
+    checkReceivedMessages: function (state) {
+      return state.receivedmessages;
     },
     checkToken: function (state) {
       return state.isValidToken;
@@ -28,7 +32,6 @@ const userStore = {
   mutations: {
     SET_IS_LOGIN: (state, isLogin) => {
       state.isLogin = isLogin;
-
     },
     SET_IS_LOGIN_ERROR: (state, isLoginError) => {
       state.isLoginError = isLoginError;
@@ -43,6 +46,9 @@ const userStore = {
     },
     SET_SENT_MESSAGES: (state, sentmessages) => {
       state.sentmessages = sentmessages;
+    },
+    SET_RECEIVED_MESSAGES: (state, receivedmessages) => {
+      state.receivedmessages = receivedmessages;
     },
   },
   actions: {
@@ -101,6 +107,23 @@ const userStore = {
                 // router.push({ name: "LoginView" });
               }
             )
+            receivedUserMessage(
+              (response) => {
+                if (response.status == 200) {
+                  commit("SET_RECEIVED_MESSAGES", response.data)
+                  sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+                  console.log(userStore.state.receivedmessages);
+                } else {
+                  console.log("받은 메세지 없음");
+                }
+              },
+              async (error) => {
+                console.log(error);
+                console.log('받은메세지 받아오기 에러');
+                
+                // router.push({ name: "LoginView" });
+              }
+            )
           // router.push({ name: "MainView" });
           } else {
             commit("SET_IS_LOGIN", false);
@@ -117,11 +140,13 @@ const userStore = {
       );
     },
   },
+  
 }
 const accessToken = sessionStorage.getItem("access-token");
 const refreshToken = sessionStorage.getItem("refresh-token");
 const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
 const sentmessages = JSON.parse(sessionStorage.getItem("sentmessages"));
+const receivedmessages = JSON.parse(sessionStorage.getItem("receivedmessages"));
 
 if (accessToken && refreshToken) {
   userStore.state.isLogin = true;
@@ -132,6 +157,9 @@ if (userinfo) {
 }
 if (sentmessages) {
   userStore.state.sentmessages = sentmessages;
+}
+if (receivedmessages) {
+  userStore.state.receivedmessages = receivedmessages;
 }
 
 
