@@ -3,6 +3,7 @@ package com.ashe.popping.api.message.dto;
 import java.time.LocalDateTime;
 
 import com.ashe.popping.domain.message.dto.MessageDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -37,7 +38,9 @@ public class MessageApiDto {
 		private String state;
 		private Long receiver;
 		private String nickname;
+		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 		private LocalDateTime createTime;
+		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 		private LocalDateTime expirationTime;
 
 		@Builder
@@ -64,6 +67,6 @@ public class MessageApiDto {
 				.expirationTime(messageDto.getExpirationTime())
 				.build();
 		}
-		
+
 	}
 }
