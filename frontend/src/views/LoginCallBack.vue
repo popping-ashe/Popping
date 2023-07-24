@@ -17,7 +17,7 @@ export default {
   },
   async created() {
     let code = this.$route.query.code;
-    console.log(code);
+    // console.log(code);
     this.kakao(code);
   },
   methods: {

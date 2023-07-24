@@ -1,27 +1,34 @@
 import router from "@/router";
 // import { kakaologin } from "@/api/user";
-import { getUserInfo, kakaologin } from "@/api/user";
+import { getUserInfo, kakaologin, sentUserMessage } from "@/api/user";
+
 
 const userStore = {
   namespaced: true,
   state: {
     isLogin: false,
+    isLoggedIn: false,
     isLoginError: false,
     userInfo: null,
     isValidToken: false,
-    // getmessage:
+    sentmessages: null,
   },
   getters: {
     checkUserInfo: function (state) {
       return state.userInfo;
     },
+    checkSentMessages: function (state) {
+      return state.sentmessages;
+    },
     checkToken: function (state) {
       return state.isValidToken;
     },
+    isLoggedIn: state => state.isLoggedIn,
   },
   mutations: {
     SET_IS_LOGIN: (state, isLogin) => {
       state.isLogin = isLogin;
+
     },
     SET_IS_LOGIN_ERROR: (state, isLoginError) => {
       state.isLoginError = isLoginError;
@@ -32,6 +39,10 @@ const userStore = {
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
+      sessionStorage.setItem("access-token", userInfo.accessToken);
+    },
+    SET_SENT_MESSAGES: (state, sentmessages) => {
+      state.sentmessages = sentmessages;
     },
   },
   actions: {
@@ -43,20 +54,22 @@ const userStore = {
             console.log(response)
             let accessToken = response.data["accessToken"];
             let refreshToken = response.data["refreshToken"];
-            console.log(accessToken)
-            console.log(refreshToken)
+            // console.log(accessToken)
+            // console.log(refreshToken)
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
+            commit("SET_IS_LOGGED_IN", true);
             sessionStorage.setItem("access-token", accessToken);
             sessionStorage.setItem("refresh-token", refreshToken);
             getUserInfo(
               (response) => {
                 if (response.status == 200) {
                   commit("SET_USER_INFO", response.data);
-                  console.log(response.data);
-                  console.log(this.state)
-                  // router.push({ name: "MainView" });
+                  sessionStorage.setItem("userinfo", JSON.stringify(response.data));
+                  // console.log(userStore.state.userInfo.nickname);
+                  // console.log(this.state)
+                  router.push({ name: "MainView" });
                 } else {
                   console.log("유저 정보 없음");
                 }
@@ -71,26 +84,31 @@ const userStore = {
                 router.push({ name: "LoginView" });
               }
             );
-            // receivedUserMessage(
-              // (response) => {
-              //   if (response.status == 200) {
-              //     commit("SET_USER_INFO", response.data);
-              //     console.log(response.data);
-              //   } else {
-              //     console.log("메세지 없음");
-              //   }
-              // },
-              // async (error) => {
-              //   console.log(error);
-              //   router.push({ name: "LoginView" });
-              // }
-            // )
+            sentUserMessage(
+              (response) => {
+                if (response.status == 200) {
+                  commit("SET_SENT_MESSAGES", response.data)
+                  sessionStorage.setItem("sentmessages", JSON.stringify(response.data));
+                  console.log(userStore.state.sentmessages);
+                } else {
+                  console.log("보낸 메세지 없음");
+                }
+              },
+              async (error) => {
+                console.log(error);
+                console.log('보낸ㅁ세지 받아오기 에러');
+                
+                // router.push({ name: "LoginView" });
+              }
+            )
+          // router.push({ name: "MainView" });
           } else {
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
             commit("SET_IS_VALID_TOKEN", false);
+            commit("SET_IS_LOGGED_IN", false);
           }
-          router.push({ name: "MainView" });
+          // router.push({ name: "MainView" });
         },
         (error) => {
           console.log()
@@ -100,5 +118,22 @@ const userStore = {
     },
   },
 }
+const accessToken = sessionStorage.getItem("access-token");
+const refreshToken = sessionStorage.getItem("refresh-token");
+const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
+const sentmessages = JSON.parse(sessionStorage.getItem("sentmessages"));
+
+if (accessToken && refreshToken) {
+  userStore.state.isLogin = true;
+  userStore.state.isValidToken = true;
+}
+if (userinfo) {
+  userStore.state.userInfo = userinfo;
+}
+if (sentmessages) {
+  userStore.state.sentmessages = sentmessages;
+}
+
 
 export default userStore;
+

@@ -10,7 +10,7 @@
       </div>
       <div class="username font-stardust">
         <!-- 본인페이지 여부에 따라 표시 -->
-        {{ isLoggedIn ? username : '' }}'s<br>
+        {{ this.nickname }}'s<br>
         BUBBLE
       </div>
       <div class="mypage-ellipse" @click="$router.push('/mypage')">
@@ -51,12 +51,24 @@ export default {
   },
   data() {
     return {
-      isLoggedIn: true, // 로그인 여부를 저장
-      username: "임준수", // 로그인한 사용자 이름 변수명은 임의
+      nickname:"",
       randomBubbleSize: [],
       randomX: [],
       randomY: [],
     };
+  },
+  created() {
+    const userInfo = this.$store.getters["userStore/checkUserInfo"];
+    console.log(userInfo)
+    this.nickname = userInfo.nickname;
+    console.log(this.nickname)
+
+    this.isLoggedIn = this.$store.getters["userStore/isLoggedIn"];
+  
+    this.sortMessageByTimeLeft();
+    this.generateRandomSizes();
+    this.generateRandomPosition();
+
   },
   methods: {
     ...mapMutations('SET_NEW_INDEX'),
@@ -92,13 +104,18 @@ export default {
       this.messages.sort((a, b) => a.timeLeft - b.timeLeft)
     },
   },
-  created() {
-    this.sortMessageByTimeLeft();
-    this.generateRandomSizes();
-    this.generateRandomPosition();
-  },
+  
   computed: {
-    ...mapState(['messages', 'detailIndex', 'showReceivedDetail'])
+    ...mapState(['messages', 'detailIndex', 'showReceivedDetail']),
+    ...mapState( ['userInfo']),
+    isLoggedIn: {
+      get() {
+        return this.$store.getters["userStore/isLoggedIn"];
+      },
+      set(value) {
+        this.$store.commit("userStore/SET_IS_LOGGED_IN", value);
+      },
+    },
   }
 }
 

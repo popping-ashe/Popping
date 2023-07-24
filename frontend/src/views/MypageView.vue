@@ -1,5 +1,6 @@
 <template>
   <div class="frame" style="z-index: 0;">
+      {{ sentmessages }}
       <SentDetail v-if="showSentDetail"/>
     <div class="upper-bar">
       <div class="back-ellipse" @click="$router.push('/main')">
@@ -20,7 +21,7 @@
     <div class="article-counts font-stardust">
       <div style="display: flex; justify-content: space-evenly">
       <div class="received-count">23</div>
-      <div class="sent-count">31</div>
+      <div class="sent-count">{{ this.sentmessagescount }}</div>
       <div class="unread-count">10</div>
       </div>
       <div style="display: flex; justify-content: space-evenly">
@@ -76,6 +77,8 @@ export default {
   data() {
     return {
       dialog: false,
+      sentmessagescount: null,
+      sentmessages: ""
   
 };
   },
@@ -89,9 +92,20 @@ export default {
       this.$store.commit('SHOW_SENT_DETAIL', !this.showSentDetail)
     }
   },
-    computed: {
-    ...mapState(['sentList', 'detailIndex', 'showSentDetail'])
-    }
+  created() {
+    const sentmessages = this.$store.getters["userStore/checkSentMessages"];
+    console.log(sentmessages)
+    this.sentmessages = sentmessages
+    this.sentmessagescount = sentmessages.length;
+    console.log(this.sentmessagescount)
+  
+ 
+
+  },
+  computed: {
+    ...mapState(['sentList', 'detailIndex', 'showSentDetail','userInfo']),
+    ...mapState(['userInfo']),
+  }
 }
 </script>
 
