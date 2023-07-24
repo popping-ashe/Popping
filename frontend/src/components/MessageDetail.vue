@@ -1,7 +1,7 @@
 <template>
   <div class="message-frame">
-    <div class="hello">
-      {{ messages[detailIndex] }} <br>
+    <div class="window">
+      {{ bubbledetailProps }} <br>
     <button @click="closeDetail()">창 닫기</button>
     </div>
   </div>
@@ -18,9 +18,10 @@ export default {
 
     }
   },
+  props: ['bubbledetailProps'],
 
   computed: {
-    ...mapState(['messages', 'detailIndex', 'showReceivedDetail'])
+    ...mapState(['showReceivedDetail'])
   }
 }
 </script>
@@ -38,10 +39,15 @@ export default {
   background: rgba(0, 0, 0, 0.3);
 }
 
-.hello {
+.window {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: calc(var(--vw, 1vw) * 80);
+  height:25%;
+  background: white;
   transform: translate(-50%, -50%);
+  border-radius: 45px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
 }
 </style>

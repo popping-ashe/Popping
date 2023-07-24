@@ -31,6 +31,18 @@ async function sendUserMessage(success, fail) {
     await api.post(`/messages`).then(success).catch(fail);
   }
 
+async function logout(success, fail) {
+  let token = "Bearer " + sessionStorage.getItem("access-token");
+  api.defaults.headers["Authorization"] = token;
+    await api.post(`/auth/logout`).then(success).catch(fail);
+  }
+
+async function changenickname(success, fail) {
+  let token = "Bearer " + sessionStorage.getItem("access-token");
+  api.defaults.headers["Authorization"] = token;
+    await api.patch(`/members/me`).then(success).catch(fail);
+  }
 
 
-export { kakaologin, getUserInfo, receivedUserMessage, sentUserMessage, sendUserMessage };
+
+export { kakaologin, getUserInfo, receivedUserMessage, sentUserMessage, sendUserMessage, logout, changenickname};

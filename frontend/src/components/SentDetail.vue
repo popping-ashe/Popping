@@ -46,6 +46,6 @@ export default {
   background: white;
   transform: translate(-50%, -50%);
   border-radius: 45px;
-  box-shadow: 0px 0px 20px black;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
 }
 </style>

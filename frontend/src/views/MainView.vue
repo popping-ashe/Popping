@@ -1,6 +1,7 @@
 <template>
   <div class="frame" style="z-index: 0;">
-        <MessageDetail class="message-detail" v-if="showReceivedDetail"/>
+    <MessageDetail :bubbledetail-props="bubbleDetail" class="message-detail" v-if="showReceivedDetail"/>
+    <MakeBubble v-if="showMakeWindow"/>
     <div class="upper-bar">
       <div class="share-ellipse">
         <div class="share-emoji">
@@ -8,12 +9,11 @@
           <!-- <img src="../assets/홈.png" alt="홈" class="icons" > -->
         </div>
       </div>
-      <div class="username font-stardust">
+      <div class="username font-stardust" @click="generateRandomSizes()">
         <!-- 본인페이지 여부에 따라 표시 -->
         {{ this.nickname }}'s<br>
         BUBBLE
       </div>
-      {{ receivedmessages }}
       <div class="mypage-ellipse" @click="$router.push('/mypage')">
         <div class="mypage-emoji">
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
@@ -23,7 +23,7 @@
 
     <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
     <div class="bubble-area">
-      <div v-for="(message, index) in messages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
+      <div v-for="(message, index) in receivedmessages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
         <img class="bubble" @click="openDetail(index)" src="../assets/bubble.png">
       </div>
       <!-- <img class="bubble1" src="../assets/bubble.png" alt="">
@@ -32,7 +32,7 @@
 
     <div class="under-bar">
       <!-- 로그인 상태에 따라 동적으로 메세지 보내기 버튼 활성화/비활성화 -->
-      <div class="bubble-make-btn font-stardust" v-if="isLoggedIn">
+      <div class="bubble-make-btn font-stardust" @click="openMake()">
         <div>버블 만들기</div>
       </div>
     </div>
@@ -43,12 +43,14 @@
 
 <script>
 import MessageDetail from '@/components/MessageDetail.vue'
-import { mapMutations, mapState } from 'vuex'
+import MakeBubble from '@/components/MakeBubble.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'MainView',
   components: {
     MessageDetail,
+    MakeBubble,
   },
   data() {
     return {
@@ -57,6 +59,7 @@ export default {
       randomX: [],
       randomY: [],
       receivedmessages: "",
+      bubbleDetail: "",
     };
   },
   created() {
@@ -73,24 +76,23 @@ export default {
     // this.receivedmessagescount = receivedmessages.length;
     // console.log(this.receivedmessagescount)
 
-    
-
-    this.sortMessageByTimeLeft();
     this.generateRandomSizes();
     this.generateRandomPosition();
 
   },
   methods: {
-    ...mapMutations('SET_NEW_INDEX'),
     openDetail(idx) {
-      this.$store.commit('SET_NEW_INDEX', idx)
+      this.bubbleDetail = this.receivedmessages[idx]
       this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
+    },
+    openMake() {
+      this.$store.commit('SHOW_MAKE_WINDOW', !this.showMakeWindow)
     },
     generateRandomSizes() {
         const minSize = 65; // Minimum bubble size (adjust as needed)
         const maxSize = 135; // Maximum bubble size (adjust as needed)
 
-        for (let i = 0; i < this.messages.length; i++) {
+        for (let i = 0; i < this.receivedmessages.length; i++) {
           const randomSize = Math.floor(Math.random() * (maxSize - minSize + 1) + minSize);
           this.randomBubbleSize.push(randomSize + 'px');
         }
@@ -101,7 +103,7 @@ export default {
       const minY = 0;     // Y는 필요 없어짐!
       const maxY = 3;
 
-      for (let j = 0; j < this.messages.length; j++) {
+      for (let j = 0; j < this.receivedmessages.length; j++) {
         const randomXPosition = Math.floor(Math.random() * (maxX - minX + 1 ) + minX);
         this.randomX.push(randomXPosition + 'px');
         const randomYPosition = Math.floor(Math.random() * (maxY - minY + 1 ) + minY);
@@ -110,13 +112,12 @@ export default {
 
     },
 
-    sortMessageByTimeLeft() {
-      this.messages.sort((a, b) => a.timeLeft - b.timeLeft)
-    },
+
   },
-  
+
+
   computed: {
-    ...mapState(['messages', 'detailIndex', 'showReceivedDetail']),
+    ...mapState(['showReceivedDetail', 'showMakeWindow']),
     ...mapState( ['userInfo']),
   }
 }
@@ -243,16 +244,8 @@ export default {
   width: 100%;
   margin: 5px;
   filter: drop-shadow(1px 1px 1px black);
-  animation-name: floating;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
 }
 
-@keyframes floating {
-    0% { transform: translate(0,  0px); }
-    50%  { transform: translate(0, 15px); }
-    100%   { transform: translate(0, -0px); }   
-}
 
 .under-bar {
   position: absolute;

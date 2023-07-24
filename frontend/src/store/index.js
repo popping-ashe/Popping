@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     showReceivedDetail : false,
     showSentDetail : false,
+    showMakeWindow : false,
     messages: [
       
     ],
@@ -20,15 +21,15 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
-    SET_NEW_INDEX(state, data){
-      state.detailIndex = data;
-    },
     SHOW_DETAIL(state, data){
       state.showReceivedDetail = data;
     },
     SHOW_SENT_DETAIL(state, data){
       state.showSentDetail = data;
-    }
+    },
+    SHOW_MAKE_WINDOW(state, data){
+      state.showMakeWindow = data;
+    },
   },
   actions: {
   },

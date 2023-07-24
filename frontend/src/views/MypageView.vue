@@ -21,7 +21,7 @@
       <div style="display: flex; justify-content: space-evenly">
       <div class="received-count">{{this.receivedmessagescount}}</div>
       <div class="sent-count">{{ this.sentmessagescount }}</div>
-      <div class="unread-count">10</div>
+      <div class="unread-count">{{ unreadMessageCount }}</div>
       </div>
       <div style="display: flex; justify-content: space-evenly">
       <div class="received">받음</div>
@@ -49,7 +49,8 @@
           </div>
           <div class="sent-bubble-info-frame font-healthset">
             <div class="sent-time-status">
-              <div style="margin-right: 5px;">{{ article.create_time }}</div>
+              <div style="margin-right: 5px;">{{ article.create_time.substr(5,2) }}/{{ article.create_time.substr(8,2) }}
+                {{ article.create_time.substr(11,5) }}</div>
               <div>{{ article.state }}</div>
             </div>
             <div class="sent-bubble-context">{{ article.content.substr(0,15) }}</div>
@@ -57,6 +58,7 @@
         </div>
       </div>
     </div>
+      <!-- <button>로그아웃</button> -->
     <!-- <SettingsPopupVue/> -->
   </div>
 </template>
@@ -65,7 +67,7 @@
 import SettingsPopupVue from '@/components/SettingsPopup.vue';
 import SentDetail from '@/components/SentDetail.vue'
 
-import { mapMutations, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'MypageView',
@@ -78,16 +80,16 @@ export default {
       dialog: false,
       sentmessagescount: null,
       receivedmessagescount:null,
-      
+
       sentmessages: "",
       nowShowing: "",
       readOption: 'all',
       messageDetail : '',
+      unreadMessageCount : '',
   
 };
   },
   methods: {
-    ...mapMutations(['SET_NEW_INDEX', 'SHOW_SENT_DETAIL']),
     closeDialog() {
       this.dialog = false;
     },
@@ -128,11 +130,14 @@ export default {
     this.receivedmessagescount = receivedmessages.length;
     console.log(this.sentmessagescount)
     this.nowShowing = sentmessages
+
+    this.unreadMessageCount = this.sentmessages.filter((article) => article.state === '안읽음').length
+
  
 
   },
   computed: {
-    ...mapState(['sentList', 'showSentDetail', 'userInfo']),
+    ...mapState(['showSentDetail']),
     ...mapState(['userInfo']),
   }
 }
