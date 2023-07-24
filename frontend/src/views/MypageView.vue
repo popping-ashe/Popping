@@ -1,6 +1,6 @@
 <template>
   <div class="frame" style="z-index: 0;">
-      <SentDetail v-if="showSentDetail"/>
+      <SentDetail :messagedetail-props="messageDetail" v-if="showSentDetail"/>
     <div class="upper-bar">
       <div class="back-ellipse" @click="$router.push('/main')">
         <div class="back-emoji">
@@ -19,9 +19,9 @@
     </div>
     <div class="article-counts font-stardust">
       <div style="display: flex; justify-content: space-evenly">
-      <div class="received-count">23</div>
-      <div class="sent-count">31</div>
-      <div class="unread-count">10</div>
+      <div class="received-count">{{this.receivedmessagescount}}</div>
+      <div class="sent-count">{{ this.sentmessagescount }}</div>
+      <div class="unread-count">{{ unreadMessageCount }}</div>
       </div>
       <div style="display: flex; justify-content: space-evenly">
       <div class="received">받음</div>
@@ -35,28 +35,30 @@
           보낸 버블 
         </div>
       <div class="selector-frame font-stardust">
-        <div class="selector-read">읽음</div> | 
-        <div class="selector-unread">안읽음</div>
+        <div class="selector-read" :style="{color: readOption ==='read' ? 'black' : 'gray'}" @click="showReadOnly">읽음</div> | 
+        <div class="selector-unread" :style="{color: readOption ==='unread' ? 'black' : 'gray'}"  @click="showUnreadOnly">안읽음</div>
       </div>
     </div>
     </div>
     <div class="sent-bubble-frame2">
       <div class="sent-message-frame">
         <!-- for문 -->
-        <div v-for="(article, index) in sentList" :key="index" class="sent-message-box" @click="sentDetail(index)">
+        <div v-for="(article, index) in nowShowing" :key="index" class="sent-message-box" @click="sentDetail(index)">
           <div class="sent-message-ellipse font-stardust">
-            <div class="user-initial "><!-- 유저 아이디 첫글자 -->{{article.name.substr(0,1)}}</div>
+            <div class="user-initial "><!-- 유저 아이디 첫글자 -->{{article.nickname.substr(0,1)}}</div>
           </div>
           <div class="sent-bubble-info-frame font-healthset">
             <div class="sent-time-status">
-              <div style="margin-right: 5px;">{{ article.time }}</div>
-              <div>{{ article.status ? '읽음' : '안읽음' }}</div>
+              <div style="margin-right: 5px;">{{ article.create_time.substr(5,2) }}/{{ article.create_time.substr(8,2) }}
+                {{ article.create_time.substr(11,5) }}</div>
+              <div>{{ article.state }}</div>
             </div>
-            <div class="sent-bubble-context">{{ article.context.substr(0,15) }}</div>
+            <div class="sent-bubble-context">{{ article.content.substr(0,15) }}</div>
           </div>
         </div>
       </div>
     </div>
+      <!-- <button>로그아웃</button> -->
     <!-- <SettingsPopupVue/> -->
   </div>
 </template>
@@ -65,7 +67,7 @@
 import SettingsPopupVue from '@/components/SettingsPopup.vue';
 import SentDetail from '@/components/SentDetail.vue'
 
-import { mapMutations, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'MypageView',
@@ -76,22 +78,68 @@ export default {
   data() {
     return {
       dialog: false,
+      sentmessagescount: null,
+      receivedmessagescount:null,
+
+      sentmessages: "",
+      nowShowing: "",
+      readOption: 'all',
+      messageDetail : '',
+      unreadMessageCount : '',
   
 };
   },
   methods: {
-    ...mapMutations(['SET_NEW_INDEX', 'SHOW_SENT_DETAIL']),
     closeDialog() {
       this.dialog = false;
     },
     sentDetail(idx) {
-      this.$store.commit('SET_NEW_INDEX', idx)
+      this.messageDetail = this.nowShowing[idx]
       this.$store.commit('SHOW_SENT_DETAIL', !this.showSentDetail)
+    },
+
+    showReadOnly() {
+      if (this.readOption == 'all' || this.readOption == 'unread') {
+        this.readOption = 'read'
+        this.nowShowing = this.sentmessages.filter((article) => article.state === '읽음')
+      }
+      else {
+        this.readOption = 'all'
+        this.nowShowing = this.sentmessages
+      }
+    },
+
+    showUnreadOnly() {
+      if (this.readOption == 'all' || this.readOption == 'read') {
+        this.readOption = 'unread'
+        this.nowShowing = this.sentmessages.filter((article) => article.state === '안읽음')
+      }
+      else {
+        this.readOption = 'all'
+        this.nowShowing = this.sentmessages
+      }
+
     }
   },
-    computed: {
-    ...mapState(['sentList', 'detailIndex', 'showSentDetail'])
-    }
+  created() {
+    const sentmessages = this.$store.getters["userStore/checkSentMessages"];
+    const receivedmessages = this.$store.getters["userStore/checkReceivedMessages"];
+    console.log(sentmessages)
+    this.sentmessages = sentmessages
+    this.sentmessagescount = sentmessages.length;
+    this.receivedmessagescount = receivedmessages.length;
+    console.log(this.sentmessagescount)
+    this.nowShowing = sentmessages
+
+    this.unreadMessageCount = this.sentmessages.filter((article) => article.state === '안읽음').length
+
+ 
+
+  },
+  computed: {
+    ...mapState(['showSentDetail']),
+    ...mapState(['userInfo']),
+  }
 }
 </script>
 
@@ -210,6 +258,7 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .sent-count {
@@ -225,7 +274,7 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
-
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -242,7 +291,7 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
-
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -250,7 +299,7 @@ export default {
   position: relative;
   width: 33.3%;
   height: 30px;
-
+  left: 1px;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -259,7 +308,7 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
-
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 
 
 }
@@ -277,7 +326,7 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
-
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   
 }
 
@@ -285,7 +334,7 @@ export default {
   position: relative;
   width: 33.3%;
   height: 30px;
-
+  left: 1px;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -294,70 +343,67 @@ export default {
   text-align: center;
   letter-spacing: -0.32px;
   color: #000000;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .sent-bubble-frame1 {
   position: absolute;
   width: 85%;
-  height:44px;
   top: 30%;
-  align-items: center;
-  overflow: scroll;
+  display: flex;
+}
+
+.sent-bubble-text-frame {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .sent-bubble-text {
   position: relative;
-  width: 80%;
-  height: 5%;
-  left: 3%;
-
+  left: 4%;
 
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 21px;
   /* or 117% */
-
   letter-spacing: -0.32px;
   color: #000000;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .selector-frame {
   position: relative;
-  width: 20%;
-  height: 5%;
-  top: 100%;
+  right: 2%;
   display: flex;
-
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 21px;
   /* or 210% */
-  display: flex;
-  align-items: bottom;
-  text-align: right;
   letter-spacing: -0.32px;
   color: black;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .selector-read {
   position: relative;
   margin-right: 4px;
-  color: gray;
+
 }
 
 .selector-unread {
   position: relative;
   margin-left: 4px;
-  color:black;
 }
 
 .sent-bubble-frame2 {
   position: absolute;
   width: 85%;
-  height: 61%;
-  top: 34.6%;
+  height: 62%;
+  top: 34%;
   align-items: center;
   overflow: scroll;
 
@@ -366,14 +412,6 @@ export default {
 
 ::-webkit-scrollbar {
   display: none;
-}
-
-.sent-bubble-text-frame {
-  position: relative;
-  width: 100%;
-  height: 4.5%;
-  display: flex;
-  justify-content: space-between;
 }
 
 .sent-message-frame {
@@ -392,9 +430,9 @@ export default {
   height: 64px;
   background: rgba(255, 255, 255, 0.485);
   box-shadow: 2px 2px 2px darkgrey;
-  border-radius: 36px;
+  border-radius:20px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   opacity: 100%;
@@ -428,6 +466,7 @@ export default {
   letter-spacing: -0.32px;
   margin-right: 2px;
   color: #000000;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .sent-bubble-info-frame {

@@ -1,7 +1,7 @@
 <template>
   <div class="message-frame">
     <div class="window">
-      {{ sentList[detailIndex] }} <br>
+      {{ messagedetailProps }} <br>
     <button @click="closeDetail()">창 닫기</button>
     </div>
   </div>
@@ -16,11 +16,12 @@ export default {
     closeDetail() {
       this.$store.commit('SHOW_SENT_DETAIL', !this.showSentDetail)
 
-    }
+    },
   },
+  props: ['messagedetailProps'],
 
   computed: {
-    ...mapState(['sentList', 'detailIndex', 'showSentDetail'])
+    ...mapState(['showSentDetail'])
   }
 }
 </script>
@@ -30,9 +31,7 @@ export default {
 
 .message-frame {
   position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
+  width: calc(var(--vw, 1vw) * 110);
   height: 100%;
   z-index: 999;
   background: rgba(0, 0, 0, 0.3);
@@ -41,12 +40,12 @@ export default {
 .window {
   position: absolute;
   top: 50%;
-  left: 51%;
-  width: 40%;
-  height:30%;
+  left: 50%;
+  width: calc(var(--vw, 1vw) * 85);
+  height:25%;
   background: white;
   transform: translate(-50%, -50%);
   border-radius: 45px;
-  box-shadow: 0px 0px 20px black;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
 }
 </style>
