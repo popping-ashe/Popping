@@ -13,25 +13,6 @@ import lombok.Getter;
 public class ShareApiDto {
 	@Getter
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-	public static class Request {
-		private String content;
-		private Long sender;
-		private Long receiver;
-		private String nickname;
-		private Long retentionTime;
-
-		@Builder
-		public Request(String content, Long sender, Long receiver, String nickname, Long retentionTime) {
-			this.content = content;
-			this.sender = sender;
-			this.receiver = receiver;
-			this.nickname = nickname;
-			this.retentionTime = retentionTime;
-		}
-	}
-
-	@Getter
-	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 	public static class Response {
 		private Long messageId;
 		private String state;
