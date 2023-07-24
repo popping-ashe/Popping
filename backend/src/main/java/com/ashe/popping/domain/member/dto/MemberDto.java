@@ -18,12 +18,14 @@ public class MemberDto {
 	private String kakaoId;
 	private LocalDateTime createdTime;
 	private Role role;
+	private Long shareId;
 
-	public static MemberDto of(String kakaoId, String nickname, Role role) {
+	public static MemberDto of(String kakaoId, String nickname, Role role, Long shareId) {
 		return MemberDto.builder()
 			.nickname(nickname)
 			.kakaoId(kakaoId)
 			.role(role)
+			.shareId(shareId)
 			.build();
 	}
 
@@ -40,6 +42,7 @@ public class MemberDto {
 			.nickname(member.getNickname())
 			.lastVisitedTime(member.getLastVisitedTime())
 			.kakaoId(member.getKakaoId())
+			.shareId(member.getMemberId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
 			.build();
@@ -51,6 +54,7 @@ public class MemberDto {
 			.nickname(member.getNickname())
 			.lastVisitedTime(member.getLastVisitedTime())
 			.kakaoId(member.getKakaoId())
+			.shareId(member.getShareId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
 			.build();

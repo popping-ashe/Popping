@@ -19,7 +19,8 @@ public enum ErrorCode {
 
 	// 회원
 	INVALID_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "M-001", "잘못된 회원 타입 입니다. (memberType : KAKAO)"),
-	ALREADY_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "M-002", "이미 가입된 회원입니다.");
+	ALREADY_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "M-002", "이미 가입된 회원입니다."),
+	NOT_EXIST_MEMBER(HttpStatus.BAD_REQUEST, "M-003", "존재하지 않는 회원입니다.");
 
 	ErrorCode(HttpStatus httpStatus, String errorCode, String message) {
 		this.httpStatus = httpStatus;

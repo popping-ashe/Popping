@@ -36,8 +36,8 @@ public class KakaoMemberInfoResponseDto {
 
 	}
 
-	public MemberDto toMemberDto(Role role) {
-		return MemberDto.of(kakaoId, kakaoAccount.getProfile().getNickname(), role);
+	public MemberDto toMemberDto(Role role, Long shareId) {
+		return MemberDto.of(kakaoId, kakaoAccount.getProfile().getNickname(), role, shareId);
 	}
 
 }

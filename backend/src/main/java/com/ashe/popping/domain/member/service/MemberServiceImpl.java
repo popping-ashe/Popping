@@ -60,6 +60,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public Optional<Member> getMemberByShareId(Long shareId) {	return memberRepository.findByShareId(shareId);}
+
+	@Override
 	public MemberDto createMember(MemberDto memberDto) {
 		Member member = Member.from(memberDto);
 
