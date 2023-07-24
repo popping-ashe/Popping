@@ -46,7 +46,7 @@ public class MessageServiceImpl implements MessageService {
 	public List<MessageDto> loadSendMessage(Long sender) {
 		List<Message> messages = messageRepository.findBySender(sender);
 		return messages.stream()
-			.map(MessageDto::from)
+			.map(m -> MessageDto.of(m, memberService.getMemberByMemberId(m.getReceiver()).getNickname()))
 			.toList();
 	}
 
