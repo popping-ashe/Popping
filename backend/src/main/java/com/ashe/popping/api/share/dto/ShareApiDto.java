@@ -44,8 +44,8 @@ public class ShareApiDto {
 			this.expirationTime = expirationTime;
 		}
 
-		public static com.ashe.popping.api.share.dto.ShareApiDto.MessageResponse from(MessageDto messageDto) {
-			return com.ashe.popping.api.share.dto.ShareApiDto.MessageResponse.builder()
+		public static MessageResponse from(MessageDto messageDto) {
+			return MessageResponse.builder()
 				.messageId(messageDto.getMessageId())
 				.state(messageDto.getState().getMessage())
 				.receiver(messageDto.getReceiver())
