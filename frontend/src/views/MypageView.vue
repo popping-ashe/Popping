@@ -56,9 +56,9 @@
             <div class="sent-bubble-context">{{ article.content.substr(0,15) }}</div>
           </div>
         </div>
+      <button v-if="isLogin" @click="logoutUser">로그아웃</button>
       </div>
     </div>
-      <!-- <button>로그아웃</button> -->
     <!-- <SettingsPopupVue/> -->
   </div>
 </template>
@@ -67,7 +67,8 @@
 import SettingsPopupVue from '@/components/SettingsPopup.vue';
 import SentDetail from '@/components/SentDetail.vue'
 
-import { mapState } from 'vuex'
+import { mapState,mapActions } from 'vuex'
+const userStore = "userStore";
 
 export default {
   name: 'MypageView',
@@ -90,6 +91,8 @@ export default {
 };
   },
   methods: {
+    ...mapActions(userStore, ["logoutUser"]),
+    
     closeDialog() {
       this.dialog = false;
     },
@@ -121,6 +124,9 @@ export default {
 
     }
   },
+  async logoutUser() {
+      this.logoutUser
+  },
   created() {
     const sentmessages = this.$store.getters["userStore/checkSentMessages"];
     const receivedmessages = this.$store.getters["userStore/checkReceivedMessages"];
@@ -138,7 +144,7 @@ export default {
   },
   computed: {
     ...mapState(['showSentDetail']),
-    ...mapState(['userInfo']),
+    ...mapState(userStore,['userInfo',"isLogin", "isLoginError"]),
   }
 }
 </script>

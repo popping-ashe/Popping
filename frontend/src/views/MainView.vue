@@ -62,7 +62,7 @@ export default {
       bubbleDetail: "",
     };
   },
-  created() {
+  mounted() {
     const userInfo = this.$store.getters["userStore/checkUserInfo"];
     const receivedmessages = this.$store.getters["userStore/checkReceivedMessages"];
     console.log(userInfo)
