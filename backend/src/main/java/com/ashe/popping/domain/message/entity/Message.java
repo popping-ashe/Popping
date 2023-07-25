@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.message.dto.MessageDto;
 import com.ashe.popping.domain.message.dto.MessageState;
 
@@ -69,6 +70,17 @@ public class Message {
 			.expirationTime(messageDto.getExpirationTime())
 			.sender(messageDto.getSender())
 			.receiver(messageDto.getReceiver())
+			.nickname(messageDto.getNickname())
+			.build();
+	}
+
+	public static Message of(MessageDto messageDto, MemberDto memberDto) {
+		return Message.builder()
+			.state(messageDto.getState())
+			.content(messageDto.getContent())
+			.expirationTime(messageDto.getExpirationTime())
+			.sender(messageDto.getSender())
+			.receiver(memberDto.getMemberId())
 			.nickname(messageDto.getNickname())
 			.build();
 	}
