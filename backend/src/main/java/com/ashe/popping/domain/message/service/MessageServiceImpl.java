@@ -24,8 +24,8 @@ public class MessageServiceImpl implements MessageService {
 	private final MemberService memberService;
 
 	@Override
-	public MessageDto saveMessage(MessageDto messageDto) {
-		Message message = Message.from(messageDto);
+	public MessageDto saveMessage(MessageDto messageDto, MemberDto memberDto) {
+		Message message = Message.of(messageDto, memberDto);
 		messageRepository.save(message);
 		return MessageDto.from(message);
 	}
