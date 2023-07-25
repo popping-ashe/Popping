@@ -13,7 +13,18 @@ import lombok.Getter;
 public class ShareApiDto {
 	@Getter
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-	public static class Response {
+	public static class ShareResponse {
+		private Long shareId;
+
+		@Builder
+		public ShareResponse(Long shareId) {
+			this.shareId = shareId;
+		}
+	}
+
+	@Getter
+	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+	public static class MessageResponse {
 		private Long messageId;
 		private String state;
 		private Long receiver;
@@ -23,7 +34,7 @@ public class ShareApiDto {
 		private LocalDateTime expirationTime;
 
 		@Builder
-		public Response(Long messageId, String content, String state, Long receiver, String nickname,
+		public MessageResponse(Long messageId, String state, Long receiver,
 			LocalDateTime createTime,
 			LocalDateTime expirationTime) {
 			this.messageId = messageId;
@@ -33,8 +44,8 @@ public class ShareApiDto {
 			this.expirationTime = expirationTime;
 		}
 
-		public static com.ashe.popping.api.share.dto.ShareApiDto.Response from(MessageDto messageDto) {
-			return com.ashe.popping.api.share.dto.ShareApiDto.Response.builder()
+		public static com.ashe.popping.api.share.dto.ShareApiDto.MessageResponse from(MessageDto messageDto) {
+			return com.ashe.popping.api.share.dto.ShareApiDto.MessageResponse.builder()
 				.messageId(messageDto.getMessageId())
 				.state(messageDto.getState().getMessage())
 				.receiver(messageDto.getReceiver())
