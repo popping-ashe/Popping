@@ -69,7 +69,7 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 		MemberDto oauthMember;
 
 		while(true){
-			Long shareId = random.nextLong(1000000000, 10000000000L);
+			Long shareId = random.nextLong(1000000000L, 10000000000L);
 			oauthMember = memberInfo.toMemberDto(Role.USER, shareId);
 			try{
 				oauthMember = memberService.createMember(oauthMember);
