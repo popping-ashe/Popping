@@ -60,7 +60,7 @@ public class MessageDto {
 			.createTime(LocalDateTime.now())
 			.expirationTime(LocalDateTime.now().plusHours(request.getRetentionTime()))
 			.sender(request.getSender())
-			.receiver(request.getReceiver())
+			.receiver(request.getShareId())
 			.nickname(request.getNickname())
 			.build();
 	}
