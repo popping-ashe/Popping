@@ -8,6 +8,7 @@ import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.repository.MemberRepository;
 import com.ashe.popping.global.error.ErrorCode;
+import com.ashe.popping.global.error.exception.AuthenticationException;
 import com.ashe.popping.global.error.exception.BusinessException;
 
 import jakarta.transaction.Transactional;
@@ -60,7 +61,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Optional<Member> getMemberByShareId(Long shareId) {	return memberRepository.findByShareId(shareId);}
+	public MemberDto getMemberByShareId(Long shareId) {
+		Optional<Member> member = memberRepository.findByShareId(shareId);
+		if(member.isEmpty()){
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
+		}
+		return MemberDto.from(member.get());
+	}
 
 	@Override
 	public MemberDto createMember(MemberDto memberDto) {

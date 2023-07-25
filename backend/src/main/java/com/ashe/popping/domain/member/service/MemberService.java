@@ -18,5 +18,5 @@ public interface MemberService {
 
 	Optional<Member> getMemberByKakaoId(String kakaoId);
 
-	Optional<Member> getMemberByShareId(Long shareId);
+	MemberDto getMemberByShareId(Long shareId);
 }
