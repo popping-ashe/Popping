@@ -1,6 +1,6 @@
 import router from "@/router";
 // import { kakaologin } from "@/api/user";
-import { getUserInfo, kakaologin, sentUserMessage, receivedUserMessage,logout } from "@/api/user";
+import { getshareid, getUserInfo, kakaologin, sentUserMessage, receivedUserMessage, logout } from "@/api/user";
 
 
 const userStore = {
@@ -12,6 +12,8 @@ const userStore = {
     isValidToken: false,
     sentmessages: null,
     receivedmessages: null,
+    shareid: null,
+    // othermessages: null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -19,6 +21,9 @@ const userStore = {
     },
     checkSentMessages: function (state) {
       return state.sentmessages;
+    },
+    checkShareId: function (state) {
+      return state.shareid;
     },
     checkReceivedMessages: function (state) {
       return state.receivedmessages;
@@ -49,6 +54,9 @@ const userStore = {
     SET_RECEIVED_MESSAGES: (state, receivedmessages) => {
       state.receivedmessages = receivedmessages;
     },
+    SET_SHAREID: (state, shareid) => {
+      state.shareid = shareid;
+    },
   },
   actions: {
     async kakao({ commit }, code) {
@@ -59,11 +67,12 @@ const userStore = {
             console.log(response)
             let accessToken = response.data["accessToken"];
             let refreshToken = response.data["refreshToken"];
-            // console.log(accessToken)
-            // console.log(refreshToken)
+            console.log(accessToken)
+            console.log(refreshToken)
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
+            console.log(this.state)
             sessionStorage.setItem("access-token", accessToken);
             sessionStorage.setItem("refresh-token", refreshToken);
             console.log(sessionStorage.getItem("access-token"))
@@ -74,7 +83,7 @@ const userStore = {
                   sessionStorage.setItem("userinfo", JSON.stringify(response.data));
                   // console.log(userStore.state.userInfo.nickname);
                   // console.log(this.state)
-                  router.push({ name: "MainView" });
+                  router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
                 } else {
                   console.log("유저 정보 없음");
                 }
@@ -86,6 +95,24 @@ const userStore = {
                 //   error.response.status
                 // );
                 commit("SET_IS_VALID_TOKEN", false);
+                router.push({ name: "LoginView" });
+              }
+            );
+            getshareid(
+              (response) => {
+                if (response.status == 200) {
+                  commit("SET_SHAREID", response.data);
+                  sessionStorage.setItem("shareid", JSON.stringify(response.data));
+                  // console.log(userStore.state.userInfo.nickname);
+                  console.log(this.state.userStore.shareid.share_id)
+                  
+                } else {
+                  console.log("shareid 없음");
+                }
+              },
+              async (error) => {
+                console.log(error);
+                // commit("SET_SHAREID", null);
                 router.push({ name: "LoginView" });
               }
             );
@@ -101,9 +128,7 @@ const userStore = {
               },
               async (error) => {
                 console.log(error);
-                console.log('보낸ㅁ세지 받아오기 에러');
-                
-                // router.push({ name: "LoginView" });
+                console.log('보낸ap세지 받아오기 에러');
               }
             )
             receivedUserMessage(
@@ -128,11 +153,12 @@ const userStore = {
           }
         },
         (error) => {
-          console.log()
           console.log(error);
         }
       );
     },
+    //여기까지 로그인 시 받아오는 정보
+
     async logoutUser({ commit }) {
       await logout((response) => {
         if (response.status == 200) {
@@ -154,7 +180,21 @@ const userStore = {
 
       })
     },
-    // async getnewaccesstoken({ commit }) {
+    // async showusersbubble({ commit }) {
+    //   await getshareidmessages((response) => {
+    //     if (response.status == 200) {
+    //       console.log(response.data)
+    //     } else {
+    //       console.log();
+
+    //     }
+    //   },
+    //     (error) => {
+    //     console.log(error);
+    //   })
+    // },
+    // // async getnewaccesstoken({ commit }) {
+    // async sendUserMessage( ) {
 
     // }
   },
@@ -165,6 +205,7 @@ const refreshToken = sessionStorage.getItem("refresh-token");
 const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
 const sentmessages = JSON.parse(sessionStorage.getItem("sentmessages"));
 const receivedmessages = JSON.parse(sessionStorage.getItem("receivedmessages"));
+const shareid = JSON.parse(sessionStorage.getItem("shareid"));
 
 if (accessToken && refreshToken) {
   userStore.state.isLogin = true;
@@ -178,6 +219,9 @@ if (sentmessages) {
 }
 if (receivedmessages) {
   userStore.state.receivedmessages = receivedmessages;
+}
+if (shareid) {
+  userStore.state.shareid = shareid;
 }
 
 
