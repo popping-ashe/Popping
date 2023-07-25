@@ -2,7 +2,7 @@
   <div class="frame" style="z-index: 0;">
       <SentDetail :messagedetail-props="messageDetail" v-if="showSentDetail"/>
     <div class="upper-bar">
-      <div class="back-ellipse" @click="$router.push('/main')">
+      <div class="back-ellipse" @click="$router.go(-1)">
         <div class="back-emoji">
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
         </div>
@@ -35,7 +35,7 @@
           보낸 버블 
         </div>
       <div class="selector-frame font-stardust">
-        <div class="selector-read" :style="{color: readOption ==='read' ? 'black' : 'gray'}" @click="showReadOnly">읽음</div> | 
+        <div class="selector-read" :style="{color: readOption ==='read' ? 'black' : 'gray'}" @click="showReadOnly">읽음</div>|
         <div class="selector-unread" :style="{color: readOption ==='unread' ? 'black' : 'gray'}"  @click="showUnreadOnly">안읽음</div>
       </div>
     </div>
@@ -155,7 +155,7 @@ export default {
 .frame {
   
   position: relative;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -390,19 +390,18 @@ export default {
   line-height: 21px;
   /* or 210% */
   letter-spacing: -0.32px;
-  color: black;
+  color: gray;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .selector-read {
   position: relative;
   margin-right: 4px;
-
 }
 
 .selector-unread {
   position: relative;
-  margin-left: 4px;
+  margin-left: 7px;
 }
 
 .sent-bubble-frame2 {

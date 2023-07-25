@@ -32,7 +32,7 @@
 
     <div class="under-bar">
       <!-- 로그인 상태에 따라 동적으로 메세지 보내기 버튼 활성화/비활성화 -->
-      <div class="bubble-make-btn font-stardust" @click="openMake()">
+      <div class="bubble-make-btn font-stardust" v-if="pageid != shareid" @click="openMake()">
         <div>버블 만들기</div>
       </div>
     </div>
@@ -54,27 +54,34 @@ export default {
   },
   data() {
     return {
+      pageid: this.$route.params.pageid,
       nickname:"",
       randomBubbleSize: [],
       randomX: [],
       randomY: [],
       receivedmessages: "",
       bubbleDetail: "",
+
     };
   },
   mounted() {
-    const userInfo = this.$store.getters["userStore/checkUserInfo"];
-    const receivedmessages = this.$store.getters["userStore/checkReceivedMessages"];
-    console.log(userInfo)
-    this.nickname = userInfo.nickname;
-    // console.log(this.nickname)
-
-    this.isLoggedIn = this.$store.getters["userStore/isLoggedIn"];
-
-    console.log(receivedmessages)
-    this.receivedmessages = receivedmessages
-    // this.receivedmessagescount = receivedmessages.length;
-    // console.log(this.receivedmessagescount)
+    const shareid = this.$store.getters["userStore/checkShareId"];
+    this.shareid = shareid.share_id
+    console.log(shareid.share_id)
+    if (this.pageid == this.shareid) {
+      const userInfo = this.$store.getters["userStore/checkUserInfo"];
+      const receivedmessages = this.$store.getters["userStore/checkReceivedMessages"];
+      console.log(userInfo)
+      this.nickname = userInfo.nickname;
+      console.log(this.nickname)
+      this.isLoggedIn = this.$store.getters["userStore/isLoggedIn"];
+  
+      console.log(receivedmessages)
+      this.receivedmessages = receivedmessages
+    } else {
+      console.log()
+      // pageid에 해당하는 유저의 받은 메세지 불러오기
+    }
 
     this.generateRandomSizes();
     this.generateRandomPosition();
@@ -82,8 +89,10 @@ export default {
   },
   methods: {
     openDetail(idx) {
-      this.bubbleDetail = this.receivedmessages[idx]
-      this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
+      if (this.pageid == this.shareid) {
+        this.bubbleDetail = this.receivedmessages[idx]
+        this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
+      }
     },
     openMake() {
       this.$store.commit('SHOW_MAKE_WINDOW', !this.showMakeWindow)
@@ -119,18 +128,16 @@ export default {
         t.select();
         document.execCommand('copy');
       this.$toast.center('복사되었습니다')
-      
-      // this.$copyText(window.document.location.href)
-
-    }
-
-
+      // this.$copyText(window.document.lo,cation.href)
+    },
+    ...mapState( ['userInfo', 'shareid']),
   },
 
 
   computed: {
     ...mapState(['showReceivedDetail', 'showMakeWindow']),
-    ...mapState( ['userInfo']),
+    
+    // ...mapActions(userStore, ["showusersbubble"])
   }
 }
 
@@ -148,7 +155,7 @@ export default {
 }
 .frame {
   position: relative;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100%;
   
   }

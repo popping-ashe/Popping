@@ -9,6 +9,7 @@ async function kakaologin(code, success, fail) {
 async function getUserInfo( success, fail) {
   let token = "Bearer " + sessionStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
+  console.log(token)
   await api.get(`/members/me`).then(success).catch(fail);
 }
 
@@ -33,7 +34,7 @@ async function sendUserMessage(success, fail) {
 async function logout(success, fail) {
   let token = "Bearer " + sessionStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
-  console.log(token)
+  // console.log(token)
     await api.post(`/auth/logout`).then(success).catch(fail);
   }
 
@@ -48,7 +49,18 @@ async function gettoken(success, fail) {
   api.defaults.headers["Authorization"] = token;
   await api.get(`/access-token/issue`).then(success).catch(fail);
 }
+async function getshareid(success, fail) {
+  let token = "Bearer " + sessionStorage.getItem("access-token");
+  api.defaults.headers["Authorization"] = token;
+  await api.get(`/share`).then(success).catch(fail);
+}
+// async function getshareidmessages(success, fail) {
+//   let token = "Bearer " + sessionStorage.getItem("refresh-token");
+//   api.defaults.headers["Authorization"] = token;
+//   await api.get(`/share/${}`).then(success).catch(fail);
+// }
 
 
 
-export { kakaologin, getUserInfo, receivedUserMessage, sentUserMessage, sendUserMessage, logout, changenickname, gettoken};
+
+export { getshareid, kakaologin, getUserInfo, receivedUserMessage, sentUserMessage, sendUserMessage, logout, changenickname, gettoken};

@@ -12,7 +12,7 @@
         </div>
       </div>
 
-      <div v-else style="width: 100vw; height: 100vh;  display: flex; justify-content: center; ">
+      <div v-else style="width: 100vw; height: calc(var(--vh, 1vh) * 100);  display: flex; justify-content: center; ">
         <div class="bgnewjeans" style="width: calc(var(--vw, 1vw) * 110); height:100%">
           <div class="main">
             <!-- <div class="container3">

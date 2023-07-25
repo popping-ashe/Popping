@@ -10,7 +10,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/main',
+    path: '/main/:pageid',
     name: 'MainView',
     component: MainView
   },
