@@ -1,7 +1,7 @@
 package com.ashe.popping.api.logout.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +18,7 @@ public class LogoutController {
 
 	private final LogoutService logoutService;
 
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public ResponseEntity<String> logout(HttpServletRequest httpServletRequest) {
 		String authorizationHeader = httpServletRequest.getHeader("Authorization");
 		AuthorizationHeaderUtils.validateAuthorization(authorizationHeader);
