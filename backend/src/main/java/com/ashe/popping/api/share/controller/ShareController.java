@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ashe.popping.api.message.dto.MessageApiDto;
+import com.ashe.popping.api.share.dto.ShareApiDto;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.service.MemberService;
@@ -31,30 +31,27 @@ public class ShareController {
 	private final MessageService messageService;
 
 	@GetMapping
-	public ResponseEntity<Long> getShareId(@MemberInfo MemberInfoDto memberInfoDto) {
+	public ResponseEntity<ShareApiDto.ShareResponse> getShareId(@MemberInfo MemberInfoDto memberInfoDto) {
 		Long memberId = memberInfoDto.getMemberId();
 		MemberDto memberDto = memberService.getMemberByMemberId(memberId);
-		return ResponseEntity.ok(memberDto.getShareId());
+		return ResponseEntity.ok(new ShareApiDto.ShareResponse(memberDto.getShareId()));
 	}
 
 	@GetMapping("/{shareId}")
-	public ResponseEntity<List<MessageApiDto.Response>> getReceivedMessage(@PathVariable Long shareId) {
+	public ResponseEntity<List<ShareApiDto.MessageResponse>> getReceivedMessage(@PathVariable Long shareId) {
 		Optional<Member> optionalMember = memberService.getMemberByShareId(shareId);
-		if(optionalMember.isEmpty()){
+		if (optionalMember.isEmpty()) {
 			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
-		}
-		else{
+		} else {
 			Member shareMember = optionalMember.get();
 			List<MessageDto> messages = messageService.loadReceiveMessage(shareMember.getMemberId());
 			return ResponseEntity.ok(toMessageResponse(messages));
 		}
 	}
 
-	private static List<MessageApiDto.Response> toMessageResponse(List<MessageDto> messages) {
+	private static List<ShareApiDto.MessageResponse> toMessageResponse(List<MessageDto> messages) {
 		return messages.stream()
-			.map(MessageApiDto.Response::from)
+			.map(ShareApiDto.MessageResponse::from)
 			.toList();
 	}
-
-
 }
