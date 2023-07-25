@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ashe.popping.api.message.dto.MessageApiDto;
+import com.ashe.popping.domain.member.service.MemberService;
 import com.ashe.popping.domain.message.dto.MessageDto;
 import com.ashe.popping.domain.message.service.MessageService;
 import com.ashe.popping.global.resolver.memberinfo.MemberInfo;
@@ -24,10 +25,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessageController {
 	private final MessageService messageService;
+	private final MemberService memberService;
 
 	@PostMapping
 	public ResponseEntity<MessageApiDto.Response> sendMessage(@RequestBody MessageApiDto.Request request) {
-		MessageDto messageDto = messageService.saveMessage(MessageDto.from(request));
+		MessageDto messageDto = messageService.saveMessage(MessageDto.from(request), memberService.getMemberByShareId(
+			request.getShareId()));
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
 	}
 
