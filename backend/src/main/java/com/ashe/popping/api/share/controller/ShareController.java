@@ -39,14 +39,10 @@ public class ShareController {
 
 	@GetMapping("/{shareId}")
 	public ResponseEntity<List<ShareApiDto.MessageResponse>> getReceivedMessage(@PathVariable Long shareId) {
-		Optional<Member> optionalMember = memberService.getMemberByShareId(shareId);
-		if (optionalMember.isEmpty()) {
-			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
-		} else {
-			Member shareMember = optionalMember.get();
-			List<MessageDto> messages = messageService.loadReceiveMessage(shareMember.getMemberId());
-			return ResponseEntity.ok(toMessageResponse(messages));
-		}
+		MemberDto member = memberService.getMemberByShareId(shareId);
+		List<MessageDto> messages = messageService.loadReceiveMessage(member.getMemberId());
+		return ResponseEntity.ok(toMessageResponse(messages));
+
 	}
 
 	private static List<ShareApiDto.MessageResponse> toMessageResponse(List<MessageDto> messages) {
