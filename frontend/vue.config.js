@@ -7,3 +7,8 @@ module.exports = defineConfig({
     'vuetify'
   ]
 })
+module.exports = {
+  devServer: {
+    allowedHosts: "all",
+  },
+};
