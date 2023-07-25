@@ -66,6 +66,7 @@ const userStore = {
             commit("SET_IS_VALID_TOKEN", true);
             sessionStorage.setItem("access-token", accessToken);
             sessionStorage.setItem("refresh-token", refreshToken);
+            console.log(sessionStorage.getItem("access-token"))
             getUserInfo(
               (response) => {
                 if (response.status == 200) {
@@ -149,8 +150,13 @@ const userStore = {
       },
         (error) => {
         console.log(error);
+        console.log('이건가');
+
       })
     },
+    // async getnewaccesstoken({ commit }) {
+
+    // }
   },
   
 }
