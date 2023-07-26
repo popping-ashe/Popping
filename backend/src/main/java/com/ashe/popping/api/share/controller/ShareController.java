@@ -1,7 +1,6 @@
 package com.ashe.popping.api.share.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ashe.popping.api.share.dto.ShareApiDto;
+import com.ashe.popping.api.share.dto.ShareApiResultDto;
 import com.ashe.popping.domain.member.dto.MemberDto;
-import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.service.MemberService;
 import com.ashe.popping.domain.message.dto.MessageDto;
 import com.ashe.popping.domain.message.service.MessageService;
-import com.ashe.popping.global.error.ErrorCode;
-import com.ashe.popping.global.error.exception.AuthenticationException;
 import com.ashe.popping.global.resolver.memberinfo.MemberInfo;
 import com.ashe.popping.global.resolver.memberinfo.MemberInfoDto;
 
@@ -38,11 +35,12 @@ public class ShareController {
 	}
 
 	@GetMapping("/{shareId}")
-	public ResponseEntity<List<ShareApiDto.MessageResponse>> getReceivedMessage(@PathVariable Long shareId) {
+	public ResponseEntity<ShareApiResultDto<List<ShareApiDto.MessageResponse>>> getReceivedMessage(
+		@PathVariable Long shareId) {
 		MemberDto member = memberService.getMemberByShareId(shareId);
 		List<MessageDto> messages = messageService.loadReceiveMessage(member.getMemberId());
-		return ResponseEntity.ok(toMessageResponse(messages));
-
+		List<ShareApiDto.MessageResponse> messageResponse = toMessageResponse(messages);
+		return ResponseEntity.ok(ShareApiResultDto.of(member.getNickname(), messageResponse));
 	}
 
 	private static List<ShareApiDto.MessageResponse> toMessageResponse(List<MessageDto> messages) {
