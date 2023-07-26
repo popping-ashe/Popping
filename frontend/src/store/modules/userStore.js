@@ -1,6 +1,6 @@
 import router from "@/router";
 // import { kakaologin } from "@/api/user";
-import { getshareid, getUserInfo, kakaologin, sentUserMessage, receivedUserMessage, logout } from "@/api/user";
+import { getshareidmessages, getshareid, getUserInfo, kakaologin, sentUserMessage, receivedUserMessage, logout } from "@/api/user";
 
 
 const userStore = {
@@ -13,7 +13,7 @@ const userStore = {
     sentmessages: null,
     receivedmessages: null,
     shareid: null,
-    // othermessages: null,
+    othermessages: null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -31,6 +31,9 @@ const userStore = {
     checkToken: function (state) {
       return state.isValidToken;
     },
+    checkOthermessages: function (state) {
+      return state.othermessages;
+    },
     isLoggedIn: state => state.isLoggedIn,
   },
   mutations: {
@@ -46,7 +49,6 @@ const userStore = {
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
-      sessionStorage.setItem("access-token", userInfo.accessToken);
     },
     SET_SENT_MESSAGES: (state, sentmessages) => {
       state.sentmessages = sentmessages;
@@ -57,8 +59,12 @@ const userStore = {
     SET_SHAREID: (state, shareid) => {
       state.shareid = shareid;
     },
+    SET_OTHERMESSAGES: (state, othermessages) => {
+      state.othermessages = othermessages;
+    },
   },
   actions: {
+    // 로그인 시 유저 정보 불러오기
     async kakao({ commit }, code) {
       await kakaologin(
         code,
@@ -83,7 +89,7 @@ const userStore = {
                   sessionStorage.setItem("userinfo", JSON.stringify(response.data));
                   // console.log(userStore.state.userInfo.nickname);
                   // console.log(this.state)
-                  router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
+                  // router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
                 } else {
                   console.log("유저 정보 없음");
                 }
@@ -105,7 +111,6 @@ const userStore = {
                   sessionStorage.setItem("shareid", JSON.stringify(response.data));
                   // console.log(userStore.state.userInfo.nickname);
                   console.log(this.state.userStore.shareid.share_id)
-                  
                 } else {
                   console.log("shareid 없음");
                 }
@@ -137,6 +142,7 @@ const userStore = {
                   commit("SET_RECEIVED_MESSAGES", response.data)
                   sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
                   console.log(userStore.state.receivedmessages);
+                  router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
                 } else {
                   console.log("받은 메세지 없음");
                 }
@@ -159,6 +165,7 @@ const userStore = {
     },
     //여기까지 로그인 시 받아오는 정보
 
+    // 로그아웃
     async logoutUser({ commit }) {
       await logout((response) => {
         if (response.status == 200) {
@@ -166,6 +173,8 @@ const userStore = {
           commit("SET_IS_LOGIN_ERROR", true);
           commit("SET_IS_VALID_TOKEN", false);
           sessionStorage.clear();
+          router.push({ name: "LoginView" });
+
         } else {
           console.log("잘못된 access token임. 로그아웃 처리.");
           commit("SET_IS_LOGIN", false);
@@ -180,19 +189,92 @@ const userStore = {
 
       })
     },
-    // async showusersbubble({ commit }) {
-    //   await getshareidmessages((response) => {
+    // 다른 유저 메인페이지에 메세지, 닉네임 띄우기
+    async shareidmessage({ commit }, page) {
+      await getshareidmessages(
+        page, 
+        (response) => {
+        if (response.status == 200) {
+          commit("SET_OTHERMESSAGES", response.data);
+          console.log(response.data)
+          console.log(response.data.nickname)
+          console.log(userStore.state.othermessages)
+          
+        } else {
+          console.log("잘못");
+        }
+      },
+        (error) => {
+        console.log(error);
+      })
+    },
+    // 유저 닉네임 변경
+    // async changeuserinfo({ commit }) {
+    //   await changeUserInfo(
+    //     (response) => {
     //     if (response.status == 200) {
-    //       console.log(response.data)
-    //     } else {
-    //       console.log();
 
+    //     } else {
+    //       console.log("잘못");
     //     }
     //   },
     //     (error) => {
     //     console.log(error);
     //   })
     // },
+
+    // 새로고침 or 페이지 넘어갈때 데이터 업데이트
+    async updateUserData({ commit }) {
+      // 여기서 API 호출 및 데이터 업데이트 로직을 작성합니다.
+      getUserInfo(
+        (response) => {
+          if (response.status == 200) {
+            commit("SET_USER_INFO", response.data);
+            sessionStorage.setItem("userinfo", JSON.stringify(response.data));
+            // router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
+          } else {
+            console.log("유저 정보 없음");
+          }
+        },
+        async (error) => {
+          console.log(error);
+          commit("SET_IS_VALID_TOKEN", false);
+          router.push({ name: "LoginView" });
+        }
+      );
+      sentUserMessage(
+        (response) => {
+          if (response.status == 200) {
+            commit("SET_SENT_MESSAGES", response.data)
+            sessionStorage.setItem("sentmessages", JSON.stringify(response.data));
+            console.log(userStore.state.sentmessages);
+          } else {
+            console.log("보낸 메세지 없음");
+          }
+        },
+        async (error) => {
+          console.log(error);
+          console.log('보낸메세지 받아오기 에러');
+        }
+      )
+      receivedUserMessage(
+        (response) => {
+          if (response.status == 200) {
+            commit("SET_RECEIVED_MESSAGES", response.data)
+            sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+            console.log(userStore.state.receivedmessages);
+          } else {
+            console.log("받은 메세지 없음");
+          }
+        },
+        async (error) => {
+          console.log(error);
+          console.log('받은메세지 받아오기 에러');
+        }
+      )
+    },
+
+    // 새로운 access Token 발급
     // // async getnewaccesstoken({ commit }) {
     // async sendUserMessage( ) {
 

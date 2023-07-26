@@ -12,6 +12,11 @@ async function getUserInfo( success, fail) {
   console.log(token)
   await api.get(`/members/me`).then(success).catch(fail);
 }
+async function changeUserInfo( success, fail) {
+  let token = "Bearer " + sessionStorage.getItem("access-token");
+  api.defaults.headers["Authorization"] = token;
+  await api.patch(`/members/me`).then(success).catch(fail);
+}
 
 async function receivedUserMessage(success, fail) {
   let token = "Bearer " + sessionStorage.getItem("access-token");
@@ -26,8 +31,8 @@ async function sentUserMessage(success, fail) {
   }
 
 async function sendUserMessage(success, fail) {
-  let token = "Bearer " + sessionStorage.getItem("access-token");
-  api.defaults.headers["Authorization"] = token;
+  // let token = "Bearer " + sessionStorage.getItem("access-token");
+  // api.defaults.headers["Authorization"] = token;
     await api.post(`/messages`).then(success).catch(fail);
   }
 
@@ -35,7 +40,7 @@ async function logout(success, fail) {
   let token = "Bearer " + sessionStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
   // console.log(token)
-    await api.post(`/auth/logout`).then(success).catch(fail);
+    await api.get(`/auth/logout`).then(success).catch(fail);
   }
 
 async function changenickname(success, fail) {
@@ -54,13 +59,13 @@ async function getshareid(success, fail) {
   api.defaults.headers["Authorization"] = token;
   await api.get(`/share`).then(success).catch(fail);
 }
-// async function getshareidmessages(success, fail) {
-//   let token = "Bearer " + sessionStorage.getItem("refresh-token");
-//   api.defaults.headers["Authorization"] = token;
-//   await api.get(`/share/${}`).then(success).catch(fail);
-// }
+
+async function getshareidmessages(page, success, fail) {
+  console.log(page)
+  await api.get(`/share/${page}`).then(success).catch(fail);
+}
 
 
 
 
-export { getshareid, kakaologin, getUserInfo, receivedUserMessage, sentUserMessage, sendUserMessage, logout, changenickname, gettoken};
+export { changeUserInfo, getshareidmessages, getshareid, kakaologin, getUserInfo, receivedUserMessage, sentUserMessage, sendUserMessage, logout, changenickname, gettoken};

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100);">
+      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden;">
         <div class="main">
           <!-- <div class="container3">
             <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
@@ -12,7 +12,7 @@
         </div>
       </div>
 
-      <div v-else style="width: 100vw; height: calc(var(--vh, 1vh) * 100);  display: flex; justify-content: center; ">
+      <div v-else style="width: 100vw; height: calc(var(--vh, 1vh) * 100);  display: flex; justify-content: center; overflow: hidden; ">
         <div class="bgnewjeans" style="width: calc(var(--vw, 1vw) * 110); height:100%">
           <div class="main">
             <!-- <div class="container3">
