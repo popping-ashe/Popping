@@ -27,9 +27,11 @@ public class MessageDto {
 
 	private String nickname;
 
+	private String receiverNickname;
+
 	@Builder
 	public MessageDto(Long messageId, MessageState state, String content, LocalDateTime createTime,
-		LocalDateTime expirationTime, Long sender, Long receiver, String nickname) {
+		LocalDateTime expirationTime, Long sender, Long receiver, String nickname, String receiverNickname) {
 		this.messageId = messageId;
 		this.state = state;
 		this.content = content;
@@ -38,6 +40,7 @@ public class MessageDto {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.nickname = nickname;
+		this.receiverNickname = receiverNickname;
 	}
 
 	public static MessageDto from(Message message) {
@@ -50,6 +53,20 @@ public class MessageDto {
 			.sender(message.getSender())
 			.receiver(message.getReceiver())
 			.nickname(message.getNickname())
+			.build();
+	}
+
+	public static MessageDto of(Message message, String receiverNickname) {
+		return MessageDto.builder()
+			.messageId(message.getMessageId())
+			.state(message.getState())
+			.content(message.getContent())
+			.createTime(message.getCreateTime())
+			.expirationTime(message.getExpirationTime())
+			.sender(message.getSender())
+			.receiver(message.getReceiver())
+			.nickname(message.getNickname())
+			.receiverNickname(receiverNickname)
 			.build();
 	}
 
