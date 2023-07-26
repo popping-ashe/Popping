@@ -1,5 +1,4 @@
 <script>
-
 import { mapState, mapActions } from "vuex";
 
 const userStore = "userStore";

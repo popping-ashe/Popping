@@ -91,7 +91,7 @@ export default {
 };
   },
   methods: {
-    ...mapActions(userStore, ["logoutUser"]),
+    ...mapActions(userStore, ['logoutUser', 'updateUserData']),
     
     closeDialog() {
       this.dialog = false;
@@ -128,6 +128,9 @@ export default {
       this.logoutUser
   },
   created() {
+    this.updateUserData()
+  },
+  mounted() {
     const sentmessages = this.$store.getters["userStore/checkSentMessages"];
     const receivedmessages = this.$store.getters["userStore/checkReceivedMessages"];
     console.log(sentmessages)
@@ -165,7 +168,7 @@ export default {
   position: relative;
   width: 100%;
   height: 5.6%;
-  top: 8%;
+  top: 4.5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -247,7 +250,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 7%;
-  top: 19%;
+  top: 15.5%;
   
 }
 
@@ -355,7 +358,7 @@ export default {
 .sent-bubble-frame1 {
   position: absolute;
   width: 85%;
-  top: 30%;
+  top: 26.3%;
   display: flex;
 }
 
@@ -407,8 +410,8 @@ export default {
 .sent-bubble-frame2 {
   position: absolute;
   width: 85%;
-  height: 62%;
-  top: 34%;
+  height: 59%;
+  top: 30.7%;
   align-items: center;
   overflow: scroll;
 
