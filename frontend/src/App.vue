@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden;">
+      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden; touch-action: none;">
         <div class="main">
           <!-- <div class="container3">
             <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
@@ -55,7 +55,18 @@
         this.isMobile = false;
       } 
     },
+
+    scrollDisable(){
+    ('body').addClass('scrollDisable').on('scroll touchmove mousewheel', function(e){
+        e.preventDefault();
+    });
+    },
+    scrollAble(){
+    ('body').removeClass('scrollDisable').off('scroll touchmove mousewheel');
+}
   };
+
+  
 </script>
 
 
