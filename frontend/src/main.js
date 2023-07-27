@@ -6,7 +6,10 @@ import userStore from './store/modules/userStore'
 import vuetify from './plugins/vuetify'
 import 'vue2-toast/lib/toast.css';
 import Toast from 'vue2-toast';
+import VueClipboard from 'vue-clipboard2'
 
+VueClipboard.config.autoSetContainer = true;
+Vue.use(VueClipboard)
 
 Vue.use(Toast);
 

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden; touch-action: none;">
+      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden;">
         <div class="main">
           <!-- <div class="container3">
             <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
@@ -53,6 +53,10 @@
         this.isMobile = true;
       } else {
         this.isMobile = false;
+          
+      const customVH = window.innerHeight * 0.01
+        document.documentElement.style.setProperty('--vh', customVH + 'px')
+        document.documentElement.style.setProperty('--vw', customVH*(393/852) + 'px')
       } 
     },
 
