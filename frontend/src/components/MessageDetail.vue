@@ -15,7 +15,7 @@ export default {
   methods: {
     closeDetail() {
       this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
-
+      
     }
   },
   props: ['bubbledetailProps'],

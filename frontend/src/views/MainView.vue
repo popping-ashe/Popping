@@ -48,6 +48,8 @@
 import MessageDetail from '@/components/MessageDetail.vue'
 import MakeBubble from '@/components/MakeBubble.vue'
 import { mapState, mapActions } from 'vuex'
+// import axios from 'axios'
+import { getshareidmessages, getUserInfo, receivedUserMessage } from "@/api/user"
 const userStore = "userStore";
 
 export default {
@@ -69,53 +71,83 @@ export default {
     };
   },
   created() {
-    this.updateUserData()
+    // this.updateUserData()
   },
   mounted() {
+    // this.updateUserData()
     const shareid = this.$store.getters["userStore/checkShareId"];
     this.shareid = shareid.share_id
     console.log(this.shareid)
     console.log(this.pageid)
     
     if (this.pageid == shareid.share_id) {
-      const userInfo = this.$store.getters["userStore/checkUserInfo"];
-      const receivedmessages = this.$store.getters["userStore/checkReceivedMessages"];
-      console.log(userInfo)
-      this.nickname = userInfo.nickname;
-      console.log(this.nickname)
-      this.isLoggedIn = this.$store.getters["userStore/isLoggedIn"];
-  
-      console.log(receivedmessages)
-      this.receivedmessages = receivedmessages
-      
-      this.generateRandomSizes();
-      this.generateRandomPosition();
-
+      getUserInfo(
+        (response) => {
+          if (response.status == 200) {
+            sessionStorage.setItem("userinfo", JSON.stringify(response.data));
+            console.log(response)
+            const userInfo = response.data
+            this.nickname = userInfo.nickname;
+          } else {
+            console.log("유저 정보 없음");
+          }
+        },
+        async (error) => {
+          console.log(error);
+          this.$router.push({ name: "LoginView" });
+        }
+      );
+      receivedUserMessage(
+        (response) => {
+          if (response.status == 200) {
+            sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+            console.log(response);
+            const receivedmessages = response.data
+            this.receivedmessages = receivedmessages
+            this.generateRandomSizes();
+            this.generateRandomPosition();
+          } else {
+            console.log("받은 메세지 없음");
+          }
+        },
+        async (error) => {
+          console.log(error);
+          console.log('받은메세지 받아오기 에러');
+        }
+      )
     } else {
       const page = this.pageid;
-      console.log(page)
-      this.shareidmessage(page);
-      setTimeout(() => {
-        
-      const othermessages = this.$store.getters["userStore/checkOthermessages"]
-      console.log(othermessages)
-      
-      this.nickname = othermessages.nickname
-      this.receivedmessages = othermessages.data
-      this.generateRandomSizes();
-      this.generateRandomPosition();
-      }, 80);
-
-
-      // pageid에 해당하는 유저의 받은 메세지 불러오기
+      getshareidmessages(
+        page, 
+        (response) => {
+        if (response.status == 200) {
+          console.log(response.data)
+          console.log(response.data.nickname)
+          const othermessages = response.data.data
+          console.log(othermessages)
+          this.nickname = response.data.nickname
+          this.receivedmessages = othermessages
+          this.generateRandomSizes();
+          this.generateRandomPosition();
+        } else {
+          console.log("잘못");
+        }
+      },
+        (error) => {
+        console.log(error);
+      })
     }
-
   },
+
   methods: {
     openDetail(idx) {
       if (this.pageid == this.shareid) {
         this.bubbleDetail = this.receivedmessages[idx]
         this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
+        const messageid = this.bubbleDetail.message_id
+        console.log(messageid)
+        this.changeread(this.bubbleDetail.message_id);
+
       }
     },
     openMake() {
@@ -162,7 +194,7 @@ export default {
       // console.log(this.shareid)
       location.href = `http://localhost:8080/main/${this.shareid}`
     },
-    ...mapActions(userStore, ["showusersbubble", "shareidmessage"])
+    ...mapActions(userStore, ["showusersbubble", "shareidmessage","changeread", "receivedUserMessage"])
  },
 
 

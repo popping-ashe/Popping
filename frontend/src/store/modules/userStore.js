@@ -1,6 +1,6 @@
 import router from "@/router";
 // import { kakaologin } from "@/api/user";
-import { getshareidmessages, getshareid, getUserInfo, kakaologin, sentUserMessage, receivedUserMessage, logout } from "@/api/user";
+import { readmessages, getshareidmessages, getshareid, getUserInfo, kakaologin, sentUserMessage, receivedUserMessage, logout } from "@/api/user";
 
 
 const userStore = {
@@ -87,8 +87,6 @@ const userStore = {
                 if (response.status == 200) {
                   commit("SET_USER_INFO", response.data);
                   sessionStorage.setItem("userinfo", JSON.stringify(response.data));
-                  // console.log(userStore.state.userInfo.nickname);
-                  // console.log(this.state)
                   // router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
                 } else {
                   console.log("유저 정보 없음");
@@ -206,6 +204,26 @@ const userStore = {
       },
         (error) => {
         console.log(error);
+      })
+    },
+    // 메세지 읽음
+    async changeread( {commit}, messageid ) {
+      // console.log(messageid)
+      await readmessages(
+        messageid, 
+        (response) => {
+        if (response.status == 200) {
+          commit("SET_RECEIVED_MESSAGES", response.data)
+          sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+          console.log('메세지 지워짐')
+          
+        } else {
+          console.log("잘못");
+        }
+      },
+        (error) => {
+        console.log(error);
+        console.log(messageid)
       })
     },
     // 유저 닉네임 변경
