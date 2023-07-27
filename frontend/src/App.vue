@@ -54,10 +54,10 @@
       } else {
         this.isMobile = false;
           
-      const customVH = window.innerHeight * 0.01
+      } 
+      let customVH = window.innerHeight * 0.01
         document.documentElement.style.setProperty('--vh', customVH + 'px')
         document.documentElement.style.setProperty('--vw', customVH*(393/852) + 'px')
-      } 
     },
 
     scrollDisable(){
@@ -75,6 +75,13 @@
 
 
 <style scoped>
+
+html, body {
+  height:100%;
+  margin:0;
+  overflow: hidden;
+}
+
 .bgnewjeans{
 -webkit-user-select: none;  
 -moz-user-select: none;  
@@ -101,4 +108,13 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#ACBCFF", en
 .com-image.enlarged-image {
   transform: scale(1.2);
 }
+
+#app {
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: scroll;
+}
+
+.v-application--wrap {
+    min-height: calc(var(--vh, 1vh) * 100) !important;
+  }
 </style>
