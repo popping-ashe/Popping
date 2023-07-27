@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden;">
+      <div v-if="isMobile" class="bgnewjeans">
         <div class="main">
           <!-- <div class="container3">
             <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
@@ -76,10 +76,14 @@
 
 <style scoped>
 
-html, body {
-  height:100%;
-  margin:0;
-  overflow: hidden;
+body {
+  min-height: 100vh;
+  /* mobile viewport bug fix */
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
 }
 
 .bgnewjeans{
