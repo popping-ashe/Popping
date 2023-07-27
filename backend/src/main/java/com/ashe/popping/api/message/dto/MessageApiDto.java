@@ -2,6 +2,7 @@ package com.ashe.popping.api.message.dto;
 
 import java.time.LocalDateTime;
 
+import com.ashe.popping.domain.message.dto.MessageCountDto;
 import com.ashe.popping.domain.message.dto.MessageDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -80,5 +81,27 @@ public class MessageApiDto {
 				.build();
 		}
 
+	}
+	@Getter
+	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+	public static class CountResponse {
+		private Long receivedMessagesCount;
+		private Long sentMessagesCount;
+		private Long unreadMessagesCount;
+
+		@Builder
+		public CountResponse(Long receivedMessagesCount, Long sentMessagesCount, Long unreadMessagesCount) {
+			this.receivedMessagesCount = receivedMessagesCount;
+			this.sentMessagesCount = sentMessagesCount;
+			this.unreadMessagesCount = unreadMessagesCount;
+		}
+
+		public static CountResponse from(MessageCountDto messageCountDto){
+			return CountResponse.builder()
+				.receivedMessagesCount(messageCountDto.getReceivedMessagesCount())
+				.sentMessagesCount(messageCountDto.getSentMessagesCount())
+				.unreadMessagesCount(messageCountDto.getUnreadMessagesCount())
+				.build();
+		}
 	}
 }
