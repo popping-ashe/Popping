@@ -29,4 +29,11 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 	@Transactional
 	@Query("update Message set state = 'EXPIRED' where expirationTime <= :now and state = 'UNREAD'")
 	int updateMessageStateToExpired(LocalDateTime now);
+
+	Long countByReceiver(Long receiver);
+
+	Long countBySender(Long sender);
+
+	Long countByReceiverAndExpirationTimeAfterAndStateIs(Long receiver, LocalDateTime now, MessageState state);
+
 }
