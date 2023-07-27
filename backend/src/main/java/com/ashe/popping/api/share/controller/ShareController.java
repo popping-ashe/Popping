@@ -2,6 +2,7 @@ package com.ashe.popping.api.share.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,9 +37,9 @@ public class ShareController {
 
 	@GetMapping("/{shareId}")
 	public ResponseEntity<ShareApiResultDto<List<ShareApiDto.MessageResponse>>> getReceivedMessage(
-		@PathVariable Long shareId) {
+		@PathVariable Long shareId, Pageable pageable) {
 		MemberDto member = memberService.getMemberByShareId(shareId);
-		List<MessageDto> messages = messageService.loadReceiveMessage(member.getMemberId());
+		List<MessageDto> messages = messageService.loadReceiveMessage(member.getMemberId(), pageable);
 		List<ShareApiDto.MessageResponse> messageResponse = toMessageResponse(messages);
 		return ResponseEntity.ok(ShareApiResultDto.of(member.getNickname(), messageResponse));
 	}
