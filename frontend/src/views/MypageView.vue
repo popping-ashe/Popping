@@ -21,7 +21,7 @@
       <div style="display: flex; justify-content: space-evenly">
       <div class="received-count">{{this.receivedmessagescount}}</div>
       <div class="sent-count">{{ this.sentmessagescount }}</div>
-      <div class="unread-count">{{ unreadMessageCount }}</div>
+      <div class="unread-count">{{ this.unreadMessageCount }}</div>
       </div>
       <div style="display: flex; justify-content: space-evenly">
       <div class="received">받음</div>
@@ -71,6 +71,7 @@ import SentDetail from '@/components/SentDetail.vue'
 
 import { mapState,mapActions } from 'vuex'
 const userStore = "userStore";
+import { sentUserMessage, receivedUserMessage } from "@/api/user"
 
 export default {
   name: 'MypageView',
@@ -133,19 +134,45 @@ export default {
     this.updateUserData()
   },
   mounted() {
-    const sentmessages = this.$store.getters["userStore/checkSentMessages"];
-    const receivedmessages = this.$store.getters["userStore/checkReceivedMessages"];
-    console.log(sentmessages)
-    this.sentmessages = sentmessages
-    this.sentmessagescount = sentmessages.length;
-    this.receivedmessagescount = receivedmessages.length;
-    console.log(this.sentmessagescount)
-    this.nowShowing = sentmessages
+    receivedUserMessage(
+        (response) => {
+          if (response.status == 200) {
+            sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+            console.log(response);
+            const receivedmessages = response.data
+            this.receivedmessages = receivedmessages
+            this.receivedmessagescount = receivedmessages.length;
 
-    this.unreadMessageCount = this.sentmessages.filter((article) => article.state === '안읽음').length
+          } else {
+            console.log("받은 메세지 없음");
+          }
+        },
+        async (error) => {
+          console.log(error);
+          console.log('받은메세지 받아오기 에러');
+        }
+    )
+    sentUserMessage(
+      (response) => {
+        if (response.status == 200) {
+          console.log(response);
+          sessionStorage.setItem("sentmessages", JSON.stringify(response.data));
+          const sentmessages = response.data
+          this.sentmessages = sentmessages
+          console.log(sentmessages)
+          this.sentmessagescount = sentmessages.length;
+          this.nowShowing = sentmessages
+          this.unreadMessageCount = this.sentmessages.filter((article) => article.state === '안읽음').length
 
- 
-
+        } else {
+          console.log("보낸 메세지 없음");
+        }
+      },
+      async (error) => {
+        console.log(error);
+        console.log('보낸ap세지 받아오기 에러');
+      }
+    )
   },
   computed: {
     ...mapState(['showSentDetail']),

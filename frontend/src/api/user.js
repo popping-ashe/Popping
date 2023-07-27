@@ -31,10 +31,10 @@ async function sentUserMessage(success, fail) {
   }
 
 //메세지 보내기
-async function sendUserMessage(success, fail) {
+async function sendUserMessage(messageData, success, fail) {
   // let token = "Bearer " + sessionStorage.getItem("access-token");
   // api.defaults.headers["Authorization"] = token;
-    await api.post(`/messages`).then(success).catch(fail);
+    await api.post(`/messages`, messageData).then(success).catch(fail);
   }
 
 //로그아웃
