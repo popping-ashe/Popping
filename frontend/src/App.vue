@@ -67,7 +67,7 @@
 </script>
 
 
-<style scoped>
+<style>
 
 .bgnewjeans{
 -webkit-user-select: none;  
@@ -104,4 +104,8 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#ACBCFF", en
 .v-application--wrap {
     min-height: calc(var(--vh, 1vh) * 100) !important;
   }
+
+body {
+  position:fixed;
+}
 </style>
