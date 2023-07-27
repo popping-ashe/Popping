@@ -55,10 +55,18 @@
       } else {
         this.isMobile = false;
           
-      } 
+      }
+      //  let customVH = window.innerHeight * 0.01
+      // document.documentElement.style.setProperty('--vh', customVH + 'px')
       let customVH = window.innerHeight * 0.01
-        document.documentElement.style.setProperty('--vh', customVH + 'px')
-        document.documentElement.style.setProperty('--vw', customVH*(393/852) + 'px')
+      document.documentElement.style.setProperty('--vh', customVH + 'px')
+      window.addEventListener('resize', () => {
+        let customVH = window.innerHeight * 0.01
+        document.documentElement.style.setProperty(
+          '--vh',
+          customVH + 'px',
+        )
+      })
     },
   
   };
