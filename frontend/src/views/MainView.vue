@@ -27,7 +27,7 @@
     <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
     <div class="bubble-area">
       <div v-for="(message, index) in receivedmessages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
-        <img class="bubble" @click="openDetail(index)" src="../assets/bubble.png">
+        <img class="bubble" @click="openDetail($event.target, index)" :id="index" src="../assets/bubble.png">
       </div>
       <!-- <img class="bubble1" src="../assets/bubble.png" alt="">
       <img class="bubble2" src="../assets/bubble.png" alt=""> -->
@@ -49,7 +49,7 @@ import MessageDetail from '@/components/MessageDetail.vue'
 import MakeBubble from '@/components/MakeBubble.vue'
 import { mapState, mapActions } from 'vuex'
 // import axios from 'axios'
-import { getshareidmessages, getUserInfo, receivedUserMessage } from "@/api/user"
+import { getshareid, getshareidmessages, getUserInfo, receivedUserMessage } from "@/api/user"
 const userStore = "userStore";
 
 export default {
@@ -65,7 +65,7 @@ export default {
       randomBubbleSize: [],
       randomX: [],
       randomY: [],
-      receivedmessages: "",
+      receivedmessages: [],
       bubbleDetail: "",
       shareid:"",
     };
@@ -75,12 +75,32 @@ export default {
   },
   mounted() {
     // this.updateUserData()
-    const shareid = this.$store.getters["userStore/checkShareId"];
-    this.shareid = shareid.share_id
-    console.log(this.shareid)
-    console.log(this.pageid)
-    
-    if (this.pageid == shareid.share_id) {
+    getshareid(
+      (response) => {
+        if (response.status == 200) {
+          const shareid = this.$store.getters["userStore/checkShareId"];
+          this.shareid = shareid.share_id
+          sessionStorage.setItem("shareid", JSON.stringify(response.data));
+          // console.log(userStore.state.userInfo.nickname);
+          console.log(this.shareid)
+          console.log(this.pageid)
+        } else {
+          console.log("shareid 없음");
+        }
+      },
+      async (error) => {
+        console.log(error);
+        console.log(this.shareid);
+
+      }
+    );
+    // const shareid = this.$store.getters["userStore/checkShareId"];
+    // this.shareid = shareid.share_id
+    // console.log(this.shareid)
+    // console.log(this.pageid)
+  
+
+    if (this.pageid == this.shareid) {
       getUserInfo(
         (response) => {
           if (response.status == 200) {
@@ -117,6 +137,7 @@ export default {
       )
     } else {
       const page = this.pageid;
+
       getshareidmessages(
         page, 
         (response) => {
@@ -140,14 +161,14 @@ export default {
   },
 
   methods: {
-    openDetail(idx) {
+    openDetail(elem, idx) {
       if (this.pageid == this.shareid) {
+        elem.style.display="none";
         this.bubbleDetail = this.receivedmessages[idx]
         this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
         const messageid = this.bubbleDetail.message_id
         console.log(messageid)
         this.changeread(this.bubbleDetail.message_id);
-
       }
     },
     openMake() {
@@ -189,7 +210,13 @@ export default {
       this.$toast.center('복사되었습니다')
       // this.$copyText(window.document.location.href)
     },
- 
+    sendmessageupdate(data){
+      console.log("test");
+      console.log(data);
+      this.receivedmessages.push(data);
+      this.generateRandomSizes();
+      this.generateRandomPosition();
+    },
     toHome() {
       // console.log(this.shareid)
       location.href = `http://localhost:8080/main/${this.shareid}`
@@ -209,6 +236,9 @@ export default {
 
 <style scoped>
 
+#index {
+  display:none;
+}
 
 /* iPhone 14 Pro - 1 */
 .icons {
@@ -333,7 +363,7 @@ export default {
   position: relative;
   width: 100%;
   margin: 5px;
-  filter: drop-shadow(1px 1px 1px black);
+  /* filter: drop-shadow(1px 1px 1px black); */
 }
 
 

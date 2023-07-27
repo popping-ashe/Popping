@@ -15,7 +15,7 @@ export default {
   methods: {
     closeDetail() {
       this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
-      
+      // this.$router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } })
     }
   },
   props: ['bubbledetailProps'],
