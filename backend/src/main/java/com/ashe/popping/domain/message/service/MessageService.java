@@ -14,7 +14,7 @@ public interface MessageService {
 
 	List<MessageDto> loadReceiveMessage(Long receiver, Pageable pageable);
 
-	List<MessageDto> loadSendMessage(Long sender);
+	List<MessageDto> loadSendMessage(Long sender, Pageable pageable);
 
 	Long countExpireMessage(Long receiver, LocalDateTime lastVisitedTime);
 

@@ -32,15 +32,14 @@ public class MessageController {
 	public ResponseEntity<MessageApiDto.Response> sendMessage(@RequestBody MessageApiDto.Request request) {
 		MessageDto messageDto = messageService.saveMessage(MessageDto.from(request), memberService.getMemberByShareId(
 			request.getShareId()));
-		System.out.println(request.get);
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
 	}
 
 	@GetMapping("/me/sent")
 	public ResponseEntity<List<MessageApiDto.Response>> getSentMessages(@MemberInfo MemberInfoDto
-		memberInfoDto) {
+		memberInfoDto, Pageable pageable) {
 		Long memberId = memberInfoDto.getMemberId();
-		List<MessageDto> messages = messageService.loadSendMessage(memberId);
+		List<MessageDto> messages = messageService.loadSendMessage(memberId, pageable);
 		return ResponseEntity.ok(toMessageResponse(messages));
 	}
 

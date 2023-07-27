@@ -15,10 +15,10 @@ import jakarta.transaction.Transactional;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-	List<Message> findBySender(Long sender);
+	List<Message> findBySender(Long sender, Pageable pageable);
 
 	List<Message> findByReceiverAndExpirationTimeAfterAndStateIs(Long receiver, LocalDateTime now, MessageState state,
-		Pageable pageableW);
+		Pageable pageable);
 
 	Long countByReceiverAndExpirationTimeBetweenAndStateIsNot(Long receiver, LocalDateTime start, LocalDateTime end,
 		MessageState state);

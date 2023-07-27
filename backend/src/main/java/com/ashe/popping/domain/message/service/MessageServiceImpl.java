@@ -44,8 +44,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<MessageDto> loadSendMessage(Long sender) {
-		List<Message> messages = messageRepository.findBySender(sender);
+	public List<MessageDto> loadSendMessage(Long sender, Pageable pageable) {
+		List<Message> messages = messageRepository.findBySender(sender, pageable);
 		return messages.stream()
 			.map(m -> MessageDto.of(m, memberService.getMemberByMemberId(m.getReceiver()).getNickname()))
 			.toList();
