@@ -1,8 +1,16 @@
 <template>
   <div class="message-frame">
     <div class="window">
-      {{ messagedetailProps }} <br>
-    <button @click="closeDetail()">창 닫기</button>
+      <div class="close-button" @click="closeDetail()"></div>
+      <div class="upper-bar">
+          <div class="sent-time">{{ messagedetailProps.create_time.substr(11,5) }}</div>
+        <div class="nickname-box">
+          <div>{{ messagedetailProps.nickname }}</div>
+        </div>
+      </div>
+      <div class="content-box">
+        {{ messagedetailProps.content }}
+      </div>
     </div>
   </div>
 </template>
@@ -28,10 +36,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .message-frame {
   position: fixed;
-  width: calc(var(--vw, 1vw) * 110);
+  top: 0px;
+  left: 0px;
+  width: 100%;
   height: 100%;
   z-index: 999;
   background: rgba(0, 0, 0, 0.3);
@@ -39,13 +48,82 @@ export default {
 
 .window {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: calc(var(--vw, 1vw) * 85);
-  height:25%;
-  background: white;
+  top: 51.5%;
+  left: 50.5%;
+  width: calc(var(--vh, 1vh) * 40);
+  height: 36%;
   transform: translate(-50%, -50%);
-  border-radius: 45px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0, 0.3));
+  background-color: transparent;
+  background-image: url("../assets/message-background.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.close-button {
+  width: 100%;
+  height: 16%;
+  /* border: 1px solid black; */
+}
+
+.upper-bar {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nickname-box {
+  width: auto;
+  height: 100%;
+  border: 0.5px solid darkslategray;
+  border-radius: 20px 0px 20px 20px;
+  outline: none;
+  font-size: 95%;
+  font-weight: bold;
+  background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
+  margin-right: 11%;
+  display: flex;
+  align-items: center;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.sent-time {
+  display: flex;
+  align-items: flex-end;
+  margin-right: 5px;
+  color: gray;
+  width: auto;
+  font-size: 12px;
+}
+
+.content-box {
+  width: 100%;
+  height: 51%;
+  font-size: 100%;
+  border: 1px solid darkslategray;
+  border-radius: 20px 0px 20px 20px;
+  outline: none;
+  padding: 9px 12px 5px 12px;
+  resize: none;
+  background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
+  margin-bottom: 6%;
+  margin-left: 6.5%;
+  margin-right: 11%;
+  padding-left: 3%;
+  padding-top: 2.3%;
+}
+
+::placeholder {
+  color: gray;
+  font-weight: normal;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
 }
 </style>

@@ -11,23 +11,22 @@
   <div class="message-frame">
     <div class="window">
       <div class="close-button" @click="closeDetail()"></div>
-      <div class="inner-window">
         <div class="upper-bar">
-          <input class="nickname-input" placeholder="닉네임" type="text" v-model="messageData.nickname"><br>
+          <input class="nickname-input" placeholder="닉네임" type="text" v-model="messageData.nickname">
           <div class="time-select-box" @click="changeLifeTime()">
             <img class="time-icon" src="../assets/clock.png" alt="">
-            <div class="time-selector">{{ messageData.retentionTime }}h</div>
+            <div class="time-selector">
+              <div>{{ messageData.retentionTime }}h</div>
+            </div>
           </div>
         </div>
-        <div class="content-box">
           <textarea class="content-input" placeholder="내용" v-model="messageData.content"></textarea>
           <!-- <input class="content-input" type="text" v-model="contents"> -->
           <div class="button-box">
             <div class="cancel-button" @click="closeDetail()">취소</div>
             <div class="send-button" @click="sendMessage()">전송</div>
           </div>
-        </div>
-      </div>
+
     </div>
   </div>
 </template>
@@ -115,105 +114,107 @@ export default {
   position: absolute;
   top: 51.5%;
   left: 50.5%;
-  width: calc(var(--vw, 1vw) * 93);
-  height: 39%;
+  width: calc(var(--vh, 1vh) * 40);
+  height: 36%;
   transform: translate(-50%, -50%);
   filter: drop-shadow(2px 2px 2px rgba(0,0,0, 0.3));
   background-color: transparent;
   background-image: url("../assets/message-background.png");
   background-size: 100%;
   background-repeat: no-repeat;
-  /* object-fit: fill; */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .close-button {
-  width: 35%;
-  height: 13%;
-}
-
-.inner-window{
-  height: 71%;
-  margin-left: 8.5%;
-  margin-right: 12%;
-  margin-top: 6%;
+  width: 100%;
+  height: 16%;
+  /* border: 1px solid black; */
 }
 
 .upper-bar {
+  width: 100%;
+  height: 10%;
   display: flex;
   justify-content: space-between;
 }
 
 .nickname-input {
-  width: 120px;
-  height: 34px;
-  font-size: 14px;
-  border: 1px solid black;
+  width: 35%;
+  height: 100%;
+  border: 0.5px solid darkslategray;
   border-radius: 0px 20px 20px 20px;
   outline: none;
-  padding-left: 12px;
+  font-size: 85%;
+  padding-left: 2.5%;
   font-weight: bold;
   background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
+  margin-left: 6.5%;
+  padding-left: 3%;
 }
 
 .time-select-box {
   display: flex;
-  width: 80px;
-  height: 34px;
-  border: 1px solid black;
+  width: 20%;
+  height: 100%;
+  border: 1px solid darkslategray;
   border-radius: 20px;
   align-items: center;
+  margin-right: 11%;
 }
 
 .time-icon {
-  width: 20px;
-  height: 20px;
-  margin-left: 8px;
+  width: 20%;
+  height: auto;
+  margin-left: 7%;
 }
 
 .time-selector {
-  margin-left: 5px;
-  width: 36px;
-  height: 20px;
+  display: flex;
+  margin-left: 6%;
+  width: 60%;
+  height: 60%;
   background-color: #abd7f2;
   text-align: center;
   border-radius: 16px;
-  font-size: 13px;
-}
-
-.content-box {
-  height: 100%;
-  position: relative;
-  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  font-size: 75%;
 }
 
 .content-input {
-  position: absolute;
-  z-index: 2;
   width: 100%;
-  height: 74%;
-  margin-top: 5%;
-  font-size: 14px;
-  border: 1px solid black;
+  height: 51%;
+  font-size: 85%;
+  border: 1px solid darkslategray;
   border-radius: 0px 20px 20px 20px;
   outline: none;
   padding: 9px 12px 5px 12px;
   resize: none;
   background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
+  margin-bottom: 6%;
+  margin-left: 6.5%;
+  margin-right: 11%;
+  padding-left: 3%;
+  padding-top: 2.3%;
 }
 
 .button-box {
   width: 100%;
-  top: 61%;
+  height: 7%;
+  top: 78%;
   position: absolute;
   z-index: 10;
   display: flex;
   justify-content: space-around;
+  margin-right: 4%;
 }
 
 .cancel-button {
-  width: 70px;
-  height: 27px;
-  display:flex;
+  width: 20%;
+  height: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 12px;
@@ -225,9 +226,9 @@ export default {
 }
 
 .send-button {
-  width: 70px;
-  height: 27px;
-  display:flex;
+  width: 20%;
+  height: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 12px;
