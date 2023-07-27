@@ -49,7 +49,8 @@ import MessageDetail from '@/components/MessageDetail.vue'
 import MakeBubble from '@/components/MakeBubble.vue'
 import { mapState, mapActions } from 'vuex'
 // import axios from 'axios'
-import { getshareid, getshareidmessages, getUserInfo, receivedUserMessage } from "@/api/user"
+import { getshareid, getshareidmessages, receivedUserMessage } from "@/api/user"
+// import { getshareid, getshareidmessages, getUserInfo, receivedUserMessage } from "@/api/user"
 const userStore = "userStore";
 
 export default {
@@ -82,32 +83,32 @@ export default {
           this.shareid = shareid.share_id
           sessionStorage.setItem("shareid", JSON.stringify(response.data));
           // console.log(userStore.state.userInfo.nickname);
-          console.log(this.shareid)
-          console.log(this.pageid)
-          getUserInfo(
-            (response) => {
-              if (response.status == 200) {
-                sessionStorage.setItem("userinfo", JSON.stringify(response.data));
-                console.log(response)
-                const userInfo = response.data
-                this.nickname = userInfo.nickname;
-              } else {
-                console.log("유저 정보 없음");
-              }
-            },
-            async (error) => {
-              console.log(error);
-              this.$router.push({ name: "LoginView" });
-            }
-          );
+          // console.log(this.shareid)
+          // console.log(this.pageid)
+          // getUserInfo(
+          //   (response) => {
+          //     if (response.status == 200) {
+          //       sessionStorage.setItem("userinfo", JSON.stringify(response.data));
+          //       // console.log(response)
+          //       const userInfo = response.data
+          //       this.nickname = userInfo.nickname;
+          //     } else {
+          //       console.log("유저 정보 없음");
+          //     }
+          //   },
+          //   async (error) => {
+          //     console.log(error);
+          //     this.$router.push({ name: "LoginView" });
+          //   }
+          // );
       receivedUserMessage(
         (response) => {
           if (response.status == 200) {
             sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
-            console.log(response);
+            // console.log(response);
             const receivedmessages = response.data
             this.receivedmessages = receivedmessages
-            console.log(receivedmessages)
+            // console.log(receivedmessages)
             this.generateRandomSizes();
             this.generateRandomPosition();
           } else {
@@ -125,7 +126,7 @@ export default {
       },
       async (error) => {
         console.log(error);
-        console.log(this.shareid);
+        // console.log(this.shareid);
 
       }
     );
@@ -133,8 +134,8 @@ export default {
     // this.shareid = shareid.share_id
     // console.log(this.shareid)
     // console.log(this.pageid)
-    console.log(this.shareid)
-    console.log(this.pageid)
+    // console.log(this.shareid)
+    // console.log(this.pageid)
 
     if (this.pageid != this.shareid) {
       const page = this.pageid;
@@ -144,10 +145,11 @@ export default {
         (response) => {
         if (response.status == 200) {
           console.log(response.data)
-          console.log(response.data.nickname)
+          // console.log(response.data.nickname)
           const othermessages = response.data.data
-          console.log(othermessages)
+          // console.log(othermessages)
           this.nickname = response.data.nickname
+          console.log(this.nickname)
           this.receivedmessages = othermessages
           this.generateRandomSizes();
           this.generateRandomPosition();
@@ -159,6 +161,7 @@ export default {
         console.log(error);
       })
     }
+    console.log(this.nickname)
   },
 
   methods: {
@@ -167,8 +170,8 @@ export default {
         elem.style.display="none";
         this.bubbleDetail = this.receivedmessages[idx]
         this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
-        const messageid = this.bubbleDetail.message_id
-        console.log(messageid)
+        // const messageid = this.bubbleDetail.message_id
+        // console.log(messageid)
         this.changeread(this.bubbleDetail.message_id);
       }
     },
