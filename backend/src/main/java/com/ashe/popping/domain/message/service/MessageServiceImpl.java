@@ -3,6 +3,7 @@ package com.ashe.popping.domain.message.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,10 +32,10 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<MessageDto> loadReceiveMessage(Long receiver) {
+	public List<MessageDto> loadReceiveMessage(Long receiver, Pageable pageable) {
 		LocalDateTime now = LocalDateTime.now();
 		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeAfterAndStateIs(receiver,
-			now, MessageState.UNREAD);
+			now, MessageState.UNREAD, pageable);
 		MemberDto memberDto = MemberDto.of(receiver, now);
 		memberService.updateLastVisitedTime(memberDto);
 		return messages.stream()

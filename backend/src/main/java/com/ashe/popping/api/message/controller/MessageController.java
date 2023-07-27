@@ -2,6 +2,7 @@ package com.ashe.popping.api.message.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,6 +32,7 @@ public class MessageController {
 	public ResponseEntity<MessageApiDto.Response> sendMessage(@RequestBody MessageApiDto.Request request) {
 		MessageDto messageDto = messageService.saveMessage(MessageDto.from(request), memberService.getMemberByShareId(
 			request.getShareId()));
+		System.out.println(request.get);
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
 	}
 
@@ -43,9 +45,10 @@ public class MessageController {
 	}
 
 	@GetMapping("/me/received")
-	public ResponseEntity<List<MessageApiDto.Response>> getReceivedMessage(@MemberInfo MemberInfoDto memberInfoDto) {
+	public ResponseEntity<List<MessageApiDto.Response>> getReceivedMessage(@MemberInfo MemberInfoDto memberInfoDto,
+		Pageable pageable) {
 		Long memberId = memberInfoDto.getMemberId();
-		List<MessageDto> messages = messageService.loadReceiveMessage(memberId);
+		List<MessageDto> messages = messageService.loadReceiveMessage(memberId, pageable);
 		return ResponseEntity.ok(toMessageResponse(messages));
 	}
 
