@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.service.MemberService;
+import com.ashe.popping.domain.message.dto.MessageCountDto;
 import com.ashe.popping.domain.message.dto.MessageDto;
 import com.ashe.popping.domain.message.dto.MessageState;
 import com.ashe.popping.domain.message.entity.Message;
@@ -63,5 +64,13 @@ public class MessageServiceImpl implements MessageService {
 		Message message = messageRepository.findByMessageId(messageId);
 		message.updateStateToRead();
 		return MessageDto.from(message);
+	}
+
+	@Override
+	public MessageCountDto countMessagesByType(Long memberId) {
+		Long receivedMessagesCount = messageRepository.countByReceiver(memberId);
+		Long sentMessagesCount = messageRepository.countBySender(memberId);
+		Long unreadMessagesCount = messageRepository.countByReceiverAndExpirationTimeAfterAndStateIs(memberId, LocalDateTime.now(), MessageState.UNREAD);
+		return MessageCountDto.of(receivedMessagesCount, sentMessagesCount, unreadMessagesCount);
 	}
 }
