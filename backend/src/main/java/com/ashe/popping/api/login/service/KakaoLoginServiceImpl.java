@@ -57,10 +57,7 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 			MemberDto oauthMember = makeShareId(memberInfo);
 			// 웰컴 메세지 보내기
 			MessageDto wellComeMessage = makeWellComeMessage();
-			MessageDto messageDto = messageService.saveMessage(wellComeMessage, oauthMember);
-			ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
-
-
+			messageService.saveMessage(wellComeMessage, oauthMember);
 			// 토큰 생성
 			jwtTokenDto = tokenManager.createJwtTokenDto(oauthMember.getMemberId(), oauthMember.getRole());
 		}
