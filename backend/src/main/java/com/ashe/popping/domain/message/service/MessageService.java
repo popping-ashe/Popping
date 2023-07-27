@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.ashe.popping.domain.member.dto.MemberDto;
+import com.ashe.popping.domain.message.dto.MessageCountDto;
 import com.ashe.popping.domain.message.dto.MessageDto;
 
 public interface MessageService {
@@ -19,4 +20,6 @@ public interface MessageService {
 	Long countExpireMessage(Long receiver, LocalDateTime lastVisitedTime);
 
 	MessageDto updateMessageStateToRead(Long messageId);
+
+	MessageCountDto countMessagesByType(Long memberId);
 }
