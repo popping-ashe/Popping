@@ -248,6 +248,7 @@ export default {
 }
 .frame {
   position: relative;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100%;
   overflow: hidden;
   }

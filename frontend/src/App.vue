@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <div v-if="isMobile" class="bgnewjeans">
+      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden;">
         <div class="main">
           <!-- <div class="container3">
             <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
@@ -46,6 +46,7 @@
           image.classList.toggle('enlarged-image');
         }, 300);
       },
+      
     },
     created() {
       const md = new MobileDetect(window.navigator.userAgent);
@@ -59,15 +60,7 @@
         document.documentElement.style.setProperty('--vh', customVH + 'px')
         document.documentElement.style.setProperty('--vw', customVH*(393/852) + 'px')
     },
-
-    scrollDisable(){
-    ('body').addClass('scrollDisable').on('scroll touchmove mousewheel', function(e){
-        e.preventDefault();
-    });
-    },
-    scrollAble(){
-    ('body').removeClass('scrollDisable').off('scroll touchmove mousewheel');
-}
+  
   };
 
   
@@ -75,16 +68,6 @@
 
 
 <style scoped>
-
-body {
-  min-height: 100vh;
-  /* mobile viewport bug fix */
-  min-height: -webkit-fill-available;
-}
-
-html {
-  height: -webkit-fill-available;
-}
 
 .bgnewjeans{
 -webkit-user-select: none;  
