@@ -57,6 +57,8 @@
           </div>
         </div>
       <button v-if="isLogin" @click="logoutUser">로그아웃</button>
+      
+      
       </div>
     </div>
     <!-- <SettingsPopupVue/> -->
