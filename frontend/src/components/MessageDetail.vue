@@ -5,12 +5,13 @@
       <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
         <div class="nickname-box">
-          <div>임시이름</div>
+          <div>{{ bubbledetailProps.nickname }}</div>
         </div>
           <div class="sent-time">{{ bubbledetailProps.create_time.substr(11,5) }}</div>
       </div>
       <div class="content-box">
-        {{ bubbledetailProps }}
+        {{ bubbledetailProps.content }}
+        <!-- {{ bubbledetailProps }} -->
       </div>
     </div>
   </div>
