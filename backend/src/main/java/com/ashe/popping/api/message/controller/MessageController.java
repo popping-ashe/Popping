@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ashe.popping.api.message.dto.MessageApiDto;
 import com.ashe.popping.domain.member.service.MemberService;
+import com.ashe.popping.domain.message.dto.MessageCountDto;
 import com.ashe.popping.domain.message.dto.MessageDto;
 import com.ashe.popping.domain.message.service.MessageService;
 import com.ashe.popping.global.resolver.memberinfo.MemberInfo;
@@ -57,10 +58,17 @@ public class MessageController {
 		return ResponseEntity.ok(null);
 	}
 
+	@GetMapping("/me")
+	public ResponseEntity<MessageApiDto.CountResponse> getMessagesCountByType(@MemberInfo MemberInfoDto memberInfoDto){
+		Long memberId = memberInfoDto.getMemberId();
+		MessageCountDto messageCountDto = messageService.countMessagesByType(memberId);
+		return ResponseEntity.ok(MessageApiDto.CountResponse.from(messageCountDto));
+	}
 	private static List<MessageApiDto.Response> toMessageResponse(List<MessageDto> messages) {
 		return messages.stream()
 			.map(MessageApiDto.Response::from)
 			.toList();
 	}
+
 
 }
