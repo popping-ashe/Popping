@@ -49,7 +49,7 @@ public class Message {
 	@Column(nullable = false)
 	private Long receiver;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 20)
 	private String nickname;
 
 	@Builder
