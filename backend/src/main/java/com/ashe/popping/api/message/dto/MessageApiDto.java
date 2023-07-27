@@ -28,6 +28,14 @@ public class MessageApiDto {
 			this.nickname = nickname;
 			this.retentionTime = retentionTime;
 		}
+
+		public static Request from(String content, String nickname, Long retentionTime){
+			return Request.builder()
+				.content(content)
+				.nickname(nickname)
+				.retentionTime(retentionTime)
+				.build();
+		}
 	}
 
 	@Getter
