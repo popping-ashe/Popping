@@ -356,7 +356,7 @@ export default {
 
 .bubble-make-image {
   width: 78%;
-  height: 85%;
+  height: 90%;
 }
 
 .bubble-make-text {
