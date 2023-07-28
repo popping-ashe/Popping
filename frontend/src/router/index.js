@@ -4,6 +4,7 @@ import MainView from '../views/MainView.vue'
 import LoginView from '../views/LoginView.vue'
 import MypageView from '../views/MypageView.vue'
 import LoginCallBack from '../views/LoginCallBack.vue'
+import Settings from '../views/SettingsView.vue'
 // import userStore from "@/store/modules/userStore";
 
 
@@ -29,6 +30,11 @@ const routes = [
     path: '/oauth/kakao/callback',
     name: 'loginCallBack',
     component: LoginCallBack
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings
   },
 
 ]

@@ -76,15 +76,15 @@
 -o-user-select: none;  
 user-select: none;
 /* background: rgba(19, 127, 250, 0.53); */
-background: hsla(228, 100%, 84%, 1);
+background: hsla(200, 81%, 79%, 1);
 
-background: linear-gradient(270deg, hsla(228, 100%, 84%, 1) 0%, hsla(201, 100%, 84%, 1) 7%, hsla(0, 0%, 100%, 1) 56%, hsla(0, 0%, 100%, 1) 88%, hsla(201, 100%, 84%, 1) 100%);
+background: linear-gradient(270deg, hsla(200, 81%, 79%, 1) 0%, hsla(0, 0%, 100%, 1) 49%, hsla(0, 0%, 100%, 1) 66%, hsla(200, 81%, 79%, 1) 100%);
 
-background: -moz-linear-gradient(270deg, hsla(228, 100%, 84%, 1) 0%, hsla(201, 100%, 84%, 1) 7%, hsla(0, 0%, 100%, 1) 56%, hsla(0, 0%, 100%, 1) 88%, hsla(201, 100%, 84%, 1) 100%);
+background: -moz-linear-gradient(270deg, hsla(200, 81%, 79%, 1) 0%, hsla(0, 0%, 100%, 1) 49%, hsla(0, 0%, 100%, 1) 66%, hsla(200, 81%, 79%, 1) 100%);
 
-background: -webkit-linear-gradient(270deg, hsla(228, 100%, 84%, 1) 0%, hsla(201, 100%, 84%, 1) 7%, hsla(0, 0%, 100%, 1) 56%, hsla(0, 0%, 100%, 1) 88%, hsla(201, 100%, 84%, 1) 100%);
+background: -webkit-linear-gradient(270deg, hsla(200, 81%, 79%, 1) 0%, hsla(0, 0%, 100%, 1) 49%, hsla(0, 0%, 100%, 1) 66%, hsla(200, 81%, 79%, 1) 100%);
 
-filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#ACBCFF", endColorstr="#AEE2FF", GradientType=1 );
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A0D8F5", endColorstr="#FFFFFF", GradientType=1 );
 }
 
 .com-image {
