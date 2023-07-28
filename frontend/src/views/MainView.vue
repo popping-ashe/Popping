@@ -116,9 +116,10 @@ export default {
       }
     );
 
-    if (this.pageid != this.shareid) {
+    if (this.pageid != this.$store.getters["userStore/checkShareId"].share_id) {
       const page = this.pageid;
-
+      console.log(this.shareid);
+      console.log(this.pageid);
       getshareidmessages(
         page, 
         (response) => {
@@ -140,6 +141,8 @@ export default {
         console.log(error);
       })
     } else {
+      console.log(this.shareid);
+      console.log(this.pageid);
       receivedUserMessage(
             (response) => {
               if (response.status == 200) {
