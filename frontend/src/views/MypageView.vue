@@ -21,7 +21,7 @@
       <div style="display: flex; justify-content: space-evenly">
       <div class="received-count">{{this.receivedmessagescount}}</div>
       <div class="sent-count">{{ this.sentmessagescount }}</div>
-      <div class="unread-count">{{ this.receivedmessagescount }}</div>
+      <div class="unread-count">{{ this.unreadMessagesCount }}</div>
       </div>
       <div style="display: flex; justify-content: space-evenly">
       <div class="received">받음</div>
@@ -89,7 +89,7 @@ export default {
       nowShowing: "",
       readOption: 'all',
       messageDetail : '',
-      unreadMessageCount : '',
+      unreadMessagesCount : '',
   
 };
   },
@@ -141,8 +141,8 @@ export default {
             // const messagesCount = response.data
             this.receivedmessagescount = response.data.received_messages_count;
             this.sentmessagescount = response.data.sent_messages_count;
-            this.unreadMessageCount = response.data.unread_messages_count;
-      
+            this.unreadMessagesCount = response.data.unread_messages_count;
+
           } else {
             console.log("메세지 없음");
           }
