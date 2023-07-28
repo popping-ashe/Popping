@@ -108,4 +108,8 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A0D8F5", en
 body {
   position:fixed;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
 </style>
