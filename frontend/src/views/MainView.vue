@@ -89,7 +89,7 @@ export default {
       receivedUserMessage(
         (response) => {
           if (response.status == 200) {
-            sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+            // sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
             // console.log(response);
             const receivedmessages = response.data
             this.receivedmessages = receivedmessages
