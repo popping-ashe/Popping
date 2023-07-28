@@ -83,14 +83,14 @@ export default {
   border: 1px solid darkslategray;
   border-radius: 0px 20px 20px 20px;
   outline: none;
-  font-size: 85%;
+  font-size: 80%;
   font-weight: bold;
   background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
   display: flex;
   align-items: center;
   margin-left: 6.5%;
-  padding-left: 3%;
-  padding-right: 3%;
+  padding-left: 4.5%;
+  padding-right: 4.5%;
 }
 
 .sent-time {

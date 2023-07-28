@@ -82,14 +82,14 @@ export default {
   border: 1px solid darkslategray;
   border-radius: 20px 0px 20px 20px;
   outline: none;
-  font-size: 85%;
+  font-size: 80%;
   font-weight: bold;
   background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
   margin-right: 11%;
   display: flex;
   align-items: center;
-  padding-left: 4%;
-  padding-right: 4%;
+  padding-left: 4.5%;
+  padding-right: 4.5%;
 }
 
 .sent-time {
@@ -124,7 +124,7 @@ export default {
   font-weight: normal;
 }
 
-.scroll::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
 }
 </style>
