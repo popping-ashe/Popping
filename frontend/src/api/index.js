@@ -3,7 +3,7 @@ import axios from "axios";
 // local vue api axios instance
 function apiInstance() {
   const instance = axios.create({
-    baseURL: "http://dev.pop-ping:5000",
+    baseURL: "http://dev.pop-ping.com:5000",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
