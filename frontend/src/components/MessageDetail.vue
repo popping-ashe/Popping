@@ -118,6 +118,9 @@ export default {
   padding-left: 3%;
   padding-top: 2.3%;
   overflow: scroll;
+  /* overflow-y: scroll; */
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
 }
 
 ::placeholder {
@@ -125,7 +128,7 @@ export default {
   font-weight: normal;
 }
 
-.scroll::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
 }
 </style>
