@@ -86,25 +86,25 @@ export default {
           console.log(this.shareid)
           console.log(this.pageid)
 
-          // receivedUserMessage(
-          //   (response) => {
-          //     if (response.status == 200) {
-          //       // sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
-          //       // console.log(response);
-          //       const receivedmessages = response.data
-          //       this.receivedmessages = receivedmessages
-          //       console.log(receivedmessages)
-          //       this.generateRandomSizes();
-          //       this.generateRandomPosition();
-          //     } else {
-          //       console.log("받은 메세지 없음");
-          //     }
-          //   },
-          //   async (error) => {
-          //     console.log(error);
-          //     console.log('받은메세지 받아오기 에러');
-          //   }
-          // )
+      receivedUserMessage(
+        (response) => {
+          if (response.status == 200) {
+            // sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+            // console.log(response);
+            const receivedmessages = response.data
+            this.receivedmessages = receivedmessages
+            console.log(receivedmessages)
+            this.generateRandomSizes();
+            this.generateRandomPosition();
+          } else {
+            console.log("받은 메세지 없음");
+          }
+        },
+        async (error) => {
+          console.log(error);
+          console.log('받은메세지 받아오기 에러');
+        }
+      )
         } else {
           console.log("shareid 없음");
         }
@@ -115,6 +115,12 @@ export default {
 
       }
     );
+    // const shareid = this.$store.getters["userStore/checkShareId"];
+    // this.shareid = shareid.share_id
+    // console.log(this.shareid)
+    // console.log(this.pageid)
+    // console.log(this.shareid)
+    // console.log(this.pageid)
 
     if (this.pageid != this.shareid) {
       const page = this.pageid;
@@ -139,26 +145,6 @@ export default {
         (error) => {
         console.log(error);
       })
-    } else {
-      receivedUserMessage(
-            (response) => {
-              if (response.status == 200) {
-                // sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
-                // console.log(response);
-                const receivedmessages = response.data
-                this.receivedmessages = receivedmessages
-                console.log(receivedmessages)
-                this.generateRandomSizes();
-                this.generateRandomPosition();
-              } else {
-                console.log("받은 메세지 없음");
-              }
-            },
-            async (error) => {
-              console.log(error);
-              console.log('받은메세지 받아오기 에러');
-            }
-          )
     }
     console.log(this.nickname)
   },
