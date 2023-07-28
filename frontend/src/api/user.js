@@ -27,7 +27,7 @@ async function receivedUserMessage(success, fail) {
 async function sentUserMessage(success, fail) {
   let token = "Bearer " + sessionStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
-    await api.get(`/messages/me/sent`).then(success).catch(fail);
+    await api.get(`/messages/me/sent?sort=createTime,DESC`).then(success).catch(fail);
   }
 
 //메세지 보내기
