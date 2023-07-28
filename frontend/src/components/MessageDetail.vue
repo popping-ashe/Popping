@@ -89,8 +89,8 @@ export default {
   display: flex;
   align-items: center;
   margin-left: 6.5%;
-  padding-left: 4.5%;
-  padding-right: 4.5%;
+  padding-left: 3.5%;
+  padding-right: 4.2%;
 }
 
 .sent-time {
@@ -105,7 +105,7 @@ export default {
 .content-box {
   width: 100%;
   height: 51%;
-  font-size: 85;
+  font-size: 85%;
   border: 1px solid darkslategray;
   border-radius: 0px 20px 20px 20px;
   outline: none;
@@ -115,7 +115,7 @@ export default {
   margin-bottom: 6%;
   margin-left: 6.5%;
   margin-right: 11%;
-  padding-left: 3%;
+  padding-left: 3.5%;
   padding-top: 2.3%;
   overflow: scroll;
 }

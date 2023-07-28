@@ -45,7 +45,7 @@ import MessageDetail from '@/components/MessageDetail.vue'
 import MakeBubble from '@/components/MakeBubble.vue'
 import { mapState, mapActions } from 'vuex'
 // import axios from 'axios'
-import { getshareid, getshareidmessages, receivedUserMessage } from "@/api/user"
+import { getshareidmessages, receivedUserMessage } from "@/api/user"
 // import { getshareid, getshareidmessages, getUserInfo, receivedUserMessage } from "@/api/user"
 const userStore = "userStore";
 
@@ -71,67 +71,34 @@ export default {
     // this.updateUserData()
   },
   mounted() {
-    // this.updateUserData()
-    getshareid(
+    if (this.isLogin == true) {
+    const shareid = this.$store.getters["userStore/checkShareId"];
+    this.shareid = shareid.share_id
+    const nickname = this.$store.getters["userStore/checkUserInfo"].nickname;
+    this.nickname = nickname
+    // sessionStorage.setItem("shareid", JSON.stringify(response.data));
+    // console.log(userStore.state.userInfo.nickname);
+    console.log(this.shareid)
+    console.log(this.pageid)
+    receivedUserMessage(
       (response) => {
         if (response.status == 200) {
-          const shareid = this.$store.getters["userStore/checkShareId"];
-          this.shareid = shareid.share_id
-          // sessionStorage.setItem("shareid", JSON.stringify(response.data));
-          // console.log(userStore.state.userInfo.nickname);
-          // console.log(this.shareid)
-          // console.log(this.pageid)
-          // getUserInfo(
-          //   (response) => {
-          //     if (response.status == 200) {
-          //       sessionStorage.setItem("userinfo", JSON.stringify(response.data));
-          //       // console.log(response)
-          //       const userInfo = response.data
-          //       this.nickname = userInfo.nickname;
-          //     } else {
-          //       console.log("유저 정보 없음");
-          //     }
-          //   },
-          //   async (error) => {
-          //     console.log(error);
-          //     this.$router.push({ name: "LoginView" });
-          //   }
-          // );
-      receivedUserMessage(
-        (response) => {
-          if (response.status == 200) {
-            sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
-            // console.log(response);
-            const receivedmessages = response.data
-            this.receivedmessages = receivedmessages
-            // console.log(receivedmessages)
-            this.generateRandomSizes();
-            this.generateRandomPosition();
-          } else {
-            console.log("받은 메세지 없음");
-          }
-        },
-        async (error) => {
-          console.log(error);
-          console.log('받은메세지 받아오기 에러');
-        }
-      )
+          sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+          // console.log(response);
+          const receivedmessages = response.data
+          this.receivedmessages = receivedmessages
+          console.log(receivedmessages)
+          this.generateRandomSizes();
+          this.generateRandomPosition();
         } else {
-          console.log("shareid 없음");
+          console.log("받은 메세지 없음");
         }
       },
       async (error) => {
         console.log(error);
-        // console.log(this.shareid);
-
+        console.log('받은메세지 받아오기 에러');
       }
-    );
-    // const shareid = this.$store.getters["userStore/checkShareId"];
-    // this.shareid = shareid.share_id
-    // console.log(this.shareid)
-    // console.log(this.pageid)
-    // console.log(this.shareid)
-    // console.log(this.pageid)
+    )
 
     if (this.pageid != this.shareid) {
       const page = this.pageid;
@@ -149,14 +116,40 @@ export default {
           this.receivedmessages = othermessages
           this.generateRandomSizes();
           this.generateRandomPosition();
-        } else {
-          console.log("잘못");
-        }
-      },
-        (error) => {
-        console.log(error);
-      })
+          } else {
+            console.log("잘못");
+          }
+        },
+          (error) => {
+          console.log(error);
+        })
+      }
     }
+    // console.log(this.isLogin)
+    if (this.isLogin == false) {
+      const page = this.pageid
+      getshareidmessages(
+        page, 
+        (response) => {
+        if (response.status == 200) {
+          console.log(response.data)
+          // console.log(response.data.nickname)
+          const othermessages = response.data.data
+          // console.log(othermessages)
+          this.nickname = response.data.nickname
+          console.log(this.nickname)
+          this.receivedmessages = othermessages
+          this.generateRandomSizes();
+          this.generateRandomPosition();
+          } else {
+            console.log("잘못");
+          }
+        },
+          (error) => {
+          console.log(error);
+        })
+    }
+    
     console.log(this.nickname)
   },
 
@@ -227,7 +220,7 @@ export default {
 
   computed: {
     ...mapState(['showReceivedDetail', 'showMakeWindow']),
-    ...mapState( userStore, ['userInfo', 'shareid', 'updateUserData','othermessages']),
+    ...mapState( userStore, ['userInfo', 'shareid', 'updateUserData','othermessages','isLogin']),
   }
 }
 
