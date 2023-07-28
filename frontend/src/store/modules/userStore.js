@@ -73,15 +73,15 @@ const userStore = {
             console.log(response)
             let accessToken = response.data["accessToken"];
             let refreshToken = response.data["refreshToken"];
-            console.log(accessToken)
-            console.log(refreshToken)
+            // console.log(accessToken)
+            // console.log(refreshToken)
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
             console.log(this.state)
             sessionStorage.setItem("access-token", accessToken);
             sessionStorage.setItem("refresh-token", refreshToken);
-            console.log(sessionStorage.getItem("access-token"))
+            // console.log(sessionStorage.getItem("access-token"))
             getUserInfo(
               (response) => {
                 if (response.status == 200) {
@@ -108,7 +108,7 @@ const userStore = {
                   commit("SET_SHAREID", response.data);
                   sessionStorage.setItem("shareid", JSON.stringify(response.data));
                   // console.log(userStore.state.userInfo.nickname);
-                  console.log(this.state.userStore.shareid.share_id)
+                  // console.log(this.state.userStore.shareid.share_id)
                 } else {
                   console.log("shareid 없음");
                 }
@@ -124,7 +124,7 @@ const userStore = {
                 if (response.status == 200) {
                   commit("SET_SENT_MESSAGES", response.data)
                   sessionStorage.setItem("sentmessages", JSON.stringify(response.data));
-                  console.log(userStore.state.sentmessages);
+                  // console.log(userStore.state.sentmessages);
                 } else {
                   console.log("보낸 메세지 없음");
                 }
@@ -139,7 +139,7 @@ const userStore = {
                 if (response.status == 200) {
                   commit("SET_RECEIVED_MESSAGES", response.data)
                   sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
-                  console.log(userStore.state.receivedmessages);
+                  // console.log(userStore.state.receivedmessages);
                   router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
                 } else {
                   console.log("받은 메세지 없음");
@@ -194,9 +194,9 @@ const userStore = {
         (response) => {
         if (response.status == 200) {
           commit("SET_OTHERMESSAGES", response.data);
-          console.log(response.data)
-          console.log(response.data.nickname)
-          console.log(userStore.state.othermessages)
+          // console.log(response.data)
+          // console.log(response.data.nickname)
+          // console.log(userStore.state.othermessages)
           
         } else {
           console.log("잘못");
@@ -265,7 +265,7 @@ const userStore = {
           if (response.status == 200) {
             commit("SET_SENT_MESSAGES", response.data)
             sessionStorage.setItem("sentmessages", JSON.stringify(response.data));
-            console.log(userStore.state.sentmessages);
+            // console.log(userStore.state.sentmessages);
           } else {
             console.log("보낸 메세지 없음");
           }
@@ -280,7 +280,7 @@ const userStore = {
           if (response.status == 200) {
             commit("SET_RECEIVED_MESSAGES", response.data)
             sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
-            console.log(userStore.state.receivedmessages);
+            // console.log(userStore.state.receivedmessages);
           } else {
             console.log("받은 메세지 없음");
           }

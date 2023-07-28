@@ -20,7 +20,9 @@
             </div>
           </div>
         </div>
-          <textarea class="content-input" placeholder="내용" v-model="messageData.content"></textarea>
+          <div class="content-input-box">
+            <textarea class="content-input" placeholder="내용" v-model="messageData.content"></textarea>
+          </div>
           <!-- <input class="content-input" type="text" v-model="contents"> -->
           <div class="button-box">
             <div class="cancel-button" @click="closeDetail()">취소</div>
@@ -143,15 +145,15 @@ export default {
 .nickname-input {
   width: 35%;
   height: 100%;
-  border: 0.5px solid darkslategray;
+  border: 1px solid darkslategray;
   border-radius: 0px 20px 20px 20px;
   outline: none;
   font-size: 85%;
-  padding-left: 2.5%;
   font-weight: bold;
   background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
   margin-left: 6.5%;
   padding-left: 3%;
+  padding-right: 3.4%;
 }
 
 .time-select-box {
@@ -167,29 +169,27 @@ export default {
 .time-icon {
   width: 20%;
   height: auto;
-  margin-left: 7%;
+  margin-left: 9%;
 }
 
 .time-selector {
   display: flex;
-  margin-left: 6%;
-  width: 60%;
+  margin-left: 7%;
+  width: 55%;
   height: 60%;
   background-color: #abd7f2;
   text-align: center;
   border-radius: 16px;
   align-items: center;
   justify-content: center;
-  font-size: 75%;
+  font-size: 68%;
 }
 
-.content-input {
+.content-input-box {
   width: 100%;
   height: 51%;
-  font-size: 85%;
   border: 1px solid darkslategray;
   border-radius: 0px 20px 20px 20px;
-  outline: none;
   padding: 9px 12px 5px 12px;
   resize: none;
   background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
@@ -198,6 +198,15 @@ export default {
   margin-right: 11%;
   padding-left: 3%;
   padding-top: 2.3%;
+  scroll-padding: 5%;
+}
+
+.content-input {
+  width: 100%;
+  height: 78%;
+  font-size: 85%;
+  resize: none;
+  outline: none;
 }
 
 .button-box {
