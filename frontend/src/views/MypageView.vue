@@ -71,7 +71,7 @@ import SentDetail from '@/components/SentDetail.vue'
 
 import { mapState,mapActions } from 'vuex'
 const userStore = "userStore";
-import { sentUserMessage, receivedUserMessage } from "@/api/user"
+import { sentUserMessage, receivedUserMessageCount } from "@/api/user"
 
 export default {
   name: 'MypageView',
@@ -134,24 +134,42 @@ export default {
     this.updateUserData()
   },
   mounted() {
-    receivedUserMessage(
-        (response) => {
+    receivedUserMessageCount(
+      (response) => {
           if (response.status == 200) {
-            sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
             console.log(response);
-            const receivedmessages = response.data
-            this.receivedmessages = receivedmessages
-            this.receivedmessagescount = receivedmessages.length;
-
+            // const messagesCount = response.data
+            this.receivedmessagescount = response.data.received_messages_count;
+            this.sentmessagescount = response.data.sent_messages_count;
+            this.unreadMessageCount = response.data.unread_messages_count;
+      
           } else {
-            console.log("받은 메세지 없음");
+            console.log("메세지 없음");
           }
         },
         async (error) => {
           console.log(error);
-          console.log('받은메세지 받아오기 에러');
+          console.log('메세지 개수 받아오기 에러');
         }
-    )
+      )
+    // receivedUserMessage(
+    //     (response) => {
+    //       if (response.status == 200) {
+    //         sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+    //         console.log(response);
+    //         const receivedmessages = response.data
+    //         this.receivedmessages = receivedmessages
+    //         this.receivedmessagescount = receivedmessages.length;
+
+    //       } else {
+    //         console.log("받은 메세지 없음");
+    //       }
+    //     },
+    //     async (error) => {
+    //       console.log(error);
+    //       console.log('받은메세지 받아오기 에러');
+    //     }
+    // )
     sentUserMessage(
       (response) => {
         if (response.status == 200) {
@@ -160,9 +178,9 @@ export default {
           const sentmessages = response.data
           this.sentmessages = sentmessages
           console.log(sentmessages)
-          this.sentmessagescount = sentmessages.length;
+          // this.sentmessagescount = sentmessages.length;
           this.nowShowing = sentmessages
-          this.unreadMessageCount = this.sentmessages.filter((article) => article.state === '안읽음').length
+          // this.unreadMessageCount = this.sentmessages.filter((article) => article.state === '안읽음').length
 
         } else {
           console.log("보낸 메세지 없음");

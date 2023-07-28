@@ -81,7 +81,7 @@ export default {
         if (response.status == 200) {
           const shareid = this.$store.getters["userStore/checkShareId"];
           this.shareid = shareid.share_id
-          sessionStorage.setItem("shareid", JSON.stringify(response.data));
+          // sessionStorage.setItem("shareid", JSON.stringify(response.data));
           // console.log(userStore.state.userInfo.nickname);
           // console.log(this.shareid)
           // console.log(this.pageid)
@@ -368,14 +368,14 @@ export default {
   width: 100%;
   margin: 5px;
   /* filter: drop-shadow(1px 1px 1px black); */
-  /* animation: popping1 3s ease-in-out infinite alternate; */
+  animation: popping1 3s ease-in-out infinite alternate;
 }
 @keyframes popping1 {
   0% {
     transform: scale(1) translateY(0);
   }
   50% {
-    transform: scale(1) translateY(-10%);
+    transform: scale(1) translateY(-15%);
   }
   100% {
     transform: scale(1) translateY(0%);

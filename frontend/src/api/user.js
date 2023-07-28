@@ -11,7 +11,7 @@ async function kakaologin(code, success, fail) {
 async function getUserInfo( success, fail) {
   let token = "Bearer " + sessionStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
-  console.log(token)
+  // console.log(token)
   await api.get(`/members/me`).then(success).catch(fail);
 }
 
@@ -28,6 +28,13 @@ async function sentUserMessage(success, fail) {
   let token = "Bearer " + sessionStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
     await api.get(`/messages/me/sent?sort=createTime,DESC`).then(success).catch(fail);
+  }
+
+// 보내고 받고 안읽은 메세지 개수
+async function receivedUserMessageCount(success, fail) {
+  let token = "Bearer " + sessionStorage.getItem("access-token");
+  api.defaults.headers["Authorization"] = token;
+    await api.get(`/messages/me/`).then(success).catch(fail);
   }
 
 //메세지 보내기
@@ -83,4 +90,4 @@ async function getshareidmessages(page, success, fail) {
 
 
 
-export { readmessages, getshareidmessages, getshareid, kakaologin, getUserInfo, receivedUserMessage, sentUserMessage, sendUserMessage, logout, changenickname, gettoken};
+export { receivedUserMessageCount, readmessages, getshareidmessages, getshareid, kakaologin, getUserInfo, receivedUserMessage, sentUserMessage, sendUserMessage, logout, changenickname, gettoken};
