@@ -4,10 +4,10 @@
       <img class="logo" src="../assets/logo_final.png" alt="">
     </div>
 
-    <div class="progress-bar">
+    <!-- <div class="progress-bar">
       <div class="loading-text">Loading...</div>
       <progress :value="progressValue" max="100"></progress>
-    </div>
+    </div> -->
 
     <div class="kakao">
       <!-- <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"> -->
