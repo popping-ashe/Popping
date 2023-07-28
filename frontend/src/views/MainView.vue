@@ -81,11 +81,26 @@ export default {
         if (response.status == 200) {
           const shareid = this.$store.getters["userStore/checkShareId"];
           this.shareid = shareid.share_id
-          // sessionStorage.setItem("shareid", JSON.stringify(response.data));
+          sessionStorage.setItem("shareid", JSON.stringify(response.data));
           // console.log(userStore.state.userInfo.nickname);
-          console.log(this.shareid)
-          console.log(this.pageid)
-
+          // console.log(this.shareid)
+          // console.log(this.pageid)
+          // getUserInfo(
+          //   (response) => {
+          //     if (response.status == 200) {
+          //       sessionStorage.setItem("userinfo", JSON.stringify(response.data));
+          //       // console.log(response)
+          //       const userInfo = response.data
+          //       this.nickname = userInfo.nickname;
+          //     } else {
+          //       console.log("유저 정보 없음");
+          //     }
+          //   },
+          //   async (error) => {
+          //     console.log(error);
+          //     this.$router.push({ name: "LoginView" });
+          //   }
+          // );
       receivedUserMessage(
         (response) => {
           if (response.status == 200) {
@@ -93,7 +108,7 @@ export default {
             // console.log(response);
             const receivedmessages = response.data
             this.receivedmessages = receivedmessages
-            console.log(receivedmessages)
+            // console.log(receivedmessages)
             this.generateRandomSizes();
             this.generateRandomPosition();
           } else {
@@ -132,7 +147,7 @@ export default {
           console.log(response.data)
           // console.log(response.data.nickname)
           const othermessages = response.data.data
-          console.log(othermessages)
+          // console.log(othermessages)
           this.nickname = response.data.nickname
           console.log(this.nickname)
           this.receivedmessages = othermessages
