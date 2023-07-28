@@ -64,9 +64,9 @@ export default {
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
   overflow: hidden;
-  /* background-image: url("../assets/background.png"); */
-  /* background-size: 100%; */
-  /* background-repeat: repeat-x; */
+  background-image: url("../assets/background.png");
+  background-size: 100%;
+  background-repeat: repeat-x;
   }
 
 .logo-frame {
