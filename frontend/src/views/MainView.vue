@@ -86,25 +86,25 @@ export default {
           console.log(this.shareid)
           console.log(this.pageid)
 
-          // receivedUserMessage(
-          //   (response) => {
-          //     if (response.status == 200) {
-          //       // sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
-          //       // console.log(response);
-          //       const receivedmessages = response.data
-          //       this.receivedmessages = receivedmessages
-          //       console.log(receivedmessages)
-          //       this.generateRandomSizes();
-          //       this.generateRandomPosition();
-          //     } else {
-          //       console.log("받은 메세지 없음");
-          //     }
-          //   },
-          //   async (error) => {
-          //     console.log(error);
-          //     console.log('받은메세지 받아오기 에러');
-          //   }
-          // )
+          receivedUserMessage(
+            (response) => {
+              if (response.status == 200) {
+                // sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+                // console.log(response);
+                const receivedmessages = response.data
+                this.receivedmessages = receivedmessages
+                console.log(receivedmessages)
+                this.generateRandomSizes();
+                this.generateRandomPosition();
+              } else {
+                console.log("받은 메세지 없음");
+              }
+            },
+            async (error) => {
+              console.log(error);
+              console.log('받은메세지 받아오기 에러');
+            }
+          )
         } else {
           console.log("shareid 없음");
         }
@@ -140,58 +140,8 @@ export default {
         (error) => {
         console.log(error);
       })
-    } else if 
-      (this.pageid != this.shareid) {
-      const page = this.pageid;
-      console.log(this.shareid);
-      console.log(this.pageid);
-      getshareidmessages(
-        page, 
-        (response) => {
-        if (response.status == 200) {
-          console.log(response.data)
-          // console.log(response.data.nickname)
-          const othermessages = response.data.data
-          console.log(othermessages)
-          this.nickname = response.data.nickname
-          console.log(this.nickname)
-          this.receivedmessages = othermessages
-          this.generateRandomSizes();
-          this.generateRandomPosition();
-        } else {
-          console.log("잘못");
-        }
-      },
-        (error) => {
-        console.log(error);
-      })
-
-    } else {
-      console.log(this.shareid);
-      console.log(this.pageid);
-      receivedUserMessage(
-            (response) => {
-              if (response.status == 200) {
-                // sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
-                // console.log(response);
-                this.nickname = this.$store.getters["userStore/checkUserInfo"].nickname
-                const receivedmessages = response.data
-                this.receivedmessages = receivedmessages
-
-                console.log(receivedmessages)
-                this.generateRandomSizes();
-                this.generateRandomPosition();
-              } else {
-                console.log("받은 메세지 없음");
-              }
-            },
-            async (error) => {
-              console.log(error);
-              console.log('받은메세지 받아오기 에러');
-            }
-          )
+    
     }
-    console.log(this.nickname)
   },
 
   methods: {
