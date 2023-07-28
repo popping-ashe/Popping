@@ -6,14 +6,18 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import feign.form.FormProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Component
 public class KakaoTokenDto {
 	@Builder
 	@Getter
 	@ToString
-	public static class Request{
+	public static class Request {
 
 		@FormProperty("grant_type")
 		private final String grant_type = "authorization_code";
@@ -25,16 +29,16 @@ public class KakaoTokenDto {
 		private String client_secret;
 
 		@FormProperty("redirect_uri")
-		private final String redirect_uri = "http://localhost:8080/oauth/kakao/callback";
+		private final String redirect_uri = "http://dev.pop-ping.com:3000/oauth/kakao/callback";
 
 		private String code;
 
-		public static Request of(String clientId, String clientSecret, String code){
+		public static Request of(String clientId, String clientSecret, String code) {
 			return Request.builder()
-						.client_id(clientId)
-						.client_secret(clientSecret)
-						.code(code)
-						.build();
+				.client_id(clientId)
+				.client_secret(clientSecret)
+				.code(code)
+				.build();
 		}
 
 	}
@@ -45,7 +49,7 @@ public class KakaoTokenDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-	public static class Response{
+	public static class Response {
 		private String tokenType;
 		private String accessToken;
 		private Integer expiresIn;
