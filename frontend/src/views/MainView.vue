@@ -140,6 +140,32 @@ export default {
         (error) => {
         console.log(error);
       })
+    } else if 
+      (this.pageid != this.shareid) {
+      const page = this.pageid;
+      console.log(this.shareid);
+      console.log(this.pageid);
+      getshareidmessages(
+        page, 
+        (response) => {
+        if (response.status == 200) {
+          console.log(response.data)
+          // console.log(response.data.nickname)
+          const othermessages = response.data.data
+          console.log(othermessages)
+          this.nickname = response.data.nickname
+          console.log(this.nickname)
+          this.receivedmessages = othermessages
+          this.generateRandomSizes();
+          this.generateRandomPosition();
+        } else {
+          console.log("잘못");
+        }
+      },
+        (error) => {
+        console.log(error);
+      })
+
     } else {
       console.log(this.shareid);
       console.log(this.pageid);
