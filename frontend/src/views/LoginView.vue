@@ -4,10 +4,10 @@
       <img class="logo" src="../assets/logo_final.png" alt="">
     </div>
 
-    <!-- <div class="progress-bar">
+    <div class="progress-bar">
       <div class="loading-text">Loading...</div>
       <progress :value="progressValue" max="100"></progress>
-    </div> -->
+    </div>
 
     <div class="kakao">
       <!-- <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"> -->
@@ -74,14 +74,13 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
-  top: 24%;
+  top: 28%;
 }
 
 .logo {
   width: 78%;
   /* filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2)); */
   filter: brightness(115%);
-  animation: popping1 3s ease-in-out infinite alternate
 }
 
 .kakao {
@@ -114,17 +113,5 @@ export default {
 progress {
   width: 65%;
   height: 20px;
-}
-
-@keyframes popping1 {
-  0% {
-    transform: scale(1) translateY(0);
-  }
-  50% {
-    transform: scale(1) translateY(-8%);
-  }
-  100% {
-    transform: scale(1) translateY(0%);
-  }
 }
 </style>

@@ -32,8 +32,8 @@
 
 
     <!-- 로그인 상태에 따라 동적으로 메세지 보내기 버튼 활성화/비활성화 -->
-    <div class="bubble-make-btn font-hangeul" v-if="pageid != shareid">
-      <img class="bubble-make-image" src="../assets/makebubblebtn.png" @click="openMake()" alt="">
+    <div class="bubble-make-btn font-hangeul" v-if="pageid != shareid" @click="openMake()">
+      <img class="bubble-make-image" src="../assets/makebubblebtn.png" alt="">
       <div class="bubble-make-text">
         버블 만들기
       </div>
