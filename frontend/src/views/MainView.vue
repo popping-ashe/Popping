@@ -148,10 +148,8 @@ export default {
               if (response.status == 200) {
                 // sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
                 // console.log(response);
-                this.nickname = this.$store.getters["userStore/checkUserInfo"].nickname
                 const receivedmessages = response.data
                 this.receivedmessages = receivedmessages
-
                 console.log(receivedmessages)
                 this.generateRandomSizes();
                 this.generateRandomPosition();
