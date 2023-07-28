@@ -8,7 +8,7 @@
       <!-- <input v-model="messageData.nickname" type="text" placeholder="보내는 사람의 nickname입력"> -->
     <!-- <button @click="sendMessage">전송</button><br>
     <button @click="closeDetail()">창 닫기</button> -->
-  <div class="message-frame">
+  <div class="message-frame animate__animated animate__fadeIn">
     <div class="window">
       <div class="close-button" @click="closeDetail()"></div>
         <div class="upper-bar">
