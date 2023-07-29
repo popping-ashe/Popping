@@ -112,4 +112,13 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.font-kor{
+  font-family: 'Galmuri9';
+  font-weight: 200;
+}
+
+.font-eng{
+  font-family: 'hydrophilia'
+}
 </style>

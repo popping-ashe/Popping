@@ -357,13 +357,4 @@ export default {
   margin-bottom: 2.5%;
 }
 
-.font-kor{
-  font-family: 'Galmuri9';
-  font-weight: 200;
-}
-
-.font-eng{
-  font-family: 'hydrophilia'
-}
-
 </style>
