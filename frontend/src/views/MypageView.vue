@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import SettingsPopupVue from '@/components/SettingsPopup.vue';
+// import SettingsPopupVue from '@/components/SettingsPopup.vue';
 import SentDetail from '@/components/SentDetail.vue'
 
 import { mapState,mapActions } from 'vuex'
@@ -78,7 +78,7 @@ import { sentUserMessage, receivedUserMessageCount } from "@/api/user"
 export default {
   name: 'MypageView',
   components : {
-    SettingsPopupVue,
+    // SettingsPopupVue,
     SentDetail
   },
   data() {
