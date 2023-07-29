@@ -2,26 +2,21 @@
   <div class="frame" style="z-index: 0;">
       <SentDetail :messagedetail-props="messageDetail" v-if="showSentDetail"/>
     <div class="upper-bar">
-      <div class="back-ellipse" @click="$router.go(-1)">
-        <div class="back-emoji">
-          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
-        </div>
+      <div class="new-button" style="margin-left: 6%" @click="$router.go(-1)">
+        Back
       </div>
-      <div class="mypage font-stardust">
-        마이페이지
+      <div class="mypage font-kor">
+        MYPAGE
       </div>
-      <div class="settings-ellipse">
-        <div class="settings-emoji">
-          <!-- <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/></svg> -->
-          <SettingsPopupVue/>
-        </div>
+      <div class="new-button" style="margin-right: 6%">
+        Settings
       </div>
     </div>
     <div class="article-counts font-stardust">
       <div style="display: flex; justify-content: space-evenly">
-      <div class="received-count">{{this.receivedmessagescount}}</div>
-      <div class="sent-count">{{ this.sentmessagescount }}</div>
-      <div class="unread-count">{{ this.unreadMessageCount }}</div>
+      <div class="received-count">1</div>
+      <div class="sent-count">23</div>
+      <div class="unread-count">23</div>
       </div>
       <div style="display: flex; justify-content: space-evenly">
       <div class="received">받음</div>
@@ -44,16 +39,23 @@
       <div class="sent-message-frame">
         <!-- for문 -->
         <div v-for="(article, index) in nowShowing" :key="index" class="sent-message-box" @click="sentDetail(index)">
-          <div class="sent-message-ellipse font-stardust">
-            <div class="user-initial "><!-- 유저 아이디 첫글자 -->{{article.nickname.substr(0,1)}}</div>
+          <div class="sent-message-ellipse">
+            <!-- <div class="user-initial"> -->
+              <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
+              <!-- {{article.nickname.substr(0,1)}} -->
+              <img class="profile-image" src="../assets/user_profile.png" alt="">
           </div>
-          <div class="sent-bubble-info-frame font-healthset">
-            <div class="sent-time-status">
-              <div style="margin-right: 5px;">{{ article.create_time.substr(5,2) }}/{{ article.create_time.substr(8,2) }}
+
+          <div class="sent-bubble-info-frame">
+            <div class="sent-upper">
+              <div class="sent-receiver">{{ article.receiver_nickname }}</div>
+              <div class="sent-state">{{ article.state }}</div>
+              <div>{{ article.create_time.substr(5,2) }}/{{ article.create_time.substr(8,2) }}
                 {{ article.create_time.substr(11,5) }}</div>
-              <div>{{ article.state }}</div>
             </div>
-            <div class="sent-bubble-context">{{ article.content.substr(0,15) }}</div>
+            <div class="sent-lower">
+              {{ article.content.substr(0,15) }}
+            </div>
           </div>
         </div>
       <button v-if="isLogin" @click="logoutUser">로그아웃</button>
@@ -200,10 +202,7 @@ export default {
 </script>
 
 <style scoped>
-/* iPhone 14 Pro - 2 */
-
 .frame {
-  
   position: relative;
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
@@ -222,56 +221,29 @@ export default {
   align-items: center;
   }
 
-.back-ellipse {
+.new-button {
+  width: 65px;
+  height: 29px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
   box-sizing: border-box;
-  width: 40px;
-  height: 40px;
-  margin-left: 6%;
-  background: #FFFFFF;
-  border: 1px solid #505050;
-  border-radius: 50%;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
-  transition: all ease 0.4s;
+  border-style : solid;
+  border-color : #808384;
+  border-color : rgba(128, 131, 132, 1);
+  border-width : 1px;
+  border-radius : 16px;
+  -moz-border-radius : 16px;
+  -webkit-border-radius : 16px;
+  box-shadow: inset 0px -3px 3px #D8D8D8;
+  padding :2px 10px 4px;
+  text-decoration: none;
+  font-family: 'hydrophilia';
+  color:black;
+  font-size: 14px;
+  font-weight: 600;
   }
-
-.back-ellipse:hover {
-    filter: brightness(70%);
-    transition: all ease 0.4s;
-  }
-
-.settings-ellipse {
-  box-sizing: border-box;
-
-  width: 40px;
-  height: 40px;
-  margin-right: 6%;
-  background: #FFFFFF;
-  border: 1px solid #505050;
-  border-radius: 50%;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
-  transition: all ease 0.4s;
-  }
-
-.settings-ellipse:hover {
-  filter: brightness(70%);
-  transition: all ease 0.4s;
-  }
-
-.back-emoji {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  left: 14px;
-  top: 5px;
-}
-
-.settings-emoji {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  left: 10px;
-  top: 0px;
-}
 
 .mypage {
   width: 176px;
@@ -281,7 +253,7 @@ export default {
 
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 14.5px;
   line-height: 21px;
   /* or 105% */
   display: flex;
@@ -290,7 +262,7 @@ export default {
   letter-spacing: -0.32px;
 
   color: #000000;
-
+  margin-top: 2px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
   }
 
@@ -359,7 +331,7 @@ export default {
   left: 1px;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 21px;
   align-items: center;
   text-align: center;
@@ -377,7 +349,7 @@ export default {
 
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 21px;
   /* or 150% */
   text-align: center;
@@ -394,7 +366,7 @@ export default {
   left: 1px;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 21px;
   /* or 150% */
   text-align: center;
@@ -462,12 +434,6 @@ export default {
   top: 30.7%;
   align-items: center;
   overflow: scroll;
-
-  font-family: '헬스셋';
-}
-
-::-webkit-scrollbar {
-  display: none;
 }
 
 .sent-message-frame {
@@ -483,24 +449,32 @@ export default {
 .sent-message-box {
   position: relative;
   width: 100%;
-  height: 64px;
-  background: rgba(255, 255, 255, 0.485);
-  box-shadow: 2px 2px 2px darkgrey;
-  border-radius:20px;
+  height: 85px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.35);
+  border-radius: 30px;
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 22px;
   display: flex;
   align-items: center;
   opacity: 100%;
 }
 
+.profile-area {
+  height: 100%;
+  width: 80px;
+  display: flex;
+  align-items: center;
+}
+
 .sent-message-ellipse {
   box-sizing: border-box;
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 54px;
+  height: 54px;
   left: 14px;
-
+  /* border: 0.1px solid darkslategray ; */
+  box-shadow:inset 1px 1px 7px rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   background: #ffffff;
   display: flex;
@@ -508,65 +482,42 @@ export default {
   justify-content: center;
 }
 
-.user-initial {
-  left: 3.1px;
-  position: relative;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  /* or 117% */
-  display: flex;
-  align-items: center;
-  text-align: center;
-  letter-spacing: -0.32px;
-  margin-right: 2px;
-  color: #000000;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+.profile-image {
+  height: 27px;
+  width: auto;
 }
 
 .sent-bubble-info-frame {
   position: relative;
   text-align: left;
-  left: 24px;
-  bottom: 2px;
-}
-
-.sent-time-status {
+  height: 100%;
+  left: 28px;
   display: flex;
-
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 21px;
-  letter-spacing: -0.32px;
-  color: darkgray;
+  flex-direction: column;
 }
 
-.sent-bubble-context {
-  height: 20px;
+.sent-upper {
+  width: 100%;
+  height: 45%;
+  display: flex;
+  align-items: flex-end;
+  font-size: 15px;
+  
+}
 
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 21px;
-  /* or 117% */
+.sent-lower {
+  width: 100%;
+  height: 45%;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  letter-spacing: -0.32px;
-  overflow: hidden;
-  color: #000000;
-  vertical-align: top;
-  overflow: hidden;
+
 }
 
 .font-stardust{
-  font-family: 'Stardust'
+  font-family: 'PFStardust'
 }
 
-.font-healthset{
-  font-family: 'HealthSet';
-}
 
 
 </style>
