@@ -520,6 +520,4 @@ export default {
   font-family: 'PFStardust'
 }
 
-
-
 </style>
