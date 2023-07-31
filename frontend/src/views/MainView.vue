@@ -212,7 +212,7 @@ export default {
     },
     toHome() {
       // console.log(this.shareid)
-      location.href = `http://dev.pop-ping.com:3000/main/${this.shareid}`
+      location.href = `https://dev.pop-ping.com/main/${this.shareid}`
     },
     ...mapActions(userStore, ["showusersbubble", "shareidmessage","changeread", "receivedUserMessage"])
  },
