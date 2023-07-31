@@ -44,19 +44,23 @@
         <div v-for="(article, index) in nowShowing" :key="index" class="sent-message-box" @click="sentDetail(index)">
           <div class="sent-message-ellipse">
             <!-- <div class="user-initial"> -->
-              <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
-              <!-- {{article.nickname.substr(0,1)}} -->
-              <img class="profile-image" src="../assets/user_profile.png" alt="">
+            <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
+            <!-- {{article.nickname.substr(0,1)}} -->
+            <img class="profile-image" src="../assets/user_profile.png" alt="">
           </div>
           <div class="sent-bubble-info-frame">
             <div class="sent-upper">
-              <div class="sent-receiver">{{ article.receiver_nickname }}</div>
+              <div class="sent-upper-left">
+                <div class="sent-receiver">{{ article.receiver_nickname }}</div>
+                <div class="sent-datetime">
+                  {{ article.create_time.substr(5,2) }}/{{ article.create_time.substr(8,2) }}
+                  {{ article.create_time.substr(11,5) }}
+                </div>
+              </div>
               <div class="sent-state">{{ article.state }}</div>
-              <div>{{ article.create_time.substr(5,2) }}/{{ article.create_time.substr(8,2) }}
-                {{ article.create_time.substr(11,5) }}</div>
             </div>
             <div class="sent-lower">
-              {{ article.content.substr(0,15) }}
+              {{ article.content }}
             </div>
           </div>
         </div>
@@ -90,7 +94,28 @@ export default {
       receivedmessagescount:null,
 
       sentmessages: "",
-      nowShowing: "",
+      nowShowing: [
+        {
+          content : '기이이이이이이이이이이이이이이이이이이이이이이이이인12321313123213123123123메세지',
+          create_time: '2022/07/31 12:31',
+          expiration_time: '2022/07/31 12:31',
+          message_id: 2,
+          nickname: '짭준수',
+          receiver: 2,
+          receiver_nickname: '찐준수',
+          state: '안읽음'
+        },
+        {
+          content : '아아아아아아아아아아아',
+          create_time: '2022/07/31 12:31',
+          expiration_time: '2022/07/31 12:31',
+          message_id: 2,
+          nickname: '짭준수',
+          receiver: 2,
+          receiver_nickname: '찐준수',
+          state: '읽음'
+        },
+      ],
       readOption: 'all',
       messageDetail : '',
       unreadMessageCount : '',
@@ -433,7 +458,7 @@ export default {
   position: absolute;
   width: 85%;
   height: 59%;
-  top: 30.7%;
+  top: 31.2%;
   align-items: center;
   overflow: scroll;
 }
@@ -451,27 +476,27 @@ export default {
 .sent-message-box {
   position: relative;
   width: 100%;
-  height: 85px;
+  height: 75px;
   background: rgba(255, 255, 255, 0.7);
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.35);
   border-radius: 30px;
   text-align: center;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
   opacity: 100%;
 }
 
 .profile-area {
+  width: 100px;
   height: 100%;
-  width: 80px;
   display: flex;
   align-items: center;
 }
 
 .sent-message-ellipse {
   box-sizing: border-box;
-  position: relative;
+  position: absolute;
   width: 54px;
   height: 54px;
   left: 14px;
@@ -482,6 +507,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 999;
 }
 
 .profile-image {
@@ -492,28 +518,53 @@ export default {
 .sent-bubble-info-frame {
   position: relative;
   text-align: left;
+  width:100%;
   height: 100%;
-  left: 28px;
   display: flex;
   flex-direction: column;
+  padding-left: 75px;
 }
 
 .sent-upper {
   width: 100%;
-  height: 45%;
+  height: 42%;
   display: flex;
   align-items: flex-end;
-  font-size: 15px;
-  
+  justify-content: space-between;
+}
+
+.sent-upper-left {
+  display: flex;
+}
+
+.sent-receiver {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.sent-datetime {
+  margin-left: 4px;
+  font-size: 11px;
+  color: darkgray;
+  display: flex;
+  align-items: flex-end;
+}
+
+.sent-state { 
+  font-weight: bold;
+  font-size: 12px;
+  padding-right: 24px;
 }
 
 .sent-lower {
-  width: 100%;
-  height: 45%;
+  display: inline-block;
+  height: 40%;
+  margin-top: 5px;
+  font-size: 16px;
+  white-space: nowrap;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-
+  text-overflow: ellipsis;
+  padding-right: 12px;
 }
 
 .font-stardust{

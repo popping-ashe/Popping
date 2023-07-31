@@ -13,7 +13,7 @@
       </div>
 
       <div v-else style="width: 100vw; height: calc(var(--vh, 1vh) * 100);  display: flex; justify-content: center; overflow: hidden; ">
-        <div class="bgnewjeans" style="width: calc(var(--vw, 1vw) * 110); height:100%">
+        <div class="bgnewjeans" style="width: calc(var(--vw, 1vw) * 125); height:100%">
           <div class="main">
             <!-- <div class="container3">
               <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
