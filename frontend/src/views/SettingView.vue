@@ -177,15 +177,6 @@ export default {
     text-decoration: underline;
   }
 
-  .font-kor{
-  font-family: 'Galmuri9';
-  font-weight: 200;
-}
-
-.font-eng{
-  font-family: 'hydrophilia'
-}
-
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.3s;

@@ -228,12 +228,6 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-    font-family: 'hydrophilia';
-    src: url('../assets/fonts/hydrophilia-iced-regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
 
 #index {
   display:none;

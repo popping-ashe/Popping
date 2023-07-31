@@ -8,7 +8,7 @@
       <div class="mypage font-kor">
         MYPAGE
       </div>
-      <div class="new-button" style="margin-right: 6%">
+      <div class="new-button" style="margin-right: 6%" @click="$router.push('/setting')">
         Settings
       </div>
     </div>
@@ -16,15 +16,18 @@
       <div style="display: flex; justify-content: space-evenly">
       <div class="received-count">{{this.receivedmessagescount}}</div>
       <div class="sent-count">{{ this.sentmessagescount }}</div>
-      <div class="unread-count">{{ this.receivedmessagescount }}</div>
+      <div class="unread-count">{{ this.unreadMessageCount }}</div>
       </div>
       <div style="display: flex; justify-content: space-evenly">
       <div class="received">받음</div>
       <div class="sent">보냄</div>
       <div class="unread">안읽음</div>
       </div>
+      <div style="display:flex; justify-content: center;">
+        <hr style="width: 85%;">
+      </div>
     </div>
-    <div class="sent-bubble-frame1">
+    <div class="sent-bubble-frame1" style="margin-top:5%;">
       <div class="sent-bubble-text-frame">
         <div class="sent-bubble-text font-stardust">
           보낸 버블 
@@ -35,7 +38,7 @@
       </div>
     </div>
     </div>
-    <div class="sent-bubble-frame2">
+    <div class="sent-bubble-frame2" style="margin-top:5%;">
       <div class="sent-message-frame">
         <!-- for문 -->
         <div v-for="(article, index) in nowShowing" :key="index" class="sent-message-box" @click="sentDetail(index)">
@@ -45,7 +48,6 @@
               <!-- {{article.nickname.substr(0,1)}} -->
               <img class="profile-image" src="../assets/user_profile.png" alt="">
           </div>
-
           <div class="sent-bubble-info-frame">
             <div class="sent-upper">
               <div class="sent-receiver">{{ article.receiver_nickname }}</div>
