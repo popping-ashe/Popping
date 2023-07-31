@@ -42,7 +42,7 @@ export default {
   left: 0px;
   width: 100%;
   height: 100%;
-  z-index: 999;
+  z-index: 998;
   background: rgba(0, 0, 0, 0.3);
 }
 
@@ -61,6 +61,7 @@ export default {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  z-index: 999;
 }
 
 .close-button {
