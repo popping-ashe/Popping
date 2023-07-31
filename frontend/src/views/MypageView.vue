@@ -8,7 +8,7 @@
       <div class="mypage font-kor">
         MYPAGE
       </div>
-      <div class="new-button" style="margin-right: 6%">
+      <div class="new-button" style="margin-right: 6%" @click="$router.push('/setting')">
         Settings
       </div>
     </div>
@@ -16,7 +16,7 @@
       <div style="display: flex; justify-content: space-evenly">
       <div class="received-count">{{this.receivedmessagescount}}</div>
       <div class="sent-count">{{ this.sentmessagescount }}</div>
-      <div class="unread-count">{{ this.receivedmessagescount }}</div>
+      <div class="unread-count">{{ this.unreadMessageCount }}</div>
       </div>
       <div style="display: flex; justify-content: space-evenly">
       <div class="received">받음</div>
@@ -517,7 +517,5 @@ export default {
 .font-stardust{
   font-family: 'PFStardust'
 }
-
-
 
 </style>
