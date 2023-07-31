@@ -14,9 +14,9 @@
     </div>
     <div class="article-counts font-stardust">
       <div style="display: flex; justify-content: space-evenly">
-      <div class="received-count">1</div>
-      <div class="sent-count">23</div>
-      <div class="unread-count">23</div>
+      <div class="received-count">{{this.receivedmessagescount}}</div>
+      <div class="sent-count">{{ this.sentmessagescount }}</div>
+      <div class="unread-count">{{ this.receivedmessagescount }}</div>
       </div>
       <div style="display: flex; justify-content: space-evenly">
       <div class="received">받음</div>
