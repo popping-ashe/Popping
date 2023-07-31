@@ -163,7 +163,7 @@ export default {
     // receivedUserMessage(
     //     (response) => {
     //       if (response.status == 200) {
-    //         sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+    //         localStorage.setItem("receivedmessages", JSON.stringify(response.data));
     //         console.log(response);
     //         const receivedmessages = response.data
     //         this.receivedmessages = receivedmessages
@@ -182,7 +182,7 @@ export default {
       (response) => {
         if (response.status == 200) {
           console.log(response);
-          sessionStorage.setItem("sentmessages", JSON.stringify(response.data));
+          localStorage.setItem("sentmessages", JSON.stringify(response.data));
           const sentmessages = response.data
           this.sentmessages = sentmessages
           console.log(sentmessages)
@@ -485,7 +485,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 990;
   font-size: 20px;
 }
 

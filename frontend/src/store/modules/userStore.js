@@ -79,14 +79,14 @@ const userStore = {
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
             console.log(this.state)
-            sessionStorage.setItem("access-token", accessToken);
-            sessionStorage.setItem("refresh-token", refreshToken);
-            // console.log(sessionStorage.getItem("access-token"))
+            localStorage.setItem("access-token", accessToken);
+            localStorage.setItem("refresh-token", refreshToken);
+            // console.log(localStorage.getItem("access-token"))
             getUserInfo(
               (response) => {
                 if (response.status == 200) {
                   commit("SET_USER_INFO", response.data);
-                  sessionStorage.setItem("userinfo", JSON.stringify(response.data));
+                  localStorage.setItem("userinfo", JSON.stringify(response.data));
                   // router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
                 } else {
                   console.log("유저 정보 없음");
@@ -106,7 +106,7 @@ const userStore = {
               (response) => {
                 if (response.status == 200) {
                   commit("SET_SHAREID", response.data);
-                  sessionStorage.setItem("shareid", JSON.stringify(response.data));
+                  localStorage.setItem("shareid", JSON.stringify(response.data));
                   // console.log(userStore.state.userInfo.nickname);
                   // console.log(this.state.userStore.shareid.share_id)
                 } else {
@@ -123,7 +123,7 @@ const userStore = {
               (response) => {
                 if (response.status == 200) {
                   commit("SET_SENT_MESSAGES", response.data)
-                  sessionStorage.setItem("sentmessages", JSON.stringify(response.data));
+                  localStorage.setItem("sentmessages", JSON.stringify(response.data));
                   // console.log(userStore.state.sentmessages);
                 } else {
                   console.log("보낸 메세지 없음");
@@ -138,7 +138,7 @@ const userStore = {
               (response) => {
                 if (response.status == 200) {
                   commit("SET_RECEIVED_MESSAGES", response.data)
-                  sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+                  localStorage.setItem("receivedmessages", JSON.stringify(response.data));
                   // console.log(userStore.state.receivedmessages);
                   router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
                 } else {
@@ -170,7 +170,7 @@ const userStore = {
           commit("SET_IS_LOGIN", false);
           commit("SET_IS_LOGIN_ERROR", true);
           commit("SET_IS_VALID_TOKEN", false);
-          sessionStorage.clear();
+          localStorage.clear();
           router.push({ name: "LoginView" });
 
         } else {
@@ -178,7 +178,7 @@ const userStore = {
           commit("SET_IS_LOGIN", false);
           commit("SET_IS_LOGIN_ERROR", true);
           commit("SET_IS_VALID_TOKEN", false);
-          sessionStorage.clear();
+          localStorage.clear();
         }
       },
         (error) => {
@@ -214,7 +214,7 @@ const userStore = {
         (response) => {
         if (response.status == 200) {
           commit("SET_RECEIVED_MESSAGES", response.data)
-          sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+          localStorage.setItem("receivedmessages", JSON.stringify(response.data));
           console.log('메세지 지워짐')
           
         } else {
@@ -248,7 +248,7 @@ const userStore = {
         (response) => {
           if (response.status == 200) {
             commit("SET_USER_INFO", response.data);
-            sessionStorage.setItem("userinfo", JSON.stringify(response.data));
+            localStorage.setItem("userinfo", JSON.stringify(response.data));
             // router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
           } else {
             console.log("유저 정보 없음");
@@ -264,7 +264,7 @@ const userStore = {
         (response) => {
           if (response.status == 200) {
             commit("SET_SENT_MESSAGES", response.data)
-            sessionStorage.setItem("sentmessages", JSON.stringify(response.data));
+            localStorage.setItem("sentmessages", JSON.stringify(response.data));
             // console.log(userStore.state.sentmessages);
           } else {
             console.log("보낸 메세지 없음");
@@ -279,7 +279,7 @@ const userStore = {
         (response) => {
           if (response.status == 200) {
             commit("SET_RECEIVED_MESSAGES", response.data)
-            sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+            localStorage.setItem("receivedmessages", JSON.stringify(response.data));
             // console.log(userStore.state.receivedmessages);
           } else {
             console.log("받은 메세지 없음");
@@ -300,12 +300,12 @@ const userStore = {
   },
   
 }
-const accessToken = sessionStorage.getItem("access-token");
-const refreshToken = sessionStorage.getItem("refresh-token");
-const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
-const sentmessages = JSON.parse(sessionStorage.getItem("sentmessages"));
-const receivedmessages = JSON.parse(sessionStorage.getItem("receivedmessages"));
-const shareid = JSON.parse(sessionStorage.getItem("shareid"));
+const accessToken = localStorage.getItem("access-token");
+const refreshToken = localStorage.getItem("refresh-token");
+const userinfo = JSON.parse(localStorage.getItem("userinfo"));
+const sentmessages = JSON.parse(localStorage.getItem("sentmessages"));
+const receivedmessages = JSON.parse(localStorage.getItem("receivedmessages"));
+const shareid = JSON.parse(localStorage.getItem("shareid"));
 
 if (accessToken && refreshToken) {
   userStore.state.isLogin = true;

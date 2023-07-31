@@ -76,14 +76,14 @@ export default {
     this.shareid = shareid.share_id
     const nickname = this.$store.getters["userStore/checkUserInfo"].nickname;
     this.nickname = nickname
-    // sessionStorage.setItem("shareid", JSON.stringify(response.data));
+    // localStorage.setItem("shareid", JSON.stringify(response.data));
     // console.log(userStore.state.userInfo.nickname);
     console.log(this.shareid)
     console.log(this.pageid)
     receivedUserMessage(
       (response) => {
         if (response.status == 200) {
-          sessionStorage.setItem("receivedmessages", JSON.stringify(response.data));
+          localStorage.setItem("receivedmessages", JSON.stringify(response.data));
           // console.log(response);
           const receivedmessages = response.data
           this.receivedmessages = receivedmessages
