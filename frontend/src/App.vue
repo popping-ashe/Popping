@@ -56,9 +56,15 @@
         this.isMobile = false;
           
       } 
-      let customVH = window.innerHeight * 0.01
-        document.documentElement.style.setProperty('--vh', customVH + 'px')
-        document.documentElement.style.setProperty('--vw', customVH*(393/852) + 'px')
+      const customVH = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', customVH + 'px')
+      document.documentElement.style.setProperty('--vw', customVH*(393/852) + 'px')
+      window.addEventListener('resize', () => {
+        document.documentElement.style.setProperty(
+          '--vh',
+          customVH + 'px',
+        )
+      })
     },
   
   };
