@@ -42,16 +42,16 @@
       <div class="sent-message-frame">
         <!-- for문 -->
         <div v-for="(article, index) in nowShowing" :key="index" class="sent-message-box" @click="sentDetail(index)">
-          <div class="sent-message-ellipse">
+          <div class="sent-message-ellipse font-kor">
             <!-- <div class="user-initial"> -->
             <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
             <!-- {{article.nickname.substr(0,1)}} -->
-            <img class="profile-image" src="../assets/user_profile.png" alt="">
+            <div class="initial">{{ article.receiver_nickname.substr(0,1) }}</div>
           </div>
           <div class="sent-bubble-info-frame">
             <div class="sent-upper">
               <div class="sent-upper-left">
-                <div class="sent-receiver">{{ article.receiver_nickname }}</div>
+                <div class="sent-mynickname">{{ article.nickname.substr(0,10) }}</div>
                 <div class="sent-datetime">
                   {{ article.create_time.substr(5,2) }}/{{ article.create_time.substr(8,2) }}
                   {{ article.create_time.substr(11,5) }}
@@ -94,28 +94,7 @@ export default {
       receivedmessagescount:null,
 
       sentmessages: "",
-      nowShowing: [
-        {
-          content : '기이이이이이이이이이이이이이이이이이이이이이이이이인12321313123213123123123메세지',
-          create_time: '2022/07/31 12:31',
-          expiration_time: '2022/07/31 12:31',
-          message_id: 2,
-          nickname: '짭준수',
-          receiver: 2,
-          receiver_nickname: '찐준수',
-          state: '안읽음'
-        },
-        {
-          content : '아아아아아아아아아아아',
-          create_time: '2022/07/31 12:31',
-          expiration_time: '2022/07/31 12:31',
-          message_id: 2,
-          nickname: '짭준수',
-          receiver: 2,
-          receiver_nickname: '찐준수',
-          state: '읽음'
-        },
-      ],
+      nowShowing: "",
       readOption: 'all',
       messageDetail : '',
       unreadMessageCount : '',
@@ -500,7 +479,6 @@ export default {
   width: 54px;
   height: 54px;
   left: 14px;
-  /* border: 0.1px solid darkslategray ; */
   box-shadow:inset 1px 1px 7px rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   background: #ffffff;
@@ -508,12 +486,14 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 999;
+  font-size: 20px;
 }
 
-.profile-image {
-  height: 27px;
-  width: auto;
+.initial {
+  margin-left: 3.5px;
+  margin-bottom: 1px;
 }
+
 
 .sent-bubble-info-frame {
   position: relative;
@@ -522,12 +502,12 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding-left: 75px;
+  padding-left: 76px;
 }
 
 .sent-upper {
   width: 100%;
-  height: 42%;
+  height: 41%;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -537,7 +517,7 @@ export default {
   display: flex;
 }
 
-.sent-receiver {
+.sent-mynickname {
   font-weight: bold;
   font-size: 12px;
 }
@@ -559,7 +539,7 @@ export default {
 .sent-lower {
   display: inline-block;
   height: 40%;
-  margin-top: 5px;
+  margin-top: 6px;
   font-size: 16px;
   white-space: nowrap;
   overflow: hidden;
@@ -567,8 +547,5 @@ export default {
   padding-right: 12px;
 }
 
-.font-stardust{
-  font-family: 'PFStardust'
-}
 
 </style>

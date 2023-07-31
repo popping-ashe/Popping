@@ -119,12 +119,16 @@ body {
   display: none;
 }
 
-.font-kor{
+.font-kor {
   font-family: 'Galmuri9';
   font-weight: 200;
 }
 
-.font-eng{
+.font-eng {
   font-family: 'hydrophilia'
+}
+
+.font-stardust {
+  font-family: 'PFStardust';
 }
 </style>
