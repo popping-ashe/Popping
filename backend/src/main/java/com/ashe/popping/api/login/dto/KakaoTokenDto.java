@@ -29,7 +29,7 @@ public class KakaoTokenDto {
 		private String client_secret;
 
 		@FormProperty("redirect_uri")
-		private final String redirect_uri = "http://dev.pop-ping.com:3000/oauth/kakao/callback";
+		private final String redirect_uri = "http://dev.pop-ping.com/oauth/kakao/callback";
 
 		private String code;
 
