@@ -19,4 +19,6 @@ public interface MemberService {
 	Optional<Member> getMemberByKakaoId(String kakaoId);
 
 	MemberDto getMemberByShareId(Long shareId);
+
+	Long deleteMember(Long memberId);
 }

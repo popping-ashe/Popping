@@ -63,7 +63,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDto getMemberByShareId(Long shareId) {
 		Optional<Member> member = memberRepository.findByShareId(shareId);
-		if(member.isEmpty()){
+		if (member.isEmpty()) {
 			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 		}
 		return MemberDto.from(member.get());
@@ -76,5 +76,14 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.save(member);
 
 		return MemberDto.from(member);
+	}
+
+	@Override
+	public Long deleteMember(Long memberId) {
+		long result = memberRepository.deleteByMemberId(memberId);
+		if (result != 1) {
+			throw new BusinessException(ErrorCode.NOT_EXIST_MEMBER);
+		}
+		return result;
 	}
 }

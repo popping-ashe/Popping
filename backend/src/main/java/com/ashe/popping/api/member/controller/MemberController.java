@@ -2,6 +2,7 @@ package com.ashe.popping.api.member.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,6 +51,16 @@ public class MemberController {
 			memberDto.getLastVisitedTime());
 
 		MemberApiDto.Response response = MemberApiDto.Response.of(memberDto, expireMessageCount);
+
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+
+	@DeleteMapping("/me")
+	public ResponseEntity<Long> deleteMember(@MemberInfo MemberInfoDto
+		memberInfoDto) {
+		Long memberId = memberInfoDto.getMemberId();
+
+		Long response = memberService.deleteMember(memberId);
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
