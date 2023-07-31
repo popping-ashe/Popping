@@ -31,14 +31,17 @@ export default {
     return {
       progressValue: 0, // Set the initial value of the progress bar
       intervalId: null,
+      client_id: process.env.VUE_APP_KAKAO_CLIENT_ID
     };
   },
+  
   methods: {
     //버블 배경 애니메이션
 
     //카카오 로그인
     kakaologin() {
-      location.href = "https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://dev.pop-ping.com:3000/oauth/kakao/callback&response_type=code"
+      // console.log(process.env.VUE_APP_KAKAO_CLIENT_ID)
+      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=http://dev.pop-ping.com/oauth/kakao/callback&response_type=code`
     },
 
     updateProgressBar() {
