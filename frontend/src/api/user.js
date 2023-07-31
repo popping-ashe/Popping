@@ -52,12 +52,12 @@ async function logout(success, fail) {
     await api.get(`/auth/logout`).then(success).catch(fail);
   }
 
-//유저 닉네임 변경
-async function changenickname(success, fail) {
-  let token = "Bearer " + sessionStorage.getItem("access-token");
-  api.defaults.headers["Authorization"] = token;
-    await api.patch(`/members/me`).then(success).catch(fail);
-  }
+  //유저 닉네임 변경
+  async function changenickname(nickname, success, fail) {
+    let token = "Bearer " + sessionStorage.getItem("access-token");
+    api.defaults.headers["Authorization"] = token;
+      await api.patch(`/members/me`, nickname).then(success).catch(fail);
+    }
 
 //access 토큰 새로 발급
 async function gettoken(success, fail) {
