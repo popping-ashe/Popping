@@ -12,4 +12,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	Optional<Member> findByKakaoId(String kakaoId);
 
 	Optional<Member> findByShareId(Long shareId);
+
+	Long deleteByMemberId(Long memberId);
 }
