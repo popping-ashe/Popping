@@ -1,4 +1,4 @@
-package com.ashe.popping.api.profile;
+package com.ashe.popping.api.profile.controller;
 
 import java.util.Arrays;
 
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/profile")
 public class ProfileController {
-	private Environment env;
+	private final Environment env;
 
 	@GetMapping
 	public String getProfile() {
