@@ -24,7 +24,7 @@
     <div class="bubble-area">
       <div class="bubble-frame font-kor" @click="openDetail($event.target, index)"
         v-for="(message, index) in receivedmessages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
-        <div class="time-left" :style="{ fontSize : randomFontSize[index]}">
+        <div class="time-left" :id="index" :style="{ fontSize : randomFontSize[index]}">
           {{ calLeftTime(index) }}
         <img class="bubble"  :id="index" src="../assets/bubble.png">
           </div>
