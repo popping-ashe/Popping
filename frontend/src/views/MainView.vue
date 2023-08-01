@@ -6,21 +6,23 @@
     <MessageDetail :bubbledetail-props="bubbleDetail" class="message-detail" v-if="showReceivedDetail"/>
     <MakeBubble v-if="showMakeWindow"/>
     <div class="upper-bar">
-      <div class="new-button font-eng" style="margin-left: 6%">
-        <div v-if="pageid == shareid" @click="opensharecomponent">
+      <div class="new-button font-eng" style="margin-left: 6%" v-if="pageid == shareid" @click="opensharecomponent">
           Share
         </div>
-        <div v-else @click="toHome()">
-          Home
+        <div v-else style="margin-left: 6%">
+          <div class="new-button font-eng" v-if="isLogin" @click="toHome()">Home</div>
+          <div class="none-button" v-else></div>
         </div>
-      </div>
       <div class="username font-kor" @click="generateRandomSizes()">
         <!-- 본인페이지 여부에 따라 표시 -->
         {{ this.nickname }}'s BUBBLE
       </div>
-      <div class="new-button font-eng link-button" style="margin-right: 6%" @click="goToPage('/mypage')">
-        My
-      </div>
+      <div v-if="isLogin" class="new-button font-eng link-button" style="margin-right: 6%" @click="goToPage('/mypage')">
+            My
+          </div>
+          <div v-else class="new-button font-eng link-button" style="margin-right: 6%" @click="$router.push('/')">
+            Login
+          </div>
     </div>
 
     <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
@@ -292,7 +294,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
 }
 
 .slide-in {
@@ -353,6 +355,11 @@ export default {
   font-size: 14px;
   font-weight: 600;
   }
+.none-button {
+  width: 65px;
+  height: 29px;
+  margin-left: 6%;
+}
 
 .username {
   width: 176px;

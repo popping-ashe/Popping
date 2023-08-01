@@ -221,7 +221,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
 }
 
 .slide-in {
