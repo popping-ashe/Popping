@@ -2,6 +2,14 @@
   <div class="message-frame">
     <div class="window">
       <div class="close-button" @click="closeDetail()"></div>
+      <div class="receiver-bar">
+        <div class="receiver-box">
+          {{ messagedetailProps.receiver_nickname }}          
+        </div>
+        <div class="state">
+          {{ messagedetailProps.state }}
+        </div>
+      </div> 
       <div class="upper-bar">
           <div class="sent-time">{{ messagedetailProps.create_time.substr(11,5) }}</div>
         <div class="nickname-box">
@@ -70,6 +78,39 @@ export default {
   /* border: 1px solid black; */
 }
 
+.receiver-bar {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  margin-top : 1.5%;
+}
+
+.receiver-box {
+  min-width: 60px;
+  width: auto;
+  height: 100%;
+  border: 1px solid darkslategray;
+  border-radius: 0px 20px 20px 20px;
+  outline: none;
+  font-size: 13px;
+  font-weight: 600;
+  background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
+  display: flex;
+  align-items: center;
+  margin-left: 7%;
+  padding-left: 3.5%;
+  padding-right: 4.2%;
+}
+
+.state {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 5px;
+  color: gray;
+  width: auto;
+  font-size: 10px;
+}
+
 .upper-bar {
   width: 100%;
   height: 10%;
@@ -78,13 +119,14 @@ export default {
 }
 
 .nickname-box {
+  min-width: 60px;
   width: auto;
   height: 100%;
   border: 1px solid darkslategray;
   border-radius: 20px 0px 20px 20px;
   outline: none;
-  font-size: 80%;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 600;
   background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
   margin-right: 11%;
   display: flex;
@@ -99,23 +141,24 @@ export default {
   margin-right: 5px;
   color: gray;
   width: auto;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .content-box {
   width: 100%;
-  height: 51%;
-  font-size: 85%;
+  height: calc(var(--vh, 1vh) * 16.5);
+  font-size: 13px;
   border: 1px solid darkslategray;
   border-radius: 20px 0px 20px 20px;
   outline: none;
   padding: 9px 12px 5px 12px;
   resize: none;
   background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
-  margin-bottom: 6%;
-  margin-left: 6.5%;
+  margin-top : 2%;
+  margin-bottom: 9%;
+  margin-left: 7%;
   margin-right: 11%;
-  padding-left: 3%;
+  padding-left: 4.5%;
   padding-top: 2.3%;
   overflow: scroll;
 }
