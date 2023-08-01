@@ -1,4 +1,6 @@
 <template>
+<div class="page-container">
+  <div class="page" :class="slideClass">
   <div class="frame" style="z-index: 0;">
     <MessageDetail :bubbledetail-props="bubbleDetail" class="message-detail" v-if="showReceivedDetail"/>
     <MakeBubble v-if="showMakeWindow"/>
@@ -15,7 +17,7 @@
         <!-- 본인페이지 여부에 따라 표시 -->
         {{ this.nickname }}'s BUBBLE
       </div>
-      <div class="new-button font-eng" style="margin-right: 6%" @click="$router.push('/mypage')">
+      <div class="new-button font-eng link-button" style="margin-right: 6%" @click="goToPage('/mypage')">
         My
       </div>
     </div>
@@ -40,6 +42,8 @@
     </div>
 
   </div>
+  </div>
+</div>
 </template>
 
 
@@ -70,6 +74,8 @@ export default {
       receivedmessages: [],
       bubbleDetail: "",
       shareid:"",
+
+      slideClass: '',
     };
   },
   created() {
@@ -159,6 +165,18 @@ export default {
   },
 
   methods: {
+    goToPage(path) {
+      this.slideClass = 'slide-in'; // 슬라이드 효과 시작
+      setTimeout(() => {
+        this.$router.push(path); // 페이지 전환
+      }, 300); // 애니메이션 시간 (300ms) 이후에 페이지 전환 실행
+    },
+    goBackPage(path) {
+      this.slideClass = 'slide-out'; // 슬라이드 효과 시작
+      setTimeout(() => {
+        this.$router.push(path); // 페이지 전환
+      }, 300); // 애니메이션 시간 (300ms) 이후에 페이지 전환 실행
+    },
     openDetail(elem, idx) {
       if (this.pageid == this.shareid) {
         elem.parentElement.parentElement.style.display="none";
@@ -264,6 +282,26 @@ export default {
 </script>
 
 <style scoped>
+.page-container {
+  position: relative;
+  /* overflow: hidden; */
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s;
+}
+
+.slide-in {
+  transform: translateX(-100%);
+}
+.slide-out {
+  transform: translateX(100%);
+}
 
 #index {
   display:none;

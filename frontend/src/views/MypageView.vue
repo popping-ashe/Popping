@@ -1,14 +1,16 @@
 <template>
+<div class="page-container">
+  <div class="page" :class="slideClass">
   <div class="frame" style="z-index: 0;">
       <SentDetail :messagedetail-props="messageDetail" v-if="showSentDetail"/>
     <div class="upper-bar">
-      <div class="new-button" style="margin-left: 6%" @click="$router.go(-1)">
+      <div class="new-button link-button" style="margin-left: 6%" @click="goBackPage(-1)">
         Back
       </div>
       <div class="mypage font-kor">
         MYPAGE
       </div>
-      <div class="new-button" style="margin-right: 6%" @click="$router.push('/setting')">
+      <div class="new-button link-button" style="margin-right: 6%" @click="goToPage('/setting')">
         Settings
       </div>
     </div>
@@ -71,6 +73,8 @@
     </div>
     <!-- <SettingsPopupVue/> -->
   </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -98,11 +102,26 @@ export default {
       readOption: 'all',
       messageDetail : '',
       unreadMessageCount : '',
+
+      slideClass: '',
   
 };
   },
   methods: {
     ...mapActions(userStore, ['logoutUser', 'updateUserData']),
+
+    goToPage(path) {
+      this.slideClass = 'slide-in'; // 슬라이드 효과 시작
+      setTimeout(() => {
+        this.$router.push(path); // 페이지 전환
+      }, 300); // 애니메이션 시간 (300ms) 이후에 페이지 전환 실행
+    },
+    goBackPage(path) {
+      this.slideClass = 'slide-out'; // 슬라이드 효과 시작
+      setTimeout(() => {
+        this.$router.go(path); // 페이지 전환
+      }, 300); // 애니메이션 시간 (300ms) 이후에 페이지 전환 실행
+    },
     
     closeDialog() {
       this.dialog = false;
@@ -160,24 +179,7 @@ export default {
           console.log('메세지 개수 받아오기 에러');
         }
       )
-    // receivedUserMessage(
-    //     (response) => {
-    //       if (response.status == 200) {
-    //         localStorage.setItem("receivedmessages", JSON.stringify(response.data));
-    //         console.log(response);
-    //         const receivedmessages = response.data
-    //         this.receivedmessages = receivedmessages
-    //         this.receivedmessagescount = receivedmessages.length;
 
-    //       } else {
-    //         console.log("받은 메세지 없음");
-    //       }
-    //     },
-    //     async (error) => {
-    //       console.log(error);
-    //       console.log('받은메세지 받아오기 에러');
-    //     }
-    // )
     sentUserMessage(
       (response) => {
         if (response.status == 200) {
@@ -208,6 +210,26 @@ export default {
 </script>
 
 <style scoped>
+.page-container {
+  position: relative;
+  /* overflow: hidden; */
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s;
+}
+
+.slide-in {
+  transform: translateX(-100%);
+}
+.slide-out {
+  transform: translateX(100%);
+}
 .frame {
   position: relative;
   height: calc(var(--vh, 1vh) * 100);
