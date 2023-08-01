@@ -59,7 +59,7 @@ name: 'ShareChoose',
 }
 </script>
 
-<style>
+<style scoped>
 .message-frame {
   position: fixed;
   top: 0px;
