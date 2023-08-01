@@ -59,7 +59,7 @@ export default {
   top: 51.5%;
   left: 50.5%;
   width: calc(var(--vh, 1vh) * 40);
-  height: 36%;
+  height: calc(var(--vh, 1vh) * 36);
   transform: translate(-50%, -50%);
   filter: drop-shadow(2px 2px 2px rgba(0,0,0, 0.3));
   background-color: transparent;
