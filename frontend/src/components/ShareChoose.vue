@@ -3,7 +3,7 @@
     <div class="window">
       <div class="close-button" @click="closeshare"></div>
       <div class="share-text font-kor">
-        <div>내 페이지를 SNS에 공유해보세요</div>
+        <div>SNS에 공유해보세요</div>
       </div>
 
         <div class="nickname-box">
@@ -30,7 +30,8 @@ name: 'ShareChoose',
         templateId: 96612,  // 내가 만들어놓은 메세지 템플릿
         installTalk: true,  // 카카오톡이 설치 되지 않았을때 마켓으로 이동
         templateArgs: {
-          shareId : this.$store.getters["userStore/checkShareId"].share_id // 여기에 shareId 담아주면 댐
+          shareId : this.$store.getters["userStore/checkShareId"].share_id, // 여기에 shareId 담아주면 댐
+          userName : this.$store.getters["userStore/checkUserInfo"].nickname
         }
       });
     },
