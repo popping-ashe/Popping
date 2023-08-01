@@ -1,4 +1,6 @@
 <template>
+<div class="page-container">
+  <div class="page" :class="slideClass">
   <div class="frame" style="z-index: 0;">
     <transition name="slide">
       <div v-if="showNicknameEdit" class="nickname-edit-overlay">
@@ -7,7 +9,7 @@
     </transition>
     <div class="upper-bar">
       <div class="new-button font-eng">
-        <div @click="$router.go(-1)">
+        <div class="link-button" @click="goBackPage(-1)">
           Back
         </div>
         
@@ -34,9 +36,10 @@
     </div>
     <br>
     <div class="delete">popping 탈퇴</div>
-    
 
   </div>  
+  </div>
+</div> 
 </template>
 
 <script>
@@ -52,11 +55,25 @@ export default {
   data()  {
     return {
       nickname: this.$store.getters["userStore/checkUserInfo"].nickname,
-      showNicknameEdit: false
+      showNicknameEdit: false,
+      slideClass: '',
     }
   },
   methods: {
     ...mapActions(userStore, ['logoutUser', 'updateUserData']),
+
+    goToPage(path) {
+      this.slideClass = 'slide-in'; // 슬라이드 효과 시작
+      setTimeout(() => {
+        this.$router.push(path); // 페이지 전환
+      }, 300); // 애니메이션 시간 (300ms) 이후에 페이지 전환 실행
+    },
+    goBackPage(path) {
+      this.slideClass = 'slide-out'; // 슬라이드 효과 시작
+      setTimeout(() => {
+        this.$router.go(path); // 페이지 전환
+      }, 300); // 애니메이션 시간 (300ms) 이후에 페이지 전환 실행
+    },
     toggleNicknameEdit() {
       this.showNicknameEdit = !this.showNicknameEdit; // true와 false를 토글
     },
@@ -75,6 +92,26 @@ export default {
 </script>
 
 <style scoped>
+.page-container {
+  position: relative;
+  /* overflow: hidden; */
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s;
+}
+
+.slide-in {
+  transform: translateX(-100%);
+}
+.slide-out {
+  transform: translateX(100%);
+}
 @font-face {
     font-family: 'hydrophilia';
     src: url('../assets/fonts/hydrophilia-iced-regular.ttf') format('truetype');
