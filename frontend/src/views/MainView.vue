@@ -97,26 +97,27 @@ export default {
     // console.log(userStore.state.userInfo.nickname);
     console.log(this.shareid)
     console.log(this.pageid)
-    receivedUserMessage(
-      (response) => {
-        if (response.status == 200) {
-          localStorage.setItem("receivedmessages", JSON.stringify(response.data));
-          // console.log(response);
-          const receivedmessages = response.data
-          this.receivedmessages = receivedmessages
-          console.log(receivedmessages)
-          this.generateRandomSizes();
-          this.generateRandomPosition();
-        } else {
-          console.log("받은 메세지 없음");
+    if (this.shareid==this.pageid) {
+      receivedUserMessage(
+        (response) => {
+          if (response.status == 200) {
+            localStorage.setItem("receivedmessages", JSON.stringify(response.data));
+            // console.log(response);
+            const receivedmessages = response.data
+            this.receivedmessages = receivedmessages
+            console.log(receivedmessages)
+            this.generateRandomSizes();
+            this.generateRandomPosition();
+          } else {
+            console.log("받은 메세지 없음");
+          }
+        },
+        async (error) => {
+          console.log(error);
+          console.log('받은메세지 받아오기 에러');
         }
-      },
-      async (error) => {
-        console.log(error);
-        console.log('받은메세지 받아오기 에러');
-      }
-    )
-
+      )
+    }
     if (this.pageid != this.shareid) {
       const page = this.pageid;
 
