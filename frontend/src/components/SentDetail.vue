@@ -4,7 +4,7 @@
       <div class="close-button" @click="closeDetail()"></div>
       <div class="receiver-bar">
         <div class="receiver-box">
-          {{ messagedetailProps.receiver_nickname }}          
+          &nbsp;&nbsp;&nbsp;{{ messagedetailProps.receiver_nickname }}&nbsp;&nbsp;&nbsp;
         </div>
         <div class="state">
           {{ messagedetailProps.state }}
@@ -13,7 +13,7 @@
       <div class="upper-bar">
           <div class="sent-time">{{ messagedetailProps.create_time.substr(11,5) }}</div>
         <div class="nickname-box">
-          <div>{{ messagedetailProps.nickname }}</div>
+          <div>&nbsp;&nbsp;&nbsp;{{ messagedetailProps.nickname }}&nbsp;&nbsp;&nbsp;</div>
         </div>
       </div>
       <div class="content-box">
@@ -86,7 +86,6 @@ export default {
 }
 
 .receiver-box {
-  min-width: 60px;
   width: auto;
   height: 100%;
   border: 1px solid darkslategray;
@@ -98,8 +97,6 @@ export default {
   display: flex;
   align-items: center;
   margin-left: 7%;
-  padding-left: 3.5%;
-  padding-right: 4.2%;
 }
 
 .state {
@@ -131,8 +128,6 @@ export default {
   margin-right: 11%;
   display: flex;
   align-items: center;
-  padding-left: 4.5%;
-  padding-right: 4.5%;
 }
 
 .sent-time {
@@ -158,7 +153,6 @@ export default {
   margin-bottom: 9%;
   margin-left: 7%;
   margin-right: 11%;
-  padding-left: 4.5%;
   padding-top: 2.3%;
   overflow: scroll;
 }
