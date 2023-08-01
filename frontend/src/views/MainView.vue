@@ -22,12 +22,12 @@
 
     <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
     <div class="bubble-area">
-      <div class="bubble-frame font-kor" @click="openDetail($event.target, index)" :id="index"
-        v-for="(message, index) in receivedmessages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
+      <div class="bubble-frame font-kor" @click="openDetail($event.target, index)"  
+          v-for="(message, index) in receivedmessages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
         <div class="time-left" :style="{ fontSize : randomFontSize[index]}">
           {{ calLeftTime(index) }}
-        <img class="bubble" src="../assets/bubble.png">
-          </div>
+          <img class="bubble" src="../assets/bubble.png">
+        </div>
       </div>
       <!-- <img class="bubble1" src="../assets/bubble.png" alt="">
       <img class="bubble2" src="../assets/bubble.png" alt=""> -->
@@ -161,7 +161,7 @@ export default {
   methods: {
     openDetail(elem, idx) {
       if (this.pageid == this.shareid) {
-        elem.style.display="none";
+        elem.parentElement.parentElement.style.display="none";
         this.bubbleDetail = this.receivedmessages[idx]
         this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
         // const messageid = this.bubbleDetail.message_id
@@ -183,6 +183,7 @@ export default {
             // 폰트 크기 따라가게
             const randomFont = randomSize/7
             this.randomFontSize.push(randomFont + 'px');
+            
         }
         }
       },
@@ -241,9 +242,6 @@ export default {
       const diffSec = bubbletime - timeNow
       const diffMin = Math.floor(diffSec / (60 * 1000))
       const diffHour = Math.floor(diffMin / 60)
-      console.log(timeNow)
-      // console.log(diffMin)
-      // console.log(diffHour)
 
       if (diffMin < 60) {
         return (diffMin + 'm')
@@ -348,7 +346,7 @@ export default {
   flex-wrap: wrap;
   justify-content: space-around;
   overflow: scroll;
-  padding-top: 25px;
+  padding-top: 10px;
   }
 
 .bubble-frame { 
