@@ -116,7 +116,6 @@ export default {
 }
 
 .nickname-box {
-  min-width: 60px;
   width: auto;
   height: 100%;
   border: 1px solid darkslategray;
