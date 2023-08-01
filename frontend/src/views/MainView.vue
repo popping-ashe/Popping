@@ -22,11 +22,11 @@
 
     <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
     <div class="bubble-area">
-      <div class="bubble-frame font-kor" @click="openDetail($event.target, index)"
+      <div class="bubble-frame font-kor" @click="openDetail($event.target, index)" :id="index"
         v-for="(message, index) in receivedmessages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
-        <div class="time-left" :id="index" :style="{ fontSize : randomFontSize[index]}">
+        <div class="time-left" :style="{ fontSize : randomFontSize[index]}">
           {{ calLeftTime(index) }}
-        <img class="bubble"  :id="index" src="../assets/bubble.png">
+        <img class="bubble" src="../assets/bubble.png">
           </div>
       </div>
       <!-- <img class="bubble1" src="../assets/bubble.png" alt="">
