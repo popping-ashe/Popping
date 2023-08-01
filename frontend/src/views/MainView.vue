@@ -22,8 +22,12 @@
 
     <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
     <div class="bubble-area">
-      <div v-for="(message, index) in receivedmessages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
-        <img class="bubble" @click="openDetail($event.target, index)" :id="index" src="../assets/bubble.png">
+      <div class="bubble-frame font-kor" @click="openDetail($event.target, index)"
+        v-for="(message, index) in receivedmessages" :key="index" :style="{ width: randomBubbleSize[index], margin: randomX[index] }">
+        <div class="time-left" :style="{ fontSize : randomFontSize[index]}">
+          {{ calLeftTime(index) }}
+        <img class="bubble"  :id="index" src="../assets/bubble.png">
+          </div>
       </div>
       <!-- <img class="bubble1" src="../assets/bubble.png" alt="">
       <img class="bubble2" src="../assets/bubble.png" alt=""> -->
@@ -60,15 +64,16 @@ export default {
       pageid: this.$route.params.pageid,
       nickname:"",
       randomBubbleSize: [],
+      randomFontSize: [],
       randomX: [],
-      randomY: [],
+      randomSpeed: [],
       receivedmessages: [],
       bubbleDetail: "",
       shareid:"",
     };
   },
   created() {
-    // this.updateUserData()
+    this.calLeftTime()
   },
   mounted() {
     if (this.isLogin == true) {
@@ -175,20 +180,23 @@ export default {
           for (let i = 0; i < this.receivedmessages.length; i++) {
             const randomSize = Math.floor(Math.random() * (maxSize - minSize + 1) + minSize);
             this.randomBubbleSize.push(randomSize + 'px');
+            // 폰트 크기 따라가게
+            const randomFont = randomSize/7
+            this.randomFontSize.push(randomFont + 'px');
         }
         }
       },
     generateRandomPosition() {
       const minX = 0;
       const maxX = 35;
-      const minY = 0;     // Y는 필요 없어짐!
-      const maxY = 3;
+      const minSpeed = 2;     // 버블 움직이는 속도
+      const maxSpeed = 6;
 
       for (let j = 0; j < this.receivedmessages.length; j++) {
         const randomXPosition = Math.floor(Math.random() * (maxX - minX + 1 ) + minX);
         this.randomX.push(randomXPosition + 'px');
-        const randomYPosition = Math.floor(Math.random() * (maxY - minY + 1 ) + minY);
-        this.randomY.push(randomYPosition + '%');
+        const randomS = Math.floor(Math.random() * (maxSpeed - minSpeed + 1 ) + minSpeed);
+        this.randomSpeed.push(randomS + 's');
       }
     },
     shareCopy() {
@@ -214,6 +222,36 @@ export default {
       // console.log(this.shareid)
       location.href = `https://dev.pop-ping.com/main/${this.shareid}`
     },
+
+    calLeftTime(index) {
+      var bubbletime = new Date(this.receivedmessages[index].expiration_time);
+      var today = new Date();
+      var year = today.getFullYear();
+      var month = ('0' + (today.getMonth() + 1)).slice(-2);
+      var day = ('0' + today.getDate()).slice(-2);
+
+      var dateString = year + '-' + month + '-' + day;
+
+      var hours = ('0' + today.getHours()).slice(-2);
+      var minutes = ('0' + today.getMinutes()).slice(-2);
+      var seconds = ('0' + today.getSeconds()).slice(-2);
+      var timeString = hours + ':' + minutes + ':' + seconds;
+      var timeNow = new Date(dateString + ' ' + timeString)
+
+      const diffSec = bubbletime - timeNow
+      const diffMin = Math.floor(diffSec / (60 * 1000))
+      const diffHour = Math.floor(diffMin / 60)
+      console.log(timeNow)
+      // console.log(diffMin)
+      // console.log(diffHour)
+
+      if (diffMin < 60) {
+        return (diffMin + 'm')
+      } else {
+        return (diffHour + 'h')
+      }
+    },
+
     ...mapActions(userStore, ["showusersbubble", "shareidmessage","changeread", "receivedUserMessage"])
  },
 
@@ -310,15 +348,38 @@ export default {
   flex-wrap: wrap;
   justify-content: space-around;
   overflow: scroll;
+  padding-top: 25px;
   }
 
-.bubble {
-  position: relative;
-  width: 100%;
-  margin: 5px;
-  /* filter: drop-shadow(1px 1px 1px black); */
-  animation: popping1 3s ease-in-out infinite alternate;
+.bubble-frame { 
+  display: flex;
+  align-items: center;
 }
+
+.time-left {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: popping1 3s ease-in-out infinite alternate;
+  color: #83add6;
+  font-weight: 800;
+  text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+  /* -webkit-text-stroke-width: 2px; */
+  /* -webkit-text-stroke-color: white; */
+
+}
+
+.bubble {
+  position: absolute;
+  width: 100%;
+  padding-top: 7px;
+  padding-right: 2px;
+  /* filter: drop-shadow(1px 1px 1px black); */
+}
+
+
 @keyframes popping1 {
   0% {
     transform: scale(1) translateY(0);
