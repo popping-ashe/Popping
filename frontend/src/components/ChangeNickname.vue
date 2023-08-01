@@ -40,7 +40,7 @@
           </div>
         </div>
           <!-- <button @click="stopEditing">수정</button> -->
-        <div style="font-size: 12px;">{{ changednickname.length+1 }} / 20</div>
+        <div style="font-size: 12px;">{{ changednickname.length+1 }} / 10</div>
       </div>
       <br>
     </div>
@@ -67,8 +67,8 @@ export default {
       this.$emit('close'); // 이벤트를 부모 컴포넌트에 전달하여 닫히도록 함
     },
     handleInput() {
-      if (this.changednickname.length > 20) {
-        this.changednickname = this.changednickname.slice(0, 20);
+      if (this.changednickname.length > 10) {
+        this.changednickname = this.changednickname.slice(0, 10);
       }
     },
     startEditing() {
@@ -127,7 +127,7 @@ export default {
 .frame {
   position: relative;
   height: calc(var(--vh, 1vh) * 100);
-  width: 100%;
+  width: calc(var(--vw, 1vw) * 110);
   overflow: hidden;
   background: hsla(200, 81%, 79%, 1);
   background: linear-gradient(270deg, hsla(200, 81%, 79%, 1) 0%, hsla(0, 0%, 100%, 1) 49%, hsla(0, 0%, 100%, 1) 66%, hsla(200, 81%, 79%, 1) 100%);

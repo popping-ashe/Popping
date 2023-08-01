@@ -1,5 +1,10 @@
 <template>
   <div class="frame" style="z-index: 0;">
+    <transition name="slide">
+      <div v-if="showNicknameEdit" class="nickname-edit-overlay">
+        <ChangeNickname @close="closeNicknameEdit" @nickname-updated="updateNickname" />
+      </div>
+    </transition>
     <div class="upper-bar">
       <div class="new-button font-eng">
         <div @click="$router.go(-1)">
@@ -29,11 +34,7 @@
     </div>
     <br>
     <div class="delete">popping 탈퇴</div>
-    <transition name="slide">
-      <div v-if="showNicknameEdit" class="nickname-edit-overlay">
-        <ChangeNickname @close="closeNicknameEdit" @nickname-updated="updateNickname" />
-      </div>
-    </transition>
+    
 
   </div>  
 </template>
