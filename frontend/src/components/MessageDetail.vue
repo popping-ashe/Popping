@@ -78,13 +78,14 @@ export default {
 }
 
 .nickname-box {
+  min-width: 60px;
   width: auto;
   height: 100%;
   border: 1px solid darkslategray;
   border-radius: 0px 20px 20px 20px;
   outline: none;
-  font-size: 80%;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 600;
   background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
   display: flex;
   align-items: center;
@@ -99,13 +100,13 @@ export default {
   margin-left: 5px;
   color: gray;
   width: auto;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .content-box {
   width: 100%;
   height: 51%;
-  font-size: 85%;
+  font-size: 13px;
   border: 1px solid darkslategray;
   border-radius: 0px 20px 20px 20px;
   outline: none;
@@ -118,6 +119,7 @@ export default {
   padding-left: 3.5%;
   padding-top: 2.3%;
   overflow: scroll;
+  white-space: normal;
 }
 
 ::placeholder {

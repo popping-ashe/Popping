@@ -1,18 +1,9 @@
 <template>
-      <!-- <input v-model="messageData.sender" type="number" placeholder="보내는 사람의 ID를 입력">
-      <input v-model="messageData.retentionTime" type="number" placeholder="보관 시간을 입력">  -->
-      <!-- <input v-model="messageData.shareId" type="text" placeholder="공유 ID를 입력하세요"> -->
-
-
-      <!-- <textarea v-model="messageData.content" rows="4" cols="50" placeholder="메시지를 입력"></textarea> -->
-      <!-- <input v-model="messageData.nickname" type="text" placeholder="보내는 사람의 nickname입력"> -->
-    <!-- <button @click="sendMessage">전송</button><br>
-    <button @click="closeDetail()">창 닫기</button> -->
   <div class="message-frame">
     <div class="window">
       <div class="close-button" @click="closeDetail()"></div>
         <div class="upper-bar">
-          <input class="nickname-input" placeholder="닉네임" type="text" v-model="messageData.nickname">
+          <input class="nickname-input" maxlength="10" placeholder="닉네임" type="text" v-model="messageData.nickname" @keyup="checkNicknameLength">
           <div class="time-select-box" @click="changeLifeTime()">
             <img class="time-icon" src="../assets/clock.png" alt="">
             <div class="time-selector">
@@ -21,7 +12,7 @@
           </div>
         </div>
           <div class="content-input-box">
-            <textarea class="content-input" placeholder="내용" v-model="messageData.content"></textarea>
+            <textarea class="content-input" maxlength="200" placeholder="내용" v-model="messageData.content" @keyup="checkContentLength"></textarea>
           </div>
           <!-- <input class="content-input" type="text" v-model="contents"> -->
           <div class="button-box">
@@ -92,6 +83,20 @@ export default {
         this.messageData.retentionTime = 1
       }
     },
+
+    checkNicknameLength() {
+      if (this.messageData.nickname.length == 10) {
+        this.$toast.bottom('닉네임 최대 길이는 10글자입니다.')
+
+      }
+    },
+
+    checkContentLength() {
+      if (this.messageData.content.length == 200) {
+        this.$toast.bottom('내용 최대 길이는 200글자입니다.')
+
+      }
+    }
   },
     computed: {
     ...mapState(['showMakeWindow']),
