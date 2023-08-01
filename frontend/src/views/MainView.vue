@@ -2,11 +2,12 @@
 <div class="page-container">
   <div class="page" :class="slideClass">
   <div class="frame" style="z-index: 0;">
+    <ShareChoose v-if="openshare" @close="closeshare"/>
     <MessageDetail :bubbledetail-props="bubbleDetail" class="message-detail" v-if="showReceivedDetail"/>
     <MakeBubble v-if="showMakeWindow"/>
     <div class="upper-bar">
       <div class="new-button font-eng" style="margin-left: 6%">
-        <div v-if="pageid == shareid" @click="shareCopy()">
+        <div v-if="pageid == shareid" @click="opensharecomponent">
           Share
         </div>
         <div v-else @click="toHome()">
@@ -51,6 +52,7 @@
 <script>
 import MessageDetail from '@/components/MessageDetail.vue'
 import MakeBubble from '@/components/MakeBubble.vue'
+import ShareChoose from '@/components/ShareChoose.vue'
 import { mapState, mapActions } from 'vuex'
 // import axios from 'axios'
 import { getshareidmessages, receivedUserMessage } from "@/api/user"
@@ -62,6 +64,7 @@ export default {
   components: {
     MessageDetail,
     MakeBubble,
+    ShareChoose
   },
   data() {
     return {
@@ -74,6 +77,7 @@ export default {
       receivedmessages: [],
       bubbleDetail: "",
       shareid:"",
+      openshare:false,
 
       slideClass: '',
     };
@@ -177,6 +181,13 @@ export default {
         this.$router.push(path); // 페이지 전환
       }, 300); // 애니메이션 시간 (300ms) 이후에 페이지 전환 실행
     },
+    opensharecomponent() {
+      this.openshare = true;
+      // console.log(this.openshare)
+    },
+    closeshare() {
+      this.openshare = false;
+    },
     openDetail(elem, idx) {
       if (this.pageid == this.shareid) {
         elem.parentElement.parentElement.style.display="none";
@@ -217,18 +228,6 @@ export default {
         const randomS = Math.floor(Math.random() * (maxSpeed - minSpeed + 1 ) + minSpeed);
         this.randomSpeed.push(randomS + 's');
       }
-    },
-    shareCopy() {
-      // var url = ''
-      // var textarea = document.createElement("textarea")
-      // document.body.appendChild(textarea)
-      // url = window.document.location.href
-      // textarea.value = url
-      // textarea.select()
-      // document.execCommand("copy")
-      // document.body.removeChild(textarea)
-      this.$copyText(window.document.location.href)
-      this.$toast.center('복사되었습니다')
     },
     sendmessageupdate(data){
       console.log("test");
