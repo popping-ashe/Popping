@@ -86,14 +86,14 @@ export default {
 
     checkNicknameLength() {
       if (this.messageData.nickname.length == 10) {
-        this.$toast.bottom('닉네임 최대 길이는 10글자입니다.')
+        this.$toast.top('닉네임 최대 길이는 10글자입니다.')
 
       }
     },
 
     checkContentLength() {
       if (this.messageData.content.length == 200) {
-        this.$toast.bottom('내용 최대 길이는 200글자입니다.')
+        this.$toast.top('내용 최대 길이는 200글자입니다.')
 
       }
     }
