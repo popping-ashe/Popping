@@ -20,9 +20,11 @@
             <div>Twitter</div>
           </div>
         </div>
-        <div class="location-box">
-          <div style="margin: 2% 2%">{{ location }}</div>
-        <button class="button" @click="shareCopy()">URL 복사</button>
+        <div class="share-link-frame font-pre">
+          <div class="location-box">
+            <div clas="location">{{ location }}</div>
+          </div>
+          <button class="button" @click="shareCopy()">&nbsp;&nbsp;URL 복사&nbsp;&nbsp;</button>
         </div>
     </div>
   </div>
@@ -92,7 +94,7 @@ data() {
   top: 51.5%;
   left: 50.5%;
   width: calc(var(--vh, 1vh) * 40);
-  height: 30%;
+  height: calc(var(--vh, 1vh) * 29);
   transform: translate(-50%, -50%);
   filter: drop-shadow(2px 2px 2px rgba(0,0,0, 0.3));
   background-color: transparent;
@@ -166,11 +168,22 @@ data() {
 
     /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
 }
-.location-box {
+
+.share-link-frame {
   width: 83%;
-  height: 13%;;
+  height: 13%;
+  display: flex;
+  justify-content: center;
+  margin-right: 3.5%;
+  margin-top: 0.5%
+}
+
+
+.location-box {
+  width: 68%;
+  height: 100%;
   border: 0.05px solid rgb(143, 143, 143);
-  border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 0px 0px 5px;
   outline: none;
   font-size: 70%;
   /* font-weight: bold; */
@@ -178,17 +191,26 @@ data() {
   display: flex;
   align-items: center;
   /* justify-content: center; */
-  /* margin-left: 6.5%; */
   /* padding-left: 3.5%;
   padding-right: 4.2%; */
-  margin-right: 4%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 4px;
 }
+
 .button {
-  height: 100%;;
-  width: 100%;
+  height: 100%;
+  width: auto;
   background: white;
-  border-left: 0.1px solid rgb(143, 143, 143);
+  display: flex;
+  justify-content: center;
+  /* border-left: 0.1px solid rgb(143, 143, 143); */
+  border: 0.05px solid rgb(143, 143, 143);
   border-radius: 0px 5px 5px 0px;
+  white-space: nowrap;
+  font-size: 12px;
+  align-items: center;
 }
 .font-kor{
   font-family: 'Galmuri9';
