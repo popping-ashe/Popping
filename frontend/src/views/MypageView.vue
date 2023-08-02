@@ -10,7 +10,7 @@
       <div class="mypage font-kor">
         MYPAGE
       </div>
-      <div class="new-button link-button" style="margin-right: 6%" @click="goToPage('/setting')">
+      <div class="new-button link-button" style="margin-right: 6%; font-size: 13px;" @click="goToPage('/setting')">
         Settings
       </div>
     </div>
@@ -309,7 +309,7 @@ export default {
 
   font-style: normal;
   font-weight: 400;
-  font-size: 25px;
+  font-size: 22px;
   line-height: 21px;
   align-items: center;
   text-align: center;
@@ -325,7 +325,7 @@ export default {
 
   font-style: normal;
   font-weight: 400;
-  font-size: 25px;
+  font-size: 22px;
   line-height: 21px;
   align-items: center;
   text-align: center;
@@ -342,7 +342,7 @@ export default {
 
   font-style: normal;
   font-weight: 400;
-  font-size: 25px;
+  font-size: 22px;
   line-height: 21px;
   align-items: center;
   text-align: center;
@@ -356,10 +356,9 @@ export default {
   position: relative;
   width: 40%;
   height: 30px;
-  left: 1px;
   font-style: normal;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 21px;
   align-items: center;
   text-align: center;
@@ -377,7 +376,7 @@ export default {
 
   font-style: normal;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 21px;
   /* or 150% */
   text-align: center;
@@ -391,10 +390,9 @@ export default {
   position: relative;
   width: 40%;
   height: 30px;
-  left: 1px;
   font-style: normal;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 21px;
   /* or 150% */
   text-align: center;
