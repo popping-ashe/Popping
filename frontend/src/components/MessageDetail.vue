@@ -1,7 +1,7 @@
 <template>
       <!-- {{ bubbledetailProps }} -->
   <div class="message-frame animate__animated animate__fadeIn">
-    <div class="window">
+    <div class="window font-pre">
       <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
         <div class="nickname-box">

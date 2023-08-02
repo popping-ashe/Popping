@@ -19,7 +19,7 @@
     </div>
     <br><br><br><br>
 
-    <div class="article-counts" style="margin-left: 6%; margin-right: 8%">
+    <div class="article-counts font-pre" style="margin-left: 6%; margin-right: 8%">
       <div>
         <div style="font-size: 13px;">
         닉네임 수정

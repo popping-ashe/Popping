@@ -51,7 +51,7 @@
             <div class="initial">{{ article.receiver_nickname.substr(0,1) }}</div>
           </div>
           <div class="sent-bubble-info-frame">
-            <div class="sent-upper">
+            <div class="sent-upper font-pre">
               <div class="sent-upper-left">
                 <div class="sent-mynickname">{{ article.nickname.substr(0,10) }}</div>
                 <div class="sent-datetime">
@@ -61,7 +61,7 @@
               </div>
               <div class="sent-state">{{ article.state }}</div>
             </div>
-            <div class="sent-lower">
+            <div class="sent-lower font-pre">
               {{ article.content }}
             </div>
           </div>

@@ -4,10 +4,13 @@
       <img class="logo" src="../assets/logo_final.png" alt="">
     </div>
 
-    <!-- <div class="progress-bar">
-      <div class="loading-text">Loading...</div>
-      <progress :value="progressValue" max="100"></progress>
-    </div> -->
+    <div class="progress-bar-frame">
+      <div class="loading font-pre">Loading...</div>
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" :style="{ width: progressCSS}">
+        </div>
+      </div>
+    </div>
 
     <div class="kakao">
       <!-- <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"> -->
@@ -29,7 +32,8 @@ export default {
   },
   data() {
     return {
-      progressValue: 0, // Set the initial value of the progress bar
+      progressValue: 0,
+      progressCSS : '',
       intervalId: null,
       client_id: process.env.VUE_APP_KAKAO_CLIENT_ID
     };
@@ -46,11 +50,17 @@ export default {
 
     updateProgressBar() {
       if (this.progressValue < 99) {
-        this.progressValue += 1; // Update the progress value as needed
-        setTimeout(this.updateProgressBar, 10); // Call the function recursively after 1 second
+        this.progressValue += 0.5;
+        this.progressCSS = this.progressValue + '%'
+        setTimeout(this.updateProgressBar, 10);
+
+
       } else {
         this.progressValue = 0;
+        this.progressCSS = this.progressValue + '%'
+
         this.updateProgressBar()
+
       }
     },
   },
@@ -63,12 +73,10 @@ export default {
 
 <style scoped>
 .frame {
-  position: relative;
   height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-  overflow: hidden;
   background-image: url("../assets/background.png");
-  background-size: 100%;
+  background-size: contain;
   background-repeat: repeat-x;
   }
 
@@ -77,13 +85,43 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
-  top: 28%;
+  top: 25%;
 }
 
 .logo {
-  width: 78%;
+  width: 72%;
   /* filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2)); */
   filter: brightness(115%);
+}
+
+.progress-bar-frame {
+  position: relative;
+  width: 100%;
+  top: 26.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  display: flex;
+  font-style: italic;
+  font-size: 15px;
+}
+
+.progress-bar-outer {
+  margin-top: 6px;
+  width: 62%;
+  height: 10px;
+  border: 2px solid #96a0a7;
+  border-radius: 8px;
+}
+
+.progress-bar-inner {
+  height: 100%;
+  border-radius: 8px;
+  background-color: #c0dff4;
 }
 
 .kakao {
@@ -99,22 +137,4 @@ export default {
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3))
 }
 
-
-.progress-bar {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  top: 29%;
-}
-
-.loading-text {
-  width: 100%;
-}
-
-progress {
-  width: 65%;
-  height: 20px;
-}
 </style>

@@ -21,7 +21,7 @@
     </div>
     <br><br><br><br>
 
-    <div class="article-counts" style="margin-left: 8%; margin-right: 8%">
+    <div class="article-counts font-pre" style="margin-left: 8%; margin-right: 8%">
       <div style="display: flex;">
         <div class="nickname ">{{ nickname }}</div>
       </div>
@@ -35,7 +35,7 @@
       </div>
     </div>
     <br>
-    <div class="delete">popping 탈퇴</div>
+    <div class="delete font-pre">popping 탈퇴</div>
 
   </div>  
   </div>

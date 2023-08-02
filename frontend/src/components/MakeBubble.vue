@@ -1,6 +1,6 @@
 <template>
   <div class="message-frame animate__animated animate__fadeIn">
-    <div class="window">
+    <div class="window font-pre">
       <div class="close-button" @click="closeDetail()"></div>
         <div class="upper-bar">
           <input class="nickname-input" maxlength="10" placeholder="닉네임" type="text" v-model="messageData.nickname" @keyup="checkNicknameLength">
@@ -60,6 +60,7 @@ export default {
           console.log(response.data)
           this.$store.commit('SHOW_MAKE_WINDOW', !this.showMakeWindow)
           this.$parent.sendmessageupdate(response.data);
+          this.$toast.center('버블을 보냈습니다.')
         } else {
           console.log("잘못");
         }
@@ -86,14 +87,14 @@ export default {
 
     checkNicknameLength() {
       if (this.messageData.nickname.length == 10) {
-        this.$toast.top('닉네임 최대 길이는 10글자입니다.')
+        this.$toast.center('닉네임 최대 길이는 10글자입니다.')
 
       }
     },
 
     checkContentLength() {
       if (this.messageData.content.length == 200) {
-        this.$toast.top('내용 최대 길이는 200글자입니다.')
+        this.$toast.center('내용 최대 길이는 200글자입니다.')
 
       }
     }

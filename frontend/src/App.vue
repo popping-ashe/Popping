@@ -131,4 +131,8 @@ body {
 .font-stardust {
   font-family: 'PFStardust';
 }
+
+.font-pre {
+  font-family: 'Pretendard-Regular';
+}
 </style>
