@@ -14,7 +14,7 @@
         Settings
       </div>
     </div>
-    <div class="article-counts font-stardust">
+    <div class="article-counts font-pre">
       <div style="display: flex; justify-content: space-evenly">
       <div class="received-count">{{this.receivedmessagescount}}</div>
       <div class="sent-count">{{ this.sentmessagescount }}</div>
@@ -304,7 +304,7 @@ export default {
 
 .received-count{
   position: relative;
-  width: 33.3%;
+  width: 40%;
   height: 30px;
 
   font-style: normal;
@@ -320,7 +320,7 @@ export default {
 
 .sent-count {
   position: relative;
-  width: 33.3%;
+  width: 20%;
   height: 30px;
 
   font-style: normal;
@@ -337,7 +337,7 @@ export default {
 
 .unread-count {
   position: relative;
-  width: 33.4%;
+  width: 40%;
   height: 30px;
 
   font-style: normal;
@@ -354,7 +354,7 @@ export default {
 
 .received{
   position: relative;
-  width: 33.3%;
+  width: 40%;
   height: 30px;
   left: 1px;
   font-style: normal;
@@ -372,7 +372,7 @@ export default {
 
 .sent {
   position: relative;
-  width: 33.4%;
+  width: 20%;
   height: 30px;
 
   font-style: normal;
@@ -389,7 +389,7 @@ export default {
 
 .unread {
   position: relative;
-  width: 33.3%;
+  width: 40%;
   height: 30px;
   left: 1px;
   font-style: normal;
@@ -459,7 +459,7 @@ export default {
   position: absolute;
   width: 85%;
   height: 59%;
-  top: 31.2%;
+  top: 32.2%;
   align-items: center;
   overflow: scroll;
 }
