@@ -90,8 +90,10 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 	}
 
 	MessageDto makeWellComeMessage(){
-		String content = "환영합니다!\nShare 버튼을 눌러 내 페이지를 공유하세요!\n제한 시간이 지나면 버블은 사라집니다 얼른 읽어주세요\n버블 만들기를 눌러 다른 사람 페이지에 버블을 남겨보세요!";
-		String nickname = "poppping 개발자";
+		String content = "\uD83D\uDC99환영합니다\uD83D\uDC99\n"
+			+ "제한 시간이 지나면 버블은 사라지니 얼른 읽어주세요⏰\n"
+			+ "친구의 링크를 공유받아 버블을 남겨보세요\uD83D\uDD17";
+		String nickname = "poppping";
 		Long retentionTime = 24L;
 		MessageApiDto.Request request = MessageApiDto.Request.from(content, nickname, retentionTime);
 		return MessageDto.from(request);
