@@ -4,18 +4,27 @@
       <img class="logo" src="../assets/logo_final.png" alt="">
     </div>
 
-    <div class="progress-bar-frame">
-      <div class="loading font-pre">Loading...</div>
+    <!-- <div class="progress-bar-frame">
+      <div v-if="progressValue < 100" class="loading font-pre">Loading...</div>
+      <div v-else class="loading font-pre" style="">Complete!&nbsp;</div>
       <div class="progress-bar-outer">
         <div class="progress-bar-inner" :style="{ width: progressCSS}">
         </div>
       </div>
-    </div>
+    </div> -->
+
+    <!-- <div class="kakao"> -->
+      <!-- <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"> -->
+      <!-- <img class="kakao-image" src="../assets/kakao_login.png" alt="" @click="kakaologin()"> -->
+      <!-- </a> -->
+    <!-- </div> -->
 
     <div class="kakao">
-      <!-- <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"> -->
-      <img class="kakao-image" src="../assets/kakao_login.png" alt="" @click="kakaologin()">
-      <!-- </a> -->
+      <div class="box-behind"></div>
+      <div class="box-front font-pre" @click="kakaologin()">
+        <img class="kakao-logo" src="../assets/kakao_logo.png" alt="">
+        <div>카카오 로그인</div>        
+      </div>
     </div>
 
   </div>
@@ -85,13 +94,26 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
-  top: 25%;
+  top: 21%;
 }
 
 .logo {
-  width: 72%;
+  width: 83%;
   /* filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2)); */
   filter: brightness(115%);
+  animation: popping1 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes popping1 {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1) translateY(-3%);
+  }
+  100% {
+    transform: scale(1) translateY(0%);
+  }
 }
 
 .progress-bar-frame {
@@ -128,13 +150,52 @@ export default {
   position: relative;
   display: flex;
   justify-content: center;
-  top: 48%;
+  top: 43%;
   width: 100%;
 }
 
 .kakao-image {
-  width: 55%;
+  background-color: #fee500;
+  width: 68%;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3))
 }
 
+.box-behind {
+  margin-top: 6px;
+  margin-left: 6px;
+  position: absolute;
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 70%;
+  height: 42px;
+
+  background: #FFFFFF;
+  border: 0.1px solid #8C9799;
+  border-radius: 50px;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.box-front {
+  position: absolute;
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 70%;
+  height: 42px;
+
+  background: linear-gradient(180deg, #fffce3 0%, #FFE500 100%);
+  border: 0.1px solid #8C9799;
+  border-radius: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+    box-shadow: inset 0px -3px 3px rgba(0, 0, 0, 6%);
+}
+
+.kakao-logo {
+  width: 30px;  
+}
 </style>
