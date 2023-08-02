@@ -1,6 +1,6 @@
 <template>
       <!-- {{ bubbledetailProps }} -->
-  <div class="message-frame">
+  <div class="message-frame animate__animated animate__fadeIn">
     <div class="window">
       <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
