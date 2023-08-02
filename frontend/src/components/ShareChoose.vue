@@ -1,18 +1,29 @@
 <template>
-  <div class="message-frame">
+  <div class="message-frame animate__animated animate__fadeIn">
     <div class="window">
       <div class="close-button" @click="closeshare"></div>
       <div class="share-text font-kor">
-        <div>SNS에 공유해보세요</div>
+        <div>공유하기</div>
       </div>
 
         <div class="nickname-box">
-            <img @click="shareKakao()" class="shareimg" src="@/assets/kakao.png" alt="kakao" style="margin-right:3%">
-            <img @click="shareFacebook()" class="shareimg" src="@/assets/facebook.png" alt="facebook" style="margin-right:3%">
-            <img @click="shareTwitter()" class="shareimg" src="@/assets/twitter.png" alt="twitter" style="margin-right:1%">
-            <img @click="shareCopy()" class="shareimg" src="@/assets/link.png" alt="link" style="width:23.5%; hight:23.5%;">
+          <div class="sharebox">
+            <img @click="shareKakao()" class="shareimg" src="@/assets/kakao.png" alt="kakao">
+            <div>Kakao</div>
+          </div>
+          <div class="sharebox">
+            <img @click="shareFacebook()" class="shareimg" src="@/assets/facebook.png" alt="facebook">
+            <div>Facebook</div>
+          </div>
+          <div class="sharebox">
+            <img @click="shareTwitter()" class="shareimg" src="@/assets/twitter.png" alt="twitter" >
+            <div>Twitter</div>
+          </div>
         </div>
-
+        <div class="location-box">
+          <div style="margin: 2% 2%">{{ location }}</div>
+        <button class="button" @click="shareCopy()">URL 복사</button>
+        </div>
     </div>
   </div>
 </template>
@@ -20,12 +31,17 @@
 <script>
 export default {
 name: 'ShareChoose',
+data() {
+    return {
+      location: window.document.location.href
+    };
+  },
   methods: {
     closeshare() {
       this.$emit('close'); // 이벤트를 부모 컴포넌트에 전달하여 닫히도록 함
     },
     shareKakao() {
-			// 카카오톡 공유 요청 보내기
+            // 카카오톡 공유 요청 보내기
       window.Kakao.Share.sendCustom({
         templateId: 96612,  // 내가 만들어놓은 메세지 템플릿
         installTalk: true,  // 카카오톡이 설치 되지 않았을때 마켓으로 이동
@@ -93,7 +109,7 @@ name: 'ShareChoose',
   
   width: 100%;
   height: 16%;
-    margin-bottom: 35px;
+    margin-bottom: 15px;
   /* border: 1px solid black; */
 }
 
@@ -112,7 +128,7 @@ name: 'ShareChoose',
 }
 .nickname-box {
   width: 83%;
-  height: 100px;;
+  height: 28%;;
   /* border: 1px solid darkslategray;
   border-radius: 20px 20px 20px 20px; */
   outline: none;
@@ -126,13 +142,53 @@ name: 'ShareChoose',
   padding-left: 3.5%;
   padding-right: 4.2%;
   margin-right: 4%;
-  
+  margin-bottom: 4%;
+  margin-top: 3%;
+}
+.sharebox {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  height: 100%;
+  /* margin: 10px;  */
 }
 
 .shareimg {
-    margin: 0px 10px;
+    margin: 0px 8%;
+    width: 55%;
+    margin-bottom: 5%;
+    /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
+}
+.sharetext {
+    margin: 0px 9%;
     width: 20%;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4))
+
+    /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
+}
+.location-box {
+  width: 83%;
+  height: 13%;;
+  border: 0.05px solid rgb(143, 143, 143);
+  border-radius: 5px 5px 5px 5px;
+  outline: none;
+  font-size: 70%;
+  /* font-weight: bold; */
+  background: rgb(230, 230, 230);
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  /* margin-left: 6.5%; */
+  /* padding-left: 3.5%;
+  padding-right: 4.2%; */
+  margin-right: 4%;
+}
+.button {
+  height: 100%;;
+  width: 100%;
+  background: white;
+  border-left: 0.1px solid rgb(143, 143, 143);
+  border-radius: 0px 5px 5px 0px;
 }
 .font-kor{
   font-family: 'Galmuri9';
