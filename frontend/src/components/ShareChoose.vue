@@ -3,7 +3,7 @@
     <div class="window">
       <div class="close-button" @click="closeshare"></div>
       <div class="share-text font-kor">
-        <div>공유하기</div>
+        <div style="font-size:70%; height:10px;">공유하기</div>
       </div>
 
         <div class="nickname-box">
@@ -120,7 +120,7 @@ data() {
 }
 
 .share-text {
-  height: 30px;
+  height: 20px;
   display: flex;
   align-content: flex-end;
   justify-content: center;
