@@ -70,7 +70,7 @@ const userStore = {
         code,
         (response) => {
           if (response.status === 200) {
-            console.log(response)
+            // console.log(response)
             let accessToken = response.data["accessToken"];
             let refreshToken = response.data["refreshToken"];
             // console.log(accessToken)
@@ -78,7 +78,7 @@ const userStore = {
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
-            console.log(this.state)
+            // console.log(this.state)
             localStorage.setItem("access-token", accessToken);
             localStorage.setItem("refresh-token", refreshToken);
             // console.log(localStorage.getItem("access-token"))
@@ -131,7 +131,7 @@ const userStore = {
               },
               async (error) => {
                 console.log(error);
-                console.log('보낸ap세지 받아오기 에러');
+                // console.log('보낸ap세지 받아오기 에러');
               }
             )
             receivedUserMessage(
@@ -147,7 +147,7 @@ const userStore = {
               },
               async (error) => {
                 console.log(error);
-                console.log('받은메세지 받아오기 에러');
+                // console.log('받은메세지 받아오기 에러');
               }
             )
           } else {
@@ -174,7 +174,7 @@ const userStore = {
           router.push({ name: "LoginView" });
 
         } else {
-          console.log("잘못된 access token임. 로그아웃 처리.");
+          // console.log("잘못된 access token임. 로그아웃 처리.");
           commit("SET_IS_LOGIN", false);
           commit("SET_IS_LOGIN_ERROR", true);
           commit("SET_IS_VALID_TOKEN", false);
@@ -183,7 +183,7 @@ const userStore = {
       },
         (error) => {
         console.log(error);
-        console.log('이건가');
+        // console.log('이건가');
       })
     },
     //탈퇴
@@ -195,7 +195,7 @@ const userStore = {
           commit("SET_IS_VALID_TOKEN", false);
           localStorage.clear();
           router.push({ name: "LoginView" });
-          console.log('탈퇴완료')
+          // console.log('탈퇴완료')
 
         } else {
           console.log("잘못된 access token임. 로그아웃 처리.");
@@ -207,7 +207,7 @@ const userStore = {
       },
         (error) => {
         console.log(error);
-        console.log('이건가');
+        // console.log('이건가');
       })
     },
     // 다른 유저 메인페이지에 메세지, 닉네임 띄우기
@@ -233,14 +233,14 @@ const userStore = {
         if (response.status == 200) {
           commit("SET_RECEIVED_MESSAGES", response.data)
           localStorage.setItem("receivedmessages", JSON.stringify(response.data));
-          console.log('메세지 지워짐')
+          // console.log('메세지 지워짐')
         } else {
           console.log("잘못");
         }
       },
         (error) => {
         console.log(error);
-        console.log(messageid)
+        // console.log(messageid)
       })
     },
 
@@ -274,7 +274,7 @@ const userStore = {
         },
         async (error) => {
           console.log(error);
-          console.log('보낸메세지 받아오기 에러');
+          // console.log('보낸메세지 받아오기 에러');
         }
       )
       receivedUserMessage(
@@ -289,7 +289,7 @@ const userStore = {
         },
         async (error) => {
           console.log(error);
-          console.log('받은메세지 받아오기 에러');
+          // console.log('받은메세지 받아오기 에러');
         }
       )
     },
@@ -307,8 +307,8 @@ const userStore = {
             commit("SET_IS_VALID_TOKEN", true);
             localStorage.setItem("access-token", accessToken);
             localStorage.setItem("refresh-token", refreshToken);
-            console.log(accessToken);
-            console.log(this.state.userStore.isValidToken)
+            // console.log(accessToken);
+            // console.log(this.state.userStore.isValidToken)
             router.go(0)
           } else {
             console.log("토큰 받아오기 오류");
@@ -316,8 +316,8 @@ const userStore = {
         },
         async (error) => {
           console.log(error);
-          console.log(accessToken);
-          console.log(refreshToken);
+          // console.log(accessToken);
+          // console.log(refreshToken);
           localStorage.clear();
           router.push({ name: "LoginView" });
         }
