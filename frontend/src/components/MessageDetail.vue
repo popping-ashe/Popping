@@ -1,5 +1,5 @@
 <template>
-      <!-- {{ bubbledetailProps }} -->
+  <!-- {{ bubbledetailProps }} -->
   <div class="message-frame animate__animated animate__fadeIn">
     <div class="window font-pre" v-click-outside="closeDetail">
       <div class="close-button" @click="closeDetail()"></div>
@@ -7,7 +7,7 @@
         <div class="nickname-box">
           <div>&nbsp;&nbsp;&nbsp;{{ bubbledetailProps.nickname }}&nbsp;&nbsp;&nbsp;</div>
         </div>
-          <div class="sent-time">{{ bubbledetailProps.create_time.substr(11,5) }}</div>
+        <div class="sent-time">{{ bubbledetailProps.create_time.substr(11, 5) }}</div>
       </div>
       <div class="content-box">
         <span v-html="bubbledetailProps.content"></span>
@@ -17,26 +17,26 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import vClickOutside from 'v-click-outside'
+import { mapState } from "vuex";
+import vClickOutside from "v-click-outside";
 
 export default {
-  name: 'MessageDetail',
+  name: "MessageDetail",
   directives: {
-    clickOutside: vClickOutside.directive
+    clickOutside: vClickOutside.directive,
   },
   methods: {
     closeDetail() {
-      this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
+      this.$store.commit("SHOW_DETAIL", !this.showReceivedDetail);
       // this.$router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } })
-    }
+    },
   },
-  props: ['bubbledetailProps'],
+  props: ["bubbledetailProps"],
 
   computed: {
-    ...mapState(['showReceivedDetail'])
-  }
-}
+    ...mapState(["showReceivedDetail"]),
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -58,7 +58,7 @@ export default {
   width: calc(var(--vh, 1vh) * 40);
   height: calc(var(--vh, 1vh) * 36);
   transform: translate(-50%, -50%);
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0, 0.3));
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
   background-color: transparent;
   background-image: url("../assets/message-background.png");
   background-size: 100%;
@@ -88,7 +88,7 @@ export default {
   outline: none;
   font-size: 13px;
   font-weight: 600;
-  background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #b9d7eb 99.99%, #b9d7eb 100%);
   display: flex;
   align-items: center;
   margin-left: 6.5%;
@@ -112,7 +112,7 @@ export default {
   outline: none;
   padding: 9px 12px 5px 12px;
   resize: none;
-  background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #b9d7eb 99.99%, #b9d7eb 100%);
   margin-bottom: 6%;
   margin-left: 6.5%;
   margin-right: 11%;

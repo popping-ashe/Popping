@@ -2,49 +2,59 @@
   <div class="message-frame animate__animated animate__fadeIn">
     <div class="window font-pre" v-click-outside="closeDetail">
       <div class="close-button" @click="closeDetail()"></div>
-        <div class="upper-bar">
-          <input class="nickname-input" maxlength="10" placeholder="닉네임" type="text" v-model="messageData.nickname" @keyup="checkNicknameLength">
-          <div class="time-select-box" @click="changeLifeTime()">
-            <img class="time-icon" src="../assets/clock.png" alt="">
-            <div class="time-selector">
-              <div>{{ messageData.retentionTime }}h</div>
-            </div>
+      <div class="upper-bar">
+        <input
+          class="nickname-input"
+          maxlength="10"
+          placeholder="닉네임"
+          type="text"
+          v-model="messageData.nickname"
+          @keyup="checkNicknameLength"
+        />
+        <div class="time-select-box" @click="changeLifeTime()">
+          <img class="time-icon" src="../assets/clock.png" alt="" />
+          <div class="time-selector">
+            <div>{{ messageData.retentionTime }}h</div>
           </div>
         </div>
-          <div class="content-input-box">
-            <textarea class="content-input" maxlength="200" placeholder="내용" v-model="messageData.content" @keyup="checkContentLength"></textarea>
-          </div>
-          <!-- <input class="content-input" type="text" v-model="contents"> -->
-          <div class="button-box">
-            <div class="cancel-button" @click="closeDetail()">취소</div>
-            <div class="send-button" @click="sendMessage()">전송</div>
-          </div>
-
+      </div>
+      <div class="content-input-box">
+        <textarea
+          class="content-input"
+          maxlength="200"
+          placeholder="내용"
+          v-model="messageData.content"
+          @keyup="checkContentLength"
+        ></textarea>
+      </div>
+      <!-- <input class="content-input" type="text" v-model="contents"> -->
+      <div class="button-box">
+        <div class="cancel-button" @click="closeDetail()">취소</div>
+        <div class="send-button" @click="sendMessage()">전송</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import {  sendUserMessage } from "@/api/user"
-import vClickOutside from 'v-click-outside'
+import { mapState } from "vuex";
+import { sendUserMessage } from "@/api/user";
+import vClickOutside from "v-click-outside";
 const userStore = "userStore";
 
 export default {
-  name: 'MakeBubble',
+  name: "MakeBubble",
   directives: {
-    clickOutside: vClickOutside.directive
+    clickOutside: vClickOutside.directive,
   },
-  components : {
-
-  },
+  components: {},
   data() {
     return {
       messageData: {
-        content: '',
+        content: "",
         sender: null,
         share_id: this.$route.params.pageid,
-        nickname: '',
+        nickname: "",
         retentionTime: 1,
       },
     };
@@ -56,58 +66,55 @@ export default {
     }
   },
   methods: {
-    sendMessage(){
+    sendMessage() {
       sendUserMessage(
-        this.messageData, 
+        this.messageData,
         (response) => {
-        if (response.status == 200) {
-          this.$store.commit('SHOW_MAKE_WINDOW', !this.showMakeWindow)
-          this.$parent.sendmessageupdate(response.data);
-          this.$toast.center('버블을 보냈습니다.')
-        } else {
-          // console.log("잘못");
-        }
-      },
+          if (response.status == 200) {
+            this.$store.commit("SHOW_MAKE_WINDOW", !this.showMakeWindow);
+            this.$parent.sendmessageupdate(response.data);
+            this.$toast.center("버블을 보냈습니다.");
+          } else {
+            // console.log("잘못");
+          }
+        },
         (error) => {
           console.log(error);
-      })
+        }
+      );
     },
-  
 
     closeDetail() {
-      this.$store.commit('SHOW_MAKE_WINDOW', !this.showMakeWindow)
+      this.$store.commit("SHOW_MAKE_WINDOW", !this.showMakeWindow);
     },
 
     changeLifeTime() {
       if (this.messageData.retentionTime === 1) {
-        this.messageData.retentionTime = 3
+        this.messageData.retentionTime = 3;
       } else if (this.messageData.retentionTime === 3) {
-        this.messageData.retentionTime = 24
+        this.messageData.retentionTime = 24;
       } else if (this.messageData.retentionTime === 24) {
-        this.messageData.retentionTime = 1
+        this.messageData.retentionTime = 1;
       }
     },
 
     checkNicknameLength() {
       if (this.messageData.nickname.length == 10) {
-        this.$toast.center('닉네임 최대 길이는 10글자입니다.')
-
+        this.$toast.center("닉네임 최대 길이는 10글자입니다.");
       }
     },
 
     checkContentLength() {
       if (this.messageData.content.length == 200) {
-        this.$toast.center('내용 최대 길이는 200글자입니다.')
-
+        this.$toast.center("내용 최대 길이는 200글자입니다.");
       }
-    }
+    },
   },
-    computed: {
-    ...mapState(['showMakeWindow']),
-    ...mapState(userStore, ['isLogin','userInfo'])
-  }
-
-}
+  computed: {
+    ...mapState(["showMakeWindow"]),
+    ...mapState(userStore, ["isLogin", "userInfo"]),
+  },
+};
 </script>
 
 <style scoped>
@@ -128,7 +135,7 @@ export default {
   width: calc(var(--vh, 1vh) * 40);
   height: calc(var(--vh, 1vh) * 36);
   transform: translate(-50%, -50%);
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0, 0.3));
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
   background-color: transparent;
   background-image: url("../assets/message-background.png");
   background-size: 100%;
@@ -159,7 +166,7 @@ export default {
   outline: none;
   font-size: 85%;
   font-weight: bold;
-  background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #b9d7eb 99.99%, #b9d7eb 100%);
   margin-left: 6.5%;
   padding-left: 3%;
   padding-right: 3.4%;
@@ -201,7 +208,7 @@ export default {
   border-radius: 0px 20px 20px 20px;
   padding: 9px 12px 5px 12px;
   resize: none;
-  background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #b9d7eb 99.99%, #b9d7eb 100%);
   margin-bottom: 6%;
   margin-left: 6.5%;
   margin-right: 11%;
@@ -253,10 +260,8 @@ export default {
   background-color: white;
   border-radius: 24px;
 
-
   margin-right: 10px;
 }
-
 
 ::placeholder {
   color: gray;

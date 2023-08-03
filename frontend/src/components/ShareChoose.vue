@@ -3,82 +3,84 @@
     <div class="window" v-click-outside="closeshare">
       <div class="close-button" @click="closeshare"></div>
       <div class="share-text font-kor">
-        <div style="font-size:70%; height:10px;">공유하기</div>
+        <div style="font-size: 70%; height: 10px">공유하기</div>
       </div>
 
-        <div class="nickname-box">
-          <div class="sharebox">
-            <img @click="shareKakao()" class="shareimg" src="@/assets/kakao.png" alt="kakao">
-            <div>Kakao</div>
-          </div>
-          <div class="sharebox">
-            <img @click="shareFacebook()" class="shareimg" src="@/assets/facebook.png" alt="facebook">
-            <div>Facebook</div>
-          </div>
-          <div class="sharebox">
-            <img @click="shareTwitter()" class="shareimg" src="@/assets/twitter.png" alt="twitter" >
-            <div>Twitter</div>
-          </div>
+      <div class="nickname-box">
+        <div class="sharebox">
+          <img @click="shareKakao()" class="shareimg" src="@/assets/kakao.png" alt="kakao" />
+          <div>Kakao</div>
         </div>
-        <div class="share-link-frame font-pre">
-          <div class="location-box">
-            <div clas="location">{{ location }}</div>
-          </div>
-          <button class="button" @click="shareCopy()">&nbsp;&nbsp;URL 복사&nbsp;&nbsp;</button>
+        <div class="sharebox">
+          <img
+            @click="shareFacebook()"
+            class="shareimg"
+            src="@/assets/facebook.png"
+            alt="facebook"
+          />
+          <div>Facebook</div>
         </div>
+        <div class="sharebox">
+          <img @click="shareTwitter()" class="shareimg" src="@/assets/twitter.png" alt="twitter" />
+          <div>Twitter</div>
+        </div>
+      </div>
+      <div class="share-link-frame font-pre">
+        <div class="location-box">
+          <div clas="location">{{ location }}</div>
+        </div>
+        <button class="button" @click="shareCopy()">&nbsp;&nbsp;URL 복사&nbsp;&nbsp;</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import vClickOutside from 'v-click-outside'
+import vClickOutside from "v-click-outside";
 
 export default {
-name: 'ShareChoose',
-directives: {
-  ClickOutside: vClickOutside.directive
-},
-data() {
+  name: "ShareChoose",
+  directives: {
+    ClickOutside: vClickOutside.directive,
+  },
+  data() {
     return {
-      location: window.document.location.href
+      location: window.document.location.href,
     };
   },
   methods: {
     closeshare() {
-      this.$emit('close'); // 이벤트를 부모 컴포넌트에 전달하여 닫히도록 함
+      this.$emit("close"); // 이벤트를 부모 컴포넌트에 전달하여 닫히도록 함
     },
     shareKakao() {
-            // 카카오톡 공유 요청 보내기
+      // 카카오톡 공유 요청 보내기
       window.Kakao.Share.sendCustom({
-        templateId: 96612,  // 내가 만들어놓은 메세지 템플릿
-        installTalk: true,  // 카카오톡이 설치 되지 않았을때 마켓으로 이동
+        templateId: 96612, // 내가 만들어놓은 메세지 템플릿
+        installTalk: true, // 카카오톡이 설치 되지 않았을때 마켓으로 이동
         templateArgs: {
-          shareId : this.$store.getters["userStore/checkShareId"].share_id, // 여기에 shareId 담아주면 댐
-          userName : this.$store.getters["userStore/checkUserInfo"].nickname
-        }
+          shareId: this.$store.getters["userStore/checkShareId"].share_id, // 여기에 shareId 담아주면 댐
+          userName: this.$store.getters["userStore/checkUserInfo"].nickname,
+        },
       });
     },
     shareTwitter() {
       const text = "💙POPPING에서 익명 메세지를 보내보세요💙"; // 작성될 트위
-      const url = window.document.location.href;  // 여기에 공유할 full url 넣기
-      window.open("https://twitter.com/intent/tweet?text="+text+"&url="+url);
+      const url = window.document.location.href; // 여기에 공유할 full url 넣기
+      window.open("https://twitter.com/intent/tweet?text=" + text + "&url=" + url);
     },
     shareFacebook() {
-      const url = window.document.location.href;  // 여기에 공유할 full url 넣기 (localhost는 현재 적용안됨)
-      window.open("https://www.facebook.com/sharer/sharer.php?u="+url);
+      const url = window.document.location.href; // 여기에 공유할 full url 넣기 (localhost는 현재 적용안됨)
+      window.open("https://www.facebook.com/sharer/sharer.php?u=" + url);
     },
     shareCopy() {
-      this.$copyText(window.document.location.href)
-      this.$toast.center('복사되었습니다')
+      this.$copyText(window.document.location.href);
+      this.$toast.center("복사되었습니다");
     },
-
   },
-  props: ['bubbledetailProps'],
+  props: ["bubbledetailProps"],
 
-  computed: {
-  }
-
-}
+  computed: {},
+};
 </script>
 
 <style scoped>
@@ -99,7 +101,7 @@ data() {
   width: calc(var(--vh, 1vh) * 40);
   height: calc(var(--vh, 1vh) * 29);
   transform: translate(-50%, -50%);
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0, 0.3));
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
   background-color: transparent;
   background-image: url("../assets/그림2.png");
   background-size: 100%;
@@ -111,10 +113,9 @@ data() {
 }
 
 .close-button {
-  
   width: 100%;
   height: 16%;
-    margin-bottom: 15px;
+  margin-bottom: 15px;
   /* border: 1px solid black; */
 }
 
@@ -133,7 +134,7 @@ data() {
 }
 .nickname-box {
   width: 83%;
-  height: 28%;;
+  height: 28%;
   /* border: 1px solid darkslategray;
   border-radius: 20px 20px 20px 20px; */
   outline: none;
@@ -152,24 +153,24 @@ data() {
 }
 .sharebox {
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
-  justify-content: center; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100%;
   /* margin: 10px;  */
 }
 
 .shareimg {
-    margin: 0px 8%;
-    width: 55%;
-    margin-bottom: 5%;
-    /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
+  margin: 0px 8%;
+  width: 55%;
+  margin-bottom: 5%;
+  /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
 }
 .sharetext {
-    margin: 0px 9%;
-    width: 20%;
+  margin: 0px 9%;
+  width: 20%;
 
-    /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
+  /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
 }
 
 .share-link-frame {
@@ -178,9 +179,8 @@ data() {
   display: flex;
   justify-content: center;
   margin-right: 3.5%;
-  margin-top: 0.5%
+  margin-top: 0.5%;
 }
-
 
 .location-box {
   width: 68%;
@@ -215,12 +215,12 @@ data() {
   font-size: 12px;
   align-items: center;
 }
-.font-kor{
-  font-family: 'Galmuri9';
+.font-kor {
+  font-family: "Galmuri9";
   font-weight: 200;
 }
 
-.font-eng{
-  font-family: 'hydrophilia'
+.font-eng {
+  font-family: "hydrophilia";
 }
 </style>

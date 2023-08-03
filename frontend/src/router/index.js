@@ -1,49 +1,47 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import MainView from '../views/MainView.vue'
-import LoginView from '../views/LoginView.vue'
-import MypageView from '../views/MypageView.vue'
-import LoginCallBack from '../views/LoginCallBack.vue'
-import SettingView from '../views/SettingView.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import MainView from "../views/MainView.vue";
+import LoginView from "../views/LoginView.vue";
+import MypageView from "../views/MypageView.vue";
+import LoginCallBack from "../views/LoginCallBack.vue";
+import SettingView from "../views/SettingView.vue";
 // import userStore from "@/store/modules/userStore";
 
-
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/main/:pageid',
-    name: 'MainView',
-    component: MainView
+    path: "/main/:pageid",
+    name: "MainView",
+    component: MainView,
   },
   {
-    path:'/',
-    name: 'LoginView',
-    component: LoginView
+    path: "/",
+    name: "LoginView",
+    component: LoginView,
   },
   {
-    path:'/mypage',
-    name: 'MypageView',
-    component: MypageView
+    path: "/mypage",
+    name: "MypageView",
+    component: MypageView,
   },
   {
-    path: '/oauth/kakao/callback',
-    name: 'loginCallBack',
-    component: LoginCallBack
+    path: "/oauth/kakao/callback",
+    name: "loginCallBack",
+    component: LoginCallBack,
   },
   {
-    path: '/setting',
-    name: 'SettingView',
-    component: SettingView
+    path: "/setting",
+    name: "SettingView",
+    component: SettingView,
   },
-
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
 // router.beforeEach(async (to, from, next) => {
 //   // 페이지에 접근하기 전에 사용자 데이터 업데이트
@@ -60,4 +58,4 @@ const router = new VueRouter({
 //   }
 // });
 
-export default router
+export default router;
