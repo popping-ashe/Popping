@@ -2,7 +2,7 @@
 <div class="page-container">
   <div class="page" :class="slideClass">
   <div class="frame" style="z-index: 0;">
-      <SentDetail :messagedetail-props="messageDetail" v-if="showSentDetail"/>
+      <SentDetail :messagedetail-props="toShowMessage" v-if="showSentDetail"/>
     <div class="upper-bar">
       <div class="new-button link-button" style="margin-left: 6%" @click="goBackPage(-1)">
         Back
