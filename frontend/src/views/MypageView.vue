@@ -164,19 +164,19 @@ export default {
     receivedUserMessageCount(
       (response) => {
           if (response.status == 200) {
-            console.log(response);
+            // console.log(response);
             // const messagesCount = response.data
             this.receivedmessagescount = response.data.received_messages_count;
             this.sentmessagescount = response.data.sent_messages_count;
             this.unreadMessageCount = response.data.unread_messages_count;
       
           } else {
-            console.log("메세지 없음");
+            // console.log("메세지 없음");
           }
         },
         async (error) => {
           console.log(error);
-          console.log('메세지 개수 받아오기 에러');
+          // console.log('메세지 개수 받아오기 에러');
           await this.getnewaccesstoken()
         }
       )
@@ -184,22 +184,22 @@ export default {
     sentUserMessage(
       (response) => {
         if (response.status == 200) {
-          console.log(response);
+          // console.log(response);
           localStorage.setItem("sentmessages", JSON.stringify(response.data));
           const sentmessages = response.data
           this.sentmessages = sentmessages
-          console.log(sentmessages)
+          // console.log(sentmessages)
           // this.sentmessagescount = sentmessages.length;
           this.nowShowing = sentmessages
           // this.unreadMessageCount = this.sentmessages.filter((article) => article.state === '안읽음').length
 
         } else {
-          console.log("보낸 메세지 없음");
+          // console.log("보낸 메세지 없음");
         }
       },
       async (error) => {
         console.log(error);
-        console.log('보낸ap세지 받아오기 에러');
+        // console.log('보낸ap세지 받아오기 에러');
         await this.getnewaccesstoken()
       }
     )

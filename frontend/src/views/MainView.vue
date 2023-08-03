@@ -25,6 +25,18 @@
           </div>
     </div>
 
+
+    <div class="please-share font-kor" v-if="pageid == shareid && showPleaseShare">
+      <div class="share-ment">
+        <div class="share-touch">Share</div>
+        <div>
+          &nbsp;를 터치해 링크를 공유하고
+        </div>
+      </div>
+      <div>버블을 받아보세요</div>
+    </div>
+
+
     <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
     <div class="bubble-area">
       <div class="bubble-frame font-kor" @click="openDetail($event.target, index)"  
@@ -39,7 +51,16 @@
     </div>
 
       <!-- 로그인 상태에 따라 동적으로 메세지 보내기 버튼 활성화/비활성화 -->
-    <div class="bubble-make-btn font-kor" v-if="pageid != shareid" @click="openMake()">
+    <!-- <div class="bubble-make-btn font-kor" v-if="pageid != shareid" @click="openMake()">
+      <img class="bubble-make-image"  src="../assets/makebubblebtn.png" alt="">
+      <div class="bubble-make-text">버블 만들기</div>
+    </div> -->
+
+    <div class="bubble-make-btn font-kor" v-if="pageid == shareid" @click="refresh()">
+      <img class="bubble-make-image"  src="../assets/makebubblebtn.png" alt="">
+      <div class="bubble-make-text">새로고침</div>
+    </div>
+    <div class="bubble-make-btn font-kor" v-else @click="openMake()">
       <img class="bubble-make-image"  src="../assets/makebubblebtn.png" alt="">
       <div class="bubble-make-text">버블 만들기</div>
     </div>
@@ -80,8 +101,8 @@ export default {
       bubbleDetail: "",
       shareid:"",
       openshare:false,
-
       slideClass: '',
+      showPleaseShare: false,
     };
   },
   created() {
@@ -95,8 +116,8 @@ export default {
     this.nickname = nickname
     // localStorage.setItem("shareid", JSON.stringify(response.data));
     // console.log(userStore.state.userInfo.nickname);
-    console.log(this.shareid)
-    console.log(this.pageid)
+    // console.log(this.shareid)
+    // console.log(this.pageid)
     if (this.shareid==this.pageid) {
       receivedUserMessage(
         (response) => {
@@ -105,16 +126,23 @@ export default {
             // console.log(response);
             const receivedmessages = response.data
             this.receivedmessages = receivedmessages
-            console.log(receivedmessages)
+            // console.log(receivedmessages)
             this.generateRandomSizes();
             this.generateRandomPosition();
+
+            if (receivedmessages.length == 0) {
+              this.showPleaseShare = true
+            } else {
+              this.showPleaseShare = false
+            }
+            
           } else {
-            console.log("받은 메세지 없음");
+            // console.log("받은 메세지 없음");
           }
         },
         async (error) => {
           console.log(error);
-          console.log('받은메세지 받아오기 에러');
+          // console.log('받은메세지 받아오기 에러');
           await this.getnewaccesstoken()
         }
       )
@@ -126,17 +154,17 @@ export default {
         page, 
         (response) => {
         if (response.status == 200) {
-          console.log(response.data)
+          // console.log(response.data)
           // console.log(response.data.nickname)
           const othermessages = response.data.data
           // console.log(othermessages)
           this.nickname = response.data.nickname
-          console.log(this.nickname)
+          // console.log(this.nickname)
           this.receivedmessages = othermessages
           this.generateRandomSizes();
           this.generateRandomPosition();
           } else {
-            console.log("잘못");
+            // console.log("잘못");
           }
         },
           (error) => {
@@ -152,17 +180,17 @@ export default {
         page, 
         (response) => {
         if (response.status == 200) {
-          console.log(response.data)
+          // console.log(response.data)
           // console.log(response.data.nickname)
           const othermessages = response.data.data
           // console.log(othermessages)
           this.nickname = response.data.nickname
-          console.log(this.nickname)
+          // console.log(this.nickname)
           this.receivedmessages = othermessages
           this.generateRandomSizes();
           this.generateRandomPosition();
           } else {
-            console.log("잘못");
+            // console.log("잘못");
           }
         },
           (error) => {
@@ -171,7 +199,7 @@ export default {
         })
     }
     
-    console.log(this.nickname)
+    // console.log(this.nickname)
   },
 
   methods: {
@@ -236,8 +264,8 @@ export default {
       }
     },
     sendmessageupdate(data){
-      console.log("test");
-      console.log(data);
+      // console.log("test");
+      // console.log(data);
       this.receivedmessages.push(data);
       this.generateRandomSizes();
       this.generateRandomPosition();
@@ -271,6 +299,10 @@ export default {
       } else {
         return (diffHour + 'h')
       }
+    },
+
+    refresh() {
+      window.location.reload()
     },
 
     ...mapActions(userStore, ["getnewaccesstoken","showusersbubble", "shareidmessage","changeread", "receivedUserMessage"])
@@ -456,6 +488,54 @@ export default {
 .bubble-make-text {
   position: absolute;
   margin-bottom: 2.5%;
+}
+
+.please-share {
+  width: 100%;
+  position: absolute;
+  font-size: 16px;
+  top: 43%;
+  animation: popping1 3s ease-in-out infinite alternate;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.2));
+  flex-wrap: wrap;
+}
+
+.hide-share {
+  display:none;
+}
+
+.share-ment {
+  display: flex;
+  width:100%;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.share-touch {
+  width: 48.8px;
+  height: 21.8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  box-sizing: border-box;
+  border-style : solid;
+  border-color : #808384;
+  border-color : rgba(128, 131, 132, 1);
+  border-width : 1px;
+  border-radius : 16px;
+  -moz-border-radius : 16px;
+  -webkit-border-radius : 16px;
+  box-shadow: inset 0px -2px 2px #D8D8D8;
+  padding :1px 5px 2px;
+  text-decoration: none;
+  font-family: 'hydrophilia';
+  color:black;
+  font-size: 10.5px;
+  font-weight: 600;
 }
 
 </style>
