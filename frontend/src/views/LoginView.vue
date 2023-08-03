@@ -38,7 +38,7 @@ export default {
 
     //카카오 로그인
     kakaologin() {
-      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=https://dev.pop-ping.com/oauth/kakao/callback&response_type=code`
+      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=https://www.pop-ping.com/oauth/kakao/callback&response_type=code`
     },
 
     updateProgressBar() {

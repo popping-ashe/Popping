@@ -114,19 +114,13 @@ export default {
     this.shareid = shareid.share_id
     const nickname = this.$store.getters["userStore/checkUserInfo"].nickname;
     this.nickname = nickname
-    // localStorage.setItem("shareid", JSON.stringify(response.data));
-    // console.log(userStore.state.userInfo.nickname);
-    // console.log(this.shareid)
-    // console.log(this.pageid)
     if (this.shareid==this.pageid) {
       receivedUserMessage(
         (response) => {
           if (response.status == 200) {
             localStorage.setItem("receivedmessages", JSON.stringify(response.data));
-            // console.log(response);
             const receivedmessages = response.data
             this.receivedmessages = receivedmessages
-            // console.log(receivedmessages)
             this.generateRandomSizes();
             this.generateRandomPosition();
 
@@ -142,7 +136,6 @@ export default {
         },
         async (error) => {
           console.log(error);
-          // console.log('받은메세지 받아오기 에러');
           await this.getnewaccesstoken()
         }
       )
@@ -154,12 +147,8 @@ export default {
         page, 
         (response) => {
         if (response.status == 200) {
-          // console.log(response.data)
-          // console.log(response.data.nickname)
           const othermessages = response.data.data
-          // console.log(othermessages)
           this.nickname = response.data.nickname
-          // console.log(this.nickname)
           this.receivedmessages = othermessages
           this.generateRandomSizes();
           this.generateRandomPosition();
@@ -173,19 +162,14 @@ export default {
         })
       }
     }
-    // console.log(this.isLogin)
     if (this.isLogin == false) {
       const page = this.pageid
       getshareidmessages(
         page, 
         (response) => {
         if (response.status == 200) {
-          // console.log(response.data)
-          // console.log(response.data.nickname)
           const othermessages = response.data.data
-          // console.log(othermessages)
           this.nickname = response.data.nickname
-          // console.log(this.nickname)
           this.receivedmessages = othermessages
           this.generateRandomSizes();
           this.generateRandomPosition();
@@ -199,7 +183,6 @@ export default {
         })
     }
     
-    // console.log(this.nickname)
   },
 
   methods: {
@@ -217,7 +200,6 @@ export default {
     },
     opensharecomponent() {
       this.openshare = true;
-      // console.log(this.openshare)
     },
     closeshare() {
       this.openshare = false;
@@ -227,8 +209,6 @@ export default {
         elem.parentElement.parentElement.style.display="none";
         this.bubbleDetail = this.receivedmessages[idx]
         this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
-        // const messageid = this.bubbleDetail.message_id
-        // console.log(messageid)
         this.changeread(this.bubbleDetail.message_id);
       }
     },
@@ -264,15 +244,12 @@ export default {
       }
     },
     sendmessageupdate(data){
-      // console.log("test");
-      // console.log(data);
       this.receivedmessages.push(data);
       this.generateRandomSizes();
       this.generateRandomPosition();
     },
     toHome() {
-      // console.log(this.shareid)
-      location.href = `https://dev.pop-ping.com/main/${this.shareid}`
+      location.href = `https://www.pop-ping.com/main/${this.shareid}`
     },
 
     calLeftTime(index) {

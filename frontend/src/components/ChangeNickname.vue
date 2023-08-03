@@ -96,7 +96,6 @@ export default {
         this.changednickname,
         (response) => {
           if (response.status == 200) {
-            // console.log(response.data);
             this.nickname = this.changednickname;
             this.updateUserData({ nickname: this.changednickname });
           } else {

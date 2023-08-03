@@ -56,12 +56,10 @@ data() {
     shareTwitter() {
       const text = "💙POPPING에서 익명 메세지를 보내보세요💙"; // 작성될 트위
       const url = window.document.location.href;  // 여기에 공유할 full url 넣기
-      // console.log(url)
       window.open("https://twitter.com/intent/tweet?text="+text+"&url="+url);
     },
     shareFacebook() {
       const url = window.document.location.href;  // 여기에 공유할 full url 넣기 (localhost는 현재 적용안됨)
-      // const url ="https://dev.pop-ping.com/";
       window.open("https://www.facebook.com/sharer/sharer.php?u="+url);
     },
     shareCopy() {
