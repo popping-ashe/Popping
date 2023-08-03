@@ -35,7 +35,7 @@
       </div>
     </div>
     <br>
-    <div class="delete font-pre">popping 탈퇴</div>
+    <div class="delete font-pre" @click="deleteuser">popping 탈퇴</div>
 
   </div>  
   </div>
@@ -60,8 +60,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(userStore, ['logoutUser', 'updateUserData']),
+    ...mapActions(userStore, ['userdelete','logoutUser', 'updateUserData']),
 
+    deleteuser() {
+      this.userdelete()
+    },
     goToPage(path) {
       this.slideClass = 'slide-in'; // 슬라이드 효과 시작
       setTimeout(() => {

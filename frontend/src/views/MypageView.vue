@@ -66,7 +66,7 @@
             </div>
           </div>
         </div>
-      <button v-if="isLogin" @click="logoutUser">로그아웃</button>
+      <!-- <button v-if="isLogin" @click="logoutUser">로그아웃</button> -->
       
       
       </div>
@@ -108,7 +108,7 @@ export default {
 };
   },
   methods: {
-    ...mapActions(userStore, ['logoutUser', 'updateUserData']),
+    ...mapActions(userStore, ['logoutUser', 'updateUserData','getnewaccesstoken']),
 
     goToPage(path) {
       this.slideClass = 'slide-in'; // 슬라이드 효과 시작
@@ -177,6 +177,7 @@ export default {
         async (error) => {
           console.log(error);
           console.log('메세지 개수 받아오기 에러');
+          await this.getnewaccesstoken()
         }
       )
 
@@ -199,6 +200,7 @@ export default {
       async (error) => {
         console.log(error);
         console.log('보낸ap세지 받아오기 에러');
+        await this.getnewaccesstoken()
       }
     )
   },

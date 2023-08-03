@@ -1,6 +1,6 @@
 import router from "@/router";
 // import { kakaologin } from "@/api/user";
-import { readmessages, getshareidmessages, getshareid, getUserInfo, kakaologin, sentUserMessage, receivedUserMessage, logout } from "@/api/user";
+import { deleteuser, gettoken, readmessages, getshareidmessages, getshareid, getUserInfo, kakaologin, sentUserMessage, receivedUserMessage, logout } from "@/api/user";
 
 
 const userStore = {
@@ -184,7 +184,30 @@ const userStore = {
         (error) => {
         console.log(error);
         console.log('이건가');
+      })
+    },
+    //탈퇴
+    async userdelete({ commit }) {
+      await deleteuser((response) => {
+        if (response.status == 200) {
+          commit("SET_IS_LOGIN", false);
+          commit("SET_IS_LOGIN_ERROR", true);
+          commit("SET_IS_VALID_TOKEN", false);
+          localStorage.clear();
+          router.push({ name: "LoginView" });
+          console.log('탈퇴완료')
 
+        } else {
+          console.log("잘못된 access token임. 로그아웃 처리.");
+          commit("SET_IS_LOGIN", false);
+          commit("SET_IS_LOGIN_ERROR", true);
+          commit("SET_IS_VALID_TOKEN", false);
+          localStorage.clear();
+        }
+      },
+        (error) => {
+        console.log(error);
+        console.log('이건가');
       })
     },
     // 다른 유저 메인페이지에 메세지, 닉네임 띄우기
@@ -194,10 +217,6 @@ const userStore = {
         (response) => {
         if (response.status == 200) {
           commit("SET_OTHERMESSAGES", response.data);
-          // console.log(response.data)
-          // console.log(response.data.nickname)
-          // console.log(userStore.state.othermessages)
-          
         } else {
           console.log("잘못");
         }
@@ -208,7 +227,6 @@ const userStore = {
     },
     // 메세지 읽음
     async changeread( {commit}, messageid ) {
-      // console.log(messageid)
       await readmessages(
         messageid, 
         (response) => {
@@ -216,7 +234,6 @@ const userStore = {
           commit("SET_RECEIVED_MESSAGES", response.data)
           localStorage.setItem("receivedmessages", JSON.stringify(response.data));
           console.log('메세지 지워짐')
-          
         } else {
           console.log("잘못");
         }
@@ -226,24 +243,9 @@ const userStore = {
         console.log(messageid)
       })
     },
-    // 유저 닉네임 변경
-    // async changeuserinfo({ commit }) {
-    //   await changeUserInfo(
-    //     (response) => {
-    //     if (response.status == 200) {
-
-    //     } else {
-    //       console.log("잘못");
-    //     }
-    //   },
-    //     (error) => {
-    //     console.log(error);
-    //   })
-    // },
 
     // 새로고침 or 페이지 넘어갈때 데이터 업데이트
     async updateUserData({ commit }) {
-      // 여기서 API 호출 및 데이터 업데이트 로직을 작성합니다.
       getUserInfo(
         (response) => {
           if (response.status == 200) {
@@ -293,10 +295,33 @@ const userStore = {
     },
 
     // 새로운 access Token 발급
-    // // async getnewaccesstoken({ commit }) {
-    // async sendUserMessage( ) {
-
-    // }
+    async getnewaccesstoken({ commit }) {
+      gettoken(
+        (response) => {
+          if (response.status == 200) {
+            console.log(response)
+            let accessToken = response.data["accessToken"];
+            let refreshToken = response.data["refreshToken"];
+            commit("SET_IS_LOGIN", true);
+            commit("SET_IS_LOGIN_ERROR", false);
+            commit("SET_IS_VALID_TOKEN", true);
+            localStorage.setItem("access-token", accessToken);
+            localStorage.setItem("refresh-token", refreshToken);
+            console.log(accessToken);
+            console.log(this.state.userStore.isValidToken)
+            router.go(0)
+          } else {
+            console.log("토큰 받아오기 오류");
+          }
+        },
+        async (error) => {
+          console.log(error);
+          console.log(accessToken);
+          console.log(refreshToken);
+          router.push({ name: "LoginView" });
+        }
+      )
+    }
   },
   
 }

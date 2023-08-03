@@ -4,21 +4,6 @@
       <img class="logo" src="../assets/logo_final.png" alt="">
     </div>
 
-    <!-- <div class="progress-bar-frame">
-      <div v-if="progressValue < 100" class="loading font-pre">Loading...</div>
-      <div v-else class="loading font-pre" style="">Complete!&nbsp;</div>
-      <div class="progress-bar-outer">
-        <div class="progress-bar-inner" :style="{ width: progressCSS}">
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div class="kakao"> -->
-      <!-- <a href="https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code"> -->
-      <!-- <img class="kakao-image" src="../assets/kakao_login.png" alt="" @click="kakaologin()"> -->
-      <!-- </a> -->
-    <!-- </div> -->
-
     <div class="kakao">
       <div class="box-behind"></div>
       <div class="box-front font-pre" @click="kakaologin()">
@@ -54,7 +39,7 @@ export default {
     //카카오 로그인
     kakaologin() {
       // console.log(process.env.VUE_APP_KAKAO_CLIENT_ID)
-      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=cecace976e616b34de2152ac78d7542b&redirect_uri=https://dev.pop-ping.com/oauth/kakao/callback&response_type=code`
+      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=https://dev.pop-ping.com/oauth/kakao/callback&response_type=code`
     },
 
     updateProgressBar() {
@@ -75,6 +60,10 @@ export default {
   },
   mounted() {
     // Start the progress bar animation on component mount (just for demonstration purposes)
+    const shareid = this.$store.getters["userStore/checkShareId"].share_id
+    if (localStorage.getItem("shareid")) {
+      this.$router.push(`main/${shareid}`)
+    }
     this.updateProgressBar();
   },
 };
