@@ -3,11 +3,6 @@
     <v-main>
       <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden;">
         <div class="main">
-          <!-- <div class="container3">
-            <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
-            <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/home.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>           
-            <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/chat.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>          
-          </div> -->
           <router-view/>
         </div>
       </div>
@@ -15,11 +10,6 @@
       <div v-else style="width: 100vw; height: calc(var(--vh, 1vh) * 100);  display: flex; justify-content: center; overflow: hidden; ">
         <div class="bgnewjeans" style="width: calc(var(--vw, 1vw) * 125); height:100%; overflow-x: hidden;">
           <div class="main">
-            <!-- <div class="container3">
-              <router-link :to="{ name: 'MainView' }"><img src="../src/assets/mail.png" alt="com" class="com-image" @click="toggleImageSize($event)">Main</router-link>
-              <router-link :to="{ name: 'LoginView' }"><img src="../src/assets/home.png" alt="com" class="com-image" @click="toggleImageSize($event)">Login</router-link>            
-              <router-link :to="{ name: 'MypageView' }"><img src="../src/assets/chat.png" alt="com" class="com-image" @click="toggleImageSize($event)">Mypage</router-link>
-            </div> -->
             <router-view/>
           </div>
         </div>

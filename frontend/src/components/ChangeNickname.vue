@@ -96,11 +96,11 @@ export default {
         this.changednickname,
         (response) => {
           if (response.status == 200) {
-            console.log(response.data);
+            // console.log(response.data);
             this.nickname = this.changednickname;
             this.updateUserData({ nickname: this.changednickname });
           } else {
-            console.log("잘못");
+            // console.log("잘못");
           }
           this.isEditing = false;
         },

@@ -17,7 +17,7 @@ export default {
   async created() {
     let code = this.$route.query.code;
     this.kakao(code);
-    console.log(code);
+    // console.log(code);
   },
   methods: {
     ...mapActions(userStore, ["kakao"]),
