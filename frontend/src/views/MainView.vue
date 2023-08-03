@@ -87,7 +87,7 @@ export default {
   created() {
     this.calLeftTime()
   },
-  mounted() {
+  async mounted() {
     if (this.isLogin == true) {
     const shareid = this.$store.getters["userStore/checkShareId"];
     this.shareid = shareid.share_id
@@ -115,6 +115,7 @@ export default {
         async (error) => {
           console.log(error);
           console.log('받은메세지 받아오기 에러');
+          await this.getnewaccesstoken()
         }
       )
     }
@@ -140,6 +141,7 @@ export default {
         },
           (error) => {
           console.log(error);
+          this.getnewaccesstoken()
         })
       }
     }
@@ -165,6 +167,7 @@ export default {
         },
           (error) => {
           console.log(error);
+          this.getnewaccesstoken()
         })
     }
     
@@ -270,7 +273,7 @@ export default {
       }
     },
 
-    ...mapActions(userStore, ["showusersbubble", "shareidmessage","changeread", "receivedUserMessage"])
+    ...mapActions(userStore, ["getnewaccesstoken","showusersbubble", "shareidmessage","changeread", "receivedUserMessage"])
  },
 
 
