@@ -33,7 +33,7 @@ public class Member {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long memberId;
 
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 30)
 	private String nickname;
 
 	private LocalDateTime lastVisitedTime;
