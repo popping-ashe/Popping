@@ -1,6 +1,6 @@
 <template>
   <div class="message-frame animate__animated animate__fadeIn">
-    <div class="window">
+    <div class="window" v-click-outside="closeshare">
       <div class="close-button" @click="closeshare"></div>
       <div class="share-text font-kor">
         <div style="font-size:70%; height:10px;">공유하기</div>
@@ -31,8 +31,13 @@
 </template>
 
 <script>
+import vClickOutside from 'v-click-outside'
+
 export default {
 name: 'ShareChoose',
+directives: {
+  ClickOutside: vClickOutside.directive
+},
 data() {
     return {
       location: window.document.location.href
@@ -91,7 +96,7 @@ data() {
 
 .window {
   position: absolute;
-  top: 51.5%;
+  top: calc(var(--vh, 1vh) * 50.5);
   left: 50.5%;
   width: calc(var(--vh, 1vh) * 40);
   height: calc(var(--vh, 1vh) * 29);

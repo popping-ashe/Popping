@@ -226,6 +226,7 @@ export default {
       if (this.pageid == this.shareid) {
         elem.parentElement.parentElement.style.display="none";
         this.bubbleDetail = this.receivedmessages[idx]
+        this.bubbleDetail.content = this.bubbleDetail.content.replace(/\n/gi,"<br>");
         this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
         // const messageid = this.bubbleDetail.message_id
         // console.log(messageid)

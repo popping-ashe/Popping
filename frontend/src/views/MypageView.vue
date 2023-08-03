@@ -128,6 +128,7 @@ export default {
     },
     sentDetail(idx) {
       this.messageDetail = this.nowShowing[idx]
+      this.messageDetail.content = this.messageDetail.content.replace(/\n/gi,"<br>")
       this.$store.commit('SHOW_SENT_DETAIL', !this.showSentDetail)
     },
 

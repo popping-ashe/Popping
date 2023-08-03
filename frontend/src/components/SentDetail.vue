@@ -1,6 +1,6 @@
 <template>
   <div class="message-frame animate__animated animate__fadeIn">
-    <div class="window font-pre">
+    <div class="window font-pre" v-click-outside="closeDetail">
       <div class="close-button" @click="closeDetail()"></div>
       <div class="receiver-bar">
         <div class="receiver-box">
@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="content-box">
-        {{ messagedetailProps.content }}
+        <span v-html="messagedetailProps.content"></span>
       </div>
     </div>
   </div>
@@ -25,9 +25,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import vClickOutside from 'v-click-outside'
 
 export default {
   name: 'SentDetail',
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
   methods: {
     closeDetail() {
       this.$store.commit('SHOW_SENT_DETAIL', !this.showSentDetail)
@@ -56,7 +60,7 @@ export default {
 
 .window {
   position: absolute;
-  top: 51.5%;
+  top: calc(var(--vh, 1vh) * 50.5);
   left: 50.5%;
   width: calc(var(--vh, 1vh) * 40);
   height: calc(var(--vh, 1vh) * 36);
