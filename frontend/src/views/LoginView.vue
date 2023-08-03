@@ -1,17 +1,16 @@
 <template>
   <div class="frame">
     <div class="logo-frame">
-      <img class="logo" src="../assets/logo_final.png" alt="">
+      <img class="logo" src="../assets/logo_final.png" alt="" />
     </div>
 
     <div class="kakao">
       <div class="box-behind"></div>
       <div class="box-front font-pre" @click="kakaologin()">
-        <img class="kakao-logo" src="../assets/kakao_logo.png" alt="">
-        <div>카카오 로그인</div>        
+        <img class="kakao-logo" src="../assets/kakao_logo.png" alt="" />
+        <div>카카오 로그인</div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -20,48 +19,45 @@
 // import ClickMessage from '../components/ClickMessage.vue';
 
 export default {
-  name: 'LoginView',
+  name: "LoginView",
   components: {
     // ClickMessage
   },
   data() {
     return {
       progressValue: 0,
-      progressCSS : '',
+      progressCSS: "",
       intervalId: null,
-      client_id: process.env.VUE_APP_KAKAO_CLIENT_ID
+      client_id: process.env.VUE_APP_KAKAO_CLIENT_ID,
     };
   },
-  
+
   methods: {
     //버블 배경 애니메이션
 
     //카카오 로그인
     kakaologin() {
-      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=https://www.pop-ping.com/oauth/kakao/callback&response_type=code`
+      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=https://www.pop-ping.com/oauth/kakao/callback&response_type=code`;
     },
 
     updateProgressBar() {
       if (this.progressValue < 99) {
         this.progressValue += 0.5;
-        this.progressCSS = this.progressValue + '%'
+        this.progressCSS = this.progressValue + "%";
         setTimeout(this.updateProgressBar, 10);
-
-
       } else {
         this.progressValue = 0;
-        this.progressCSS = this.progressValue + '%'
+        this.progressCSS = this.progressValue + "%";
 
-        this.updateProgressBar()
-
+        this.updateProgressBar();
       }
     },
   },
   mounted() {
     // Start the progress bar animation on component mount (just for demonstration purposes)
-    const shareid = this.$store.getters["userStore/checkShareId"].share_id
+    const shareid = this.$store.getters["userStore/checkShareId"].share_id;
     if (localStorage.getItem("shareid")) {
-      this.$router.push(`main/${shareid}`)
+      this.$router.push(`main/${shareid}`);
     }
     this.updateProgressBar();
   },
@@ -75,7 +71,7 @@ export default {
   background-image: url("../assets/background.png");
   background-size: contain;
   background-repeat: repeat-x;
-  }
+}
 
 .logo-frame {
   position: relative;
@@ -145,7 +141,7 @@ export default {
 .kakao-image {
   background-color: #fee500;
   width: 68%;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3))
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .box-behind {
@@ -158,8 +154,8 @@ export default {
   width: 70%;
   height: 42px;
 
-  background: #FFFFFF;
-  border: 0.1px solid #8C9799;
+  background: #ffffff;
+  border: 0.1px solid #8c9799;
   border-radius: 12px;
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25));
 }
@@ -172,18 +168,18 @@ export default {
   width: 70%;
   height: 42px;
 
-  background: #FFE500;
-  border: 0.1px solid #8C9799;
+  background: #ffe500;
+  border: 0.1px solid #8c9799;
   border-radius: 12px;
 
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 800;
-    box-shadow: inset 0px -3px 3px rgba(0, 0, 0, 6%);
+  box-shadow: inset 0px -3px 3px rgba(0, 0, 0, 6%);
 }
 
 .kakao-logo {
-  width: 30px;  
+  width: 30px;
 }
 </style>

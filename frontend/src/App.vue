@@ -1,16 +1,32 @@
 <template>
   <v-app>
     <v-main>
-      <div v-if="isMobile" class="bgpopping" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden;">
+      <div
+        v-if="isMobile"
+        class="bgpopping"
+        style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden"
+      >
         <div class="main">
-          <router-view/>
+          <router-view />
         </div>
       </div>
 
-      <div v-else style="width: 100vw; height: calc(var(--vh, 1vh) * 100);  display: flex; justify-content: center; overflow: hidden; ">
-        <div class="bgpopping" style="width: calc(var(--vw, 1vw) * 125); height:100%; overflow-x: hidden;">
+      <div
+        v-else
+        style="
+          width: 100vw;
+          height: calc(var(--vh, 1vh) * 100);
+          display: flex;
+          justify-content: center;
+          overflow: hidden;
+        "
+      >
+        <div
+          class="bgpopping"
+          style="width: calc(var(--vw, 1vw) * 125); height: 100%; overflow-x: hidden"
+        >
           <div class="main">
-            <router-view/>
+            <router-view />
           </div>
         </div>
       </div>
@@ -19,68 +35,75 @@
 </template>
 
 <script>
-
-  import MobileDetect from 'mobile-detect';
-  export default {
-    name: 'CloseBtn',
-    data: () => {
-      return {
-        isMobile: false,
-      };
+import MobileDetect from "mobile-detect";
+export default {
+  name: "CloseBtn",
+  data: () => {
+    return {
+      isMobile: false,
+    };
+  },
+  methods: {
+    toggleImageSize(event) {
+      const image = event.target;
+      image.classList.toggle("enlarged-image");
+      setTimeout(() => {
+        image.classList.toggle("enlarged-image");
+      }, 300);
     },
-    methods: {
-      toggleImageSize(event) {
-        const image = event.target;
-        image.classList.toggle('enlarged-image');
-        setTimeout(() => {
-          image.classList.toggle('enlarged-image');
-        }, 300);
-      },
-      
-    },
-    created() {
-      const md = new MobileDetect(window.navigator.userAgent);
-      if (md.mobile()) {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-          
-      } 
-      const customVH = window.innerHeight * 0.01
-      document.documentElement.style.setProperty('--vh', customVH + 'px')
-      document.documentElement.style.setProperty('--vw', customVH*(393/852) + 'px')
-      window.addEventListener('resize', () => {
-        document.documentElement.style.setProperty(
-          '--vh',
-          customVH + 'px',
-        )
-      })
-    },
-  
-  };
-
-  
+  },
+  created() {
+    const md = new MobileDetect(window.navigator.userAgent);
+    if (md.mobile()) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
+    const customVH = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", customVH + "px");
+    document.documentElement.style.setProperty("--vw", customVH * (393 / 852) + "px");
+    window.addEventListener("resize", () => {
+      document.documentElement.style.setProperty("--vh", customVH + "px");
+    });
+  },
+};
 </script>
 
-
 <style>
+.bgpopping {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  /* background: rgba(19, 127, 250, 0.53); */
+  background: hsla(200, 81%, 79%, 1);
 
-.bgpopping{
--webkit-user-select: none;  
--moz-user-select: none;  
--ms-user-select: none;  
--o-user-select: none;  
-user-select: none;
-/* background: rgba(19, 127, 250, 0.53); */
-background: hsla(200, 81%, 79%, 1);
+  background: linear-gradient(
+    270deg,
+    hsla(200, 81%, 79%, 1) 0%,
+    hsla(0, 0%, 100%, 1) 49%,
+    hsla(0, 0%, 100%, 1) 66%,
+    hsla(200, 81%, 79%, 1) 100%
+  );
 
-background: linear-gradient(270deg, hsla(200, 81%, 79%, 1) 0%, hsla(0, 0%, 100%, 1) 49%, hsla(0, 0%, 100%, 1) 66%, hsla(200, 81%, 79%, 1) 100%);
+  background: -moz-linear-gradient(
+    270deg,
+    hsla(200, 81%, 79%, 1) 0%,
+    hsla(0, 0%, 100%, 1) 49%,
+    hsla(0, 0%, 100%, 1) 66%,
+    hsla(200, 81%, 79%, 1) 100%
+  );
 
-background: -moz-linear-gradient(270deg, hsla(200, 81%, 79%, 1) 0%, hsla(0, 0%, 100%, 1) 49%, hsla(0, 0%, 100%, 1) 66%, hsla(200, 81%, 79%, 1) 100%);
+  background: -webkit-linear-gradient(
+    270deg,
+    hsla(200, 81%, 79%, 1) 0%,
+    hsla(0, 0%, 100%, 1) 49%,
+    hsla(0, 0%, 100%, 1) 66%,
+    hsla(200, 81%, 79%, 1) 100%
+  );
 
-background: -webkit-linear-gradient(270deg, hsla(200, 81%, 79%, 1) 0%, hsla(0, 0%, 100%, 1) 49%, hsla(0, 0%, 100%, 1) 66%, hsla(200, 81%, 79%, 1) 100%);
-
-filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A0D8F5", endColorstr="#FFFFFF", GradientType=1 );
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A0D8F5", endColorstr="#FFFFFF", GradientType=1 );
 }
 
 .com-image {
@@ -98,11 +121,11 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A0D8F5", en
 }
 
 .v-application--wrap {
-    min-height: calc(var(--vh, 1vh) * 100) !important;
-  }
+  min-height: calc(var(--vh, 1vh) * 100) !important;
+}
 
 body {
-  position:fixed;
+  position: fixed;
 }
 
 ::-webkit-scrollbar {
@@ -110,19 +133,19 @@ body {
 }
 
 .font-kor {
-  font-family: 'Galmuri9';
+  font-family: "Galmuri9";
   font-weight: 200;
 }
 
 .font-eng {
-  font-family: 'hydrophilia'
+  font-family: "hydrophilia";
 }
 
 .font-stardust {
-  font-family: 'PFStardust';
+  font-family: "PFStardust";
 }
 
 .font-pre {
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
 }
 </style>
