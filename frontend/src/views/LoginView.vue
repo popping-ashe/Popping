@@ -38,7 +38,6 @@ export default {
 
     //카카오 로그인
     kakaologin() {
-      // console.log(process.env.VUE_APP_KAKAO_CLIENT_ID)
       location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=https://dev.pop-ping.com/oauth/kakao/callback&response_type=code`
     },
 

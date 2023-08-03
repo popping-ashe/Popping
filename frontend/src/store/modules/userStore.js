@@ -318,6 +318,7 @@ const userStore = {
           console.log(error);
           console.log(accessToken);
           console.log(refreshToken);
+          localStorage.clear();
           router.push({ name: "LoginView" });
         }
       )
