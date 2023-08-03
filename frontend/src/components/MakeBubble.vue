@@ -1,6 +1,6 @@
 <template>
   <div class="message-frame animate__animated animate__fadeIn">
-    <div class="window font-pre">
+    <div class="window font-pre" v-click-outside="closeDetail">
       <div class="close-button" @click="closeDetail()"></div>
         <div class="upper-bar">
           <input class="nickname-input" maxlength="10" placeholder="닉네임" type="text" v-model="messageData.nickname" @keyup="checkNicknameLength">
@@ -27,10 +27,14 @@
 <script>
 import { mapState } from 'vuex'
 import {  sendUserMessage } from "@/api/user"
+import vClickOutside from 'v-click-outside'
 const userStore = "userStore";
 
 export default {
   name: 'MakeBubble',
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
   components : {
 
   },
@@ -119,7 +123,7 @@ export default {
 
 .window {
   position: absolute;
-  top: 51.5%;
+  top: calc(var(--vh, 1vh) * 50.5);
   left: 50.5%;
   width: calc(var(--vh, 1vh) * 40);
   height: calc(var(--vh, 1vh) * 36);

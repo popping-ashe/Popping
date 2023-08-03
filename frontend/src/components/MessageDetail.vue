@@ -1,7 +1,7 @@
 <template>
       <!-- {{ bubbledetailProps }} -->
   <div class="message-frame animate__animated animate__fadeIn">
-    <div class="window font-pre">
+    <div class="window font-pre" v-click-outside="closeDetail">
       <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
         <div class="nickname-box">
@@ -10,8 +10,7 @@
           <div class="sent-time">{{ bubbledetailProps.create_time.substr(11,5) }}</div>
       </div>
       <div class="content-box">
-        {{ bubbledetailProps.content }}
-        <!-- {{ bubbledetailProps }} -->
+        <span v-html="bubbledetailProps.content"></span>
       </div>
     </div>
   </div>
@@ -19,9 +18,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import vClickOutside from 'v-click-outside'
 
 export default {
   name: 'MessageDetail',
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
   methods: {
     closeDetail() {
       this.$store.commit('SHOW_DETAIL', !this.showReceivedDetail)
@@ -50,7 +53,7 @@ export default {
 
 .window {
   position: absolute;
-  top: 51.5%;
+  top: calc(var(--vh, 1vh) * 50.5);
   left: 50.5%;
   width: calc(var(--vh, 1vh) * 40);
   height: calc(var(--vh, 1vh) * 36);
