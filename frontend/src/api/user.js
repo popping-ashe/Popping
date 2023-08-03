@@ -12,7 +12,7 @@ async function kakaologin(code, success, fail) {
 async function getUserInfo( success, fail) {
   let accessToken = localStorage.getItem("access-token");
   const cipher = CryptoJS.AES.decrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-      iv: CryptoJS.enc.Utf8.parse("ashe"),
+      iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
       mode: CryptoJS.mode.CBC
   })
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
@@ -26,7 +26,7 @@ async function getUserInfo( success, fail) {
 async function receivedUserMessage(success, fail) {
   let accessToken = localStorage.getItem("access-token");
   const cipher = CryptoJS.AES.decrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-      iv: CryptoJS.enc.Utf8.parse("ashe"),
+      iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
       mode: CryptoJS.mode.CBC
   })
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
@@ -39,7 +39,7 @@ async function receivedUserMessage(success, fail) {
 async function sentUserMessage(success, fail) {
   let accessToken = localStorage.getItem("access-token");
   const cipher = CryptoJS.AES.decrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-    iv: CryptoJS.enc.Utf8.parse("ashe"),
+    iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
     mode: CryptoJS.mode.CBC
   })
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
@@ -52,7 +52,7 @@ async function sentUserMessage(success, fail) {
 async function receivedUserMessageCount(success, fail) {
   let accessToken = localStorage.getItem("access-token");
   const cipher = CryptoJS.AES.decrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-    iv: CryptoJS.enc.Utf8.parse("ashe"),
+    iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
     mode: CryptoJS.mode.CBC
   })
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
@@ -72,7 +72,7 @@ async function sendUserMessage(messageData, success, fail) {
 async function logout(success, fail) {
   let accessToken = localStorage.getItem("access-token");
   const cipher = CryptoJS.AES.decrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-    iv: CryptoJS.enc.Utf8.parse("ashe"),
+    iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
     mode: CryptoJS.mode.CBC
   })
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
@@ -85,7 +85,7 @@ async function logout(success, fail) {
 async function changenickname(nickname, success, fail) {
   let accessToken = localStorage.getItem("access-token");
   const cipher = CryptoJS.AES.decrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-    iv: CryptoJS.enc.Utf8.parse("ashe"),
+    iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
     mode: CryptoJS.mode.CBC
   })
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
@@ -98,7 +98,7 @@ async function changenickname(nickname, success, fail) {
 async function deleteuser(success, fail) {
   let accessToken = localStorage.getItem("access-token");
   const cipher = CryptoJS.AES.decrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-    iv: CryptoJS.enc.Utf8.parse("ashe"),
+    iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
     mode: CryptoJS.mode.CBC
   })
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
@@ -110,7 +110,7 @@ async function deleteuser(success, fail) {
 async function gettoken(success, fail) {
   let refreshToken = localStorage.getItem("refresh-token");
   const cipher = CryptoJS.AES.decrypt(refreshToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-    iv: CryptoJS.enc.Utf8.parse("ashe"),
+    iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
     mode: CryptoJS.mode.CBC
   })
   const decryptRefreshToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
@@ -123,7 +123,7 @@ async function gettoken(success, fail) {
 async function getshareid(success, fail) {
   let accessToken = localStorage.getItem("access-token");
   const cipher = CryptoJS.AES.decrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-    iv: CryptoJS.enc.Utf8.parse("ashe"),
+    iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
     mode: CryptoJS.mode.CBC
   })
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
@@ -136,7 +136,7 @@ async function getshareid(success, fail) {
 async function readmessages(messageid, success, fail) {
   let accessToken = localStorage.getItem("access-token");
   const cipher = CryptoJS.AES.decrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-    iv: CryptoJS.enc.Utf8.parse("ashe"),
+    iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
     mode: CryptoJS.mode.CBC
   })
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
