@@ -42,7 +42,9 @@
     </div>
     <div class="sent-bubble-frame2" style="margin-top:5%;">
       <div class="sent-message-frame">
-        <!-- for문 -->
+        <div class="font-kor" v-if="pleaseShare" style="margin-top: 40px; font-size: 13px" >
+          친구의 페이지를 공유받아 버블을 보내보세요
+        </div>
         <div v-for="(article, index) in nowShowing" :key="index" class="sent-message-box" @click="sentDetail(index)">
           <div class="sent-message-ellipse font-kor">
             <!-- <div class="user-initial"> -->
@@ -104,6 +106,7 @@ export default {
       unreadMessageCount : '',
 
       slideClass: '',
+      pleaseShare: false,
   
 };
   },
@@ -141,6 +144,12 @@ export default {
         this.readOption = 'all'
         this.nowShowing = this.sentmessages
       }
+
+      if (this.nowShowing.length==0) {
+        this.pleaseShare = true
+      } else {
+        this.pleaseShare = false
+      }
     },
 
     showUnreadOnly() {
@@ -153,6 +162,11 @@ export default {
         this.nowShowing = this.sentmessages
       }
 
+      if (this.nowShowing.length==0) {
+        this.pleaseShare = true
+      } else {
+        this.pleaseShare = false
+      }
     }
   },
   async logoutUser() {
@@ -185,6 +199,13 @@ export default {
           localStorage.setItem("sentmessages", JSON.stringify(response.data));
           const sentmessages = response.data
           this.sentmessages = sentmessages
+
+          if (this.sentmessages.length == 0) {
+            this.pleaseShare = true
+          } else {
+            this.pleaseShare = false
+          }
+          
           this.nowShowing = sentmessages
         } else {
           // console.log("보낸 메세지 없음");
