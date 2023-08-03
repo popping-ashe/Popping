@@ -1,7 +1,7 @@
 import router from "@/router";
 // import { kakaologin } from "@/api/user";
 import { deleteuser, gettoken, readmessages, getshareidmessages, getshareid, getUserInfo, kakaologin, sentUserMessage, receivedUserMessage, logout } from "@/api/user";
-
+import CryptoJS from "crypto-js";
 
 const userStore = {
   namespaced: true,
@@ -64,6 +64,7 @@ const userStore = {
     },
   },
   actions: {
+    
     // 로그인 시 유저 정보 불러오기
     async kakao({ commit }, code) {
       await kakaologin(
@@ -75,8 +76,16 @@ const userStore = {
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
-            localStorage.setItem("access-token", accessToken);
-            localStorage.setItem("refresh-token", refreshToken);
+            const encryptAccessToken =  CryptoJS.AES.encrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
+              iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+              mode: CryptoJS.mode.CBC
+            }).toString();
+            const encryptRefreshToken =  CryptoJS.AES.encrypt(refreshToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
+              iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+              mode: CryptoJS.mode.CBC
+            }).toString();
+            localStorage.setItem("access-token", encryptAccessToken);
+            localStorage.setItem("refresh-token", encryptRefreshToken);
             getUserInfo(
               (response) => {
                 if (response.status == 200) {
@@ -178,7 +187,6 @@ const userStore = {
           router.push({ name: "LoginView" });
 
         } else {
-          console.log("잘못된 access token임. 로그아웃 처리.");
           commit("SET_IS_LOGIN", false);
           commit("SET_IS_LOGIN_ERROR", true);
           commit("SET_IS_VALID_TOKEN", false);
@@ -271,14 +279,21 @@ const userStore = {
       gettoken(
         (response) => {
           if (response.status == 200) {
-            console.log(response)
             let accessToken = response.data["accessToken"];
             let refreshToken = response.data["refreshToken"];
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
-            localStorage.setItem("access-token", accessToken);
-            localStorage.setItem("refresh-token", refreshToken);
+            const encryptAccessToken =  CryptoJS.AES.encrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
+              iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+              mode: CryptoJS.mode.CBC
+            }).toString();
+            const encryptRefreshToken =  CryptoJS.AES.encrypt(refreshToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
+              iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+              mode: CryptoJS.mode.CBC
+            }).toString();
+            localStorage.setItem("access-token", encryptAccessToken);
+            localStorage.setItem("refresh-token", encryptRefreshToken);
             router.go(0)
           } else {
             console.log("토큰 받아오기 오류");
