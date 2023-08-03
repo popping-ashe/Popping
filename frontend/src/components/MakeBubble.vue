@@ -57,7 +57,6 @@ export default {
         this.messageData, 
         (response) => {
         if (response.status == 200) {
-          // console.log(response.data)
           this.$store.commit('SHOW_MAKE_WINDOW', !this.showMakeWindow)
           this.$parent.sendmessageupdate(response.data);
           this.$toast.center('버블을 보냈습니다.')

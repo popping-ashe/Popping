@@ -11,7 +11,6 @@ async function kakaologin(code, success, fail) {
 async function getUserInfo( success, fail) {
   let token = "Bearer " + localStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
-  // console.log(token)
   await api.get(`/members/me`).then(success).catch(fail);
 }
 
@@ -48,7 +47,6 @@ async function sendUserMessage(messageData, success, fail) {
 async function logout(success, fail) {
   let token = "Bearer " + localStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
-  // console.log(token)
     await api.get(`/auth/logout`).then(success).catch(fail);
   }
 
@@ -83,13 +81,11 @@ async function getshareid(success, fail) {
 async function readmessages(messageid, success, fail) {
   let token = "Bearer " + localStorage.getItem("access-token");
   api.defaults.headers["Authorization"] = token;
-  console.log(messageid)
   await api.patch(`/messages/${messageid}`).then(success).catch(fail);
 }
 
 //shareid에 해당하는 유저 정보 받아오기
 async function getshareidmessages(page, success, fail) {
-  // console.log(page)
   await api.get(`/share/${page}`).then(success).catch(fail);
 }
 

@@ -1,14 +1,14 @@
 <template>
   <v-app>
     <v-main>
-      <div v-if="isMobile" class="bgnewjeans" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden;">
+      <div v-if="isMobile" class="bgpopping" style="width: 100vw; height: calc(var(--vh, 1vh) * 100); overflow: hidden;">
         <div class="main">
           <router-view/>
         </div>
       </div>
 
       <div v-else style="width: 100vw; height: calc(var(--vh, 1vh) * 100);  display: flex; justify-content: center; overflow: hidden; ">
-        <div class="bgnewjeans" style="width: calc(var(--vw, 1vw) * 125); height:100%; overflow-x: hidden;">
+        <div class="bgpopping" style="width: calc(var(--vw, 1vw) * 125); height:100%; overflow-x: hidden;">
           <div class="main">
             <router-view/>
           </div>
@@ -65,7 +65,7 @@
 
 <style>
 
-.bgnewjeans{
+.bgpopping{
 -webkit-user-select: none;  
 -moz-user-select: none;  
 -ms-user-select: none;  

@@ -70,34 +70,24 @@ const userStore = {
         code,
         (response) => {
           if (response.status === 200) {
-            // console.log(response)
             let accessToken = response.data["accessToken"];
             let refreshToken = response.data["refreshToken"];
-            // console.log(accessToken)
-            // console.log(refreshToken)
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
-            // console.log(this.state)
             localStorage.setItem("access-token", accessToken);
             localStorage.setItem("refresh-token", refreshToken);
-            // console.log(localStorage.getItem("access-token"))
             getUserInfo(
               (response) => {
                 if (response.status == 200) {
                   commit("SET_USER_INFO", response.data);
                   localStorage.setItem("userinfo", JSON.stringify(response.data));
-                  // router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
                 } else {
                   console.log("유저 정보 없음");
                 }
               },
               async (error) => {
                 console.log(error);
-                // console.log(
-                //   "getUserInfo() error code [토큰 만료되어 사용 불가] ::: ",
-                //   error.response.status
-                // );
                 commit("SET_IS_VALID_TOKEN", false);
                 router.push({ name: "LoginView" });
               }
@@ -107,15 +97,12 @@ const userStore = {
                 if (response.status == 200) {
                   commit("SET_SHAREID", response.data);
                   localStorage.setItem("shareid", JSON.stringify(response.data));
-                  // console.log(userStore.state.userInfo.nickname);
-                  // console.log(this.state.userStore.shareid.share_id)
                 } else {
                   console.log("shareid 없음");
                 }
               },
               async (error) => {
                 console.log(error);
-                // commit("SET_SHAREID", null);
                 router.push({ name: "LoginView" });
               }
             );
@@ -124,14 +111,12 @@ const userStore = {
                 if (response.status == 200) {
                   commit("SET_SENT_MESSAGES", response.data)
                   localStorage.setItem("sentmessages", JSON.stringify(response.data));
-                  // console.log(userStore.state.sentmessages);
                 } else {
                   console.log("보낸 메세지 없음");
                 }
               },
               async (error) => {
                 console.log(error);
-                // console.log('보낸ap세지 받아오기 에러');
               }
             )
             receivedUserMessage(
@@ -139,7 +124,6 @@ const userStore = {
                 if (response.status == 200) {
                   commit("SET_RECEIVED_MESSAGES", response.data)
                   localStorage.setItem("receivedmessages", JSON.stringify(response.data));
-                  // console.log(userStore.state.receivedmessages);
                   router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
                 } else {
                   console.log("받은 메세지 없음");
@@ -147,7 +131,6 @@ const userStore = {
               },
               async (error) => {
                 console.log(error);
-                // console.log('받은메세지 받아오기 에러');
               }
             )
           } else {
@@ -174,7 +157,6 @@ const userStore = {
           router.push({ name: "LoginView" });
 
         } else {
-          // console.log("잘못된 access token임. 로그아웃 처리.");
           commit("SET_IS_LOGIN", false);
           commit("SET_IS_LOGIN_ERROR", true);
           commit("SET_IS_VALID_TOKEN", false);
@@ -183,7 +165,6 @@ const userStore = {
       },
         (error) => {
         console.log(error);
-        // console.log('이건가');
       })
     },
     //탈퇴
@@ -195,7 +176,6 @@ const userStore = {
           commit("SET_IS_VALID_TOKEN", false);
           localStorage.clear();
           router.push({ name: "LoginView" });
-          // console.log('탈퇴완료')
 
         } else {
           console.log("잘못된 access token임. 로그아웃 처리.");
@@ -207,7 +187,6 @@ const userStore = {
       },
         (error) => {
         console.log(error);
-        // console.log('이건가');
       })
     },
     // 다른 유저 메인페이지에 메세지, 닉네임 띄우기
@@ -233,14 +212,12 @@ const userStore = {
         if (response.status == 200) {
           commit("SET_RECEIVED_MESSAGES", response.data)
           localStorage.setItem("receivedmessages", JSON.stringify(response.data));
-          // console.log('메세지 지워짐')
         } else {
           console.log("잘못");
         }
       },
         (error) => {
         console.log(error);
-        // console.log(messageid)
       })
     },
 
@@ -251,7 +228,6 @@ const userStore = {
           if (response.status == 200) {
             commit("SET_USER_INFO", response.data);
             localStorage.setItem("userinfo", JSON.stringify(response.data));
-            // router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
           } else {
             console.log("유저 정보 없음");
           }
@@ -267,14 +243,12 @@ const userStore = {
           if (response.status == 200) {
             commit("SET_SENT_MESSAGES", response.data)
             localStorage.setItem("sentmessages", JSON.stringify(response.data));
-            // console.log(userStore.state.sentmessages);
           } else {
             console.log("보낸 메세지 없음");
           }
         },
         async (error) => {
           console.log(error);
-          // console.log('보낸메세지 받아오기 에러');
         }
       )
       receivedUserMessage(
@@ -282,14 +256,12 @@ const userStore = {
           if (response.status == 200) {
             commit("SET_RECEIVED_MESSAGES", response.data)
             localStorage.setItem("receivedmessages", JSON.stringify(response.data));
-            // console.log(userStore.state.receivedmessages);
           } else {
             console.log("받은 메세지 없음");
           }
         },
         async (error) => {
           console.log(error);
-          // console.log('받은메세지 받아오기 에러');
         }
       )
     },
@@ -307,8 +279,6 @@ const userStore = {
             commit("SET_IS_VALID_TOKEN", true);
             localStorage.setItem("access-token", accessToken);
             localStorage.setItem("refresh-token", refreshToken);
-            // console.log(accessToken);
-            // console.log(this.state.userStore.isValidToken)
             router.go(0)
           } else {
             console.log("토큰 받아오기 오류");
@@ -316,8 +286,6 @@ const userStore = {
         },
         async (error) => {
           console.log(error);
-          // console.log(accessToken);
-          // console.log(refreshToken);
           localStorage.clear();
           router.push({ name: "LoginView" });
         }
