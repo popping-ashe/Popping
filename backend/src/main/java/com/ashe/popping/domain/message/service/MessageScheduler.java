@@ -19,6 +19,6 @@ public class MessageScheduler {
 	@Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")
 	public void updateMessageState() {
 		int countUpdatedMessages = messageRepository.updateMessageStateToExpired(LocalDateTime.now());
-		log.info("{}", countUpdatedMessages);
+		log.info("Number of expired messages : {}", countUpdatedMessages);
 	}
 }
