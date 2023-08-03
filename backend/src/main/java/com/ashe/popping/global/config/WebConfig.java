@@ -31,9 +31,9 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addMapping("/**")
 			.allowedOrigins(
 				// "http://localhost:8081",
-				"https://dev.pop-ping.com/api"
-				// "https://pop-ping.com/api",
-				// "https://www.pop-ping.com/api"
+				"https://dev.pop-ping.com"
+				// "https://pop-ping.com",
+				// "https://www.pop-ping.com"
 			)
 			.allowedMethods(
 				HttpMethod.GET.name(),
