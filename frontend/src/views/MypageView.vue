@@ -200,7 +200,7 @@ export default {
       async (error) => {
         console.log(error);
         // console.log('보낸ap세지 받아오기 에러');
-        await this.getnewaccesstoken()
+        // await this.getnewaccesstoken()
       }
     )
   },

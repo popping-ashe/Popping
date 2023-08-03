@@ -27,7 +27,7 @@ new Vue({
   render: h => h(App),
 }).$mount('#app')
 
-const KAKAKO_API_KEY = "6b633448ee0923565844cb4bee991a38";//이것은 나의 카카오 앱키
-window.Kakao.init(KAKAKO_API_KEY);
+const KAKAO_API_KEY = process.env.VUE_APP_KAKAO_API_KEY
+window.Kakao.init(KAKAO_API_KEY);
 // window.Kakao.init("");
 
