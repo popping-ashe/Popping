@@ -149,8 +149,8 @@ export default {
 }
 
 .box-behind {
-  margin-top: 6px;
-  margin-left: 6px;
+  margin-top: 6.5px;
+  margin-left: 13px;
   position: absolute;
   box-sizing: border-box;
 
@@ -160,7 +160,7 @@ export default {
 
   background: #FFFFFF;
   border: 0.1px solid #8C9799;
-  border-radius: 50px;
+  border-radius: 12px;
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25));
 }
 
@@ -172,9 +172,9 @@ export default {
   width: 70%;
   height: 42px;
 
-  background: linear-gradient(180deg, #fffce3 0%, #FFE500 100%);
+  background: #FFE500;
   border: 0.1px solid #8C9799;
-  border-radius: 50px;
+  border-radius: 12px;
 
   display: flex;
   justify-content: center;

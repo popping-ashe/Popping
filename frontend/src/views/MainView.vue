@@ -254,7 +254,7 @@ export default {
     },
 
     calLeftTime(index) {
-      var bubbletime = new Date(this.receivedmessages[index].expiration_time);
+      var bubbletime = new Date(this.receivedmessages[index]?.expiration_time);
       var today = new Date();
       var year = today.getFullYear();
       var month = ('0' + (today.getMonth() + 1)).slice(-2);
