@@ -1,6 +1,16 @@
 import router from "@/router";
-// import { kakaologin } from "@/api/user";
-import { deleteuser, gettoken, readmessages, getshareidmessages, getshareid, getUserInfo, kakaologin, sentUserMessage, receivedUserMessage, logout } from "@/api/user";
+import {
+  deleteuser,
+  gettoken,
+  readmessages,
+  getshareidmessages,
+  getshareid,
+  getUserInfo,
+  kakaologin,
+  sentUserMessage,
+  receivedUserMessage,
+  logout,
+} from "@/api/user";
 import CryptoJS from "crypto-js";
 
 const userStore = {
@@ -34,7 +44,7 @@ const userStore = {
     checkOthermessages: function (state) {
       return state.othermessages;
     },
-    isLoggedIn: state => state.isLoggedIn,
+    isLoggedIn: (state) => state.isLoggedIn,
   },
   mutations: {
     SET_IS_LOGIN: (state, isLogin) => {
@@ -64,7 +74,6 @@ const userStore = {
     },
   },
   actions: {
-    
     // 로그인 시 유저 정보 불러오기
     async kakao({ commit }, code) {
       await kakaologin(
@@ -76,14 +85,22 @@ const userStore = {
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
-            const encryptAccessToken =  CryptoJS.AES.encrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-              iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
-              mode: CryptoJS.mode.CBC
-            }).toString();
-            const encryptRefreshToken =  CryptoJS.AES.encrypt(refreshToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-              iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
-              mode: CryptoJS.mode.CBC
-            }).toString();
+            const encryptAccessToken = CryptoJS.AES.encrypt(
+              accessToken,
+              CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+              {
+                iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+                mode: CryptoJS.mode.CBC,
+              }
+            ).toString();
+            const encryptRefreshToken = CryptoJS.AES.encrypt(
+              refreshToken,
+              CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+              {
+                iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+                mode: CryptoJS.mode.CBC,
+              }
+            ).toString();
             localStorage.setItem("access-token", encryptAccessToken);
             localStorage.setItem("refresh-token", encryptRefreshToken);
             getUserInfo(
@@ -118,8 +135,7 @@ const userStore = {
             sentUserMessage(
               (response) => {
                 if (response.status == 200) {
-                  commit("SET_SENT_MESSAGES", response.data)
-                  localStorage.setItem("sentmessages", JSON.stringify(response.data));
+                  commit("SET_SENT_MESSAGES", response.data);
                 } else {
                   console.log("보낸 메세지 없음");
                 }
@@ -127,13 +143,15 @@ const userStore = {
               async (error) => {
                 console.log(error);
               }
-            )
+            );
             receivedUserMessage(
               (response) => {
                 if (response.status == 200) {
-                  commit("SET_RECEIVED_MESSAGES", response.data)
-                  localStorage.setItem("receivedmessages", JSON.stringify(response.data));
-                  router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } });
+                  commit("SET_RECEIVED_MESSAGES", response.data);
+                  router.push({
+                    name: "MainView",
+                    params: { pageid: this.state.userStore.shareid.share_id },
+                  });
                 } else {
                   console.log("받은 메세지 없음");
                 }
@@ -141,7 +159,7 @@ const userStore = {
               async (error) => {
                 console.log(error);
               }
-            )
+            );
           } else {
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
@@ -157,76 +175,79 @@ const userStore = {
 
     // 로그아웃
     async logoutUser({ commit }) {
-      await logout((response) => {
-        if (response.status == 200) {
-          commit("SET_IS_LOGIN", false);
-          commit("SET_IS_LOGIN_ERROR", true);
-          commit("SET_IS_VALID_TOKEN", false);
-          localStorage.clear();
-          router.push({ name: "LoginView" });
-
-        } else {
-          commit("SET_IS_LOGIN", false);
-          commit("SET_IS_LOGIN_ERROR", true);
-          commit("SET_IS_VALID_TOKEN", false);
-          localStorage.clear();
-        }
-      },
+      await logout(
+        (response) => {
+          if (response.status == 200) {
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true);
+            commit("SET_IS_VALID_TOKEN", false);
+            localStorage.clear();
+            router.push({ name: "LoginView" });
+          } else {
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true);
+            commit("SET_IS_VALID_TOKEN", false);
+            localStorage.clear();
+          }
+        },
         (error) => {
-        console.log(error);
-      })
+          console.log(error);
+        }
+      );
     },
     //탈퇴
     async userdelete({ commit }) {
-      await deleteuser((response) => {
-        if (response.status == 200) {
-          commit("SET_IS_LOGIN", false);
-          commit("SET_IS_LOGIN_ERROR", true);
-          commit("SET_IS_VALID_TOKEN", false);
-          localStorage.clear();
-          router.push({ name: "LoginView" });
-
-        } else {
-          commit("SET_IS_LOGIN", false);
-          commit("SET_IS_LOGIN_ERROR", true);
-          commit("SET_IS_VALID_TOKEN", false);
-          localStorage.clear();
-        }
-      },
+      await deleteuser(
+        (response) => {
+          if (response.status == 200) {
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true);
+            commit("SET_IS_VALID_TOKEN", false);
+            localStorage.clear();
+            router.push({ name: "LoginView" });
+          } else {
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true);
+            commit("SET_IS_VALID_TOKEN", false);
+            localStorage.clear();
+          }
+        },
         (error) => {
-        console.log(error);
-      })
+          console.log(error);
+        }
+      );
     },
     // 다른 유저 메인페이지에 메세지, 닉네임 띄우기
     async shareidmessage({ commit }, page) {
       await getshareidmessages(
-        page, 
+        page,
         (response) => {
-        if (response.status == 200) {
-          commit("SET_OTHERMESSAGES", response.data);
-        } else {
-          console.log("잘못");
-        }
-      },
+          if (response.status == 200) {
+            commit("SET_OTHERMESSAGES", response.data);
+          } else {
+            console.log("잘못");
+          }
+        },
         (error) => {
-        console.log(error);
-      })
+          console.log(error);
+        }
+      );
     },
     // 메세지 읽음
-    async changeread( {commit}, messageid ) {
+    async changeread({ commit }, messageid) {
       await readmessages(
-        messageid, 
+        messageid,
         (response) => {
-        if (response.status == 200) {
-          commit("SET_RECEIVED_MESSAGES", response.data)
-          localStorage.setItem("receivedmessages", JSON.stringify(response.data));
-        } else {
-          console.log("잘못");
-        }
-      },
+          if (response.status == 200) {
+            commit("SET_RECEIVED_MESSAGES", response.data);
+          } else {
+            console.log("잘못");
+          }
+        },
         (error) => {
-        console.log(error);
-      })
+          console.log(error);
+        }
+      );
     },
 
     // 새로고침 or 페이지 넘어갈때 데이터 업데이트
@@ -235,7 +256,6 @@ const userStore = {
         (response) => {
           if (response.status == 200) {
             commit("SET_USER_INFO", response.data);
-            localStorage.setItem("userinfo", JSON.stringify(response.data));
           } else {
             console.log("유저 정보 없음");
           }
@@ -249,8 +269,7 @@ const userStore = {
       sentUserMessage(
         (response) => {
           if (response.status == 200) {
-            commit("SET_SENT_MESSAGES", response.data)
-            localStorage.setItem("sentmessages", JSON.stringify(response.data));
+            commit("SET_SENT_MESSAGES", response.data);
           } else {
             console.log("보낸 메세지 없음");
           }
@@ -258,12 +277,11 @@ const userStore = {
         async (error) => {
           console.log(error);
         }
-      )
+      );
       receivedUserMessage(
         (response) => {
           if (response.status == 200) {
-            commit("SET_RECEIVED_MESSAGES", response.data)
-            localStorage.setItem("receivedmessages", JSON.stringify(response.data));
+            commit("SET_RECEIVED_MESSAGES", response.data);
           } else {
             console.log("받은 메세지 없음");
           }
@@ -271,7 +289,7 @@ const userStore = {
         async (error) => {
           console.log(error);
         }
-      )
+      );
     },
 
     // 새로운 access Token 발급
@@ -284,17 +302,25 @@ const userStore = {
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
-            const encryptAccessToken =  CryptoJS.AES.encrypt(accessToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-              iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
-              mode: CryptoJS.mode.CBC
-            }).toString();
-            const encryptRefreshToken =  CryptoJS.AES.encrypt(refreshToken, CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY), {
-              iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
-              mode: CryptoJS.mode.CBC
-            }).toString();
+            const encryptAccessToken = CryptoJS.AES.encrypt(
+              accessToken,
+              CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+              {
+                iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+                mode: CryptoJS.mode.CBC,
+              }
+            ).toString();
+            const encryptRefreshToken = CryptoJS.AES.encrypt(
+              refreshToken,
+              CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+              {
+                iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+                mode: CryptoJS.mode.CBC,
+              }
+            ).toString();
             localStorage.setItem("access-token", encryptAccessToken);
             localStorage.setItem("refresh-token", encryptRefreshToken);
-            router.go(0)
+            router.go(0);
           } else {
             console.log("토큰 받아오기 오류");
           }
@@ -304,16 +330,13 @@ const userStore = {
           localStorage.clear();
           router.push({ name: "LoginView" });
         }
-      )
-    }
+      );
+    },
   },
-  
-}
+};
 const accessToken = localStorage.getItem("access-token");
 const refreshToken = localStorage.getItem("refresh-token");
 const userinfo = JSON.parse(localStorage.getItem("userinfo"));
-const sentmessages = JSON.parse(localStorage.getItem("sentmessages"));
-const receivedmessages = JSON.parse(localStorage.getItem("receivedmessages"));
 const shareid = JSON.parse(localStorage.getItem("shareid"));
 
 if (accessToken && refreshToken) {
@@ -323,16 +346,8 @@ if (accessToken && refreshToken) {
 if (userinfo) {
   userStore.state.userInfo = userinfo;
 }
-if (sentmessages) {
-  userStore.state.sentmessages = sentmessages;
-}
-if (receivedmessages) {
-  userStore.state.receivedmessages = receivedmessages;
-}
 if (shareid) {
   userStore.state.shareid = shareid;
 }
 
-
 export default userStore;
-

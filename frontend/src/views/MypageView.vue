@@ -1,213 +1,217 @@
 <template>
-<div class="page-container">
-  <div class="page" :class="slideClass">
-  <div class="frame" style="z-index: 0;">
-      <SentDetail :messagedetail-props="toShowMessage" v-if="showSentDetail"/>
-    <div class="upper-bar">
-      <div class="new-button link-button" style="margin-left: 6%" @click="goBackPage(-1)">
-        Back
-      </div>
-      <div class="mypage font-kor">
-        MYPAGE
-      </div>
-      <div class="new-button link-button" style="margin-right: 6%; font-size: 13px;" @click="goToPage('/setting')">
-        Settings
-      </div>
-    </div>
-    <div class="article-counts font-pre">
-      <div style="display: flex; justify-content: space-evenly">
-      <div class="received-count">{{this.receivedmessagescount}}</div>
-      <div class="sent-count">{{ this.sentmessagescount }}</div>
-      <div class="unread-count">{{ this.unreadMessageCount }}</div>
-      </div>
-      <div style="display: flex; justify-content: space-evenly">
-      <div class="received">받음</div>
-      <div class="sent">보냄</div>
-      <div class="unread">안읽음</div>
-      </div>
-      <div style="display:flex; justify-content: center;">
-        <hr style="width: 85%;">
-      </div>
-    </div>
-    <div class="sent-bubble-frame1" style="margin-top:5%;">
-      <div class="sent-bubble-text-frame">
-        <div class="sent-bubble-text font-stardust">
-          보낸 버블 
-        </div>
-      <div class="selector-frame font-stardust">
-        <div class="selector-read" :style="{color: readOption ==='read' ? 'black' : 'gray'}" @click="showReadOnly">읽음</div>|
-        <div class="selector-unread" :style="{color: readOption ==='unread' ? 'black' : 'gray'}"  @click="showUnreadOnly">안읽음</div>
-      </div>
-    </div>
-    </div>
-    <div class="sent-bubble-frame2" style="margin-top:5%;">
-      <div class="sent-message-frame">
-        <div class="font-kor" v-if="pleaseShare" style="margin-top: 40px; font-size: 13px" >
-          친구의 페이지를 공유받아 버블을 보내보세요
-        </div>
-        <div v-for="(article, index) in nowShowing" :key="index" class="sent-message-box" @click="sentDetail(index)">
-          <div class="sent-message-ellipse font-kor">
-            <!-- <div class="user-initial"> -->
-            <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
-            <!-- {{article.nickname.substr(0,1)}} -->
-            <div class="initial">{{ article.receiver_nickname.substr(0,1) }}</div>
+  <div class="page-container">
+    <div class="page" :class="slideClass">
+      <div class="frame" style="z-index: 0">
+        <SentDetail :messagedetail-props="toShowMessage" v-if="showSentDetail" />
+        <div class="upper-bar">
+          <div class="new-button link-button" style="margin-left: 6%" @click="goBackPage(-1)">
+            Back
           </div>
-          <div class="sent-bubble-info-frame">
-            <div class="sent-upper font-pre">
-              <div class="sent-upper-left">
-                <div class="sent-mynickname">{{ article.nickname.substr(0,10) }}</div>
-                <div class="sent-datetime">
-                  {{ article.create_time.substr(5,2) }}/{{ article.create_time.substr(8,2) }}
-                  {{ article.create_time.substr(11,5) }}
+          <div class="mypage font-kor">MYPAGE</div>
+          <div
+            class="new-button link-button"
+            style="margin-right: 6%; font-size: 13px"
+            @click="goToPage('/setting')"
+          >
+            Settings
+          </div>
+        </div>
+        <div class="article-counts font-pre">
+          <div style="display: flex; justify-content: space-evenly">
+            <div class="received-count">{{ this.receivedmessagescount }}</div>
+            <div class="sent-count">{{ this.sentmessagescount }}</div>
+            <div class="unread-count">{{ this.unreadMessageCount }}</div>
+          </div>
+          <div style="display: flex; justify-content: space-evenly">
+            <div class="received">받음</div>
+            <div class="sent">보냄</div>
+            <div class="unread">안읽음</div>
+          </div>
+          <div style="display: flex; justify-content: center">
+            <hr style="width: 85%" />
+          </div>
+        </div>
+        <div class="sent-bubble-frame1" style="margin-top: 5%">
+          <div class="sent-bubble-text-frame">
+            <div class="sent-bubble-text font-stardust">보낸 버블</div>
+            <div class="selector-frame font-stardust">
+              <div
+                class="selector-read"
+                :style="{ color: readOption === 'read' ? 'black' : 'gray' }"
+                @click="showReadOnly"
+              >
+                읽음
+              </div>
+              |
+              <div
+                class="selector-unread"
+                :style="{ color: readOption === 'unread' ? 'black' : 'gray' }"
+                @click="showUnreadOnly"
+              >
+                안읽음
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sent-bubble-frame2" style="margin-top: 5%">
+          <div class="sent-message-frame">
+            <div class="font-kor" v-if="pleaseShare" style="margin-top: 40px; font-size: 13px">
+              친구의 페이지를 공유받아 버블을 보내보세요
+            </div>
+            <div
+              v-for="(article, index) in nowShowing"
+              :key="index"
+              class="sent-message-box"
+              @click="sentDetail(index)"
+            >
+              <div class="sent-message-ellipse font-kor">
+                <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
+                <div class="initial">{{ article.receiver_nickname.substr(0, 1) }}</div>
+              </div>
+              <div class="sent-bubble-info-frame">
+                <div class="sent-upper font-pre">
+                  <div class="sent-upper-left">
+                    <div class="sent-mynickname">{{ article.nickname.substr(0, 10) }}</div>
+                    <div class="sent-datetime">
+                      {{ article.create_time.substr(5, 2) }}/{{ article.create_time.substr(8, 2) }}
+                      {{ article.create_time.substr(11, 5) }}
+                    </div>
+                  </div>
+                  <div class="sent-state">{{ article.state }}</div>
+                </div>
+                <div class="sent-lower font-pre">
+                  {{ article.content }}
                 </div>
               </div>
-              <div class="sent-state">{{ article.state }}</div>
-            </div>
-            <div class="sent-lower font-pre">
-              {{ article.content }}
             </div>
           </div>
         </div>
-      <!-- <button v-if="isLogin" @click="logoutUser">로그아웃</button> -->
-      
-      
       </div>
     </div>
-    <!-- <SettingsPopupVue/> -->
   </div>
-  </div>
-</div>
 </template>
 
 <script>
-// import SettingsPopupVue from '@/components/SettingsPopup.vue';
-import SentDetail from '@/components/SentDetail.vue'
+import SentDetail from "@/components/SentDetail.vue";
 
-import { mapState,mapActions } from 'vuex'
+import { mapState, mapActions } from "vuex";
 const userStore = "userStore";
-import { sentUserMessage, receivedUserMessageCount } from "@/api/user"
+import { sentUserMessage, receivedUserMessageCount } from "@/api/user";
 
 export default {
-  name: 'MypageView',
-  components : {
-    // SettingsPopupVue,
-    SentDetail
+  name: "MypageView",
+  components: {
+    SentDetail,
   },
   data() {
     return {
       dialog: false,
       sentmessagescount: null,
-      receivedmessagescount:null,
+      receivedmessagescount: null,
 
       sentmessages: "",
       nowShowing: "",
-      readOption: 'all',
-      messageDetail : '',
-      unreadMessageCount : '',
-      toShowMessage: '',
-      slideClass: '',
+      readOption: "all",
+      messageDetail: "",
+      unreadMessageCount: "",
+      toShowMessage: "",
+      slideClass: "",
       pleaseShare: false,
-  
-};
+    };
   },
   methods: {
-    ...mapActions(userStore, ['logoutUser', 'updateUserData','getnewaccesstoken']),
+    ...mapActions(userStore, ["logoutUser", "updateUserData", "getnewaccesstoken"]),
 
     goToPage(path) {
-      this.slideClass = 'slide-in'; // 슬라이드 효과 시작
+      this.slideClass = "slide-in"; // 슬라이드 효과 시작
       setTimeout(() => {
         this.$router.push(path); // 페이지 전환
       }, 300); // 애니메이션 시간 (300ms) 이후에 페이지 전환 실행
     },
     goBackPage(path) {
-      this.slideClass = 'slide-out'; // 슬라이드 효과 시작
+      this.slideClass = "slide-out"; // 슬라이드 효과 시작
       setTimeout(() => {
         this.$router.go(path); // 페이지 전환
       }, 300); // 애니메이션 시간 (300ms) 이후에 페이지 전환 실행
     },
-    
+
     closeDialog() {
       this.dialog = false;
     },
     sentDetail(idx) {
-      this.messageDetail = this.nowShowing[idx]
-      this.toShowMessage.content = this.messageDetail.content.replace(/\n/gi,"<br>")
-      // this.messageDetail.content = this.messageDetail.content.replace(/\n/gi,"<br>")
-      this.$store.commit('SHOW_SENT_DETAIL', !this.showSentDetail)
+      this.messageDetail = this.nowShowing[idx];
+      this.toShowMessage.content = this.messageDetail.content.replace(/\n/gi, "<br>");
+      this.$store.commit("SHOW_SENT_DETAIL", !this.showSentDetail);
     },
 
     showReadOnly() {
-      if (this.readOption == 'all' || this.readOption == 'unread') {
-        this.readOption = 'read'
-        this.nowShowing = this.sentmessages.filter((article) => article.state === '읽음')
-      }
-      else {
-        this.readOption = 'all'
-        this.nowShowing = this.sentmessages
+      if (this.readOption == "all" || this.readOption == "unread") {
+        this.readOption = "read";
+        this.nowShowing = this.sentmessages.filter((article) => article.state === "읽음");
+      } else {
+        this.readOption = "all";
+        this.nowShowing = this.sentmessages;
       }
 
-      if (this.nowShowing.length==0) {
-        this.pleaseShare = true
+      if (this.nowShowing.length == 0) {
+        this.pleaseShare = true;
       } else {
-        this.pleaseShare = false
+        this.pleaseShare = false;
       }
     },
 
     showUnreadOnly() {
-      if (this.readOption == 'all' || this.readOption == 'read') {
-        this.readOption = 'unread'
-        this.nowShowing = this.sentmessages.filter((article) => article.state === '안읽음')
-      }
-      else {
-        this.readOption = 'all'
-        this.nowShowing = this.sentmessages
+      if (this.readOption == "all" || this.readOption == "read") {
+        this.readOption = "unread";
+        this.nowShowing = this.sentmessages.filter((article) => article.state === "안읽음");
+      } else {
+        this.readOption = "all";
+        this.nowShowing = this.sentmessages;
       }
 
-      if (this.nowShowing.length==0) {
-        this.pleaseShare = true
+      if (this.nowShowing.length == 0) {
+        this.pleaseShare = true;
       } else {
-        this.pleaseShare = false
+        this.pleaseShare = false;
       }
-    }
+    },
   },
   async logoutUser() {
-      this.logoutUser
+    this.logoutUser;
   },
   created() {
-    this.updateUserData()
+    this.updateUserData();
   },
   mounted() {
     receivedUserMessageCount(
       (response) => {
-          if (response.status == 200) {
-            this.receivedmessagescount = response.data.received_messages_count;
-            this.sentmessagescount = response.data.sent_messages_count;
-            this.unreadMessageCount = response.data.unread_messages_count;
-      
-          } else {
-            // console.log("메세지 없음");
-          }
-        },
-        async (error) => {
-          console.log(error);
-          await this.getnewaccesstoken()
+        if (response.status == 200) {
+          this.receivedmessagescount = response.data.received_messages_count;
+          this.sentmessagescount = response.data.sent_messages_count;
+          this.unreadMessageCount = response.data.unread_messages_count;
+        } else {
+          // console.log("메세지 없음");
         }
-      )
+      },
+      async (error) => {
+        console.log(error);
+        await this.getnewaccesstoken();
+      }
+    );
 
     sentUserMessage(
       (response) => {
         if (response.status == 200) {
-          localStorage.setItem("sentmessages", JSON.stringify(response.data));
-          const sentmessages = response.data
-          this.sentmessages = sentmessages
+          const sentmessages = response.data;
+          this.sentmessages = sentmessages;
 
           if (this.sentmessages.length == 0) {
-            this.pleaseShare = true
+            this.pleaseShare = true;
           } else {
-            this.pleaseShare = false
+            this.pleaseShare = false;
           }
-          
-          this.nowShowing = sentmessages
+
+          this.nowShowing = sentmessages;
         } else {
           // console.log("보낸 메세지 없음");
         }
@@ -215,13 +219,13 @@ export default {
       async (error) => {
         console.log(error);
       }
-    )
+    );
   },
   computed: {
-    ...mapState(['showSentDetail']),
-    ...mapState(userStore,['userInfo',"isLogin", "isLoginError"]),
-  }
-}
+    ...mapState(["showSentDetail"]),
+    ...mapState(userStore, ["userInfo", "isLogin", "isLoginError"]),
+  },
+};
 </script>
 
 <style scoped>
@@ -262,7 +266,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  }
+}
 
 .new-button {
   width: 65px;
@@ -272,27 +276,26 @@ export default {
   align-items: center;
   background-color: white;
   box-sizing: border-box;
-  border-style : solid;
-  border-color : #808384;
-  border-color : rgba(128, 131, 132, 1);
-  border-width : 1px;
-  border-radius : 16px;
-  -moz-border-radius : 16px;
-  -webkit-border-radius : 16px;
-  box-shadow: inset 0px -3px 3px #D8D8D8;
-  padding :2px 10px 4px;
+  border-style: solid;
+  border-color: #808384;
+  border-color: rgba(128, 131, 132, 1);
+  border-width: 1px;
+  border-radius: 16px;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+  box-shadow: inset 0px -3px 3px #d8d8d8;
+  padding: 2px 10px 4px;
   text-decoration: none;
-  font-family: 'hydrophilia';
-  color:black;
+  font-family: "hydrophilia";
+  color: black;
   font-size: 14px;
   font-weight: 600;
-  }
+}
 
 .mypage {
   width: 176px;
   height: 48px;
   justify-content: center;
-
 
   font-style: normal;
   font-weight: 400;
@@ -307,17 +310,16 @@ export default {
   color: #000000;
   margin-top: 2px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-  }
+}
 
 .article-counts {
   position: absolute;
   width: 100%;
   height: 7%;
   top: 15.5%;
-  
 }
 
-.received-count{
+.received-count {
   position: relative;
   width: 40%;
   height: 30px;
@@ -347,7 +349,6 @@ export default {
   letter-spacing: -0.32px;
   color: #000000;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-
 }
 
 .unread-count {
@@ -364,10 +365,9 @@ export default {
   letter-spacing: -0.32px;
   color: #000000;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-
 }
 
-.received{
+.received {
   position: relative;
   width: 40%;
   height: 30px;
@@ -380,8 +380,6 @@ export default {
   letter-spacing: -0.32px;
   color: #000000;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-
-
 }
 
 .sent {
@@ -398,7 +396,6 @@ export default {
   letter-spacing: -0.32px;
   color: #000000;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  
 }
 
 .unread {
@@ -484,7 +481,6 @@ export default {
   text-align: center;
   padding-right: 4px;
   padding-left: 4px;
-  
 }
 
 .sent-message-box {
@@ -514,7 +510,7 @@ export default {
   width: 54px;
   height: 54px;
   left: 14px;
-  box-shadow:inset 1px 1px 7px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 1px 7px rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   background: #ffffff;
   display: flex;
@@ -529,11 +525,10 @@ export default {
   margin-bottom: 1px;
 }
 
-
 .sent-bubble-info-frame {
   position: relative;
   text-align: left;
-  width:100%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -565,7 +560,7 @@ export default {
   align-items: flex-end;
 }
 
-.sent-state { 
+.sent-state {
   font-weight: bold;
   font-size: 12px;
   padding-right: 24px;
@@ -581,6 +576,4 @@ export default {
   text-overflow: ellipsis;
   padding-right: 12px;
 }
-
-
 </style>
