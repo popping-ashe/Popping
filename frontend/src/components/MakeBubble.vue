@@ -1,7 +1,7 @@
 <template>
   <div class="message-frame animate__animated animate__fadeIn">
     <div class="window font-pre" v-click-outside="closeDetail">
-      <div class="close-button" @click="closeDetail()"></div>
+      <div class="close-button" @click="[closeDetail(),analyticsCancel()]"></div>
       <div class="upper-bar">
         <input
           class="nickname-input"
@@ -29,8 +29,8 @@
       </div>
       <!-- <input class="content-input" type="text" v-model="contents"> -->
       <div class="button-box">
-        <div class="cancel-button" @click="closeDetail()">취소</div>
-        <div class="send-button" @click="sendMessage()">전송</div>
+        <div class="cancel-button" @click="[closeDetail(), analyticsCancel()]">취소</div>
+        <div class="send-button" @click="[sendMessage(),analyticsSend()]">전송</div>
       </div>
     </div>
   </div>
@@ -108,6 +108,21 @@ export default {
       if (this.messageData.content.length == 200) {
         this.$toast.center("내용 최대 길이는 200글자입니다.");
       }
+    },
+
+    analyticsSend(){
+      this.$gtag.event('click', {
+        event_category: 'message',
+        event_label: 'send',
+        value: 'send',
+      }); 
+    },
+    analyticsCancel(){
+      this.$gtag.event('click', {
+        event_category: 'message',
+        event_label: 'cancel',
+        value: 'cancel',
+      }); 
     },
   },
   computed: {
