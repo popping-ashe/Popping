@@ -1,7 +1,7 @@
 <template>
   <div class="message-frame animate__animated animate__fadeIn">
     <div class="window font-pre" v-click-outside="closeDetail">
-      <div class="close-button" @click="closeDetail()></div>
+      <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
         <input
           class="nickname-input"
