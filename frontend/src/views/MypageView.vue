@@ -11,7 +11,7 @@
           <div
             class="new-button link-button"
             style="margin-right: 6%; font-size: 13px"
-            @click="goToPage('/setting')"
+            @click="goToPage('/settings')"
           >
             Settings
           </div>

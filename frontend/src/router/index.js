@@ -31,7 +31,7 @@ const routes = [
     component: LoginCallBack,
   },
   {
-    path: "/setting",
+    path: "/settings",
     name: "SettingView",
     component: SettingView,
   },

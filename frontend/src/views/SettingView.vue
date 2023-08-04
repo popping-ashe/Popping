@@ -28,6 +28,7 @@
           </div>
           <hr />
           <div style="display: flex" class="logout" @click="logoutUser">로그아웃</div>
+          <div style="display: flex; margin-top:12px;" class="logout" @click="tocenter()">고객센터</div>
         </div>
         <br />
         <div class="delete font-pre" @click="deleteuser">popping 탈퇴</div>
@@ -81,6 +82,9 @@ export default {
     updateNickname(newNickname) {
       this.nickname = newNickname;
     },
+    tocenter() {
+      location.href = `http://pf.kakao.com/_IjYZG`
+    }
   },
   async logoutUser() {
     this.logoutUser;
