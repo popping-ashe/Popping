@@ -257,7 +257,7 @@ export default {
       this.generateRandomPosition();
     },
     toHome() {
-      location.href = `http://www.pop-ping.com/main/${this.shareid}`;
+      location.href = `http://www.pop-ping.com/main/${this.getshareid}`;
     },
 
     calLeftTime(index) {
