@@ -55,7 +55,7 @@ export default {
   },
   mounted() {
     // Start the progress bar animation on component mount (just for demonstration purposes)
-    const shareid = this.$store.getters["userStore/checkShareId"].share_id;
+    const shareid = this.$store.getters["userStore/checkShareId"]?.share_id;
     if (localStorage.getItem("shareid")) {
       this.$router.push(`main/${shareid}`);
     }

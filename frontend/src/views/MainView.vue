@@ -13,7 +13,7 @@
           <div
             class="new-button font-eng"
             style="margin-left: 6%"
-            v-if="pageid == shareid"
+            v-if="pageid == getshareid"
             @click="opensharecomponent"
           >
             Share
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div class="please-share font-kor" v-if="pageid == shareid && showPleaseShare">
+        <div class="please-share font-kor" v-if="pageid == getshareid && showPleaseShare">
           <div class="share-ment">
             <div class="share-touch">Share</div>
             <div>&nbsp;를 터치해 링크를 공유하고</div>
@@ -69,7 +69,7 @@
         </div>
 
         <!-- 로그인 상태에 따라 동적으로 메세지 보내기 버튼 활성화/비활성화 -->
-        <div class="bubble-make-btn font-kor" v-if="pageid == shareid" @click="refresh()">
+        <div class="bubble-make-btn font-kor" v-if="pageid == getshareid" @click="refresh()">
           <img class="bubble-make-image" src="../assets/makebubblebtn.png" alt="" />
           <div class="bubble-make-text">새로고침</div>
         </div>
@@ -109,7 +109,7 @@ export default {
       randomSpeed: [],
       receivedmessages: [],
       bubbleDetail: "",
-      shareid: "",
+      getshareid: "",
       openshare: false,
       slideClass: "",
       showPleaseShare: false,
@@ -121,10 +121,10 @@ export default {
   async mounted() {
     if (this.isLogin == true) {
       const shareid = this.$store.getters["userStore/checkShareId"];
-      this.shareid = shareid.share_id;
+      this.getshareid = shareid?.share_id;
       const nickname = this.$store.getters["userStore/checkUserInfo"].nickname;
       this.nickname = nickname;
-      if (this.shareid == this.pageid) {
+      if (this.getshareid == this.pageid) {
         receivedUserMessage(
           (response) => {
             if (response.status == 200) {
@@ -148,7 +148,7 @@ export default {
           }
         );
       }
-      if (this.pageid != this.shareid) {
+      if (this.pageid != this.getshareid) {
         const page = this.pageid;
 
         getshareidmessages(
@@ -214,7 +214,7 @@ export default {
       this.openshare = false;
     },
     openDetail(elem, idx) {
-      if (this.pageid == this.shareid) {
+      if (this.pageid == this.getshareid) {
         elem.parentElement.parentElement.style.display = "none";
         this.bubbleDetail = this.receivedmessages[idx];
         this.bubbleDetail.content = this.bubbleDetail.content.replace(/\n/gi, "<br>");
