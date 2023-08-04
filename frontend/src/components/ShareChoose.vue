@@ -10,12 +10,12 @@
 
       <div class="nickname-box">
         <div class="sharebox">
-          <img @click="shareKakao()" class="shareimg" src="@/assets/kakao.png" alt="kakao" />
+          <img @click="[shareKakao(), analyticsKaKao()]" class="shareimg" src="@/assets/kakao.png" alt="kakao" />
           <div>Kakao</div>
         </div>
         <div class="sharebox">
           <img
-            @click="shareFacebook()"
+            @click="[shareFacebook(),analyticsFacebook()]"
             class="shareimg"
             src="@/assets/facebook.png"
             alt="facebook"
@@ -23,7 +23,7 @@
           <div>Facebook</div>
         </div>
         <div class="sharebox">
-          <img @click="shareTwitter()" class="shareimg" src="@/assets/twitter.png" alt="twitter" />
+          <img @click="[shareTwitter(),analyticsTwitter()]" class="shareimg" src="@/assets/twitter.png" alt="twitter" />
           <div>Twitter</div>
         </div>
       </div>
@@ -31,7 +31,7 @@
         <div class="location-box">
           <div clas="location">{{ location }}</div>
         </div>
-        <button class="button" @click="shareCopy()">&nbsp;&nbsp;URL 복사&nbsp;&nbsp;</button>
+        <button class="button" @click="[shareCopy(),analyticsCopy()]">&nbsp;&nbsp;URL 복사&nbsp;&nbsp;</button>
       </div>
     </div>
   </div>
@@ -77,6 +77,34 @@ export default {
     shareCopy() {
       this.$copyText(window.document.location.href);
       this.$toast.center("복사되었습니다");
+    },
+    analyticsKaKao(){
+      this.$gtag.event('click', {
+        event_category: 'share',
+        event_label: 'kakao',
+        value: 'kakao',
+      }); 
+    },
+    analyticsFacebook(){
+      this.$gtag.event('click', {
+        event_category: 'share',
+        event_label: 'facebook',
+        value: 'facebook',
+      }); 
+    },
+    analyticsTwitter(){
+      this.$gtag.event('click', {
+        event_category: 'share',
+        event_label: 'twitter',
+        value: 'twitter',
+      }); 
+    },
+    analyticsCopy(){
+      this.$gtag.event('click', {
+        event_category: 'share',
+        event_label: 'copy',
+        value: 'copy',
+      }); 
     },
   },
   props: ["bubbledetailProps"],
