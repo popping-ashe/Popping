@@ -353,6 +353,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
 
 .new-button {
@@ -459,7 +461,7 @@ export default {
   position: relative;
   top: 79%;
   width: 100%;
-  height: 10%;
+  height: 71.5px;
   display: flex;
   justify-content: center;
   align-items: center;
