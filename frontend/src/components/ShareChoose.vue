@@ -57,7 +57,7 @@ export default {
     shareKakao() {
       // 카카오톡 공유 요청 보내기
       window.Kakao.Share.sendCustom({
-        templateId: 96612, // 내가 만들어놓은 메세지 템플릿
+        templateId: process.env.VUE_APP_KAKAO_MESSAGE_ID,
         installTalk: true, // 카카오톡이 설치 되지 않았을때 마켓으로 이동
         templateArgs: {
           shareId: this.$store.getters["userStore/checkShareId"].share_id, // 여기에 shareId 담아주면 댐
