@@ -166,7 +166,7 @@ export default {
           },
           (error) => {
             console.log(error);
-            this.getnewaccesstoken();
+            this.$router.push("/error");
           }
         );
       }
@@ -188,7 +188,7 @@ export default {
         },
         (error) => {
           console.log(error);
-          this.getnewaccesstoken();
+          this.$router.push("/error");
         }
       );
     }
