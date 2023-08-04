@@ -185,7 +185,8 @@ export default {
   display: flex;
   justify-content: center;
   margin-right: 3.5%;
-  margin-top: 0.5%
+  margin-top: 0.5%;
+  margin-bottom: 1%;
 }
 
 
