@@ -7,7 +7,6 @@ import vuetify from "./plugins/vuetify";
 import "vue2-toast/lib/toast.css";
 import Toast from "vue2-toast";
 import VueClipboard from "vue-clipboard2";
-import VueGtag from 'vue-gtag'
 
 VueClipboard.config.autoSetContainer = true;
 Vue.use(VueClipboard);
