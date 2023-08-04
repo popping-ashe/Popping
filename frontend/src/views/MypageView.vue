@@ -9,7 +9,7 @@
           </div>
           <div class="mypage font-kor">MYPAGE</div>
           <div
-            class="new-button link-button"
+            class="new-button link-button" 
             style="margin-right: 6%; font-size: 13px"
             @click="goToPage('/settings')"
           >
@@ -38,7 +38,7 @@
               <div
                 class="selector-read"
                 :style="{ color: readOption === 'read' ? 'black' : 'gray' }"
-                @click="showReadOnly"
+                @click="[showReadOnly(), analyticsRead()]"
               >
                 읽음
               </div>
@@ -46,7 +46,7 @@
               <div
                 class="selector-unread"
                 :style="{ color: readOption === 'unread' ? 'black' : 'gray' }"
-                @click="showUnreadOnly"
+                @click="[showUnreadOnly(),analyticsUnread()]"
               >
                 안읽음
               </div>
@@ -62,7 +62,7 @@
               v-for="(article, index) in nowShowing"
               :key="index"
               class="sent-message-box"
-              @click="sentDetail(index)"
+              @click="[sentDetail(index),analyticsBubble()]"
             >
               <div class="sent-message-ellipse font-kor">
                 <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
@@ -173,6 +173,27 @@ export default {
       } else {
         this.pleaseShare = false;
       }
+    },
+    analyticsRead(){
+      this.$gtag.event('click', {
+        event_category: 'mypage',
+        event_label: 'readButton',
+        value: 'readButton',
+      }); 
+    },
+    analyticsUnread(){
+      this.$gtag.event('click', {
+        event_category: 'mypage',
+        event_label: 'unreadButton',
+        value: 'unreadButton',
+      }); 
+    },
+    analyticsBubble(){
+      this.$gtag.event('click', {
+        event_category: 'mypage',
+        event_label: 'sentBubble',
+        value: 'sentBubble',
+      }); 
     },
   },
   async logoutUser() {
