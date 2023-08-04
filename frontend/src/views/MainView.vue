@@ -14,7 +14,7 @@
             class="new-button font-eng"
             style="margin-left: 6%"
             v-if="pageid == getshareid"
-            @click="opensharecomponent"
+            @click="[opensharecomponent(),analyticsShare()]"
           >
             Share
           </div>
@@ -56,7 +56,7 @@
         <div class="bubble-area">
           <div
             class="bubble-frame font-kor"
-            @click="openDetail($event.target, index)"
+            @click="[openDetail($event.target, index),analyticsBubble()]"
             v-for="(message, index) in receivedmessages"
             :key="index"
             :style="{ width: randomBubbleSize[index], margin: randomX[index] }"
@@ -69,11 +69,11 @@
         </div>
 
         <!-- 로그인 상태에 따라 동적으로 메세지 보내기 버튼 활성화/비활성화 -->
-        <div class="bubble-make-btn font-kor" v-if="pageid == getshareid" @click="refresh()">
+        <div class="bubble-make-btn font-kor" v-if="pageid == getshareid" @click="[refresh(),analyticsRefresh()]">
           <img class="bubble-make-image" src="../assets/makebubblebtn.png" alt="" />
           <div class="bubble-make-text">새로고침</div>
         </div>
-        <div class="bubble-make-btn font-kor" v-else @click="openMake()">
+        <div class="bubble-make-btn font-kor" v-else @click="[openMake(),analyticsMake()]">
           <img class="bubble-make-image" src="../assets/makebubblebtn.png" alt="" />
           <div class="bubble-make-text">버블 만들기</div>
         </div>
@@ -290,6 +290,35 @@ export default {
       window.location.reload();
     },
 
+    analyticsShare(){
+      this.$gtag.event('click', {
+        event_category: 'main',
+        event_label: 'shareWindow',
+        value: 'shareWindow',
+      }); 
+    },
+    analyticsRefresh(){
+      this.$gtag.event('click', {
+        event_category: 'main',
+        event_label: 'refresh',
+        value: 'refresh',
+      }); 
+    },
+    analyticsBubble(){
+      this.$gtag.event('click', {
+        event_category: 'main',
+        event_label: 'readBubble',
+        value: 'readBubble',
+      }); 
+    },
+    analyticsMake(){
+      this.$gtag.event('click', {
+        event_category: 'main',
+        event_label: 'makeBubble',
+        value: 'makeBubble',
+      }); 
+    },
+
     ...mapActions(userStore, [
       "getnewaccesstoken",
       "showusersbubble",
@@ -297,6 +326,8 @@ export default {
       "changeread",
       "receivedUserMessage",
     ]),
+
+    
   },
 
   computed: {
