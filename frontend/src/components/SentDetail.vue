@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="content-box">
-        <span v-html="messagedetailProps.content"></span>
+        <span v-html="messageTemp"></span>
       </div>
     </div>
   </div>
@@ -40,6 +40,10 @@ export default {
   props: ["messagedetailProps"],
 
   computed: {
+    messageTemp() {
+      return this.messagedetailProps.content.replace(/\n/gi,"<br>")
+    },
+
     ...mapState(["showSentDetail"]),
   },
 };

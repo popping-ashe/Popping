@@ -2,9 +2,11 @@
   <div class="message-frame animate__animated animate__fadeIn">
     <div class="window" v-click-outside="closeshare">
       <div class="close-button" @click="closeshare"></div>
-      <div class="share-text font-kor">
-        <div style="font-size: 70%; height: 10px">공유하기</div>
-      </div>
+        <div class="upper-bar">
+          <div class="share-text font-kor">
+            공유하기
+          </div>
+        </div>
 
       <div class="nickname-box">
         <div class="sharebox">
@@ -96,12 +98,12 @@ export default {
 
 .window {
   position: absolute;
-  top: calc(var(--vh, 1vh) * 50.5);
+  top: 51.5%;
   left: 50.5%;
   width: calc(var(--vh, 1vh) * 40);
   height: calc(var(--vh, 1vh) * 29);
   transform: translate(-50%, -50%);
-  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0, 0.3));
   background-color: transparent;
   background-image: url("../assets/그림2.png");
   background-size: 100%;
@@ -113,28 +115,33 @@ export default {
 }
 
 .close-button {
+  
   width: 100%;
   height: 16%;
-  margin-bottom: 15px;
+    margin-bottom: 15px;
   /* border: 1px solid black; */
 }
 
 .upper-bar {
   width: 100%;
-  height: 25%;
+  height: 10%;
   display: flex;
+  margin-bottom: 1%;
 }
 
 .share-text {
-  height: 20px;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-content: flex-end;
   justify-content: center;
   margin-right: 4%;
+  font-size: 90%;
 }
+
 .nickname-box {
   width: 83%;
-  height: 28%;
+  height: 28%;;
   /* border: 1px solid darkslategray;
   border-radius: 20px 20px 20px 20px; */
   outline: none;
@@ -143,34 +150,33 @@ export default {
   /* background: linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%, #B9D7EB 100%); */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   /* margin-left: 6.5%; */
-  padding-left: 3.5%;
-  padding-right: 4.2%;
   margin-right: 4%;
   margin-bottom: 4%;
   margin-top: 3%;
 }
+
 .sharebox {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
   height: 100%;
   /* margin: 10px;  */
 }
 
 .shareimg {
-  margin: 0px 8%;
-  width: 55%;
-  margin-bottom: 5%;
-  /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
+    margin: 0px 8%;
+    width: 55%;
+    margin-bottom: 5%;
+    /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
 }
 .sharetext {
-  margin: 0px 9%;
-  width: 20%;
+    margin: 0px 9%;
+    width: 20%;
 
-  /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
+    /* filter: drop-shadow(2px 2px 4px rgba(0,0,0, 0.4)) */
 }
 
 .share-link-frame {
@@ -179,8 +185,9 @@ export default {
   display: flex;
   justify-content: center;
   margin-right: 3.5%;
-  margin-top: 0.5%;
+  margin-top: 0.5%
 }
+
 
 .location-box {
   width: 68%;
@@ -215,12 +222,13 @@ export default {
   font-size: 12px;
   align-items: center;
 }
-.font-kor {
-  font-family: "Galmuri9";
+.font-kor{
+  font-family: 'Galmuri9';
   font-weight: 200;
 }
 
-.font-eng {
-  font-family: "hydrophilia";
+.font-eng{
+  font-family: 'hydrophilia'
 }
+
 </style>
