@@ -27,12 +27,12 @@
             프로필 수정
           </div>
           <hr />
-          <div style="display: flex" class="logout" @click="[logoutUser(), analyticsLogout()]">로그아웃</div>
-          <div style="display: flex; margin-top:12px;" class="logout" @click="[tocenter(), analyticsQnA()]">고객센터</div>
+          <div style="display: flex" class="logout" @click="logoutUser()">로그아웃</div>
+          <div style="display: flex; margin-top:12px;" class="logout" @click="tocenter()">고객센터</div>
         </div>
 
         <br />
-        <div class="delete font-pre" @click="[deleteuser(), analyticsSignout()]">popping 탈퇴</div>
+        <div class="delete font-pre" @click="deleteuser()>popping 탈퇴</div>
       </div>
     </div>
   </div>
