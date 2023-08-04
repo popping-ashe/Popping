@@ -200,7 +200,7 @@ export default {
     this.logoutUser;
   },
   created() {
-    this.updateUserData();
+    // this.updateUserData();
   },
   mounted() {
     receivedUserMessageCount(
