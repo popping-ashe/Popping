@@ -5,6 +5,7 @@ import LoginView from "../views/LoginView.vue";
 import MypageView from "../views/MypageView.vue";
 import LoginCallBack from "../views/LoginCallBack.vue";
 import SettingView from "../views/SettingView.vue";
+import ErrorView from "../views/ErrorView.vue";
 // import userStore from "@/store/modules/userStore";
 
 Vue.use(VueRouter);
@@ -35,6 +36,12 @@ const routes = [
     name: "SettingView",
     component: SettingView,
   },
+  {
+    path: "/error",
+    name: "ErrorView",
+    component: ErrorView,
+  },
+
 ];
 
 const router = new VueRouter({
