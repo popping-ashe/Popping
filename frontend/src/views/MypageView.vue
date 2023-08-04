@@ -38,7 +38,7 @@
               <div
                 class="selector-read"
                 :style="{ color: readOption === 'read' ? 'black' : 'gray' }"
-                @click="[showReadOnly(), analyticsRead()]"
+                @click="showReadOnly()"
               >
                 읽음
               </div>
@@ -46,7 +46,7 @@
               <div
                 class="selector-unread"
                 :style="{ color: readOption === 'unread' ? 'black' : 'gray' }"
-                @click="[showUnreadOnly(),analyticsUnread()]"
+                @click="showUnreadOnly()"
               >
                 안읽음
               </div>
@@ -62,7 +62,7 @@
               v-for="(article, index) in nowShowing"
               :key="index"
               class="sent-message-box"
-              @click="[sentDetail(index),analyticsBubble()]"
+              @click="sentDetail(index)"
             >
               <div class="sent-message-ellipse font-kor">
                 <!-- 유저 아이디 첫글자 -> 이미지로 변경-->

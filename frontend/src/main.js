@@ -16,21 +16,6 @@ Vue.use(Toast);
 
 Vue.config.productionTip = false;
 
-if (process.env.VUE_APP_GOOGLE_ANALYTICS_KEY) {
-  Vue.use(
-    VueGtag,
-    {
-      config: {
-        id: `${process.env.VUE_APP_GOOGLE_ANALYTICS_KEY}`,
-        params: {
-          send_page_view: false,
-        },
-      },
-    },
-    router
-  );
-}
-
 new Vue({
   router,
   store,
