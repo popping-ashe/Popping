@@ -33,4 +33,10 @@ public class TermsController {
 		List<TermsDto> terms = termsService.getAllTerms();
 		return ResponseEntity.ok(terms.stream().map(TermsApiDto.Response::from).toList());
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<TermsApiDto.Response> getTerms(@PathVariable("id") Long termsId) {
+		TermsDto terms = termsService.getTerms(termsId);
+		return ResponseEntity.ok(TermsApiDto.Response.from(terms));
+	}
 }
