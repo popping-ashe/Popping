@@ -24,4 +24,10 @@ public class TermsAgreementServiceImpl implements TermsAgreementService{
 		termsAgreementRepository.save(termsAgreement);
 		return TermsAgreementDto.from(termsAgreement);
 	}
+
+	@Override
+	public List<TermsAgreementDto> getTermsAgreementByMember(Long memberId) {
+		List<TermsAgreement> termsAgreement = termsAgreementRepository.findByMemberId(memberId);
+		return termsAgreement.stream().map(TermsAgreementDto::from).toList();
+	}
 }
