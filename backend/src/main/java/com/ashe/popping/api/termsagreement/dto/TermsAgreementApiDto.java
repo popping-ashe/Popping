@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import com.ashe.popping.domain.terms.dto.TermsDto;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
-import com.ashe.popping.domain.termsagreement.entity.TermsAgreement;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -15,6 +14,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class TermsAgreementApiDto {
+
+	@Builder
+	@Getter
+	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+	@NoArgsConstructor(access = AccessLevel.PROTECTED)
+	@AllArgsConstructor
+	public static class Request {
+		private Long termsId;
+		private Long memberId;
+		private String agreement;
+	}
+
 	@Builder
 	@Getter
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
