@@ -2,12 +2,9 @@ package com.ashe.popping.domain.termsagreement.dto;
 
 import java.time.LocalDateTime;
 
+import com.ashe.popping.api.termsagreement.dto.TermsAgreementApiDto;
 import com.ashe.popping.domain.termsagreement.entity.TermsAgreement;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -40,6 +37,14 @@ public class TermsAgreementDto {
 			.memberId(termsAgreement.getMemberId())
 			.agreement(termsAgreement.getAgreement())
 			.agreementDate(termsAgreement.getAgreementDate())
+			.build();
+	}
+
+	public static TermsAgreementDto from(TermsAgreementApiDto.Request request) {
+		return TermsAgreementDto.builder()
+			.termsId(request.getTermsId())
+			.memberId(request.getMemberId())
+			.agreement(request.getAgreement())
 			.build();
 	}
 }
