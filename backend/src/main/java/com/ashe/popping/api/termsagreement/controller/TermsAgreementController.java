@@ -30,4 +30,10 @@ public class TermsAgreementController {
 		TermsAgreementDto termsAgreementDto = termsAgreementService.createTermsAgreement(TermsAgreementDto.from(request));
 		return ResponseEntity.ok(TermsAgreementApiDto.Response.of(termsService.getTerms(request.getTermsId()), termsAgreementDto));
 	}
+
+	@PatchMapping
+	public ResponseEntity<TermsAgreementApiDto.Response> updateTermsAgreement(@RequestBody TermsAgreementApiDto.Request request) {
+		TermsAgreementDto termsAgreementDto = termsAgreementService.updateTermsAgreement(TermsAgreementDto.from(request));
+		return ResponseEntity.ok(TermsAgreementApiDto.Response.of(termsService.getTerms(request.getTermsId()), termsAgreementDto));
+	}
 }
