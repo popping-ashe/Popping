@@ -36,4 +36,12 @@ public class TermsAgreementController {
 		TermsAgreementDto termsAgreementDto = termsAgreementService.updateTermsAgreement(TermsAgreementDto.from(request));
 		return ResponseEntity.ok(TermsAgreementApiDto.Response.of(termsService.getTerms(request.getTermsId()), termsAgreementDto));
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<List<TermsAgreementApiDto.Response>> getTermsAgreementByMember(@PathVariable("id") Long memberId) {
+		List<TermsAgreementDto> termsAgreement = termsAgreementService.getTermsAgreementByMember(memberId);
+		List<TermsAgreementApiDto.Response> termsAgreementApiDto = termsAgreement.stream().map(t -> TermsAgreementApiDto.Response.of(
+			termsService.getTerms(t.getTermsId()),t)).toList();
+		return ResponseEntity.ok(termsAgreementApiDto);
+	}
 }
