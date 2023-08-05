@@ -1,5 +1,6 @@
 package com.ashe.popping.domain.termsagreement.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,7 +21,12 @@ public class TermsAgreementServiceImpl implements TermsAgreementService{
 
 	@Override
 	public TermsAgreementDto createTermsAgreement(TermsAgreementDto termsAgreementDto) {
-		TermsAgreement termsAgreement = TermsAgreement.from(termsAgreementDto);
+		TermsAgreement termsAgreement = null;
+		if(termsAgreementDto.getAgreement().equals(("Y"))) {
+			termsAgreement = TermsAgreement.of(termsAgreementDto, LocalDateTime.now());
+		} else {
+			termsAgreement = TermsAgreement.from(termsAgreementDto);
+		}
 		termsAgreementRepository.save(termsAgreement);
 		return TermsAgreementDto.from(termsAgreement);
 	}
