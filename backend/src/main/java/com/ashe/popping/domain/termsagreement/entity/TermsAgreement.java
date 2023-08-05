@@ -64,4 +64,12 @@ public class TermsAgreement {
 			.agreementDate(agreementDate)
 			.build();
 	}
+
+	public void updateAgreement(String agreement) {
+		this.agreement = agreement;
+	}
+
+	public void updateAgreementDate(LocalDateTime agreementDate) {
+		this.agreementDate = agreementDate;
+	}
 }
