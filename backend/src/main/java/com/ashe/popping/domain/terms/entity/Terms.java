@@ -53,5 +53,16 @@ public class Terms {
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
 	}
+
+	public static Terms from(TermsDto termsDto) {
+		return Terms.builder()
+			.termsId(termsDto.getTermsId())
+			.title(termsDto.getTitle())
+			.content(termsDto.getTitle())
+			.mandatory(termsDto.getMandatory())
+			.createdTime(termsDto.getCreatedTime())
+			.updatedTime(termsDto.getUpdatedTime())
+			.build();
+	}
 }
 
