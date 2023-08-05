@@ -36,4 +36,14 @@ public class TermsAgreementServiceImpl implements TermsAgreementService{
 		List<TermsAgreement> termsAgreement = termsAgreementRepository.findByMemberId(memberId);
 		return termsAgreement.stream().map(TermsAgreementDto::from).toList();
 	}
+
+	@Override
+	public TermsAgreementDto updateTermsAgreement(TermsAgreementDto termsAgreementDto) {
+		TermsAgreement termsAgreement = termsAgreementRepository.findByTermsIdAndMemberId(termsAgreementDto.getTermsId(), termsAgreementDto.getMemberId());
+		termsAgreement.updateAgreement(termsAgreementDto.getAgreement());
+		if(termsAgreementDto.getAgreement().equals(("Y"))) {
+			termsAgreement.updateAgreementDate(LocalDateTime.now());
+		}
+		return TermsAgreementDto.from(termsAgreement);
+	}
 }
