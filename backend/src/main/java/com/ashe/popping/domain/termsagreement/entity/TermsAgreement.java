@@ -6,7 +6,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
 
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -53,6 +52,16 @@ public class TermsAgreement {
 			.memberId(termsAgreementDto.getMemberId())
 			.agreement(termsAgreementDto.getAgreement())
 			.agreementDate(termsAgreementDto.getAgreementDate())
+			.build();
+	}
+
+	public static TermsAgreement of(TermsAgreementDto termsAgreementDto, LocalDateTime agreementDate) {
+		return TermsAgreement.builder()
+			.termsAgreementId(termsAgreementDto.getTermsAgreementId())
+			.termsId(termsAgreementDto.getTermsId())
+			.memberId(termsAgreementDto.getMemberId())
+			.agreement(termsAgreementDto.getAgreement())
+			.agreementDate(agreementDate)
 			.build();
 	}
 }
