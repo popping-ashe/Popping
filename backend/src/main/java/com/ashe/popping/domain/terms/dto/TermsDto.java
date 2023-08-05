@@ -2,6 +2,8 @@ package com.ashe.popping.domain.terms.dto;
 
 import java.time.LocalDateTime;
 
+import com.ashe.popping.domain.terms.entity.Terms;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -28,5 +30,16 @@ public class TermsDto {
 		this.mandatory = mandatory;
 		this.createdTime = createdTime;
 		this.updatedTime = updatedTime;
+	}
+
+	public static TermsDto from(Terms terms) {
+		return TermsDto.builder()
+			.termsId(terms.getTermsId())
+			.title(terms.getTitle())
+			.content(terms.getContent())
+			.mandatory(terms.getMandatory())
+			.createdTime(terms.getCreatedTime())
+			.updatedTime(terms.getUpdatedTime())
+			.build();
 	}
 }
