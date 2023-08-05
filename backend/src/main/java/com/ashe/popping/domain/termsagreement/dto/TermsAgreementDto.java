@@ -32,4 +32,14 @@ public class TermsAgreementDto {
 		this.agreement = agreement;
 		this.agreementDate = agreementDate;
 	}
+
+	public static TermsAgreementDto from(TermsAgreement termsAgreement) {
+		return TermsAgreementDto.builder()
+			.termsAgreementId(termsAgreement.getTermsAgreementId())
+			.termsId(termsAgreement.getTermsId())
+			.memberId(termsAgreement.getMemberId())
+			.agreement(termsAgreement.getAgreement())
+			.agreementDate(termsAgreement.getAgreementDate())
+			.build();
+	}
 }
