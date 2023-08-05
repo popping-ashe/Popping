@@ -6,4 +6,6 @@ import com.ashe.popping.domain.terms.dto.TermsDto;
 
 public interface TermsService {
 	List<TermsDto> getAllTerms();
+
+	TermsDto getTerms(Long termsId);
 }
