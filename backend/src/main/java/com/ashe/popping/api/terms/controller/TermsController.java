@@ -27,4 +27,10 @@ public class TermsController {
 		TermsDto terms = termsService.createTerms(TermsDto.from(request));
 		return ResponseEntity.ok(TermsApiDto.Response.from(terms));
 	}
+
+	@GetMapping
+	public ResponseEntity<List<TermsApiDto.Response>> getAllTerms() {
+		List<TermsDto> terms = termsService.getAllTerms();
+		return ResponseEntity.ok(terms.stream().map(TermsApiDto.Response::from).toList());
+	}
 }
