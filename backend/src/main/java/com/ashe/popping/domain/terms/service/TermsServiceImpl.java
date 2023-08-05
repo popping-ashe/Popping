@@ -19,6 +19,13 @@ public class TermsServiceImpl implements TermsService {
 	private final TermsRepository termsRepository;
 
 	@Override
+	public TermsDto createTerms(TermsDto termsDto) {
+		Terms terms = Terms.from(termsDto);
+		termsRepository.save(terms);
+		return TermsDto.from(terms);
+	}
+
+	@Override
 	public List<TermsDto> getAllTerms() {
 		List<Terms> terms = termsRepository.findAll();
 		return terms.stream().map(TermsDto::from).toList();
