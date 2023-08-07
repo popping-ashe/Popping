@@ -70,7 +70,7 @@ public class MessageServiceImpl implements MessageService {
 	public MessageCountDto countMessagesByType(Long memberId) {
 		Long receivedMessagesCount = messageRepository.countByReceiver(memberId);
 		Long sentMessagesCount = messageRepository.countBySender(memberId);
-		Long unreadMessagesCount = messageRepository.countByReceiverAndExpirationTimeAfterAndStateIs(memberId, LocalDateTime.now(), MessageState.UNREAD);
-		return MessageCountDto.of(receivedMessagesCount, sentMessagesCount, unreadMessagesCount);
+		Long expiredMessagesCount = messageRepository.countByReceiverAndStateIs(memberId, MessageState.EXPIRED);
+		return MessageCountDto.of(receivedMessagesCount, sentMessagesCount, expiredMessagesCount);
 	}
 }

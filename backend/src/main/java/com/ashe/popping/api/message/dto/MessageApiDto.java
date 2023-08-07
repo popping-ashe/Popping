@@ -87,20 +87,20 @@ public class MessageApiDto {
 	public static class CountResponse {
 		private Long receivedMessagesCount;
 		private Long sentMessagesCount;
-		private Long unreadMessagesCount;
+		private Long expiredMessagesCount;
 
 		@Builder
-		public CountResponse(Long receivedMessagesCount, Long sentMessagesCount, Long unreadMessagesCount) {
+		public CountResponse(Long receivedMessagesCount, Long sentMessagesCount, Long expiredMessagesCount) {
 			this.receivedMessagesCount = receivedMessagesCount;
 			this.sentMessagesCount = sentMessagesCount;
-			this.unreadMessagesCount = unreadMessagesCount;
+			this.expiredMessagesCount = expiredMessagesCount;
 		}
 
 		public static CountResponse from(MessageCountDto messageCountDto){
 			return CountResponse.builder()
 				.receivedMessagesCount(messageCountDto.getReceivedMessagesCount())
 				.sentMessagesCount(messageCountDto.getSentMessagesCount())
-				.unreadMessagesCount(messageCountDto.getUnreadMessagesCount())
+				.expiredMessagesCount(messageCountDto.getExpiredMessagesCount())
 				.build();
 		}
 	}
