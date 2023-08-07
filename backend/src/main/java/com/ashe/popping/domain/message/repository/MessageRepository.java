@@ -34,6 +34,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
 	Long countBySender(Long sender);
 
-	Long countByReceiverAndExpirationTimeAfterAndStateIs(Long receiver, LocalDateTime now, MessageState state);
+	Long countByReceiverAndStateIs(Long receiver, MessageState state);
 
 }
