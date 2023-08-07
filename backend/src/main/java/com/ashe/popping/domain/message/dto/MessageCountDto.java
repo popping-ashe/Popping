@@ -8,20 +8,20 @@ public class MessageCountDto {
 
 	private Long receivedMessagesCount;
 	private Long sentMessagesCount;
-	private Long unreadMessagesCount;
+	private Long expiredMessagesCount;
 
 	@Builder
-	public MessageCountDto(Long receivedMessagesCount, Long sentMessagesCount, Long unreadMessagesCount) {
+	public MessageCountDto(Long receivedMessagesCount, Long sentMessagesCount, Long expiredMessagesCount) {
 		this.receivedMessagesCount = receivedMessagesCount;
 		this.sentMessagesCount = sentMessagesCount;
-		this.unreadMessagesCount = unreadMessagesCount;
+		this.expiredMessagesCount = expiredMessagesCount;
 	}
 
-	public static MessageCountDto of(Long receivedMessagesCount, Long sentMessagesCount, Long unreadMessagesCount){
+	public static MessageCountDto of(Long receivedMessagesCount, Long sentMessagesCount, Long expiredMessagesCount){
 		return MessageCountDto.builder()
 			.receivedMessagesCount(receivedMessagesCount)
 			.sentMessagesCount(sentMessagesCount)
-			.unreadMessagesCount(unreadMessagesCount)
+			.expiredMessagesCount(expiredMessagesCount)
 			.build();
 	}
 }
