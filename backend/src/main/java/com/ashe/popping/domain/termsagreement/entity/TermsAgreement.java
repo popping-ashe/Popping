@@ -38,7 +38,7 @@ public class TermsAgreement {
 	@Enumerated(EnumType.STRING)
 	private TermsAgreementState state;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private LocalDateTime agreementDate;
 
 	@Builder
