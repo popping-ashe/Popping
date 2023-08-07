@@ -52,6 +52,19 @@
           <div>버블을 받아보세요</div>
         </div>
 
+        <div class="please-make font-kor" v-if="pageid != getshareid && showPleaseMake && !letscheck">
+          <div style="width:100%; display: flex; justify-content: center">
+            <div class="make-button-for-ment">
+              <img class="make-button-image" src="../assets/makebubblebtn.png" alt="">
+              <div class="make-button-inner">버블 만들기</div>
+            </div>
+            <div style="margin-top: 8.2px;">&nbsp;&nbsp;를 눌러</div>
+          </div>
+          <div>버블을 만들어보세요</div>
+        </div>
+
+
+
         <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
         <div class="bubble-area">
           <div
@@ -59,7 +72,7 @@
             @click="[openDetail($event.target, index),analyticsBubble()]"
             v-for="(message, index) in receivedmessages"
             :key="index"
-            :style="{ width: randomBubbleSize[index], margin: randomX[index] }"
+            :style="{ width: randomBubbleSize[index], height: randomBubbleSize[index], margin: randomX[index] }"
           >
             <div class="time-left" :style="{ fontSize: randomFontSize[index] }">
               {{ calLeftTime(index) }}
@@ -113,6 +126,9 @@ export default {
       openshare: false,
       slideClass: "",
       showPleaseShare: false,
+      showPleaseMake: false,
+      firstlength: '',
+      letscheck: false,
     };
   },
   created() {
@@ -134,6 +150,7 @@ export default {
               this.receivedmessages = receivedmessages;
               this.generateRandomSizes();
               this.generateRandomPosition();
+              this.firstlength = this.receivedmessages.length
 
               if (receivedmessages.length == 0) {
                 this.showPleaseShare = true;
@@ -160,6 +177,13 @@ export default {
               const othermessages = response.data.data;
               this.nickname = response.data.nickname;
               this.receivedmessages = othermessages;
+
+            if (this.receivedmessages.length == 0) {
+                this.showPleaseMake = true
+              } else {
+                this.showPleaseShare = false
+              }
+
               this.generateRandomSizes();
               this.generateRandomPosition();
             } else {
@@ -182,6 +206,13 @@ export default {
             const othermessages = response.data.data;
             this.nickname = response.data.nickname;
             this.receivedmessages = othermessages;
+
+            if (this.receivedmessages.length == 0) {
+                this.showPleaseMake = true
+              } else {
+                this.showPleaseMake = false
+              }
+
             this.generateRandomSizes();
             this.generateRandomPosition();
           } else {
@@ -222,6 +253,10 @@ export default {
         this.bubbleDetail.content = this.bubbleDetail.content.replace(/\n/gi, "<br>");
         this.$store.commit("SHOW_DETAIL", !this.showReceivedDetail);
         this.changeread(this.bubbleDetail.message_id);
+        this.firstlength = this.firstlength - 1
+        if (this.firstlength == 0) {
+          this.showPleaseShare = true
+        }
       }
     },
     openMake() {
@@ -257,9 +292,12 @@ export default {
       this.receivedmessages.push(data);
       this.generateRandomSizes();
       this.generateRandomPosition();
+      if (this.receivedmessages.length != 0) {
+        this.letscheck = true
+      }
     },
     toHome() {
-      location.href = `http://www.pop-ping.com/main/${this.getshareid}`;
+      location.href = `http://dev.pop-ping.com/main/${this.getshareid}`;
     },
 
     calLeftTime(index) {
@@ -556,5 +594,39 @@ export default {
   color: black;
   font-size: 10.5px;
   font-weight: 600;
+}
+
+.please-make {
+  width: 100%;
+  position: absolute;
+  font-size: 16px;
+  top: 43%;
+  animation: popping1 3s ease-in-out infinite alternate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.2));
+  flex-wrap: wrap;
+}
+
+.make-button-for-ment {
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.make-button-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.make-button-inner {
+  position: absolute;
+  font-size : 12px;
+  margin-bottom: 2px;
+  margin-left: 5.5px;
 }
 </style>

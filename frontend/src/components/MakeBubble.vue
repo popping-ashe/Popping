@@ -55,7 +55,7 @@ export default {
         sender: null,
         share_id: this.$route.params.pageid,
         nickname: "",
-        retentionTime: 1,
+        retentionTime: 24,
       },
     };
   },
