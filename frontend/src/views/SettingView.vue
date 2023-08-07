@@ -2,6 +2,7 @@
   <div class="page-container">
     <div class="page" :class="slideClass">
       <div class="frame" style="z-index: 0">
+        <DeleteUser v-if="openshare" @close="closeshare" />
         <transition name="slide">
           <div v-if="showNicknameEdit" class="nickname-edit-overlay">
             <ChangeNickname @close="closeNicknameEdit" @nickname-updated="updateNickname" />
@@ -41,18 +42,21 @@
 <script>
 import { mapActions } from "vuex";
 import ChangeNickname from "@/components/ChangeNickname.vue";
+import DeleteUser from "@/components/DeleteUser.vue";
 const userStore = "userStore";
 
 export default {
   name: "SettingView",
   components: {
     ChangeNickname,
+    DeleteUser
   },
   data() {
     return {
       nickname: this.$store.getters["userStore/checkUserInfo"].nickname,
       showNicknameEdit: false,
       slideClass: "",
+      openshare: false,
     };
   },
   methods: {
@@ -86,6 +90,13 @@ export default {
     tocenter() {
       location.href = `http://pf.kakao.com/_IjYZG`
     },
+    opensharecomponent() {
+      this.openshare = true;
+    },
+    closeshare() {
+      this.openshare = false;
+    },
+    
     analyticsLogout(){
       this.$gtag.event('click', {
         event_category: 'settings',
