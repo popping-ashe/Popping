@@ -23,7 +23,9 @@ public class TermsAgreementServiceImpl implements TermsAgreementService {
 	@Override
 	public TermsAgreementDto createTermsAgreement(TermsAgreementDto termsAgreementDto) {
 		TermsAgreement termsAgreement = null;
-		if (termsAgreementDto.getState().equals(TermsAgreementState.ACTIVE)) {
+		if (termsAgreementDto.getState() == null) {
+			termsAgreement = TermsAgreement.of(termsAgreementDto, TermsAgreementState.PENDING);
+		} else if (termsAgreementDto.getState().equals(TermsAgreementState.ACTIVE)) {
 			termsAgreement = TermsAgreement.of(termsAgreementDto, LocalDateTime.now());
 		} else {
 			termsAgreement = TermsAgreement.from(termsAgreementDto);
