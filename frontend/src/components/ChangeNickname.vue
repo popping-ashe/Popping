@@ -33,7 +33,7 @@
           </div>
         </div>
         <!-- <button @click="stopEditing">수정</button> -->
-        <div style="font-size: 12px">{{ changednickname.length + 1 }} / 10</div>
+        <div style="font-size: 12px">{{ changednickname.length }} / 10</div>
       </div>
       <br />
     </div>
@@ -75,6 +75,9 @@ export default {
       this.isEditing = false;
       if (this.nickname !== this.changednickname) {
         this.change();
+        const userinfo = JSON.parse(localStorage.getItem("userinfo"));
+        userinfo.nickname = this.changednickname;
+        localStorage.setItem("userinfo", JSON.stringify(userinfo));
       }
     },
     clearInput() {
@@ -90,7 +93,6 @@ export default {
         (response) => {
           if (response.status == 200) {
             this.nickname = this.changednickname;
-            this.updateUserData({ nickname: this.changednickname });
           } else {
             // console.log("잘못");
           }
