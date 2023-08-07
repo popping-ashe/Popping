@@ -20,14 +20,17 @@ public class MessageApiDto {
 		private Long shareId;
 		private String nickname;
 		private Long retentionTime;
+		private String replyAvailable;
 
 		@Builder
-		public Request(String content, Long sender, Long shareId, String nickname, Long retentionTime) {
+		public Request(String content, Long sender, Long shareId, String nickname, Long retentionTime,
+			String replyAvailable) {
 			this.content = content;
 			this.sender = sender;
 			this.shareId = shareId;
 			this.nickname = nickname;
 			this.retentionTime = retentionTime;
+			this.replyAvailable = replyAvailable;
 		}
 
 		public static Request from(String content, String nickname, Long retentionTime){
@@ -35,7 +38,28 @@ public class MessageApiDto {
 				.content(content)
 				.nickname(nickname)
 				.retentionTime(retentionTime)
+				.replyAvailable("NO")
 				.build();
+		}
+	}
+
+	@Getter
+	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+	public static class ReplyRequest {
+		private String content;
+		private Long messageId;
+		private String nickname;
+		private Long retentionTime;
+		private String replyAvailable;
+
+		@Builder
+		public ReplyRequest(String content, Long messageId, String nickname, Long retentionTime,
+			String replyAvailable) {
+			this.content = content;
+			this.messageId = messageId;
+			this.nickname = nickname;
+			this.retentionTime = retentionTime;
+			this.replyAvailable = replyAvailable;
 		}
 	}
 
@@ -52,12 +76,12 @@ public class MessageApiDto {
 		private LocalDateTime createTime;
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 		private LocalDateTime expirationTime;
+		private String replyAvailable;
 
 		@Builder
 		public Response(Long messageId, String content, String state, Long receiver, String nickname,
-			String receiverNickname,
-			LocalDateTime createTime,
-			LocalDateTime expirationTime) {
+			String receiverNickname, LocalDateTime createTime, LocalDateTime expirationTime,
+			String replyAvailable) {
 			this.messageId = messageId;
 			this.content = content;
 			this.state = state;
@@ -66,6 +90,7 @@ public class MessageApiDto {
 			this.receiverNickname = receiverNickname;
 			this.createTime = createTime;
 			this.expirationTime = expirationTime;
+			this.replyAvailable = replyAvailable;
 		}
 
 		public static Response from(MessageDto messageDto) {
@@ -78,6 +103,7 @@ public class MessageApiDto {
 				.receiverNickname(messageDto.getReceiverNickname())
 				.createTime(messageDto.getCreateTime())
 				.expirationTime(messageDto.getExpirationTime())
+				.replyAvailable(messageDto.getReplyAvailable())
 				.build();
 		}
 
