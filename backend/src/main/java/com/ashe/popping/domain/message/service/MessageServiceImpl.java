@@ -35,7 +35,8 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public MessageDto saveMessage(MessageDto messageDto) {
 		Message message = messageRepository.findByMessageId(messageDto.getMessageId());
-		return MessageDto.from(messageRepository.save(Message.of(messageDto, message.getSender(), message.getReceiver())));
+		Message newMessage = messageRepository.save(Message.of(messageDto, message.getSender(), message.getReceiver()));
+		return MessageDto.from(newMessage);
 	}
 
 	@Override
