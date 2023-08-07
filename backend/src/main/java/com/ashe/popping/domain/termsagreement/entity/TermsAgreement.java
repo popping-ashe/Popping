@@ -70,6 +70,16 @@ public class TermsAgreement {
 			.agreementDate(agreementDate)
 			.build();
 	}
+	
+	public static TermsAgreement of(TermsAgreementDto termsAgreementDto, TermsAgreementState state) {
+		return TermsAgreement.builder()
+			.termsAgreementId(termsAgreementDto.getTermsAgreementId())
+			.termsId(termsAgreementDto.getTermsId())
+			.memberId(termsAgreementDto.getMemberId())
+			.state(state)
+			.agreementDate(termsAgreementDto.getAgreementDate())
+			.build();
+	}
 
 	public void updateAgreement(TermsAgreementState state) {
 		this.state = state;
