@@ -19,6 +19,7 @@ public class MemberDto {
 	private LocalDateTime createdTime;
 	private Role role;
 	private Long shareId;
+	private String bio;
 
 	public static MemberDto of(String kakaoId, String nickname, Role role, Long shareId) {
 		return MemberDto.builder()
@@ -26,6 +27,7 @@ public class MemberDto {
 			.kakaoId(kakaoId)
 			.role(role)
 			.shareId(shareId)
+			.bio("")
 			.build();
 	}
 
@@ -45,6 +47,7 @@ public class MemberDto {
 			.shareId(member.getMemberId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
+			.bio(member.getBio())
 			.build();
 	}
 
@@ -57,6 +60,7 @@ public class MemberDto {
 			.shareId(member.getShareId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
+			.bio(member.getBio())
 			.build();
 	}
 
@@ -64,6 +68,13 @@ public class MemberDto {
 		return MemberDto.builder()
 			.memberId(memberId)
 			.nickname(request.getNickname())
+			.build();
+	}
+
+	public static MemberDto of(MemberApiDto.UpdateBioRequest request, Long memberId) {
+		return MemberDto.builder()
+			.memberId(memberId)
+			.bio(request.getBio())
 			.build();
 	}
 }

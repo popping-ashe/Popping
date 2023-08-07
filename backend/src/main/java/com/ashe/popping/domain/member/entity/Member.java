@@ -50,6 +50,9 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
+	@Column(nullable = false, length = 30)
+	private String bio;
+
 	public static Member from(MemberDto memberDto) {
 		return Member.builder()
 			.memberId(memberDto.getMemberId())
@@ -59,6 +62,7 @@ public class Member {
 			.shareId(memberDto.getShareId())
 			.createdTime(memberDto.getCreatedTime())
 			.role(memberDto.getRole())
+			.bio(memberDto.getBio())
 			.build();
 	}
 
@@ -68,5 +72,9 @@ public class Member {
 
 	public void updateLastVisitedTime(LocalDateTime lastVisitedTime) {
 		this.lastVisitedTime = lastVisitedTime;
+	}
+
+	public void updateBio(String bio) {
+		this.bio = bio;
 	}
 }

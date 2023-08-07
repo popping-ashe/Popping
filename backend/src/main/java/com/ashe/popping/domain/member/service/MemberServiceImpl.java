@@ -86,4 +86,11 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return result;
 	}
+
+	@Override
+	public MemberDto updateBio(MemberDto memberDto) {
+		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
+		member.updateBio(memberDto.getBio());
+		return MemberDto.from(member);
+	}
 }
