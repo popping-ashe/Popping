@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
-import com.ashe.popping.domain.member.entity.Member;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -23,29 +22,13 @@ public class MemberApiDto {
 	private String kakaoId;
 	private LocalDateTime createdTime;
 	private Role role;
-
-	public static MemberApiDto from(MemberApiDto.Request request) {
-		return MemberApiDto.builder()
-			.nickname(request.getNickname())
-			.build();
-	}
+	private String bio;
 
 	public static MemberApiDto of(String kakaoId, String nickname, Role role) {
 		return MemberApiDto.builder()
 			.nickname(nickname)
 			.kakaoId(kakaoId)
 			.role(role)
-			.build();
-	}
-
-	public static MemberApiDto from(Member member) {
-		return MemberApiDto.builder()
-			.memberId(member.getMemberId())
-			.nickname(member.getNickname())
-			.lastVisitedTime(member.getLastVisitedTime())
-			.kakaoId(member.getKakaoId())
-			.createdTime(member.getCreatedTime())
-			.role(member.getRole())
 			.build();
 	}
 
@@ -66,6 +49,17 @@ public class MemberApiDto {
 
 	}
 
+	@Getter
+	@NoArgsConstructor(access = AccessLevel.PROTECTED)
+	public static class UpdateBioRequest {
+		private String bio;
+
+		@Builder
+		public UpdateBioRequest(String bio) {
+			this.bio = bio;
+		}
+	}
+
 	@Builder
 	@Getter
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
@@ -75,11 +69,13 @@ public class MemberApiDto {
 		private Long memberId;
 		private String nickname;
 		private Long expiredMessageCount;
+		private String bio;
 
 		public static Response from(MemberDto memberDto) {
 			return Response.builder()
 				.memberId(memberDto.getMemberId())
 				.nickname(memberDto.getNickname())
+				.bio(memberDto.getBio())
 				.build();
 		}
 
@@ -87,6 +83,7 @@ public class MemberApiDto {
 			return Response.builder()
 				.memberId(memberDto.getMemberId())
 				.nickname(memberDto.getNickname())
+				.bio(memberDto.getBio())
 				.expiredMessageCount(expiredMessageCount)
 				.build();
 		}

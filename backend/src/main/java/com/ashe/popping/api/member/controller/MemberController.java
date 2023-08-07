@@ -65,4 +65,12 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
+	@PatchMapping("/me/bio")
+	public ResponseEntity<?> updateMemberBio(@MemberInfo MemberInfoDto memberInfoDto,
+		@RequestBody MemberApiDto.UpdateBioRequest request) {
+		Long memberId = memberInfoDto.getMemberId();
+		MemberDto memberDto = memberService.updateBio(MemberDto.of(request, memberId));
+		return ResponseEntity.ok(MemberApiDto.Response.from(memberDto));
+	}
+
 }

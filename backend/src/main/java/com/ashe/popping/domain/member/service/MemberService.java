@@ -21,4 +21,6 @@ public interface MemberService {
 	MemberDto getMemberByShareId(Long shareId);
 
 	Long deleteMember(Long memberId);
+
+	MemberDto updateBio(MemberDto memberDto);
 }
