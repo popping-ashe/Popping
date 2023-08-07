@@ -93,7 +93,6 @@ export default {
         (response) => {
           if (response.status == 200) {
             this.nickname = this.changednickname;
-            this.updateUserData({ nickname: this.changednickname });
           } else {
             // console.log("잘못");
           }

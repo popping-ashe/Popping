@@ -8,7 +8,7 @@
           class="message-detail"
           v-if="showReceivedDetail"
         />
-        <MakeBubble v-if="showMakeWindow" />
+        <MakeBubble v-if="showMakeWindow"/>
         <div class="upper-bar">
           <div
             class="new-button font-eng"
