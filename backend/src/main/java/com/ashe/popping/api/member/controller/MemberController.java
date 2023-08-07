@@ -1,5 +1,7 @@
 package com.ashe.popping.api.member.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ashe.popping.api.member.dto.MemberApiDto;
+import com.ashe.popping.api.termsagreement.dto.TermsAgreementApiDto;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.service.MemberService;
 import com.ashe.popping.domain.message.service.MessageService;
+import com.ashe.popping.domain.terms.service.TermsService;
+import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
+import com.ashe.popping.domain.termsagreement.service.TermsAgreementService;
 import com.ashe.popping.global.resolver.memberinfo.MemberInfo;
 import com.ashe.popping.global.resolver.memberinfo.MemberInfoDto;
 
@@ -25,6 +31,8 @@ public class MemberController {
 
 	private final MemberService memberService;
 	private final MessageService messageService;
+	private final TermsService termsService;
+	private final TermsAgreementService termsAgreementService;
 
 	@GetMapping("/me")
 	public ResponseEntity<MemberApiDto.Response> getMember(@MemberInfo MemberInfoDto
@@ -34,7 +42,12 @@ public class MemberController {
 		Long expireMessageCount = messageService.countExpireMessage(memberDto.getMemberId(),
 			memberDto.getLastVisitedTime());
 
-		MemberApiDto.Response response = MemberApiDto.Response.of(memberDto, expireMessageCount);
+		List<TermsAgreementDto> termsAgreement = termsAgreementService.getTermsAgreementByMember(memberId);
+		List<TermsAgreementApiDto.Response> termsAgreementApiDto = termsAgreement.stream()
+			.map(t -> TermsAgreementApiDto.Response.of(
+				termsService.getTerms(t.getTermsId()), t))
+			.toList();
+		MemberApiDto.Response response = MemberApiDto.Response.of(memberDto, expireMessageCount, termsAgreementApiDto);
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}

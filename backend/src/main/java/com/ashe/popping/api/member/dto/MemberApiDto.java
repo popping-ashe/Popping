@@ -1,7 +1,9 @@
 package com.ashe.popping.api.member.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.ashe.popping.api.termsagreement.dto.TermsAgreementApiDto;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -70,6 +72,7 @@ public class MemberApiDto {
 		private String nickname;
 		private Long expiredMessageCount;
 		private String bio;
+		private List<TermsAgreementApiDto.Response> termsAgreement;
 
 		public static Response from(MemberDto memberDto) {
 			return Response.builder()
@@ -85,6 +88,17 @@ public class MemberApiDto {
 				.nickname(memberDto.getNickname())
 				.bio(memberDto.getBio())
 				.expiredMessageCount(expiredMessageCount)
+				.build();
+		}
+
+		public static Response of(MemberDto memberDto, Long expiredMessageCount,
+			List<TermsAgreementApiDto.Response> termsAgreement) {
+			return Response.builder()
+				.memberId(memberDto.getMemberId())
+				.nickname(memberDto.getNickname())
+				.bio(memberDto.getBio())
+				.expiredMessageCount(expiredMessageCount)
+				.termsAgreement(termsAgreement)
 				.build();
 		}
 
