@@ -16,17 +16,17 @@ public class TermsAgreementDto {
 
 	private Long termsId;
 
-	private String agreement;
+	private TermsAgreementState state;
 
 	private LocalDateTime agreementDate;
 
 	@Builder
-	public TermsAgreementDto(Long termsAgreementId, Long memberId, Long termsId, String agreement,
+	public TermsAgreementDto(Long termsAgreementId, Long memberId, Long termsId, TermsAgreementState state,
 		LocalDateTime agreementDate) {
 		this.termsAgreementId = termsAgreementId;
 		this.memberId = memberId;
 		this.termsId = termsId;
-		this.agreement = agreement;
+		this.state = state;
 		this.agreementDate = agreementDate;
 	}
 
@@ -35,7 +35,7 @@ public class TermsAgreementDto {
 			.termsAgreementId(termsAgreement.getTermsAgreementId())
 			.termsId(termsAgreement.getTermsId())
 			.memberId(termsAgreement.getMemberId())
-			.agreement(termsAgreement.getAgreement())
+			.state(termsAgreement.getState())
 			.agreementDate(termsAgreement.getAgreementDate())
 			.build();
 	}
@@ -44,7 +44,7 @@ public class TermsAgreementDto {
 		return TermsAgreementDto.builder()
 			.termsId(request.getTermsId())
 			.memberId(request.getMemberId())
-			.agreement(request.getAgreement())
+			.state(request.getState())
 			.build();
 	}
 }

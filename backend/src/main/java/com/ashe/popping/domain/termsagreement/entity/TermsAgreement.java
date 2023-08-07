@@ -5,10 +5,13 @@ import java.time.LocalDateTime;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
+import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,29 +31,32 @@ public class TermsAgreement {
 
 	@Column(nullable = false)
 	private Long memberId;
+
 	@Column(nullable = false)
 	private Long termsId;
-	@Column(nullable = false)
-	private String agreement;
+
+	@Enumerated(EnumType.STRING)
+	private TermsAgreementState state;
+
 	@Column(nullable = false)
 	private LocalDateTime agreementDate;
 
 	@Builder
-	public TermsAgreement(Long termsAgreementId, Long memberId, Long termsId, String agreement,
+	public TermsAgreement(Long termsAgreementId, Long memberId, Long termsId, TermsAgreementState state,
 		LocalDateTime agreementDate) {
 		this.termsAgreementId = termsAgreementId;
 		this.memberId = memberId;
 		this.termsId = termsId;
-		this.agreement = agreement;
+		this.state = state;
 		this.agreementDate = agreementDate;
 	}
-	
+
 	public static TermsAgreement from(TermsAgreementDto termsAgreementDto) {
 		return TermsAgreement.builder()
 			.termsAgreementId(termsAgreementDto.getTermsAgreementId())
 			.termsId(termsAgreementDto.getTermsId())
 			.memberId(termsAgreementDto.getMemberId())
-			.agreement(termsAgreementDto.getAgreement())
+			.state(termsAgreementDto.getState())
 			.agreementDate(termsAgreementDto.getAgreementDate())
 			.build();
 	}
@@ -60,13 +66,13 @@ public class TermsAgreement {
 			.termsAgreementId(termsAgreementDto.getTermsAgreementId())
 			.termsId(termsAgreementDto.getTermsId())
 			.memberId(termsAgreementDto.getMemberId())
-			.agreement(termsAgreementDto.getAgreement())
+			.state(termsAgreementDto.getState())
 			.agreementDate(agreementDate)
 			.build();
 	}
 
-	public void updateAgreement(String agreement) {
-		this.agreement = agreement;
+	public void updateAgreement(TermsAgreementState state) {
+		this.state = state;
 	}
 
 	public void updateAgreementDate(LocalDateTime agreementDate) {

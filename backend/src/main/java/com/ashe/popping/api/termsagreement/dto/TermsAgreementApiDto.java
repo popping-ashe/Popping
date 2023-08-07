@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.ashe.popping.domain.terms.dto.TermsDto;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
+import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -23,7 +24,7 @@ public class TermsAgreementApiDto {
 	public static class Request {
 		private Long termsId;
 		private Long memberId;
-		private String agreement;
+		private TermsAgreementState state;
 	}
 
 	@Builder
@@ -37,14 +38,14 @@ public class TermsAgreementApiDto {
 		private String title;
 		private String content;
 		private String mandatory;
-		private String agreement;
+		private TermsAgreementState state;
 		private LocalDateTime agreementDate;
 
 		public static TermsAgreementApiDto.Response of(TermsDto termsDto, TermsAgreementDto termsAgreementDto) {
 			return Response.builder()
 				.termsAgreementId(termsAgreementDto.getTermsAgreementId())
 				.termsId(termsAgreementDto.getTermsId())
-				.agreement(termsAgreementDto.getAgreement())
+				.state(termsAgreementDto.getState())
 				.agreementDate(termsAgreementDto.getAgreementDate())
 				.title(termsDto.getTitle())
 				.content(termsDto.getContent())
