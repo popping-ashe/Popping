@@ -15,22 +15,21 @@
         <div class="term-frame font-pre">
           <div class="nickname">서비스 이용약관에<br>동의해주세요.</div><br>
           <div>
-            <input type="checkbox">&nbsp; 네, 모두 동의합니다.
+            <label for="chkAll"><input id="chkAll" type="checkbox" v-model="agreetoall" @click="toggleAllAgreements">&nbsp; 네, 모두 동의합니다.</label>
             <br><hr>
           </div>
           <div class="term" v-for="(term, index) in terms_agreement" :key=index>
             <div>
-              <input type="checkbox" v-model="terms_agreement[index].state" true-value="ACTIVE" false-value="PENDING">
-              &nbsp; {{ getMandatoryLabel(term.mandatory) }} {{ term.title }} {{ term.state }}
+              <label :for="term.terms_id"><input :id="term.terms_id" type="checkbox" v-model="terms_agreement[index].state" true-value="ACTIVE" false-value="PENDING">
+              &nbsp; {{ getMandatoryLabel(term.mandatory) }} {{ term.title }}</label>
             </div>
-            <div class="term-detail">Detail</div>
+            <div class="term-detail">보기</div>
           </div>
-
-          <div>
-            
-          </div>
+            <div class="signup-button-frame">
+              <div class="signup-button" :style="{ background: signupButtonColor }">가입하기</div>
+            </div>
         </div>
-
+        <br>{{ agreedTermIds }}
 
         <br />
       </div>
@@ -56,24 +55,55 @@ export default {
           mandatory: "Y",
           state: "ACTIVE",
           agreement_date: "2023-08-07T15:50:05.980233"
-            },
+        },
         {
           terms_agreement_id: 2,
           terms_id: 2,
           title: "개인정보 수집 및 이용 동의",
           content: "개인정보 수집 및 이용 동의",
+          mandatory: "Y",
+          state: "PENDING",
+          agreement_date: "2023-08-07T15:49:06.454691"
+        },
+        {
+          terms_agreement_id: 3,
+          terms_id: 3,
+          title: "개인정보 수집 및 이용 동의",
+          content: "개인정보 수집 및 이용 동의",
           mandatory: "N",
           state: "PENDING",
           agreement_date: "2023-08-07T15:49:06.454691"
-            }
-        ]
+        },
+      ],
+      agreetoall: false,
     };
   },
   methods: {
     getMandatoryLabel(mandatory) {
       return mandatory === "Y" ? "(필수)" : "(선택)";
-      },
+    },
+    toggleAllAgreements() {
+      const newState = this.agreetoall ? "PENDING" : "ACTIVE"
+      this.terms_agreement.forEach((term) => {
+        term.state = newState
+      })
+    }
+
   },
+    computed: {
+    signupButtonColor() {
+      const allMandatoryActive = this.terms_agreement
+        .filter(term => term.mandatory === "Y")
+        .every(term => term.state === "ACTIVE")
+
+      return allMandatoryActive ? "linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%)" : "linear-gradient(180deg, #FFFFFF 0%, #CCCCCC 99.99%)"
+    },
+    agreedTermIds() {
+      return this.terms_agreement
+        .filter(term => term.state === "ACTIVE")
+        .map(term => term.terms_id);
+    }
+  }
 };
 </script>
 
@@ -223,5 +253,28 @@ export default {
   color: gray;
   text-decoration: underline;
 }
+
+.signup-button-frame {
+  margin-top: 24px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  height: 100%;
+  background-color: lightgray;
+  border-radius: 24px;
+  border: 1px solid black;
+  /* #9ed8f5 */
+}
+
+
 
 </style>
