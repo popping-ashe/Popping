@@ -122,8 +122,10 @@ export default {
     if (this.isLogin == true) {
       const shareid = this.$store.getters["userStore/checkShareId"];
       this.getshareid = shareid?.share_id;
-      const nickname = this.$store.getters["userStore/checkUserInfo"].nickname;
+      // const nickname = this.$store.getters["userStore/checkUserInfo"].nickname;
+      const nickname = JSON.parse(localStorage.getItem("userinfo")).nickname
       this.nickname = nickname;
+
       if (this.getshareid == this.pageid) {
         receivedUserMessage(
           (response) => {
