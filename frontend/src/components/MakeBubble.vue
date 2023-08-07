@@ -1,7 +1,7 @@
 <template>
   <div class="message-frame animate__animated animate__fadeIn">
     <div class="window font-pre" v-click-outside="closeDetail">
-      <div class="close-button" @click="[closeDetail(),analyticsCancel()]"></div>
+      <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
         <input
           class="nickname-input"
@@ -29,8 +29,8 @@
       </div>
       <!-- <input class="content-input" type="text" v-model="contents"> -->
       <div class="button-box">
-        <div class="cancel-button" @click="[closeDetail(), analyticsCancel()]">취소</div>
-        <div class="send-button" @click="[sendMessage(),analyticsSend()]">전송</div>
+        <div class="cancel-button" @click="closeDetail()">취소</div>
+        <div class="send-button" @click="sendMessage()">전송</div>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@ export default {
         sender: null,
         share_id: this.$route.params.pageid,
         nickname: "",
-        retentionTime: 1,
+        retentionTime: 24,
       },
     };
   },
