@@ -33,6 +33,13 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
+	public MessageDto saveMessage(MessageDto messageDto) {
+		Message message = messageRepository.findByMessageId(messageDto.getMessageId());
+		Message newMessage = messageRepository.save(Message.of(messageDto, message.getSender(), message.getReceiver()));
+		return MessageDto.from(newMessage);
+	}
+
+	@Override
 	public List<MessageDto> loadReceiveMessage(Long receiver, Pageable pageable) {
 		LocalDateTime now = LocalDateTime.now();
 		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeAfterAndStateIs(receiver,
