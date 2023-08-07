@@ -68,6 +68,12 @@ public class MessageController {
 		return ResponseEntity.ok(MessageApiDto.CountResponse.from(messageCountDto));
 	}
 
+	@PostMapping("/reply")
+	public ResponseEntity<MessageApiDto.Response> replyMessage(@RequestBody MessageApiDto.ReplyRequest request) {
+		MessageDto messageDto = messageService.saveMessage(MessageDto.from(request));
+		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
+	}
+
 	private static List<MessageApiDto.Response> toMessageResponse(List<MessageDto> messages) {
 		return messages.stream()
 			.map(MessageApiDto.Response::from)
