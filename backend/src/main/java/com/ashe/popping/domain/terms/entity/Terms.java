@@ -58,7 +58,7 @@ public class Terms {
 		return Terms.builder()
 			.termsId(termsDto.getTermsId())
 			.title(termsDto.getTitle())
-			.content(termsDto.getTitle())
+			.content(termsDto.getContent())
 			.mandatory(termsDto.getMandatory())
 			.createdTime(termsDto.getCreatedTime())
 			.updatedTime(termsDto.getUpdatedTime())
