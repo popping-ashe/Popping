@@ -29,9 +29,12 @@ public class MessageDto {
 
 	private String receiverNickname;
 
+	private String replyAvailable;
+
 	@Builder
 	public MessageDto(Long messageId, MessageState state, String content, LocalDateTime createTime,
-		LocalDateTime expirationTime, Long sender, Long receiver, String nickname, String receiverNickname) {
+		LocalDateTime expirationTime, Long sender, Long receiver, String nickname, String receiverNickname,
+		String replyAvailable) {
 		this.messageId = messageId;
 		this.state = state;
 		this.content = content;
@@ -41,6 +44,7 @@ public class MessageDto {
 		this.receiver = receiver;
 		this.nickname = nickname;
 		this.receiverNickname = receiverNickname;
+		this.replyAvailable = replyAvailable;
 	}
 
 	public static MessageDto from(Message message) {
@@ -53,6 +57,7 @@ public class MessageDto {
 			.sender(message.getSender())
 			.receiver(message.getReceiver())
 			.nickname(message.getNickname())
+			.replyAvailable(message.getReplyAvailable())
 			.build();
 	}
 
@@ -67,6 +72,7 @@ public class MessageDto {
 			.receiver(message.getReceiver())
 			.nickname(message.getNickname())
 			.receiverNickname(receiverNickname)
+			.replyAvailable(message.getReplyAvailable())
 			.build();
 	}
 
@@ -79,6 +85,19 @@ public class MessageDto {
 			.sender(request.getSender())
 			.receiver(request.getShareId())
 			.nickname(request.getNickname())
+			.replyAvailable(request.getReplyAvailable())
+			.build();
+	}
+
+	public static MessageDto from(MessageApiDto.ReplyRequest request) {
+		return MessageDto.builder()
+			.state(MessageState.UNREAD)
+			.content(request.getContent())
+			.createTime(LocalDateTime.now())
+			.messageId(request.getMessageId())
+			.expirationTime(LocalDateTime.now().plusHours(request.getRetentionTime()))
+			.nickname(request.getNickname())
+			.replyAvailable(request.getReplyAvailable())
 			.build();
 	}
 }
