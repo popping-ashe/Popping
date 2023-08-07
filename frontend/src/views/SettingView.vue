@@ -33,7 +33,7 @@
         </div>
 
         <br />
-        <div class="delete font-pre" @click="deleteuser()">popping 탈퇴</div>
+        <div class="delete font-pre" @click="opensharecomponent()">popping 탈퇴</div>
       </div>
     </div>
   </div>
