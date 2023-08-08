@@ -20,10 +20,12 @@ public class TermsApiDto {
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	@AllArgsConstructor
 	public static class Request {
+		private Long termsId;
 		private String title;
 		private String content;
 		private String mandatory;
 	}
+
 	@Builder
 	@Getter
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
