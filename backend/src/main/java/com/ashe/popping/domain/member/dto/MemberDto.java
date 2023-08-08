@@ -3,6 +3,7 @@ package com.ashe.popping.domain.member.dto;
 import java.time.LocalDateTime;
 
 import com.ashe.popping.api.member.dto.MemberApiDto;
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.entity.Member;
 
@@ -13,18 +14,19 @@ import lombok.Getter;
 @Builder
 public class MemberDto {
 	private Long memberId;
+	private MemberType memberType;
 	private String nickname;
 	private LocalDateTime lastVisitedTime;
-	private String kakaoId;
+	private String socialLoginId;
 	private LocalDateTime createdTime;
 	private Role role;
 	private Long shareId;
 	private String bio;
 
-	public static MemberDto of(String kakaoId, String nickname, Role role, Long shareId) {
+	public static MemberDto of(String socialLoginId, String nickname, Role role, Long shareId) {
 		return MemberDto.builder()
 			.nickname(nickname)
-			.kakaoId(kakaoId)
+			.socialLoginId(socialLoginId)
 			.role(role)
 			.shareId(shareId)
 			.bio("")
@@ -43,7 +45,7 @@ public class MemberDto {
 			.memberId(member.getMemberId())
 			.nickname(member.getNickname())
 			.lastVisitedTime(member.getLastVisitedTime())
-			.kakaoId(member.getKakaoId())
+			.socialLoginId(member.getSocialLoginId())
 			.shareId(member.getMemberId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
@@ -56,7 +58,7 @@ public class MemberDto {
 			.memberId(member.getMemberId())
 			.nickname(member.getNickname())
 			.lastVisitedTime(member.getLastVisitedTime())
-			.kakaoId(member.getKakaoId())
+			.socialLoginId(member.getSocialLoginId())
 			.shareId(member.getShareId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
