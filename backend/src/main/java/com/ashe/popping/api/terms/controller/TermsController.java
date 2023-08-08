@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,5 +50,12 @@ public class TermsController {
 
 		return ResponseEntity.ok(TermsApiDto.Response.from(terms));
 	}
-	
+
+	@PatchMapping("/{id}")
+	public ResponseEntity<TermsApiDto.Response> modifyTerms(@PathVariable("id") Long termsId,
+		@RequestBody TermsApiDto.Request request) {
+		TermsDto terms = termsService.modifyTerms(TermsDto.of(request, termsId));
+		
+		return ResponseEntity.ok(TermsApiDto.Response.from(terms));
+	}
 }
