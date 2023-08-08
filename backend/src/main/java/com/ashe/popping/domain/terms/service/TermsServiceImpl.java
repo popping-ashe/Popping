@@ -35,4 +35,17 @@ public class TermsServiceImpl implements TermsService {
 	public TermsDto getTerms(Long termsId) {
 		return TermsDto.from(termsRepository.findByTermsId(termsId));
 	}
+
+	@Override
+	public TermsDto modifyTerms(TermsDto termsDto) {
+		Terms terms = termsRepository.findByTermsId(termsDto.getTermsId());
+		if (termsDto.getTitle() != null)
+			terms.updateTitle(termsDto.getTitle());
+		if (termsDto.getContent() != null)
+			terms.updateContent(termsDto.getContent());
+		if (termsDto.getMandatory() != null)
+			terms.updateTitle(termsDto.getMandatory());
+
+		return TermsDto.from(terms);
+	}
 }
