@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ashe.popping.api.termsagreement.dto.TermsAgreementApiDto;
 import com.ashe.popping.domain.terms.service.TermsService;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
+import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.service.TermsAgreementService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,10 +45,11 @@ public class TermsAgreementController {
 		return ResponseEntity.ok(responses);
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<List<TermsAgreementApiDto.Response>> getTermsAgreementByMember(
+	@GetMapping("/pending/{id}")
+	public ResponseEntity<List<TermsAgreementApiDto.Response>> getTermsAgreementIsPendingByMember(
 		@PathVariable("id") Long memberId) {
-		List<TermsAgreementDto> termsAgreement = termsAgreementService.getTermsAgreementByMember(memberId);
+		List<TermsAgreementDto> termsAgreement = termsAgreementService.getTermsAgreementByMember(memberId,
+			TermsAgreementState.PENDING);
 		List<TermsAgreementApiDto.Response> termsAgreementApiDto = termsAgreement.stream()
 			.map(t -> TermsAgreementApiDto.Response.of(
 				termsService.getTerms(t.getTermsId()), t))
