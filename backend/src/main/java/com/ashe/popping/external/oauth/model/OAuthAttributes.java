@@ -2,6 +2,7 @@ package com.ashe.popping.external.oauth.model;
 
 import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.constant.Role;
+import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
 
 import lombok.Builder;
@@ -23,12 +24,7 @@ public class OAuthAttributes {
 			.build();
 	}
 
-	public Member toMemberEntity(MemberType memberType, Role role){
-		return Member.builder()
-			.memberType(memberType)
-			.socialLoginId(id)
-			.nickname(nickname)
-			.role(role)
-			.build();
+	public MemberDto toMemberDto(MemberType memberType, Role role, Long shareId){
+		return MemberDto.of(id, nickname, role, shareId, memberType);
 	}
 }
