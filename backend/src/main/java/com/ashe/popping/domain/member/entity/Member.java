@@ -44,7 +44,7 @@ public class Member {
 	private LocalDateTime lastVisitedTime;
 
 	@Column(nullable = false, unique = true)
-	private String kakaoId;
+	private String socialLoginId;
 
 	@Column(nullable = false, unique = true)
 	private Long shareId;
@@ -61,9 +61,10 @@ public class Member {
 	public static Member from(MemberDto memberDto) {
 		return Member.builder()
 			.memberId(memberDto.getMemberId())
+			.memberType(memberDto.getMemberType())
 			.nickname(memberDto.getNickname())
 			.lastVisitedTime(memberDto.getLastVisitedTime())
-			.kakaoId(memberDto.getKakaoId())
+			.socialLoginId(memberDto.getSocialLoginId())
 			.shareId(memberDto.getShareId())
 			.createdTime(memberDto.getCreatedTime())
 			.role(memberDto.getRole())
