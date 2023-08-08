@@ -26,10 +26,12 @@
             <div class="term-detail">보기</div>
           </div>
             <div class="signup-button-frame">
-              <div class="signup-button" :style="{ background: signupButtonColor }">가입하기</div>
+              <div class="signup-button" @click="signUp()" :style="{ background: signupButtonColor }">가입하기</div>
             </div>
         </div>
-        <br>{{ agreedTermIds }}
+        <br>
+        {{ agreedTermIds }}<br>
+        signUp : {{ temp }}
 
         <br />
       </div>
@@ -75,22 +77,43 @@ export default {
           agreement_date: "2023-08-07T15:49:06.454691"
         },
       ],
-      agreetoall: false,
+      agreetoall: false,  // 전체동의/해제용 변수
+      temp: false,        // 버튼 눌렸는지 체크용, 지워도됨
     };
   },
   methods: {
+    // mandatory: Y, N으로 넘어오는거 글자로 변환
     getMandatoryLabel(mandatory) {
       return mandatory === "Y" ? "(필수)" : "(선택)";
     },
+
+
+    // 전체동의 전체해제
     toggleAllAgreements() {
       const newState = this.agreetoall ? "PENDING" : "ACTIVE"
       this.terms_agreement.forEach((term) => {
         term.state = newState
       })
+    },
+
+    // 가입하기 버튼 필수 선택 안됐을땐 비활성화
+    signUp() {
+      const mandatoryCheck = this.terms_agreement
+      .filter(term => term.mandatory === "Y")
+      .every(term => term.state === "ACTIVE");
+
+      if (mandatoryCheck) {
+        // 여기가 가입하기 버튼 클릭됐을때
+        this.temp = true;
+      } else {
+        this.temp = false;
+      }
     }
+    
 
   },
     computed: {
+    // 가입하기 버튼 색
     signupButtonColor() {
       const allMandatoryActive = this.terms_agreement
         .filter(term => term.mandatory === "Y")
@@ -98,6 +121,8 @@ export default {
 
       return allMandatoryActive ? "linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%)" : "linear-gradient(180deg, #FFFFFF 0%, #CCCCCC 99.99%)"
     },
+    
+    // 동의한 항목만 리스트로 표시
     agreedTermIds() {
       return this.terms_agreement
         .filter(term => term.state === "ACTIVE")
