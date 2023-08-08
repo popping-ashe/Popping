@@ -48,4 +48,9 @@ public class TermsServiceImpl implements TermsService {
 
 		return TermsDto.from(terms);
 	}
+
+	@Override
+	public Long deleteTerms(Long termsId) {
+		return termsRepository.deleteByTermsId(termsId);
+	}
 }
