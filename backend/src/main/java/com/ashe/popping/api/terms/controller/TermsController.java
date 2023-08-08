@@ -3,6 +3,7 @@ package com.ashe.popping.api.terms.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,7 +56,13 @@ public class TermsController {
 	public ResponseEntity<TermsApiDto.Response> modifyTerms(@PathVariable("id") Long termsId,
 		@RequestBody TermsApiDto.Request request) {
 		TermsDto terms = termsService.modifyTerms(TermsDto.of(request, termsId));
-		
+
 		return ResponseEntity.ok(TermsApiDto.Response.from(terms));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Long> deleteTerms(@PathVariable("id") Long termsId,
+		@RequestBody TermsApiDto.Request request) {
+		return ResponseEntity.ok(termsService.deleteTerms(termsId));
 	}
 }
