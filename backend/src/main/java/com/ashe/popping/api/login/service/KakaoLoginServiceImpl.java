@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ashe.popping.api.login.client.KakaoTokenClient;
 import com.ashe.popping.api.login.dto.KakaoTokenDto;
 import com.ashe.popping.api.message.dto.MessageApiDto;
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
@@ -23,6 +24,9 @@ import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.service.TermsAgreementService;
 import com.ashe.popping.external.oauth.kakao.dto.KakaoMemberInfoResponseDto;
 import com.ashe.popping.external.oauth.kakao.service.KakaoLoginApiService;
+import com.ashe.popping.external.oauth.kakao.service.KakaoLoginApiServiceImpl;
+import com.ashe.popping.external.oauth.model.OAuthAttributes;
+import com.ashe.popping.external.oauth.service.SocialLoginApiService;
 import com.ashe.popping.global.jwt.contant.GrantType;
 import com.ashe.popping.global.jwt.dto.JwtTokenDto;
 import com.ashe.popping.global.jwt.service.TokenManager;
@@ -35,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class KakaoLoginServiceImpl implements KakaoLoginService {
 	private final KakaoTokenClient kakaoTokenClient;
-	private final KakaoLoginApiService kakaoLoginApiService;
+	private final SocialLoginApiService socialLoginApiService;
 	private final TokenManager tokenManager;
 	private final MemberService memberService;
 	private final MessageService messageService;
@@ -53,10 +57,10 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 		String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 		KakaoTokenDto.Request kakaoTokenRequestDto = KakaoTokenDto.Request.of(clientId, clientSecret, code);
 		KakaoTokenDto.Response kakaoToken = kakaoTokenClient.requestKakaoToken(contentType, kakaoTokenRequestDto);
-		KakaoMemberInfoResponseDto memberInfo = kakaoLoginApiService.getMemberInfo(
+		OAuthAttributes memberInfo = socialLoginApiService.getMemberInfo(
 			GrantType.BEARER.getType() + " " + kakaoToken.getAccessToken());
 		JwtTokenDto jwtTokenDto;
-		Optional<Member> optionalMember = memberService.getMemberByKakaoId(memberInfo.getKakaoId());
+		Optional<Member> optionalMember = memberService.getMemberByKakaoId(memberInfo.getId());
 
 		// 1. 신규 회원
 		if (optionalMember.isEmpty()) {
@@ -86,13 +90,13 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 
 	}
 
-	MemberDto makeShareId(KakaoMemberInfoResponseDto memberInfo) {
+	MemberDto makeShareId(OAuthAttributes memberInfo) {
 		SecureRandom random = new SecureRandom();
 		MemberDto oauthMember;
 
 		while (true) {
 			Long shareId = random.nextLong(1000000000L, 10000000000L);
-			oauthMember = memberInfo.toMemberDto(Role.USER, shareId);
+			oauthMember = memberInfo.toMemberDto(MemberType.KAKAO, Role.USER, shareId);
 			try {
 				oauthMember = memberService.createMember(oauthMember);
 				break;
