@@ -19,7 +19,7 @@ public class SignoutController {
 	private final SignoutService signoutService;
 	private final MemberService memberService;
 
-	@DeleteMapping("/remove/me")
+	@DeleteMapping("/signout")
 	public ResponseEntity<String> deleteMember(@MemberInfo MemberInfoDto memberInfoDto){
 		MemberDto memberDto = memberService.getMemberByMemberId(memberInfoDto.getMemberId());
 		signoutService.disconnectKakao(memberDto.getKakaoId());
