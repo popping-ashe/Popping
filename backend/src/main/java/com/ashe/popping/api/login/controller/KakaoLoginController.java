@@ -19,4 +19,11 @@ public class KakaoLoginController {
 		JwtTokenDto jwtTokenDto = kakaoTokenService.kakaoLogin(code);
 		return ResponseEntity.ok(jwtTokenDto);
 	}
+
+	@GetMapping("/oauth/google/callback")
+	public ResponseEntity<String> loginCallBack(String code){
+		return ResponseEntity.ok(code);
+	}
+
+
 }
