@@ -23,12 +23,13 @@ public class MemberDto {
 	private Long shareId;
 	private String bio;
 
-	public static MemberDto of(String socialLoginId, String nickname, Role role, Long shareId) {
+	public static MemberDto of(String socialLoginId, String nickname, Role role, Long shareId, MemberType memberType) {
 		return MemberDto.builder()
 			.nickname(nickname)
 			.socialLoginId(socialLoginId)
 			.role(role)
 			.shareId(shareId)
+			.memberType(memberType)
 			.bio("")
 			.build();
 	}
