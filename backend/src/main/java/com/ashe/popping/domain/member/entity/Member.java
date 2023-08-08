@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
 
@@ -32,6 +33,10 @@ public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long memberId;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 10)
+	private MemberType memberType;
 
 	@Column(nullable = false, length = 30)
 	private String nickname;
