@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +17,7 @@ import com.ashe.popping.domain.member.service.MemberService;
 import com.ashe.popping.domain.message.service.MessageService;
 import com.ashe.popping.domain.terms.service.TermsService;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
+import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.service.TermsAgreementService;
 import com.ashe.popping.global.resolver.memberinfo.MemberInfo;
 import com.ashe.popping.global.resolver.memberinfo.MemberInfoDto;
@@ -42,7 +42,8 @@ public class MemberController {
 		Long expireMessageCount = messageService.countExpireMessage(memberDto.getMemberId(),
 			memberDto.getLastVisitedTime());
 
-		List<TermsAgreementDto> termsAgreement = termsAgreementService.getTermsAgreementByMember(memberId);
+		List<TermsAgreementDto> termsAgreement = termsAgreementService.getTermsAgreementByMember(memberId,
+			TermsAgreementState.PENDING);
 		List<TermsAgreementApiDto.Response> termsAgreementApiDto = termsAgreement.stream()
 			.map(t -> TermsAgreementApiDto.Response.of(
 				termsService.getTerms(t.getTermsId()), t))
