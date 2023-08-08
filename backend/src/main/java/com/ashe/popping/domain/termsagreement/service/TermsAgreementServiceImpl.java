@@ -2,6 +2,7 @@ package com.ashe.popping.domain.termsagreement.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,8 @@ import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.entity.TermsAgreement;
 import com.ashe.popping.domain.termsagreement.repository.TermsAgreementRepository;
+import com.ashe.popping.global.error.ErrorCode;
+import com.ashe.popping.global.error.exception.BusinessException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,8 +46,12 @@ public class TermsAgreementServiceImpl implements TermsAgreementService {
 
 	@Override
 	public TermsAgreementDto updateTermsAgreement(TermsAgreementDto termsAgreementDto) {
-		TermsAgreement termsAgreement = termsAgreementRepository.findByTermsIdAndMemberId(
+		Optional<TermsAgreement> optionalTermsAgreement = termsAgreementRepository.findByTermsIdAndMemberId(
 			termsAgreementDto.getTermsId(), termsAgreementDto.getMemberId());
+		if (optionalTermsAgreement.isEmpty())
+			throw new BusinessException(ErrorCode.NOT_EXIST_TERMS_AGREEMENT);
+
+		TermsAgreement termsAgreement = optionalTermsAgreement.get();
 		termsAgreement.updateAgreement(termsAgreementDto.getState());
 		if (termsAgreementDto.getState().equals(TermsAgreementState.ACTIVE)) {
 			termsAgreement.updateAgreementDate(LocalDateTime.now());
