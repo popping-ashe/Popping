@@ -1,6 +1,5 @@
 package com.ashe.popping.api.termsagreement.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -39,9 +38,10 @@ public class TermsAgreementController {
 	@PatchMapping
 	public ResponseEntity<List<TermsAgreementApiDto.Response>> updateTermsAgreement(
 		@RequestBody List<TermsAgreementApiDto.Request> request) {
-		List<TermsAgreementApiDto.Response> responses = new LinkedList<>();
-		request.forEach(r -> responses.add(TermsAgreementApiDto.Response.of(termsService.getTerms(r.getTermsId()),
-			termsAgreementService.updateTermsAgreement(TermsAgreementDto.from(r)))));
+		List<TermsAgreementApiDto.Response> responses = request.stream()
+			.map(r -> TermsAgreementApiDto.Response.of(termsService.getTerms(r.getTermsId()),
+				termsAgreementService.updateTermsAgreement(TermsAgreementDto.from(r))))
+			.toList();
 		return ResponseEntity.ok(responses);
 	}
 
