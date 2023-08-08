@@ -40,7 +40,7 @@ const routes = [
   },
   {
     path: "/terms",
-    name: "Terms",
+    name: "TermsofUse",
     component: TermsofUse,
   },
   {
