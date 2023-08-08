@@ -10,4 +10,8 @@ public interface TermsService {
 	List<TermsDto> getAllTerms();
 
 	TermsDto getTerms(Long termsId);
+
+	TermsDto modifyTerms(TermsDto termsDto);
+
+	Long deleteTerms(Long termsId);
 }

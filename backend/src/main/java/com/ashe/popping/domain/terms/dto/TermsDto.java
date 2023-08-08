@@ -33,6 +33,15 @@ public class TermsDto {
 		this.updatedTime = updatedTime;
 	}
 
+	public static TermsDto of(TermsApiDto.Request termsApiDto, Long termsId) {
+		return TermsDto.builder()
+			.termsId(termsId)
+			.title(termsApiDto.getTitle())
+			.content(termsApiDto.getContent())
+			.mandatory(termsApiDto.getMandatory())
+			.build();
+	}
+
 	public static TermsDto from(Terms terms) {
 		return TermsDto.builder()
 			.termsId(terms.getTermsId())

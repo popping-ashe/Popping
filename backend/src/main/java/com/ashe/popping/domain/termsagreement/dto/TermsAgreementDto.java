@@ -30,6 +30,14 @@ public class TermsAgreementDto {
 		this.agreementDate = agreementDate;
 	}
 
+	public static TermsAgreementDto of(Long memberId, Long termsId, TermsAgreementState state) {
+		return TermsAgreementDto.builder()
+			.memberId(memberId)
+			.termsId(termsId)
+			.state(state)
+			.build();
+	}
+
 	public static TermsAgreementDto from(TermsAgreement termsAgreement) {
 		return TermsAgreementDto.builder()
 			.termsAgreementId(termsAgreement.getTermsAgreementId())

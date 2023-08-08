@@ -35,7 +35,7 @@ public class TermsAgreementServiceImpl implements TermsAgreementService {
 	}
 
 	@Override
-	public List<TermsAgreementDto> getTermsAgreementByMember(Long memberId) {
+	public List<TermsAgreementDto> getTermsAgreementByMember(Long memberId, TermsAgreementState termsAgreementState) {
 		List<TermsAgreement> termsAgreement = termsAgreementRepository.findByMemberIdAndStateIs(memberId,
 			TermsAgreementState.PENDING);
 		return termsAgreement.stream().map(TermsAgreementDto::from).toList();

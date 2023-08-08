@@ -10,4 +10,6 @@ public interface TermsRepository extends JpaRepository<Terms, Long> {
 	List<Terms> findAll();
 
 	Terms findByTermsId(Long termsId);
+
+	Long deleteByTermsId(Long termsId);
 }
