@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void validateDuplicateMember(MemberDto memberDto) {
 		Member member = Member.from(memberDto);
-		Optional<Member> optionalMember = memberRepository.findByKakaoId(member.getSocialLoginId());
+		Optional<Member> optionalMember = memberRepository.findBySocialLoginId(member.getSocialLoginId());
 		if (optionalMember.isPresent()) {
 			throw new BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER);
 		}
@@ -59,7 +59,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Optional<Member> getMemberByKakaoId(String kakaoId) {
-		return memberRepository.findByKakaoId(kakaoId);
+		return memberRepository.findBySocialLoginId(kakaoId);
 	}
 
 	@Override

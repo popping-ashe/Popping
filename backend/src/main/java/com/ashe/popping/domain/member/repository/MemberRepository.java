@@ -10,7 +10,7 @@ import com.ashe.popping.domain.member.entity.Member;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 	Optional<Member> findByMemberId(Long memberId);
 
-	Optional<Member> findByKakaoId(String kakaoId);
+	Optional<Member> findBySocialLoginId(String Id);
 
 	Optional<Member> findByShareId(Long shareId);
 
