@@ -44,7 +44,7 @@ public class TermsServiceImpl implements TermsService {
 		if (termsDto.getContent() != null)
 			terms.updateContent(termsDto.getContent());
 		if (termsDto.getMandatory() != null)
-			terms.updateTitle(termsDto.getMandatory());
+			terms.updateMandatory(termsDto.getMandatory());
 
 		return TermsDto.from(terms);
 	}
