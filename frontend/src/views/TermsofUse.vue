@@ -41,6 +41,8 @@
 <script>
 import termsDetail from '../components/termsDetail.vue';
 import { mapState } from "vuex";
+import { changeagree } from "@/api/user";
+import router from '../router';
 
 export default {
   name: "TermsofUse",
@@ -50,7 +52,7 @@ export default {
   data() {
     return {
       toggler: true,
-      terms_agreement: '',
+      terms_agreement: JSON.parse(localStorage.getItem("userinfo")).terms_agreement,
       agreetoall: false,  // 전체동의/해제용 변수
       temp: false,        // 버튼 눌렸는지 체크용, 지워도됨
       termDetail: "",     // 자식 컴포넌트로 보내는 상세약관
@@ -85,8 +87,28 @@ export default {
             term.state = "REJECTED";
           }
         });
-      } else {
-        this.temp = false;
+        const member = JSON.parse(localStorage.getItem("userinfo")).member_id
+				const agree = []
+				for (const term of this.terms_agreement) {
+					agree.push({
+						terms_id: term.terms_id,
+						member_id: member,
+						state: term.state,
+					})}
+				console.log(agree)
+				changeagree(
+					agree,
+					(response) => {
+						if (response.status == 200) {
+							// console.log('가입되었슴니다')
+							const share = JSON.parse(localStorage.getItem("shareid")).share_id
+							// console.log(share)
+							router.push(`/main/${share}`)
+						}
+					},
+					(error) => {
+						console.log(error);
+				});	 
       }
     },
 
