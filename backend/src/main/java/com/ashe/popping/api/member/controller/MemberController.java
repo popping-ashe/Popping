@@ -68,16 +68,6 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
-	@DeleteMapping("/me")
-	public ResponseEntity<Long> deleteMember(@MemberInfo MemberInfoDto
-		memberInfoDto) {
-		Long memberId = memberInfoDto.getMemberId();
-
-		Long response = memberService.deleteMember(memberId);
-
-		return ResponseEntity.status(HttpStatus.OK).body(response);
-	}
-
 	@PatchMapping("/me/bio")
 	public ResponseEntity<?> updateMemberBio(@MemberInfo MemberInfoDto memberInfoDto,
 		@RequestBody MemberApiDto.UpdateBioRequest request) {
