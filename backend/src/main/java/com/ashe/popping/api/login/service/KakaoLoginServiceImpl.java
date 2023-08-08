@@ -63,7 +63,7 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 			// 공유 url에 필요한 난수 생성 및 회원 생성
 			MemberDto oauthMember = makeShareId(memberInfo);
 			// 웰컴 메세지 보내기
-			MessageDto wellComeMessage = makeWellComeMessage();
+			MessageDto wellComeMessage = makeWelComeMessage();
 			messageService.saveMessage(wellComeMessage, oauthMember);
 
 			List<TermsDto> terms = termsService.getAllTerms();
@@ -103,11 +103,11 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 		return oauthMember;
 	}
 
-	MessageDto makeWellComeMessage() {
+	MessageDto makeWelComeMessage() {
 		String content = "\uD83D\uDC99환영합니다\uD83D\uDC99\n"
 			+ "제한 시간이 지나면 버블은 사라지니 얼른 읽어주세요⏰\n"
 			+ "친구의 링크를 공유받아 버블을 남겨보세요\uD83D\uDD17";
-		String nickname = "poppping";
+		String nickname = "popping";
 		Long retentionTime = 24L;
 		MessageApiDto.Request request = MessageApiDto.Request.from(content, nickname, retentionTime);
 		return MessageDto.from(request);
