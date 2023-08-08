@@ -1,5 +1,6 @@
 package com.ashe.popping.external.oauth.kakao.dto;
 
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,7 +38,7 @@ public class KakaoMemberInfoResponseDto {
 	}
 
 	public MemberDto toMemberDto(Role role, Long shareId) {
-		return MemberDto.of(kakaoId, kakaoAccount.getProfile().getNickname(), role, shareId);
+		return MemberDto.of(kakaoId, kakaoAccount.getProfile().getNickname(), role, shareId, MemberType.KAKAO);
 	}
 
 }
