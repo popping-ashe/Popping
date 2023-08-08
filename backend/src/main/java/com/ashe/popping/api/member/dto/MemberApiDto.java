@@ -21,15 +21,15 @@ public class MemberApiDto {
 	private Long memberId;
 	private String nickname;
 	private LocalDateTime lastVisitedTime;
-	private String kakaoId;
+	private String socialLoginId;
 	private LocalDateTime createdTime;
 	private Role role;
 	private String bio;
 
-	public static MemberApiDto of(String kakaoId, String nickname, Role role) {
+	public static MemberApiDto of(String socialLoginId, String nickname, Role role) {
 		return MemberApiDto.builder()
 			.nickname(nickname)
-			.kakaoId(kakaoId)
+			.socialLoginId(socialLoginId)
 			.role(role)
 			.build();
 	}
