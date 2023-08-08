@@ -1,5 +1,6 @@
 package com.ashe.popping.api.termsagreement.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -26,22 +27,31 @@ public class TermsAgreementController {
 	private final TermsService termsService;
 
 	@PostMapping
-	public ResponseEntity<TermsAgreementApiDto.Response> createTermsAgreement(@RequestBody TermsAgreementApiDto.Request request) {
-		TermsAgreementDto termsAgreementDto = termsAgreementService.createTermsAgreement(TermsAgreementDto.from(request));
-		return ResponseEntity.ok(TermsAgreementApiDto.Response.of(termsService.getTerms(request.getTermsId()), termsAgreementDto));
+	public ResponseEntity<TermsAgreementApiDto.Response> createTermsAgreement(
+		@RequestBody TermsAgreementApiDto.Request request) {
+		TermsAgreementDto termsAgreementDto = termsAgreementService.createTermsAgreement(
+			TermsAgreementDto.from(request));
+		return ResponseEntity.ok(
+			TermsAgreementApiDto.Response.of(termsService.getTerms(request.getTermsId()), termsAgreementDto));
 	}
 
 	@PatchMapping
-	public ResponseEntity<TermsAgreementApiDto.Response> updateTermsAgreement(@RequestBody TermsAgreementApiDto.Request request) {
-		TermsAgreementDto termsAgreementDto = termsAgreementService.updateTermsAgreement(TermsAgreementDto.from(request));
-		return ResponseEntity.ok(TermsAgreementApiDto.Response.of(termsService.getTerms(request.getTermsId()), termsAgreementDto));
+	public ResponseEntity<List<TermsAgreementApiDto.Response>> updateTermsAgreement(
+		@RequestBody List<TermsAgreementApiDto.Request> request) {
+		List<TermsAgreementApiDto.Response> responses = new LinkedList<>();
+		request.forEach(r -> responses.add(TermsAgreementApiDto.Response.of(termsService.getTerms(r.getTermsId()),
+			termsAgreementService.updateTermsAgreement(TermsAgreementDto.from(r)))));
+		return ResponseEntity.ok(responses);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<List<TermsAgreementApiDto.Response>> getTermsAgreementByMember(@PathVariable("id") Long memberId) {
+	public ResponseEntity<List<TermsAgreementApiDto.Response>> getTermsAgreementByMember(
+		@PathVariable("id") Long memberId) {
 		List<TermsAgreementDto> termsAgreement = termsAgreementService.getTermsAgreementByMember(memberId);
-		List<TermsAgreementApiDto.Response> termsAgreementApiDto = termsAgreement.stream().map(t -> TermsAgreementApiDto.Response.of(
-			termsService.getTerms(t.getTermsId()),t)).toList();
+		List<TermsAgreementApiDto.Response> termsAgreementApiDto = termsAgreement.stream()
+			.map(t -> TermsAgreementApiDto.Response.of(
+				termsService.getTerms(t.getTermsId()), t))
+			.toList();
 		return ResponseEntity.ok(termsAgreementApiDto);
 	}
 }
