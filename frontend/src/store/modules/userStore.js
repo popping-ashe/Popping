@@ -108,9 +108,9 @@ const userStore = {
                 if (response.status == 200) {
                   commit("SET_USER_INFO", response.data);
                   localStorage.setItem("userinfo", JSON.stringify(response.data));
-                  if (JSON.parse(localStorage.getItem("userinfo")).terms_agreement.length!=0) {
-                    console.log(JSON.parse(localStorage.getItem("userinfo")).terms_agreement.length)
-                    router.push({ name: "TermsofUse" }) 
+                  if (response.data.terms_agreement.length!=0) {
+                    // console.log(JSON.parse(localStorage.getItem("userinfo")).terms_agreement.length)
+                    router.push('/terms') 
                   }
                 } else {
                   console.log("유저 정보 없음");
