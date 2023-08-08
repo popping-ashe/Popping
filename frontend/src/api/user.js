@@ -131,7 +131,7 @@ async function deleteuser(success, fail) {
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
   let token = "Bearer " + decryptAccessToken;
   api.defaults.headers["Authorization"] = token;
-  await api.delete(`/remove/me`).then(success).catch(fail);
+  await api.delete(`/signout`).then(success).catch(fail);
 }
 //access 토큰 새로 발급
 async function gettoken(success, fail) {
@@ -188,6 +188,10 @@ async function readmessages(messageid, success, fail) {
 async function getshareidmessages(page, success, fail) {
   await api.get(`/share/${page}`).then(success).catch(fail);
 }
+//약관동의
+async function changeagree(agree, success, fail) {
+  await api.patch(`/terms-agreement`, agree).then(success).catch(fail);
+}
 
 export {
   deleteuser,
@@ -203,4 +207,5 @@ export {
   logout,
   changenickname,
   gettoken,
+  changeagree
 };
