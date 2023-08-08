@@ -133,6 +133,12 @@ export default {
   },
   created() {
     this.calLeftTime();
+    const termcheck = JSON.parse(localStorage.getItem("userinfo")).terms_agreement
+    // this.nickname = nickname;
+    if (termcheck.length!=0) {
+      console.log(termcheck.length)
+      this.$router.push('/terms') 
+    }
   },
   async mounted() {
     if (this.isLogin == true) {
