@@ -67,6 +67,14 @@ export default {
   },
   methods: {
     sendMessage() {
+      // 빈칸일때 익명, 내용없음으로 가짐
+      if (this.messageData.nickname.trim() === "") {
+        this.messageData.nickname = "익명"
+      }
+      if (this.messageData.content.trim() === "") {
+        this.messageData.content = "내용없음"
+      }
+      
       sendUserMessage(
         this.messageData,
         (response) => {
