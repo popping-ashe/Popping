@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    url: jdbc:tc:mariadb:///popping
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
