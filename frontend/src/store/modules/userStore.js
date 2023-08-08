@@ -110,7 +110,7 @@ const userStore = {
                   localStorage.setItem("userinfo", JSON.stringify(response.data));
                   if (JSON.parse(localStorage.getItem("userinfo")).terms_agreement.length!=0) {
                     console.log(JSON.parse(localStorage.getItem("userinfo")).terms_agreement.length)
-                   router.push('/terms') 
+                    router.push({ name: "TermsofUse" }) 
                   }
                 } else {
                   console.log("유저 정보 없음");
