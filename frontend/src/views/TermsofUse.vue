@@ -87,6 +87,9 @@ export default {
             term.state = "REJECTED";
           }
         });
+        const userinfo = JSON.parse(localStorage.getItem("userinfo"))
+				userinfo.terms_agreement = []
+				localStorage.setItem("userinfo", JSON.stringify(userinfo))
         const member = JSON.parse(localStorage.getItem("userinfo")).member_id
 				const agree = []
 				for (const term of this.terms_agreement) {
