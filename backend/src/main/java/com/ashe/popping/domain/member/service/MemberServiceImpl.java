@@ -1,5 +1,7 @@
 package com.ashe.popping.domain.member.service;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -92,5 +94,12 @@ public class MemberServiceImpl implements MemberService {
 		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
 		member.updateBio(memberDto.getBio());
 		return MemberDto.from(member);
+	}
+
+	@Override
+	public List<MemberDto> getAllMember() {
+		List<MemberDto> memberDtos = new LinkedList<>();
+		memberRepository.findAll().forEach(m -> memberDtos.add(MemberDto.from(m)));
+		return memberDtos;
 	}
 }

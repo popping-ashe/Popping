@@ -1,5 +1,6 @@
 package com.ashe.popping.domain.member.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.ashe.popping.domain.member.dto.MemberDto;
@@ -23,4 +24,6 @@ public interface MemberService {
 	Long deleteMember(Long memberId);
 
 	MemberDto updateBio(MemberDto memberDto);
+	
+	List<MemberDto> getAllMember();
 }
