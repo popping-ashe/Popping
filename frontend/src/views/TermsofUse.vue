@@ -1,5 +1,6 @@
 <template>
   <div class="page-container">
+    <termsDetail :termdetail-props="termDetail" v-if="showReceivedDetail"/>
     <div class="page" :class="slideClass">
       <div class="frame" style="z-index: 0">
         <div class="upper-bar">
@@ -23,15 +24,13 @@
               <label :for="term.terms_id"><input :id="term.terms_id" type="checkbox" v-model="terms_agreement[index].state" true-value="ACTIVE" false-value="PENDING">
               &nbsp; {{ getMandatoryLabel(term.mandatory) }} {{ term.title }}</label>
             </div>
-            <div class="term-detail">보기</div>
+            <div class="term-detail" @click="openDetail(index)">보기</div>
           </div>
             <div class="signup-button-frame">
               <div class="signup-button" @click="signUp()" :style="{ background: signupButtonColor }">가입하기</div>
             </div>
         </div>
-        <br>
-        {{ agreedTermIds }}<br>
-        signUp : {{ temp }}
+
 
         <br />
       </div>
@@ -40,45 +39,21 @@
 </template>
 
 <script>
+import termsDetail from '../components/termsDetail.vue';
+import { mapState } from "vuex";
 
 export default {
   name: "TermsofUse",
   components: {
+    termsDetail
   },
   data() {
     return {
       toggler: true,
-      terms_agreement: [
-        {
-          terms_agreement_id: 1,
-          terms_id: 1,
-          title: "서비스 이용약관에 동의",
-          content: "카카오스타일 쇼핑 플랫폼 이용약관",
-          mandatory: "Y",
-          state: "ACTIVE",
-          agreement_date: "2023-08-07T15:50:05.980233"
-        },
-        {
-          terms_agreement_id: 2,
-          terms_id: 2,
-          title: "개인정보 수집 및 이용 동의",
-          content: "개인정보 수집 및 이용 동의",
-          mandatory: "Y",
-          state: "PENDING",
-          agreement_date: "2023-08-07T15:49:06.454691"
-        },
-        {
-          terms_agreement_id: 3,
-          terms_id: 3,
-          title: "개인정보 수집 및 이용 동의",
-          content: "개인정보 수집 및 이용 동의",
-          mandatory: "N",
-          state: "PENDING",
-          agreement_date: "2023-08-07T15:49:06.454691"
-        },
-      ],
+      terms_agreement: '',
       agreetoall: false,  // 전체동의/해제용 변수
       temp: false,        // 버튼 눌렸는지 체크용, 지워도됨
+      termDetail: "",     // 자식 컴포넌트로 보내는 상세약관
     };
   },
   methods: {
@@ -105,9 +80,20 @@ export default {
       if (mandatoryCheck) {
         // 여기가 가입하기 버튼 클릭됐을때
         this.temp = true;
+        this.terms_agreement.forEach(term => {
+          if (term.mandatory === "N" && term.state === "PENDING") {
+            term.state = "REJECTED";
+          }
+        });
       } else {
         this.temp = false;
       }
+    },
+
+    openDetail(idx) {
+      this.termDetail = this.terms_agreement[idx].content
+      this.$store.commit("SHOW_DETAIL", !this.showReceivedDetail);
+
     }
     
 
@@ -127,8 +113,21 @@ export default {
       return this.terms_agreement
         .filter(term => term.state === "ACTIVE")
         .map(term => term.terms_id);
+    },
+    ...mapState(["showReceivedDetail"]),
+
+  },
+  
+  // 모두 체크 되었을때 모두 동의 체크박스도 체크되게 함
+  watch: {
+    terms_agreement: {
+      deep: true,
+      handler(newValue) {
+        const allActive = newValue.every(term => term.state === "ACTIVE");
+        this.agreetoall = allActive;
+      }
     }
-  }
+  },
 };
 </script>
 
@@ -298,6 +297,7 @@ export default {
   border-radius: 24px;
   border: 1px solid black;
   /* #9ed8f5 */
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
 }
 
 

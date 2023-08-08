@@ -5,7 +5,7 @@
       <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
         <div class="nickname-box">
-          <div>&nbsp;&nbsp;&nbsp;{{ bubbledetailProps.nickname }}&nbsp;&nbsp;&nbsp;</div>
+          <div>&nbsp;&nbsp;&nbsp;<span v-html="bubbledetailProps.nickname"></span>&nbsp;&nbsp;&nbsp;</div>
         </div>
         <div class="sent-time">{{ bubbledetailProps.create_time.substr(11, 5) }}</div>
       </div>
@@ -116,7 +116,7 @@ export default {
   margin-bottom: 6%;
   margin-left: 6.5%;
   margin-right: 11%;
-  padding-top: 2.3%;
+  padding-top: 3.2%;
   overflow: scroll;
   white-space: normal;
 }
