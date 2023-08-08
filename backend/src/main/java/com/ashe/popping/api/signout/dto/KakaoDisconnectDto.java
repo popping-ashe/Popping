@@ -7,7 +7,6 @@ import lombok.*;
 public class KakaoDisconnectDto {
 	@Builder
 	@Getter
-	@ToString
 	public static class Request {
 		private final String target_id_type="user_id";
 
@@ -21,11 +20,7 @@ public class KakaoDisconnectDto {
 
 	}
 
-	@Builder
 	@Getter
-	@ToString
-	@NoArgsConstructor
-	@AllArgsConstructor
 	public static class Response {
 		private String id;
 	}
