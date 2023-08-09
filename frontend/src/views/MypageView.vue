@@ -208,7 +208,7 @@ export default {
         if (response.status == 200) {
           this.receivedmessagescount = response.data.received_messages_count;
           this.sentmessagescount = response.data.sent_messages_count;
-          this.unreadMessageCount = response.data.unread_messages_count;
+          this.unreadMessageCount = response.data.expired_messages_count;
         } else {
           // console.log("메세지 없음");
         }
