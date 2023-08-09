@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ashe.popping.domain.favorite.dto.FavoriteDto;
-import com.ashe.popping.domain.favorite.dto.FavoriteListDto;
 import com.ashe.popping.domain.favorite.entity.Favorite;
 import com.ashe.popping.domain.favorite.entity.FavoriteMapping;
 import com.ashe.popping.domain.favorite.repository.FavoriteRepository;
@@ -27,9 +26,11 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	@Override
-	public FavoriteListDto loadFavorites(Long memberId) {
+	public List<Long> loadFavorites(Long memberId) {
 		List<FavoriteMapping> favoriteMappings = favoriteRepository.findByMemberId(memberId);
-		return FavoriteListDto.of(memberId, favoriteMappings);
+		return favoriteMappings.stream()
+			.map(FavoriteMapping::getFavoriteId)
+			.toList();
 	}
 
 	@Override
