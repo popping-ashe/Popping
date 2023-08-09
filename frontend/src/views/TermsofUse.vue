@@ -20,9 +20,13 @@
             <br><hr>
           </div>
           <div class="term" v-for="(term, index) in terms_agreement" :key=index>
-            <div>
-              <label :for="term.terms_id"><input :id="term.terms_id" type="checkbox" v-model="terms_agreement[index].state" true-value="ACTIVE" false-value="PENDING">
-              &nbsp; {{ getMandatoryLabel(term.mandatory) }} {{ term.title }}</label>
+            <div class="checkbox-and-term">
+              <div class="checkboxes">
+                <input :id="term.terms_id" type="checkbox" v-model="terms_agreement[index].state" true-value="ACTIVE" false-value="PENDING">
+              </div>
+              <div class="term-content">
+                <label :for="term.terms_id">{{ getMandatoryLabel(term.mandatory) }} {{ term.title }}</label>
+              </div>
             </div>
             <div class="term-detail" @click="openDetail(index)">보기</div>
           </div>
@@ -325,6 +329,13 @@ export default {
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
 }
 
+.checkbox-and-term {
+  display: flex;
+  width: 88%;
+}
 
+.term-content {
+  margin-left: 8px;
+}
 
 </style>

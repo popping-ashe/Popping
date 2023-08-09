@@ -72,25 +72,27 @@ export default {
       if (this.messageData.nickname.trim() === "") {
         this.messageData.nickname = "익명"
       }
-      if (this.messageData.content.trim() === "") {
-        this.messageData.content = "내용없음"
-      }
-      
-      sendUserMessage(
-        this.messageData,
-        (response) => {
-          if (response.status == 200) {
-            this.$store.commit("SHOW_MAKE_WINDOW", !this.showMakeWindow);
-            this.$parent.sendmessageupdate(response.data);
-            this.$toast.center("버블을 보냈습니다.");
-          } else {
-            // console.log("잘못");
+      // 내용 없을때 안보내지게
+      if (this.messageData.content == "")
+      {
+        this.$toast.center("내용을 입력해주세요.")
+      } else {
+        sendUserMessage(
+          this.messageData,
+          (response) => {
+            if (response.status == 200) {
+              this.$store.commit("SHOW_MAKE_WINDOW", !this.showMakeWindow);
+              this.$parent.sendmessageupdate(response.data);
+              this.$toast.center("버블을 보냈습니다.");
+            } else {
+              // console.log("잘못");
+            }
+          },
+          (error) => {
+            console.log(error);
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        );
+      }
     },
 
     closeDetail() {
