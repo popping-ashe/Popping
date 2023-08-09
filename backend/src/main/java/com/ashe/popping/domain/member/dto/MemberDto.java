@@ -60,6 +60,7 @@ public class MemberDto {
 			.nickname(member.getNickname())
 			.lastVisitedTime(member.getLastVisitedTime())
 			.socialLoginId(member.getSocialLoginId())
+			.memberType(member.getMemberType())
 			.shareId(member.getShareId())
 			.createdTime(member.getCreatedTime())
 			.role(member.getRole())
