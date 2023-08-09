@@ -58,4 +58,10 @@ public class TermsAgreementServiceImpl implements TermsAgreementService {
 		}
 		return TermsAgreementDto.from(termsAgreement);
 	}
+
+	@Override
+	public Long deleteTermsAgreementByTermsId(Long termsId) {
+		return termsAgreementRepository.deleteByTermsId(termsId);
+	}
+
 }
