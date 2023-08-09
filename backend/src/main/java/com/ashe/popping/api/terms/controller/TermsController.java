@@ -62,6 +62,10 @@ public class TermsController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Long> deleteTerms(@PathVariable("id") Long termsId) {
-		return ResponseEntity.ok(termsService.deleteTerms(termsId));
+		Long response = termsService.deleteTerms(termsId);
+		if (response == 1) {
+			termsAgreementService.deleteTermsAgreementByTermsId(termsId);
+		}
+		return ResponseEntity.ok(response);
 	}
 }

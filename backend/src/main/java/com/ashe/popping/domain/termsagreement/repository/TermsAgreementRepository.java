@@ -12,4 +12,6 @@ public interface TermsAgreementRepository extends JpaRepository<TermsAgreement, 
 	List<TermsAgreement> findByMemberIdAndStateIs(Long memberId, TermsAgreementState state);
 
 	Optional<TermsAgreement> findByTermsIdAndMemberId(Long termsId, Long memberId);
+
+	Long deleteByTermsId(Long termsId);
 }

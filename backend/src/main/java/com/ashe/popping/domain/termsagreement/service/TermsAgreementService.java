@@ -11,4 +11,6 @@ public interface TermsAgreementService {
 	List<TermsAgreementDto> getTermsAgreementByMember(Long memberId, TermsAgreementState termsAgreementState);
 
 	TermsAgreementDto updateTermsAgreement(TermsAgreementDto termsAgreementDto);
+
+	Long deleteTermsAgreementByTermsId(Long termsId);
 }
