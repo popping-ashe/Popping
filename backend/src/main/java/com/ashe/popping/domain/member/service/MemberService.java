@@ -17,7 +17,7 @@ public interface MemberService {
 
 	void validateDuplicateMember(MemberDto memberDto);
 
-	Optional<Member> getMemberByKakaoId(String kakaoId);
+	Optional<Member> getMemberBySocialId(String kakaoId);
 
 	MemberDto getMemberByShareId(Long shareId);
 
