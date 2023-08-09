@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.ashe.popping.api.login.google.client.GoogleTokenClient;
 import com.ashe.popping.api.login.dto.OAuthTokenDto;
+import com.ashe.popping.api.login.google.client.GoogleTokenClient;
 import com.ashe.popping.api.login.kakao.client.KakaoTokenClient;
 import com.ashe.popping.api.message.dto.MessageApiDto;
 import com.ashe.popping.domain.member.constant.MemberType;
@@ -62,16 +62,17 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
 		String type = memberType.name().toLowerCase();
-		String redirectUri = "https://dev.pop-ping.com/oauth/"+type+"/callback";
-
+		String redirectUri = "https://dev.pop-ping.com/oauth/" + type + "/callback";
 
 		OAuthTokenDto.Response oAuthToken = null;
-		if(MemberType.KAKAO.equals(memberType)){
-			OAuthTokenDto.Request oAuthRequestDto = OAuthTokenDto.Request.of(kakaoClientId, kakaoClientSecret, code, redirectUri);
+		if (MemberType.KAKAO.equals(memberType)) {
+			OAuthTokenDto.Request oAuthRequestDto = OAuthTokenDto.Request.of(kakaoClientId, kakaoClientSecret, code,
+				redirectUri);
 			oAuthToken = kakaoTokenClient.requestKakaoToken(contentType, oAuthRequestDto);
 		}
-		if(MemberType.GOOGLE.equals(memberType)){
-			OAuthTokenDto.Request oAuthRequestDto = OAuthTokenDto.Request.of(googleClientId, googleClientSecret, code, redirectUri);
+		if (MemberType.GOOGLE.equals(memberType)) {
+			OAuthTokenDto.Request oAuthRequestDto = OAuthTokenDto.Request.of(googleClientId, googleClientSecret, code,
+				redirectUri);
 			oAuthToken = googleTokenClient.requestGoogleToken(contentType, oAuthRequestDto);
 		}
 
@@ -80,7 +81,7 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		OAuthAttributes memberInfo = socialLoginApiService.getMemberInfo(
 			GrantType.BEARER.getType() + " " + oAuthToken.getAccessToken());
 		JwtTokenDto jwtTokenDto;
-		Optional<Member> optionalMember = memberService.getMemberBySocialId(memberInfo.getId());
+		Optional<Member> optionalMember = memberService.getMemberBySocialLoginId(memberInfo.getId());
 
 		// 1. 신규 회원
 		if (optionalMember.isEmpty()) {
