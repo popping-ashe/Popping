@@ -35,21 +35,7 @@
           <div class="sent-bubble-text-frame">
             <div class="sent-bubble-text font-stardust">보낸 버블</div>
             <div class="selector-frame font-stardust">
-              <div
-                class="selector-read"
-                :style="{ color: readOption === 'read' ? 'black' : 'gray' }"
-                @click="showReadOnly()"
-              >
-                읽음
-              </div>
-              |
-              <div
-                class="selector-unread"
-                :style="{ color: readOption === 'unread' ? 'black' : 'gray' }"
-                @click="showUnreadOnly()"
-              >
-                안읽음
-              </div>
+              {{ readOption }}
             </div>
           </div>
         </div>
@@ -111,7 +97,7 @@ export default {
 
       sentmessages: "",
       nowShowing: "",
-      readOption: "all",
+      readOption: "전체",
       messageDetail: "",
       unreadMessageCount: "",
       toShowMessage: "",
@@ -174,6 +160,28 @@ export default {
         this.pleaseShare = false;
       }
     },
+
+
+    changeReadOption() {
+      if (this.readOption == "전체") {
+        this.readOption = "읽음"
+        this.nowShowing = this.sentmessages.filter((article) => article.state === "읽음");
+      } else if (this.readOption == "읽음") {
+        this.readOption = "안읽음"
+        this.nowShowing = this.sentmessages.filter((article) => article.state === "안읽음");
+      } else if (this.readOption == "안읽음") {
+        this.readOption = "전체"
+        this.nowShowing = this.sentmessages
+      }
+      
+      if (this.nowShowing.length == 0) {
+        this.pleaseShare = true;
+      } else {
+        this.pleaseShare = false;
+      }
+    },
+
+
     analyticsRead(){
       this.$gtag.event('click', {
         event_category: 'mypage',
@@ -471,8 +479,9 @@ export default {
   line-height: 21px;
   /* or 210% */
   letter-spacing: -0.32px;
-  color: gray;
+  /* color: gray; */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
 }
 
 .selector-read {
