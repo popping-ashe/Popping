@@ -81,6 +81,8 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public MessageDto updateMessageStateToExpired(Long messageId) {
 		Message message = messageRepository.findByMessageId(messageId);
+		if (!message.getState().equals(MessageState.UNREAD))
+			return null;
 		message.updateStateToExpired();
 		return MessageDto.from(message);
 	}
