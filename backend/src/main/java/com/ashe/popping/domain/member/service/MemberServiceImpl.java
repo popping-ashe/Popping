@@ -58,8 +58,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Optional<Member> getMemberBySocialId(String kakaoId) {
-		return memberRepository.findBySocialLoginId(kakaoId);
+	public Optional<Member> getMemberBySocialId(String socialLoginId) {
+		return memberRepository.findBySocialLoginId(socialLoginId);
 	}
 
 	@Override
