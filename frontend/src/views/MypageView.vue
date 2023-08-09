@@ -34,7 +34,7 @@
         <div class="sent-bubble-frame1" style="margin-top: 5%">
           <div class="sent-bubble-text-frame">
             <div class="sent-bubble-text font-stardust">보낸 버블</div>
-            <div class="selector-frame font-stardust">
+            <div class="selector-frame font-stardust" @click="changeReadOption">
               {{ readOption }}
             </div>
           </div>
@@ -129,37 +129,37 @@ export default {
       this.$store.commit("SHOW_SENT_DETAIL", !this.showSentDetail);
     },
 
-    showReadOnly() {
-      if (this.readOption == "all" || this.readOption == "unread") {
-        this.readOption = "read";
-        this.nowShowing = this.sentmessages.filter((article) => article.state === "읽음");
-      } else {
-        this.readOption = "all";
-        this.nowShowing = this.sentmessages;
-      }
+    // showReadOnly() {
+    //   if (this.readOption == "all" || this.readOption == "unread") {
+    //     this.readOption = "read";
+    //     this.nowShowing = this.sentmessages.filter((article) => article.state === "읽음");
+    //   } else {
+    //     this.readOption = "all";
+    //     this.nowShowing = this.sentmessages;
+    //   }
 
-      if (this.nowShowing.length == 0) {
-        this.pleaseShare = true;
-      } else {
-        this.pleaseShare = false;
-      }
-    },
+    //   if (this.nowShowing.length == 0) {
+    //     this.pleaseShare = true;
+    //   } else {
+    //     this.pleaseShare = false;
+    //   }
+    // },
 
-    showUnreadOnly() {
-      if (this.readOption == "all" || this.readOption == "read") {
-        this.readOption = "unread";
-        this.nowShowing = this.sentmessages.filter((article) => article.state === "안읽음");
-      } else {
-        this.readOption = "all";
-        this.nowShowing = this.sentmessages;
-      }
+    // showUnreadOnly() {
+    //   if (this.readOption == "all" || this.readOption == "read") {
+    //     this.readOption = "unread";
+    //     this.nowShowing = this.sentmessages.filter((article) => article.state === "안읽음");
+    //   } else {
+    //     this.readOption = "all";
+    //     this.nowShowing = this.sentmessages;
+    //   }
 
-      if (this.nowShowing.length == 0) {
-        this.pleaseShare = true;
-      } else {
-        this.pleaseShare = false;
-      }
-    },
+    //   if (this.nowShowing.length == 0) {
+    //     this.pleaseShare = true;
+    //   } else {
+    //     this.pleaseShare = false;
+    //   }
+    // },
 
 
     changeReadOption() {
