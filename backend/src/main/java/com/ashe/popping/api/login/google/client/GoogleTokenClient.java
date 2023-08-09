@@ -1,4 +1,4 @@
-package com.ashe.popping.api.login.client;
+package com.ashe.popping.api.login.google.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;

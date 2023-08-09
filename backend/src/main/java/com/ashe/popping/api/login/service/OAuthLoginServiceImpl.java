@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.ashe.popping.api.login.client.GoogleTokenClient;
+import com.ashe.popping.api.login.google.client.GoogleTokenClient;
 import com.ashe.popping.api.login.dto.OAuthTokenDto;
 import com.ashe.popping.api.login.kakao.client.KakaoTokenClient;
 import com.ashe.popping.api.message.dto.MessageApiDto;
