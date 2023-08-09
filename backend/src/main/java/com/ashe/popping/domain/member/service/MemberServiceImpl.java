@@ -26,7 +26,9 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDto getMemberByMemberId(Long memberId) {
 		Optional<Member> member = memberRepository.findByMemberId(memberId);
-
+		if (member.isEmpty()) {
+			return MemberDto.deletedMemberDto();
+		}
 		return MemberDto.from(member.get());
 	}
 
