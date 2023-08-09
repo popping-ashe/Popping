@@ -80,4 +80,14 @@ public class MemberDto {
 			.bio(request.getBio())
 			.build();
 	}
+
+	public static MemberDto deletedMemberDto() {
+		return MemberDto.builder()
+			.memberId(0L)
+			.nickname("탈퇴한 회원")
+			.shareId(0L)
+			.bio("")
+			.build();
+	}
+
 }
