@@ -190,6 +190,18 @@ async function getshareidmessages(page, success, fail) {
 }
 //약관동의
 async function changeagree(agree, success, fail) {
+  let accessToken = localStorage.getItem("access-token");
+  const cipher = CryptoJS.AES.decrypt(
+    accessToken,
+    CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+    {
+      iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+      mode: CryptoJS.mode.CBC,
+    }
+  );
+  const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
+  let token = "Bearer " + decryptAccessToken;
+  api.defaults.headers["Authorization"] = token;
   await api.patch(`/terms-agreement`, agree).then(success).catch(fail);
 }
 
