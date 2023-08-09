@@ -62,7 +62,7 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
 		String type = memberType.name().toLowerCase();
-		String redirectUri = "http://localhost:8080/oauth/"+type+"/callback";
+		String redirectUri = "https://dev.pop-ping.com/oauth/"+type+"/callback";
 
 
 		OAuthTokenDto.Response oAuthToken = null;
