@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Optional<Member> getMemberBySocialId(String socialLoginId) {
+	public Optional<Member> getMemberBySocialLoginId(String socialLoginId) {
 		return memberRepository.findBySocialLoginId(socialLoginId);
 	}
 
