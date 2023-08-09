@@ -106,4 +106,8 @@ public class Message {
 	public void updateStateToRead() {
 		this.state = MessageState.READ;
 	}
+
+	public void updateStateToExpired() {
+		this.state = MessageState.EXPIRED;
+	}
 }

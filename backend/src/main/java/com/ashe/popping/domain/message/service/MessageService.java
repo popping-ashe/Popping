@@ -23,5 +23,7 @@ public interface MessageService {
 
 	MessageDto updateMessageStateToRead(Long messageId);
 
+	MessageDto updateMessageStateToExpired(Long messageId);
+
 	MessageCountDto countMessagesByType(Long memberId);
 }

@@ -24,11 +24,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
 	Message findByMessageId(Long messageId);
 
-	@Modifying(clearAutomatically = true)
-	@Transactional
-	@Query("update Message set state = 'EXPIRED' where expirationTime <= :now and state = 'UNREAD'")
-	int updateMessageStateToExpired(LocalDateTime now);
-
 	Long countByReceiver(Long receiver);
 
 	Long countBySender(Long sender);
