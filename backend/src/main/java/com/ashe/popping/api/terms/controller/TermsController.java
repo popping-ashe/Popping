@@ -61,8 +61,7 @@ public class TermsController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Long> deleteTerms(@PathVariable("id") Long termsId,
-		@RequestBody TermsApiDto.Request request) {
+	public ResponseEntity<Long> deleteTerms(@PathVariable("id") Long termsId) {
 		return ResponseEntity.ok(termsService.deleteTerms(termsId));
 	}
 }
