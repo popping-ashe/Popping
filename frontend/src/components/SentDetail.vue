@@ -74,14 +74,14 @@ export default {
   background-size: 100%;
   background-repeat: no-repeat;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-wrap: wrap;
   z-index: 999;
 }
 
 .close-button {
-  width: 100%;
-  height: 16%;
+  width: 35%;
+  height: 15%;
   /* border: 1px solid black; */
 }
 

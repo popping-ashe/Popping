@@ -56,6 +56,7 @@ export default {
         share_id: this.$route.params.pageid,
         nickname: "",
         retentionTime: 24,
+        reply_available: "YES",
       },
     };
   },
@@ -164,13 +165,13 @@ export default {
   background-size: 100%;
   background-repeat: no-repeat;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-wrap: wrap;
 }
 
 .close-button {
-  width: 100%;
-  height: 16%;
+  width: 35%;
+  height: 15%;
   /* border: 1px solid black; */
 }
 

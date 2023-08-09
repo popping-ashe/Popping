@@ -7,11 +7,13 @@ import vuetify from "./plugins/vuetify";
 import "vue2-toast/lib/toast.css";
 import Toast from "vue2-toast";
 import VueClipboard from "vue-clipboard2";
+import VueCarousel from "vue-carousel";
 
 VueClipboard.config.autoSetContainer = true;
 Vue.use(VueClipboard);
 
 Vue.use(Toast);
+Vue.use(VueCarousel);
 
 Vue.config.productionTip = false;
 
