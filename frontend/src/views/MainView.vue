@@ -146,6 +146,7 @@ export default {
         },
       async (error) => {
         console.log(error);
+        await this.getnewaccesstoken();
       }
     );
   },
