@@ -133,12 +133,21 @@ export default {
   },
   created() {
     this.calLeftTime();
-    const termcheck = JSON.parse(localStorage.getItem("userinfo")).terms_agreement
-    // this.nickname = nickname;
-    if (termcheck.length!=0) {
-      console.log(termcheck.length)
-      this.$router.push('/terms') 
-    }
+    getUserInfo(
+      (response) => {
+        if (response.status == 200) {
+          localStorage.setItem("userinfo", JSON.stringify(response.data));
+          if (response.data.terms_agreement.length!=0) {
+            this.$router.push('/terms') 
+          }
+          } else {
+            console.log("유저 정보 없음");
+          }
+        },
+      async (error) => {
+        console.log(error);
+      }
+    );
   },
   async mounted() {
     if (this.isLogin == true) {
