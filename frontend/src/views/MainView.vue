@@ -101,7 +101,7 @@ import MakeBubble from "@/components/MakeBubble.vue";
 import ShareChoose from "@/components/ShareChoose.vue";
 import { mapState, mapActions } from "vuex";
 // import axios from 'axios'
-import { getshareidmessages, receivedUserMessage } from "@/api/user";
+import { getshareidmessages, receivedUserMessage, getUserInfo } from "@/api/user";
 // import { getshareid, getshareidmessages, getUserInfo, receivedUserMessage } from "@/api/user"
 const userStore = "userStore";
 
