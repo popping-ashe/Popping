@@ -17,9 +17,10 @@ public enum ErrorCode {
 	NOT_ACCESS_TOKEN_TYPE(HttpStatus.UNAUTHORIZED, "A-007", "해당 토큰은 Access Token이 아닙니다."),
 	NOT_REFRESH_TOKEN_TYPE(HttpStatus.UNAUTHORIZED, "A-008", "해당 토큰은 Refresh Token이 아닙니다."),
 	FORBIDDEN_ADMIN(HttpStatus.FORBIDDEN, "A-009", "관리자 Role이 아닙니다."),
+	NOT_EXIST_CALLBACK_TYPE(HttpStatus.FORBIDDEN, "A-010", "잘못된 redirect uri입니다."),
 
 	// 회원
-	INVALID_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "M-001", "잘못된 회원 타입 입니다. (memberType : KAKAO)"),
+	INVALID_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "M-001", "잘못된 회원 타입 입니다. (memberType : KAKAO, GOOGLE)"),
 	ALREADY_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "M-002", "이미 가입된 회원입니다."),
 	NOT_EXIST_MEMBER(HttpStatus.BAD_REQUEST, "M-003", "존재하지 않는 회원입니다."),
 

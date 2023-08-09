@@ -62,8 +62,7 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(authenticationIntercepter)
 			.order(1)
 			.addPathPatterns("/**").excludePathPatterns("/access-token/issue", "/health",
-				"/oauth/kakao/callback", "/messages", "/share/*", "/profile", "/swagger-ui/*");
-	}
+				"/oauth/kakao/callback", "/messages", "/share/*", "/profile", "/oauth/google/callback", "/swagger-ui/*");
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

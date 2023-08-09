@@ -25,6 +25,11 @@ kakao:
     secret: ${KAKAO_SECRET_KEY}
     admin : ${KAKAO_ADMIN_KEY}
 
+google:
+  client:
+    id: ${GOOGLE_API_KEY}
+    secret: ${GOOGLE_SECRET_KEY}
+
 feign:
   client:
     config:

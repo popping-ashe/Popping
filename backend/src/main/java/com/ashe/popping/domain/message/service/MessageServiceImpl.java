@@ -42,8 +42,7 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public List<MessageDto> loadReceiveMessage(Long receiver, Pageable pageable) {
 		LocalDateTime now = LocalDateTime.now();
-		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeAfterAndStateIs(receiver,
-			now, MessageState.UNREAD, pageable);
+		List<Message> messages = messageRepository.findByReceiverAndExpirationTimeAfter(receiver, now, pageable);
 		MemberDto memberDto = MemberDto.of(receiver, now);
 		memberService.updateLastVisitedTime(memberDto);
 		return messages.stream()

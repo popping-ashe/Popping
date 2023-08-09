@@ -17,13 +17,13 @@ public interface MemberService {
 
 	void validateDuplicateMember(MemberDto memberDto);
 
-	Optional<Member> getMemberByKakaoId(String kakaoId);
+	Optional<Member> getMemberBySocialLoginId(String socialLoginId);
 
 	MemberDto getMemberByShareId(Long shareId);
 
 	Long deleteMember(Long memberId);
 
 	MemberDto updateBio(MemberDto memberDto);
-	
+
 	List<MemberDto> getAllMember();
 }

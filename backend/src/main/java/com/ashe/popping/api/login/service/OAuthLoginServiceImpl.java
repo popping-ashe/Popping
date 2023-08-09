@@ -7,9 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.ashe.popping.api.login.client.KakaoTokenClient;
-import com.ashe.popping.api.login.dto.KakaoTokenDto;
+import com.ashe.popping.api.login.dto.OAuthTokenDto;
+import com.ashe.popping.api.login.google.client.GoogleTokenClient;
+import com.ashe.popping.api.login.kakao.client.KakaoTokenClient;
 import com.ashe.popping.api.message.dto.MessageApiDto;
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
@@ -21,8 +23,9 @@ import com.ashe.popping.domain.terms.service.TermsService;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.service.TermsAgreementService;
-import com.ashe.popping.external.oauth.kakao.dto.KakaoMemberInfoResponseDto;
-import com.ashe.popping.external.oauth.kakao.service.KakaoLoginApiService;
+import com.ashe.popping.external.oauth.model.OAuthAttributes;
+import com.ashe.popping.external.oauth.service.SocialLoginApiService;
+import com.ashe.popping.external.oauth.service.SocialLoginApiServiceFactory;
 import com.ashe.popping.global.jwt.contant.GrantType;
 import com.ashe.popping.global.jwt.dto.JwtTokenDto;
 import com.ashe.popping.global.jwt.service.TokenManager;
@@ -33,35 +36,57 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class KakaoLoginServiceImpl implements KakaoLoginService {
+public class OAuthLoginServiceImpl implements OAuthLoginService {
+	private final GoogleTokenClient googleTokenClient;
 	private final KakaoTokenClient kakaoTokenClient;
-	private final KakaoLoginApiService kakaoLoginApiService;
 	private final TokenManager tokenManager;
 	private final MemberService memberService;
 	private final MessageService messageService;
 	private final TermsService termsService;
 	private final TermsAgreementService termsAgreementService;
 
+	@Value("${google.client.id}")
+	private String googleClientId;
+
+	@Value("${google.client.secret}")
+	private String googleClientSecret;
+
 	@Value("${kakao.client.id}")
-	private String clientId;
+	private String kakaoClientId;
 
 	@Value("${kakao.client.secret}")
-	private String clientSecret;
+	private String kakaoClientSecret;
 
 	@Override
-	public JwtTokenDto kakaoLogin(String code) {
+	public JwtTokenDto socialLogin(String code, MemberType memberType) {
 		String contentType = "application/x-www-form-urlencoded;charset=utf-8";
-		KakaoTokenDto.Request kakaoTokenRequestDto = KakaoTokenDto.Request.of(clientId, clientSecret, code);
-		KakaoTokenDto.Response kakaoToken = kakaoTokenClient.requestKakaoToken(contentType, kakaoTokenRequestDto);
-		KakaoMemberInfoResponseDto memberInfo = kakaoLoginApiService.getMemberInfo(
-			GrantType.BEARER.getType() + " " + kakaoToken.getAccessToken());
+
+		String type = memberType.name().toLowerCase();
+		String redirectUri = "https://dev.pop-ping.com/oauth/" + type + "/callback";
+
+		OAuthTokenDto.Response oAuthToken = null;
+		if (MemberType.KAKAO.equals(memberType)) {
+			OAuthTokenDto.Request oAuthRequestDto = OAuthTokenDto.Request.of(kakaoClientId, kakaoClientSecret, code,
+				redirectUri);
+			oAuthToken = kakaoTokenClient.requestKakaoToken(contentType, oAuthRequestDto);
+		}
+		if (MemberType.GOOGLE.equals(memberType)) {
+			OAuthTokenDto.Request oAuthRequestDto = OAuthTokenDto.Request.of(googleClientId, googleClientSecret, code,
+				redirectUri);
+			oAuthToken = googleTokenClient.requestGoogleToken(contentType, oAuthRequestDto);
+		}
+
+		SocialLoginApiService socialLoginApiService = SocialLoginApiServiceFactory.getSocialLoginApiService(memberType);
+
+		OAuthAttributes memberInfo = socialLoginApiService.getMemberInfo(
+			GrantType.BEARER.getType() + " " + oAuthToken.getAccessToken());
 		JwtTokenDto jwtTokenDto;
-		Optional<Member> optionalMember = memberService.getMemberByKakaoId(memberInfo.getKakaoId());
+		Optional<Member> optionalMember = memberService.getMemberBySocialLoginId(memberInfo.getId());
 
 		// 1. 신규 회원
 		if (optionalMember.isEmpty()) {
 			// 공유 url에 필요한 난수 생성 및 회원 생성
-			MemberDto oauthMember = makeShareId(memberInfo);
+			MemberDto oauthMember = makeShareId(memberInfo, memberType);
 			// 웰컴 메세지 보내기
 			MessageDto wellComeMessage = makeWelComeMessage();
 			messageService.saveMessage(wellComeMessage, oauthMember);
@@ -86,13 +111,13 @@ public class KakaoLoginServiceImpl implements KakaoLoginService {
 
 	}
 
-	MemberDto makeShareId(KakaoMemberInfoResponseDto memberInfo) {
+	MemberDto makeShareId(OAuthAttributes memberInfo, MemberType memberType) {
 		SecureRandom random = new SecureRandom();
 		MemberDto oauthMember;
 
 		while (true) {
 			Long shareId = random.nextLong(1000000000L, 10000000000L);
-			oauthMember = memberInfo.toMemberDto(Role.USER, shareId);
+			oauthMember = memberInfo.toMemberDto(memberType, Role.USER, shareId);
 			try {
 				oauthMember = memberService.createMember(oauthMember);
 				break;
