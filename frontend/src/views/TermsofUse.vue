@@ -27,7 +27,7 @@
             <div class="term-detail" @click="openDetail(index)">보기</div>
           </div>
             <div class="signup-button-frame">
-              <div class="signup-button" @click="signUp()" :style="{ background: signupButtonColor }">가입하기</div>
+              <div class="signup-button" @click="signUp()" :style="{ background: signupButtonColor }">동의하기</div>
             </div>
         </div>
 

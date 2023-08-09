@@ -25,7 +25,7 @@
           <div style="display: flex; justify-content: space-evenly">
             <div class="received">받음</div>
             <div class="sent">보냄</div>
-            <div class="unread">안읽음</div>
+            <div class="unread">만료됨</div>
           </div>
           <div style="display: flex; justify-content: center">
             <hr style="width: 85%" />

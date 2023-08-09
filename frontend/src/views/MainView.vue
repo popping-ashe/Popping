@@ -133,22 +133,24 @@ export default {
   },
   created() {
     this.calLeftTime();
-    getUserInfo(
-      (response) => {
-        if (response.status == 200) {
-          localStorage.setItem("userinfo", JSON.stringify(response.data));
-          if (response.data.terms_agreement.length!=0) {
-            this.$router.push('/terms') 
-          }
-          } else {
-            console.log("유저 정보 없음");
-          }
-        },
-      async (error) => {
-        console.log(error);
-        await this.getnewaccesstoken();
-      }
-    );
+    if (this.isLogin) {
+      getUserInfo(
+        (response) => {
+          if (response.status == 200) {
+            localStorage.setItem("userinfo", JSON.stringify(response.data));
+            if (response.data.terms_agreement.length!=0) {
+              this.$router.push('/terms') 
+            }
+            } else {
+              console.log("유저 정보 없음");
+            }
+          },
+        async (error) => {
+          console.log(error);
+          await this.getnewaccesstoken();
+        }
+      );
+    }
   },
   async mounted() {
     if (this.isLogin == true) {
