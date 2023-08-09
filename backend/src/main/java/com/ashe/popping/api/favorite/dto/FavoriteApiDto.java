@@ -2,8 +2,7 @@ package com.ashe.popping.api.favorite.dto;
 
 import java.util.List;
 
-import com.ashe.popping.domain.favorite.dto.FavoriteDto;
-import com.ashe.popping.domain.favorite.dto.FavoriteListDto;
+import com.ashe.popping.domain.member.dto.MemberDto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -37,10 +36,33 @@ public class FavoriteApiDto {
 			this.favoriteId = favoriteId;
 		}
 
-		public static FavoriteApiDto.Response from(FavoriteDto favoriteDto) {
+		public static FavoriteApiDto.Response of(Long memberId, Long favoriteId) {
 			return Response.builder()
-				.memberId(favoriteDto.getMemberId())
-				.favoriteId(favoriteDto.getFavoriteId())
+				.memberId(memberId)
+				.favoriteId(favoriteId)
+				.build();
+		}
+	}
+
+	@Getter
+	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+	public static class FavoriteMember {
+		private String nickname;
+		private String bio;
+		private Long shareId;
+
+		@Builder
+		public FavoriteMember(String nickname, String bio, Long shareId) {
+			this.nickname = nickname;
+			this.bio = bio;
+			this.shareId = shareId;
+		}
+
+		public static FavoriteMember from(MemberDto memberDto) {
+			return FavoriteMember.builder()
+				.nickname(memberDto.getNickname())
+				.bio(memberDto.getBio())
+				.shareId(memberDto.getShareId())
 				.build();
 		}
 	}
@@ -49,18 +71,18 @@ public class FavoriteApiDto {
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 	public static class ListResponse {
 		private Long memberId;
-		private List<Long> favorites;
+		private List<FavoriteMember> favorites;
 
 		@Builder
-		public ListResponse(Long memberId, List<Long> favorites) {
+		public ListResponse(Long memberId, List<FavoriteMember> favorites) {
 			this.memberId = memberId;
 			this.favorites = favorites;
 		}
 
-		public static ListResponse from(FavoriteListDto favoriteListDto){
+		public static ListResponse of(Long memberId, List<FavoriteMember> favorites) {
 			return ListResponse.builder()
-				.memberId(favoriteListDto.getMemberId())
-				.favorites(favoriteListDto.getFavorites())
+				.memberId(memberId)
+				.favorites(favorites)
 				.build();
 		}
 	}

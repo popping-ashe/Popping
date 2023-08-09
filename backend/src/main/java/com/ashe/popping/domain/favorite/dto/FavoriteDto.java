@@ -30,4 +30,11 @@ public class FavoriteDto {
 			.favoriteId(favorite.getFavoriteId())
 			.build();
 	}
+
+	static public FavoriteDto of(Long memberId, Long favoriteId) {
+		return FavoriteDto.builder()
+			.memberId(memberId)
+			.favoriteId(favoriteId)
+			.build();
+	}
 }
