@@ -47,6 +47,7 @@ import termsDetail from '../components/termsDetail.vue';
 import { mapState, mapActions } from "vuex";
 import { changeagree } from "@/api/user";
 import router from '../router';
+const userStore = "userStore";
 
 export default {
   name: "TermsofUse",
