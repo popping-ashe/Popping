@@ -10,4 +10,8 @@ import com.ashe.popping.domain.favorite.entity.FavoritePK;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, FavoritePK> {
 	List<FavoriteMapping> findByMemberId(Long memberId);
+
+	int deleteByMemberId(Long memberId);
+
+	int deleteByFavoriteId(Long favoriteId);
 }
