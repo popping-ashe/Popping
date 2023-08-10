@@ -56,16 +56,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void validateDuplicateMember(MemberDto memberDto) {
-		Member member = Member.from(memberDto);
-		Optional<Member> optionalMember = memberRepository.findBySocialLoginIdAndMemberType(member.getSocialLoginId(),
-			member.getMemberType());
-		if (optionalMember.isPresent()) {
-			throw new BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER);
-		}
-	}
-
-	@Override
 	public Optional<MemberDto> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType) {
 		Optional<Member> optionalMember = memberRepository.findBySocialLoginIdAndMemberType(socialLoginId,
 			memberType);
