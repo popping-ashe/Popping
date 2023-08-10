@@ -12,7 +12,6 @@ import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.repository.MemberRepository;
 import com.ashe.popping.global.error.ErrorCode;
 import com.ashe.popping.global.error.exception.AuthenticationException;
-import com.ashe.popping.global.error.exception.BusinessException;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -84,7 +83,7 @@ public class MemberServiceImpl implements MemberService {
 	public Long deleteMember(Long memberId) {
 		long result = memberRepository.deleteByMemberId(memberId);
 		if (result != 1) {
-			throw new BusinessException(ErrorCode.NOT_EXIST_MEMBER);
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 		}
 		return result;
 	}
