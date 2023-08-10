@@ -1,40 +1,56 @@
 <template>
   <div class="page-container">
-    <termsDetail :termdetail-props="termDetail" v-if="showReceivedDetail"/>
+    <termsDetail :termdetail-props="termDetail" v-if="showReceivedDetail" />
     <div class="page">
       <div class="frame" style="z-index: 0">
         <div class="upper-bar">
           <div class="new-button font-eng" @click="logoutUser()">
             <div>Back</div>
           </div>
-          <div class="username font-kor">
-
-          </div>
+          <div class="username font-kor"></div>
         </div>
         <br /><br /><br /><br />
 
         <div class="term-frame font-pre">
-          <div class="nickname">서비스 이용약관에<br>동의해주세요.</div><br>
+          <div class="nickname">서비스 이용약관에<br />동의해주세요.</div>
+          <br />
           <div>
-            <label for="chkAll"><input id="chkAll" type="checkbox" v-model="agreetoall" @click="toggleAllAgreements">&nbsp; 네, 모두 동의합니다.</label>
-            <br><hr>
+            <label for="chkAll"
+              ><input
+                id="chkAll"
+                type="checkbox"
+                v-model="agreetoall"
+                @click="toggleAllAgreements"
+              />&nbsp; 네, 모두 동의합니다.</label
+            >
+            <br />
+            <hr />
           </div>
-          <div class="term" v-for="(term, index) in terms_agreement" :key=index>
+          <div class="term" v-for="(term, index) in terms_agreement" :key="index">
             <div class="checkbox-and-term">
               <div class="checkboxes">
-                <input :id="term.terms_id" type="checkbox" v-model="terms_agreement[index].state" true-value="ACTIVE" false-value="PENDING">
+                <input
+                  :id="term.terms_id"
+                  type="checkbox"
+                  v-model="terms_agreement[index].state"
+                  true-value="ACTIVE"
+                  false-value="PENDING"
+                />
               </div>
               <div class="term-content">
-                <label :for="term.terms_id">{{ getMandatoryLabel(term.mandatory) }} {{ term.title }}</label>
+                <label :for="term.terms_id"
+                  >{{ getMandatoryLabel(term.mandatory) }} {{ term.title }}</label
+                >
               </div>
             </div>
             <div class="term-detail" @click="openDetail(index)">보기</div>
           </div>
-            <div class="signup-button-frame">
-              <div class="signup-button" @click="signUp()" :style="{ background: signupButtonColor }">동의하기</div>
+          <div class="signup-button-frame">
+            <div class="signup-button" @click="signUp()" :style="{ background: signupButtonColor }">
+              동의하기
             </div>
+          </div>
         </div>
-
 
         <br />
       </div>
@@ -43,127 +59,125 @@
 </template>
 
 <script>
-import termsDetail from '../components/termsDetail.vue';
+import termsDetail from "../components/termsDetail.vue";
 import { mapState, mapActions } from "vuex";
 import { changeagree } from "@/api/user";
-import router from '../router';
+import router from "../router";
 const userStore = "userStore";
 
 export default {
   name: "TermsofUse",
   components: {
-    termsDetail
+    termsDetail,
   },
   data() {
     return {
       toggler: true,
       terms_agreement: JSON.parse(localStorage.getItem("userinfo")).terms_agreement,
-      agreetoall: false,  // 전체동의/해제용 변수
-      temp: false,        // 버튼 눌렸는지 체크용, 지워도됨
-      termDetail: "",     // 자식 컴포넌트로 보내는 상세약관
+      agreetoall: false, // 전체동의/해제용 변수
+      temp: false, // 버튼 눌렸는지 체크용, 지워도됨
+      termDetail: "", // 자식 컴포넌트로 보내는 상세약관
     };
   },
   methods: {
     ...mapActions(userStore, ["logoutUser"]),
-    async logoutUser() {
-      this.logoutUser;
-    },
     // mandatory: Y, N으로 넘어오는거 글자로 변환
     getMandatoryLabel(mandatory) {
       return mandatory === "Y" ? "(필수)" : "(선택)";
     },
 
-
     // 전체동의 전체해제
     toggleAllAgreements() {
-      const newState = this.agreetoall ? "PENDING" : "ACTIVE"
+      const newState = this.agreetoall ? "PENDING" : "ACTIVE";
       this.terms_agreement.forEach((term) => {
-        term.state = newState
-      })
+        term.state = newState;
+      });
     },
 
     // 가입하기 버튼 필수 선택 안됐을땐 비활성화
     signUp() {
       const mandatoryCheck = this.terms_agreement
-      .filter(term => term.mandatory === "Y")
-      .every(term => term.state === "ACTIVE");
+        .filter((term) => term.mandatory === "Y")
+        .every((term) => term.state === "ACTIVE");
 
       if (mandatoryCheck) {
         // 여기가 가입하기 버튼 클릭됐을때
         this.temp = true;
-        this.terms_agreement.forEach(term => {
+        this.terms_agreement.forEach((term) => {
           if (term.mandatory === "N" && term.state === "PENDING") {
             term.state = "REJECTED";
           }
         });
-        const userinfo = JSON.parse(localStorage.getItem("userinfo"))
-				userinfo.terms_agreement = []
-				localStorage.setItem("userinfo", JSON.stringify(userinfo))
-        const member = JSON.parse(localStorage.getItem("userinfo")).member_id
-				const agree = []
-				for (const term of this.terms_agreement) {
-					agree.push({
-						terms_id: term.terms_id,
-						member_id: member,
-						state: term.state,
-					})}
-				console.log(agree)
-				changeagree(
-					agree,
-					(response) => {
-						if (response.status == 200) {
-							// console.log('가입되었슴니다')
-							const share = JSON.parse(localStorage.getItem("shareid")).share_id
-							// console.log(share)
-							router.push(`/main/${share}`)
-						}
-					},
-					(error) => {
-						console.log(error);
-				});	 
+        const userinfo = JSON.parse(localStorage.getItem("userinfo"));
+        userinfo.terms_agreement = [];
+        localStorage.setItem("userinfo", JSON.stringify(userinfo));
+        const member = JSON.parse(localStorage.getItem("userinfo")).member_id;
+        const agree = [];
+        for (const term of this.terms_agreement) {
+          agree.push({
+            terms_id: term.terms_id,
+            member_id: member,
+            state: term.state,
+          });
+        }
+        console.log(agree);
+        changeagree(
+          agree,
+          (response) => {
+            if (response.status == 200) {
+              // console.log('가입되었슴니다')
+              const share = JSON.parse(localStorage.getItem("shareid")).share_id;
+              // console.log(share)
+              router.push(`/main/${share}`);
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
     },
 
     openDetail(idx) {
-      this.termDetail = this.terms_agreement[idx].content
+      this.termDetail = this.terms_agreement[idx].content;
       this.$store.commit("SHOW_DETAIL", !this.showReceivedDetail);
-
-    }
-    
-
+    },
   },
-    computed: {
+  async logoutUser() {
+    this.logoutUser;
+  },
+  computed: {
     // 가입하기 버튼 색
     signupButtonColor() {
       const allMandatoryActive = this.terms_agreement
-        .filter(term => term.mandatory === "Y")
-        .every(term => term.state === "ACTIVE")
+        .filter((term) => term.mandatory === "Y")
+        .every((term) => term.state === "ACTIVE");
 
-      return allMandatoryActive ? "linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%)" : "linear-gradient(180deg, #FFFFFF 0%, #CCCCCC 99.99%)"
+      return allMandatoryActive
+        ? "linear-gradient(180deg, #FFFFFF 0%, #B9D7EB 99.99%)"
+        : "linear-gradient(180deg, #FFFFFF 0%, #CCCCCC 99.99%)";
     },
-    
+
     // 동의한 항목만 리스트로 표시
     agreedTermIds() {
       return this.terms_agreement
-        .filter(term => term.state === "ACTIVE")
-        .map(term => term.terms_id);
+        .filter((term) => term.state === "ACTIVE")
+        .map((term) => term.terms_id);
     },
     ...mapState(["showReceivedDetail"]),
-
   },
-  
+
   // 모두 체크 되었을때 모두 동의 체크박스도 체크되게 함
   watch: {
     terms_agreement: {
       deep: true,
       handler(newValue) {
-        const allActive = newValue.every(term => term.state === "ACTIVE");
+        const allActive = newValue.every((term) => term.state === "ACTIVE");
         this.agreetoall = allActive;
-      }
-    }
+      },
+    },
   },
 };
-
 </script>
 
 <style scoped>
@@ -263,13 +277,10 @@ export default {
   z-index: 0;
 }
 
-
-
 .nickname {
   font-weight: bold;
   font-size: 20px;
 }
-
 
 .slide-enter-active,
 .slide-leave-active {
@@ -297,7 +308,6 @@ export default {
   width: 100%;
   padding-left: 8%;
   padding-right: 8%;
-
 }
 
 .term {
@@ -305,7 +315,6 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
-
 }
 
 .term-detail {
@@ -343,5 +352,4 @@ export default {
 .term-content {
   margin-left: 8px;
 }
-
 </style>
