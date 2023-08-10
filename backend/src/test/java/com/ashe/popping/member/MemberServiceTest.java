@@ -177,4 +177,20 @@ public class MemberServiceTest {
 		Assertions.assertEquals(member2.getMemberId(), updatedMember2.getMemberId());
 		Assertions.assertEquals(member2.getNickname(), updatedMember2.getNickname());
 	}
+
+	@Test
+	@DisplayName("update bio")
+	@Order(6)
+	void updateBio() {
+		MemberDto member1 = MemberDto.builder().memberId(1L).bio("rookie").build();
+		MemberDto member2 = MemberDto.builder().memberId(2L).bio("queendom").build();
+		MemberDto updatedMember1 = memberService.updateBio(member1);
+		MemberDto updatedMember2 = memberService.updateBio(member2);
+
+		Assertions.assertEquals(member1.getMemberId(), updatedMember1.getMemberId());
+		Assertions.assertEquals(member1.getBio(), updatedMember1.getBio());
+
+		Assertions.assertEquals(member2.getMemberId(), updatedMember2.getMemberId());
+		Assertions.assertEquals(member2.getBio(), updatedMember2.getBio());
+	}
 }
