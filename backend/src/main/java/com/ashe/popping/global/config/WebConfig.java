@@ -31,9 +31,9 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addMapping("/**")
 			.allowedOrigins(
 				// "http://localhost:8081",
-				// "https://dev.pop-ping.com"
-				"https://pop-ping.com",
-				"https://www.pop-ping.com"
+				"https://dev.pop-ping.com"
+				// "https://pop-ping.com",
+				// "https://www.pop-ping.com"
 			)
 			.allowedMethods(
 				HttpMethod.GET.name(),
@@ -62,7 +62,7 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(authenticationIntercepter)
 			.order(1)
 			.addPathPatterns("/**").excludePathPatterns("/access-token/issue", "/health",
-				"/oauth/kakao/callback", "/messages", "/share/*", "/profile");
+				"/oauth/kakao/callback", "/messages", "/share/*", "/profile", "/oauth/google/callback", "/swagger-ui/*");
 	}
 
 	@Override

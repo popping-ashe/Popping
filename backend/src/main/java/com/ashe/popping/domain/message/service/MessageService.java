@@ -13,6 +13,8 @@ public interface MessageService {
 
 	MessageDto saveMessage(MessageDto messageDto, MemberDto memberDto);
 
+	MessageDto saveMessage(MessageDto messageDto);
+
 	List<MessageDto> loadReceiveMessage(Long receiver, Pageable pageable);
 
 	List<MessageDto> loadSendMessage(Long sender, Pageable pageable);
@@ -20,6 +22,8 @@ public interface MessageService {
 	Long countExpireMessage(Long receiver, LocalDateTime lastVisitedTime);
 
 	MessageDto updateMessageStateToRead(Long messageId);
+
+	void updateMessageStateToExpired(Long messageId);
 
 	MessageCountDto countMessagesByType(Long memberId);
 }

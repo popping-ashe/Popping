@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
 
@@ -33,13 +34,17 @@ public class Member {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long memberId;
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 10)
+	private MemberType memberType;
+
 	@Column(nullable = false, length = 30)
 	private String nickname;
 
 	private LocalDateTime lastVisitedTime;
 
-	@Column(nullable = false, unique = true)
-	private String kakaoId;
+	@Column(nullable = false)
+	private String socialLoginId;
 
 	@Column(nullable = false, unique = true)
 	private Long shareId;
@@ -50,15 +55,22 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
+	@Column(nullable = false, length = 30)
+	private String bio;
+
+	private LocalDateTime withdrawalDate;
+
 	public static Member from(MemberDto memberDto) {
 		return Member.builder()
 			.memberId(memberDto.getMemberId())
+			.memberType(memberDto.getMemberType())
 			.nickname(memberDto.getNickname())
 			.lastVisitedTime(memberDto.getLastVisitedTime())
-			.kakaoId(memberDto.getKakaoId())
+			.socialLoginId(memberDto.getSocialLoginId())
 			.shareId(memberDto.getShareId())
 			.createdTime(memberDto.getCreatedTime())
 			.role(memberDto.getRole())
+			.bio(memberDto.getBio())
 			.build();
 	}
 
@@ -68,5 +80,13 @@ public class Member {
 
 	public void updateLastVisitedTime(LocalDateTime lastVisitedTime) {
 		this.lastVisitedTime = lastVisitedTime;
+	}
+
+	public void updateBio(String bio) {
+		this.bio = bio;
+	}
+
+	public void updateWithdrawalDate(LocalDateTime withdrawalDate) {
+		this.withdrawalDate = withdrawalDate;
 	}
 }

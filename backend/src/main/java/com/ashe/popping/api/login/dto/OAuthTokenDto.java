@@ -13,30 +13,27 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Component
-public class KakaoTokenDto {
+public class OAuthTokenDto {
 	@Builder
 	@Getter
 	@ToString
 	public static class Request {
 
-		@FormProperty("grant_type")
 		private final String grant_type = "authorization_code";
 
-		@FormProperty("client_id")
 		private String client_id;
 
-		@FormProperty("client_secret")
 		private String client_secret;
 
-		@FormProperty("redirect_uri")
-		private final String redirect_uri = "https://www.pop-ping.com/oauth/kakao/callback";
+		private String redirect_uri;
 
 		private String code;
 
-		public static Request of(String clientId, String clientSecret, String code) {
+		public static Request of(String clientId, String clientSecret, String code, String redirectUri) {
 			return Request.builder()
 				.client_id(clientId)
 				.client_secret(clientSecret)
+				.redirect_uri(redirectUri)
 				.code(code)
 				.build();
 		}

@@ -17,23 +17,17 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
 	List<Message> findBySender(Long sender, Pageable pageable);
 
-	List<Message> findByReceiverAndExpirationTimeAfterAndStateIs(Long receiver, LocalDateTime now, MessageState state,
-		Pageable pageable);
+	List<Message> findByReceiverAndExpirationTimeAfter(Long receiver, LocalDateTime now, Pageable pageable);
 
 	Long countByReceiverAndExpirationTimeBetweenAndStateIsNot(Long receiver, LocalDateTime start, LocalDateTime end,
 		MessageState state);
 
 	Message findByMessageId(Long messageId);
 
-	@Modifying(clearAutomatically = true)
-	@Transactional
-	@Query("update Message set state = 'EXPIRED' where expirationTime <= :now and state = 'UNREAD'")
-	int updateMessageStateToExpired(LocalDateTime now);
-
 	Long countByReceiver(Long receiver);
 
 	Long countBySender(Long sender);
 
-	Long countByReceiverAndExpirationTimeAfterAndStateIs(Long receiver, LocalDateTime now, MessageState state);
+	Long countByReceiverAndStateIs(Long receiver, MessageState state);
 
 }

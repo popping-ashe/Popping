@@ -28,6 +28,10 @@ public class AuthenticationIntercepter implements HandlerInterceptor {
 			return true;
 		}
 
+		String swaggerUri = request.getRequestURI();
+		if (swaggerUri.contains("swagger") || swaggerUri.contains("api-docs") || swaggerUri.contains("webjars"))
+			return true;
+
 		// 1. Authorization Header 검증
 		String authorizationHeader = request.getHeader("Authorization");
 		AuthorizationHeaderUtils.validateAuthorization(authorizationHeader);

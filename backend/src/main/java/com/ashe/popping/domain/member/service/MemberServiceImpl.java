@@ -1,9 +1,13 @@
 package com.ashe.popping.domain.member.service;
 
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.repository.MemberRepository;
@@ -25,39 +29,38 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDto getMemberByMemberId(Long memberId) {
 		Optional<Member> member = memberRepository.findByMemberId(memberId);
 
-		return MemberDto.from(member.get());
+		return MemberDto.from(member.orElseThrow(() -> new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER)));
 	}
 
 	@Override
 	public MemberDto updateNickname(MemberDto memberDto) {
-		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
+		Optional<Member> member = memberRepository.findByMemberId(memberDto.getMemberId());
 
-		member.updateNickname(memberDto.getNickname());
+		if (member.isEmpty())
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 
-		return MemberDto.from(member);
+		member.get().updateNickname(memberDto.getNickname());
+
+		return MemberDto.from(member.get());
 	}
 
 	@Override
 	public MemberDto updateLastVisitedTime(MemberDto memberDto) {
-		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
+		Optional<Member> member = memberRepository.findByMemberId(memberDto.getMemberId());
 
-		member.updateLastVisitedTime(memberDto.getLastVisitedTime());
+		if (member.isEmpty())
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 
-		return MemberDto.from(member);
+		member.get().updateLastVisitedTime(memberDto.getLastVisitedTime());
+
+		return MemberDto.from(member.get());
 	}
 
 	@Override
-	public void validateDuplicateMember(MemberDto memberDto) {
-		Member member = Member.from(memberDto);
-		Optional<Member> optionalMember = memberRepository.findByKakaoId(member.getKakaoId());
-		if (optionalMember.isPresent()) {
-			throw new BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER);
-		}
-	}
-
-	@Override
-	public Optional<Member> getMemberByKakaoId(String kakaoId) {
-		return memberRepository.findByKakaoId(kakaoId);
+	public Optional<MemberDto> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType) {
+		Optional<Member> optionalMember = memberRepository.findBySocialLoginIdAndMemberType(socialLoginId,
+			memberType);
+		return optionalMember.map(MemberDto::from).or(() -> Optional.ofNullable(null));
 	}
 
 	@Override
@@ -82,8 +85,37 @@ public class MemberServiceImpl implements MemberService {
 	public Long deleteMember(Long memberId) {
 		long result = memberRepository.deleteByMemberId(memberId);
 		if (result != 1) {
-			throw new BusinessException(ErrorCode.NOT_EXIST_MEMBER);
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 		}
 		return result;
+	}
+
+	@Override
+	public void updateWithdrawalDate(Long memberId, boolean withDrawal) {
+		Optional<Member> member = memberRepository.findByMemberId(memberId);
+		if (member.isEmpty()) {
+			throw new BusinessException(ErrorCode.NOT_EXIST_MEMBER);
+		}
+		if (withDrawal)
+			member.get().updateWithdrawalDate(LocalDateTime.now().plusMonths(1));
+		else
+			member.get().updateWithdrawalDate(null);
+	}
+
+	@Override
+	public MemberDto updateBio(MemberDto memberDto) {
+		Optional<Member> member = memberRepository.findByMemberId(memberDto.getMemberId());
+		if (member.isEmpty())
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
+
+		member.get().updateBio(memberDto.getBio());
+		return MemberDto.from(member.get());
+	}
+
+	@Override
+	public List<MemberDto> getAllMember() {
+		List<MemberDto> memberDtos = new LinkedList<>();
+		memberRepository.findAll().forEach(m -> memberDtos.add(MemberDto.from(m)));
+		return memberDtos;
 	}
 }

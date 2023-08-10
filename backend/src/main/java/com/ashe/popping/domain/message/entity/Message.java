@@ -52,15 +52,19 @@ public class Message {
 	@Column(nullable = false, length = 20)
 	private String nickname;
 
+	@Column(nullable = false, length = 1)
+	private String replyAvailable;
+
 	@Builder
 	public Message(MessageState state, String content, LocalDateTime expirationTime, Long sender, Long receiver,
-		String nickname) {
+		String nickname, String replyAvailable) {
 		this.state = state;
 		this.content = content;
 		this.expirationTime = expirationTime;
 		this.sender = sender;
 		this.receiver = receiver;
 		this.nickname = nickname;
+		this.replyAvailable = replyAvailable;
 	}
 
 	public static Message from(MessageDto messageDto) {
@@ -71,6 +75,7 @@ public class Message {
 			.sender(messageDto.getSender())
 			.receiver(messageDto.getReceiver())
 			.nickname(messageDto.getNickname())
+			.replyAvailable(messageDto.getReplyAvailable())
 			.build();
 	}
 
@@ -82,10 +87,27 @@ public class Message {
 			.sender(messageDto.getSender())
 			.receiver(memberDto.getMemberId())
 			.nickname(messageDto.getNickname())
+			.replyAvailable(messageDto.getReplyAvailable())
+			.build();
+	}
+
+	public static Message of(MessageDto messageDto, Long senderId, Long receiverId) {
+		return Message.builder()
+			.state(messageDto.getState())
+			.content(messageDto.getContent())
+			.expirationTime(messageDto.getExpirationTime())
+			.sender(senderId)
+			.receiver(receiverId)
+			.nickname(messageDto.getNickname())
+			.replyAvailable(messageDto.getReplyAvailable())
 			.build();
 	}
 
 	public void updateStateToRead() {
 		this.state = MessageState.READ;
+	}
+
+	public void updateStateToExpired() {
+		this.state = MessageState.EXPIRED;
 	}
 }
