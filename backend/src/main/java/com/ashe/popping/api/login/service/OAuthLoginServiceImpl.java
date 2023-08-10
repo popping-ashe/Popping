@@ -56,12 +56,15 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 	@Value("${kakao.client.secret}")
 	private String kakaoClientSecret;
 
+	@Value("${redirect-uri}")
+	private String redirectUri;
+
 	@Override
 	public JwtTokenDto socialLogin(String code, MemberType memberType) {
 		String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
 		String type = memberType.name().toLowerCase();
-		String redirectUri = "https://dev.pop-ping.com/oauth/" + type + "/callback";
+		redirectUri = redirectUri + type + "/callback";
 
 		OAuthTokenDto.Response oAuthToken = null;
 		if (MemberType.KAKAO.equals(memberType)) {
