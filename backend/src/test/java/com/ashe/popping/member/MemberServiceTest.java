@@ -88,4 +88,29 @@ public class MemberServiceTest {
 		Assertions.assertEquals(member2.getCreatedTime(), createdMember2.getCreatedTime());
 		Assertions.assertEquals(member2.getRole(), createdMember2.getRole());
 	}
+
+	@Test
+	@DisplayName("get member by member id")
+	@Order(2)
+	void getMemberByMemberId() {
+		MemberDto member1 = memberService.getMemberByMemberId(1L);
+		MemberDto member2 = memberService.getMemberByMemberId(2L);
+
+		Assertions.assertEquals(1L, member1.getMemberId());
+		Assertions.assertEquals("russian roulette", member1.getBio());
+		Assertions.assertEquals("irene", member1.getNickname());
+		Assertions.assertEquals("red", member1.getSocialLoginId());
+		Assertions.assertEquals(MemberType.KAKAO, member1.getMemberType());
+		Assertions.assertEquals(1234567890L, member1.getShareId());
+		Assertions.assertEquals(Role.USER, member1.getRole());
+
+		Assertions.assertEquals(2L, member2.getMemberId());
+		Assertions.assertEquals("feel my rhythm", member2.getBio());
+		Assertions.assertEquals("wendy", member2.getNickname());
+		Assertions.assertEquals("velvet", member2.getSocialLoginId());
+		Assertions.assertEquals(MemberType.GOOGLE, member1.getMemberType());
+		Assertions.assertEquals(1234567891L, member2.getShareId());
+		Assertions.assertEquals(Role.ADMIN, member2.getRole());
+	}
+
 }
