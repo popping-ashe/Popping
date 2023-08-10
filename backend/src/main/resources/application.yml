@@ -49,3 +49,4 @@ logging:
     org.hibernate.type: trace # 콘솔창에 조건에 바인딩되는 값 및 조회 결과 출력
     com.ashe.popping: debug
 
+redirect-uri: "https://dev.pop-ping.com/oauth/"
