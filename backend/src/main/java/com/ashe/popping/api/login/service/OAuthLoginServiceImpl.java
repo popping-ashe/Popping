@@ -81,7 +81,8 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		OAuthAttributes memberInfo = socialLoginApiService.getMemberInfo(
 			GrantType.BEARER.getType() + " " + oAuthToken.getAccessToken());
 		JwtTokenDto jwtTokenDto;
-		Optional<Member> optionalMember = memberService.getMemberBySocialLoginId(memberInfo.getId());
+		Optional<Member> optionalMember = memberService.getMemberBySocialLoginIdAndMemberType(memberInfo.getId(),
+			memberInfo.getMemberType());
 
 		// 1. 신규 회원
 		if (optionalMember.isEmpty()) {
