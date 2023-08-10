@@ -4,7 +4,7 @@
     <div class="page">
       <div class="frame" style="z-index: 0">
         <div class="upper-bar">
-          <div class="new-button font-eng" @click="$router.push('/')">
+          <div class="new-button font-eng" @click="logoutUser()">
             <div>Back</div>
           </div>
           <div class="username font-kor">
@@ -44,7 +44,7 @@
 
 <script>
 import termsDetail from '../components/termsDetail.vue';
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { changeagree } from "@/api/user";
 import router from '../router';
 
@@ -63,6 +63,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions(userStore, ["logoutUser"]),
+    async logoutUser() {
+      this.logoutUser;
+    },
     // mandatory: Y, N으로 넘어오는거 글자로 변환
     getMandatoryLabel(mandatory) {
       return mandatory === "Y" ? "(필수)" : "(선택)";
@@ -158,6 +162,7 @@ export default {
     }
   },
 };
+
 </script>
 
 <style scoped>
