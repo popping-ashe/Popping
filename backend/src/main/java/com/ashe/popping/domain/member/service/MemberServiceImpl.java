@@ -13,6 +13,7 @@ import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.repository.MemberRepository;
 import com.ashe.popping.global.error.ErrorCode;
 import com.ashe.popping.global.error.exception.AuthenticationException;
+import com.ashe.popping.global.error.exception.BusinessException;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
