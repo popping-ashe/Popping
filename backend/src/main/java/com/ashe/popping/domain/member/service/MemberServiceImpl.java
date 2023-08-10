@@ -12,7 +12,6 @@ import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.repository.MemberRepository;
 import com.ashe.popping.global.error.ErrorCode;
 import com.ashe.popping.global.error.exception.AuthenticationException;
-import com.ashe.popping.global.error.exception.BusinessException;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -33,30 +32,26 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto updateNickname(MemberDto memberDto) {
-		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
+		Optional<Member> member = memberRepository.findByMemberId(memberDto.getMemberId());
 
-		member.updateNickname(memberDto.getNickname());
+		if (member.isEmpty())
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 
-		return MemberDto.from(member);
+		member.get().updateNickname(memberDto.getNickname());
+
+		return MemberDto.from(member.get());
 	}
 
 	@Override
 	public MemberDto updateLastVisitedTime(MemberDto memberDto) {
-		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
+		Optional<Member> member = memberRepository.findByMemberId(memberDto.getMemberId());
 
-		member.updateLastVisitedTime(memberDto.getLastVisitedTime());
+		if (member.isEmpty())
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 
-		return MemberDto.from(member);
-	}
+		member.get().updateLastVisitedTime(memberDto.getLastVisitedTime());
 
-	@Override
-	public void validateDuplicateMember(MemberDto memberDto) {
-		Member member = Member.from(memberDto);
-		Optional<Member> optionalMember = memberRepository.findBySocialLoginIdAndMemberType(member.getSocialLoginId(),
-			member.getMemberType());
-		if (optionalMember.isPresent()) {
-			throw new BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER);
-		}
+		return MemberDto.from(member.get());
 	}
 
 	@Override
@@ -88,16 +83,19 @@ public class MemberServiceImpl implements MemberService {
 	public Long deleteMember(Long memberId) {
 		long result = memberRepository.deleteByMemberId(memberId);
 		if (result != 1) {
-			throw new BusinessException(ErrorCode.NOT_EXIST_MEMBER);
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 		}
 		return result;
 	}
 
 	@Override
 	public MemberDto updateBio(MemberDto memberDto) {
-		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
-		member.updateBio(memberDto.getBio());
-		return MemberDto.from(member);
+		Optional<Member> member = memberRepository.findByMemberId(memberDto.getMemberId());
+		if (member.isEmpty())
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
+
+		member.get().updateBio(memberDto.getBio());
+		return MemberDto.from(member.get());
 	}
 
 	@Override
