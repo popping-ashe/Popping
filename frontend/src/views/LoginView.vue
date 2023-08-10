@@ -61,7 +61,7 @@ export default {
       const shareid = this.$store.getters["userStore/checkShareId"]?.share_id;
   
       if (localStorage.getItem("shareid")) {
-        this.$router.push(`main/${shareid}`);
+        this.$router.push(`main/${shareid}`).catch(()=>{});
       }
       this.updateProgressBar();
     }
