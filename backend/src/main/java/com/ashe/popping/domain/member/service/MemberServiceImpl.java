@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDto getMemberByMemberId(Long memberId) {
 		Optional<Member> member = memberRepository.findByMemberId(memberId);
 
-		return MemberDto.from(member.get());
+		return MemberDto.from(member.orElseThrow(() -> new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER)));
 	}
 
 	@Override
@@ -60,8 +60,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Optional<Member> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType) {
-		return memberRepository.findBySocialLoginIdAndMemberType(socialLoginId, memberType);
+	public Optional<MemberDto> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType) {
+		Optional<Member> optionalMember = memberRepository.findBySocialLoginIdAndMemberType(socialLoginId,
+			memberType);
+		return optionalMember.map(MemberDto::from).or(() -> Optional.ofNullable(null));
 	}
 
 	@Override
