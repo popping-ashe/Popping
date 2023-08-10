@@ -4,7 +4,9 @@
       <div class="close-button" @click="closeshare"></div>
         <div class="upper-bar">
           <div class="share-text font-kor">
-            정말로 탈퇴하시겠습니까?
+            <div style="margin-bottom:10px;">정말로 탈퇴하시겠습니까?</div>
+            <div style="font-size:70%;">회원 정보는 한 달 동안 유지되며 <br>
+기간 내에 다시 로그인하면 계정이 복구됩니다.</div>
           </div>
         </div>
       <div class="button-box">
@@ -88,9 +90,13 @@ export default {
   display: flex;
   align-content: flex-end;
   justify-content: center;
-  margin-right: 4%;
-  margin-top: 10%;
+  text-align: center;
+  margin-left:  5%;
+  margin-right: 10%;
+  margin-top: 13%;
   font-size: 100%;
+  flex-direction: column;
+
 }
 
 .button-box {
