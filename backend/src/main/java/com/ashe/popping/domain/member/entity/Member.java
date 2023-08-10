@@ -58,6 +58,8 @@ public class Member {
 	@Column(nullable = false, length = 30)
 	private String bio;
 
+	private LocalDateTime withdrawalDate;
+
 	public static Member from(MemberDto memberDto) {
 		return Member.builder()
 			.memberId(memberDto.getMemberId())
@@ -82,5 +84,9 @@ public class Member {
 
 	public void updateBio(String bio) {
 		this.bio = bio;
+	}
+
+	public void updateWithdrawalDate(LocalDateTime withdrawalDate) {
+		this.withdrawalDate = withdrawalDate;
 	}
 }
