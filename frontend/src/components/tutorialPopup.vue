@@ -17,7 +17,11 @@
           </slide>
           <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_03.png" alt=""><br><br>
-            <span class="carousel-text">버블 만료시간을 정하고<br>닉네임, 내용을 작성해주세요</span>
+            <span class="carousel-text">닉네임, 내용을 작성하고<br>버블 만료 시간을 정해주세요</span>
+          </slide>
+          <slide class="carousel-slide">
+            <img class="carousel-image" src="../assets/tutorial_08.png" alt=""><br><br>
+            <span class="carousel-text">기본 만료시간은 24시간으로<br>터치해서 변경할 수 있습니다</span>
           </slide>
           <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_04.png" alt=""><br>
