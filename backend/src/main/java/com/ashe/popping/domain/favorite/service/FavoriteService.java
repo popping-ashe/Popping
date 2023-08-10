@@ -15,4 +15,5 @@ public interface FavoriteService {
 	// 즐겨찾기 삭제
 	void removeFavorite(FavoriteDto favoriteDto);
 
+	void removeWithdrawalMember(Long memberId);
 }

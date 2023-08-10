@@ -37,4 +37,10 @@ public class FavoriteServiceImpl implements FavoriteService {
 	public void removeFavorite(FavoriteDto favoriteDto) {
 		favoriteRepository.delete(Favorite.from(favoriteDto));
 	}
+
+	@Override
+	public void removeWithdrawalMember(Long memberId) {
+		favoriteRepository.deleteByMemberId(memberId);
+		favoriteRepository.deleteByFavoriteId(memberId);
+	}
 }
