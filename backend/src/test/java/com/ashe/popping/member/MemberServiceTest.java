@@ -193,4 +193,22 @@ public class MemberServiceTest {
 		Assertions.assertEquals(member2.getMemberId(), updatedMember2.getMemberId());
 		Assertions.assertEquals(member2.getBio(), updatedMember2.getBio());
 	}
+
+	@Test
+	@DisplayName("update last visited time")
+	@Order(7)
+	void updateLastVisitedTime() {
+		LocalDateTime after1Month = LocalDateTime.now().plusMonths(1L);
+		LocalDateTime after2Month = LocalDateTime.now().plusMonths(2L);
+		MemberDto member1 = MemberDto.builder().memberId(1L).lastVisitedTime(after1Month).build();
+		MemberDto member2 = MemberDto.builder().memberId(2L).lastVisitedTime(after2Month).build();
+		MemberDto updatedMember1 = memberService.updateLastVisitedTime(member1);
+		MemberDto updatedMember2 = memberService.updateLastVisitedTime(member2);
+
+		Assertions.assertEquals(member1.getMemberId(), updatedMember1.getMemberId());
+		Assertions.assertEquals(member1.getLastVisitedTime(), updatedMember1.getLastVisitedTime());
+
+		Assertions.assertEquals(member2.getMemberId(), updatedMember2.getMemberId());
+		Assertions.assertEquals(member2.getLastVisitedTime(), updatedMember2.getLastVisitedTime());
+	}
 }
