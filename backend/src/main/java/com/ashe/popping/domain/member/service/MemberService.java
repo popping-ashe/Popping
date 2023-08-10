@@ -23,6 +23,8 @@ public interface MemberService {
 
 	Long deleteMember(Long memberId);
 
+	MemberDto updateWithdrawalDate(Long memberId);
+
 	MemberDto updateBio(MemberDto memberDto);
 
 	List<MemberDto> getAllMember();
