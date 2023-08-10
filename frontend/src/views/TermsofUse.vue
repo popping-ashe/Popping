@@ -1,11 +1,11 @@
 <template>
   <div class="page-container">
     <termsDetail :termdetail-props="termDetail" v-if="showReceivedDetail"/>
-    <div class="page" :class="slideClass">
+    <div class="page">
       <div class="frame" style="z-index: 0">
         <div class="upper-bar">
-          <div class="new-button font-eng">
-            <div @click="goBackPage(-1)">Back</div>
+          <div class="new-button font-eng" @click="$router.push('/')">
+            <div>Back</div>
           </div>
           <div class="username font-kor">
 

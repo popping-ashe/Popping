@@ -3,8 +3,7 @@
     <div class="window font-pre" v-click-outside="closeDetail">
       <div class="close-button" @click="closeDetail()"></div>
       <div class="term-detail-frame font-pre">
-        <div class="term-detail">
-          {{ termdetailProps }}
+        <div class="term-detail" v-html="messageTemp">
         </div>
       </div>
       <div class="close-button-frame" >
@@ -34,6 +33,10 @@ export default {
   props: ["termdetailProps"],
 
   computed: {
+    messageTemp() {
+      return this.termdetailProps.replace(/\n/gi,"<br>")
+    },
+
     ...mapState(["showReceivedDetail"]),
   },
 };
@@ -87,6 +90,7 @@ export default {
   border-radius: 24px;
   /* box-shadow: inset 1px 1px 2px black; */
   height: 100%;
+  word-break: break-all;
 }
 
 

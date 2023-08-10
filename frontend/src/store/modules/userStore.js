@@ -332,6 +332,7 @@ const userStore = {
         async (error) => {
           console.log(error);
           localStorage.clear();
+          commit("SET_IS_LOGIN", false);
           router.push({ name: "LoginView" });
         }
       );
