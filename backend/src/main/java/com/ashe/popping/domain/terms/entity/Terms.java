@@ -76,5 +76,9 @@ public class Terms {
 	public void updateMandatory(String mandatory) {
 		this.mandatory = mandatory;
 	}
+
+	public void updateUpdatedTime(LocalDateTime updatedTime) {
+		this.updatedTime = updatedTime;
+	}
 }
 
