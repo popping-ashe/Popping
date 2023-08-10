@@ -67,17 +67,36 @@
 
 
         <!-- 본인 페이지 여부에 따라 버블 클릭 가능/불가능 -->
-        <div class="bubble-area">
+        <div v-if="pageid == getshareid && isLogin" class="bubble-area">
           <div
             class="bubble-frame font-kor"
-            @click="[openDetail(index),analyticsBubble()]"
+            @click="[openDetail($event.target, index),analyticsBubble()]"
+            v-for="(message, index) in receivedmessages"
+            :key="index"
+            :style="{ width: randomBubbleSize[index], height: randomBubbleSize[index], margin: randomX[index] }"
+          >
+
+            <div class="time-left" :style="{ fontSize: randomFontSize[index], color: message.state === '읽음' ? 'darkgray' : '#83add6'  }" >
+              {{ calLeftTime(index) }}
+              <img class="bubble" :style="message.state === '읽음' ? 'filter: grayscale(1)' : 'filter: none' " src="../assets/bubble.png"  />
+            </div>
+            <!-- <div v-if="message.state == '읽음'" class="time-left" :style="{ fontSize: randomFontSize[index] } " style="color: darkgray !important;">
+              {{ calLeftTime(index) }}
+              <img class="bubble" src="../assets/bubble_read.png"  />
+            </div> -->
+          </div>
+        </div>
+
+        <div v-else class="bubble-area">
+          <div
+            class="bubble-frame font-kor"
             v-for="(message, index) in receivedmessages"
             :key="index"
             :style="{ width: randomBubbleSize[index], height: randomBubbleSize[index], margin: randomX[index] }"
           >
             <div class="time-left" :style="{ fontSize: randomFontSize[index] }">
               {{ calLeftTime(index) }}
-              <img class="bubble" src="../assets/bubble.png" />
+              <img class="bubble" src="../assets/bubble.png"  />
             </div>
           </div>
         </div>
@@ -282,9 +301,10 @@ export default {
     closeTutorialComponent() {
       this.openTutorial = false;
     },
-    openDetail(idx) {
+    openDetail(elem, idx) {
       if (this.pageid == this.getshareid) {
         // elem.parentElement.parentElement.style.display = "none";
+        elem.parentElement.parentElement.style.filter = "grayscale(1)";
         this.bubbleDetail = this.receivedmessages[idx];
         this.bubbleDetail.content = this.bubbleDetail.content.replace(/\n/gi, "<br>");
         this.$store.commit("SHOW_DETAIL", !this.showReceivedDetail);
