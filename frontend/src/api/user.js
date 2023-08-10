@@ -131,7 +131,7 @@ async function deleteuser(success, fail) {
   const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
   let token = "Bearer " + decryptAccessToken;
   api.defaults.headers["Authorization"] = token;
-  await api.delete(`/signout`).then(success).catch(fail);
+  await api.post(`/signout`).then(success).catch(fail);
 }
 //access 토큰 새로 발급
 async function gettoken(success, fail) {

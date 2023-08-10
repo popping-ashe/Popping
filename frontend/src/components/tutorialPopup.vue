@@ -24,19 +24,19 @@
             <span class="carousel-text">기본 만료시간은 24시간으로<br>터치해서 변경할 수 있습니다</span>
           </slide>
           <slide class="carousel-slide">
-            <img class="carousel-image" src="../assets/tutorial_04.png" alt=""><br>
+            <img class="carousel-image" src="../assets/tutorial_04.png" alt=""><br><br>
             <span class="carousel-text">닉네임을 작성하지 않으면<br>'익명'으로 발송됩니다</span>
           </slide>
           <slide class="carousel-slide">
-            <img class="carousel-image" src="../assets/tutorial_05.png" alt=""><br>
-            <span class="carousel-text">버블 위 숫자는<br>버블이 터지기까지 남은 시간입니다</span>
+            <img class="carousel-image" src="../assets/tutorial_05.png" alt=""><br><br>
+            <span class="carousel-text">버블 위 숫자는<br>버블이 터지기까지 남은 시간입니다<br>읽은 버블은 회색으로 변합니다</span>
           </slide>
           <slide class="carousel-slide">
-            <img class="carousel-image" src="../assets/tutorial_06.png" alt=""><br>
+            <img class="carousel-image" src="../assets/tutorial_06.png" alt=""><br><br>
             <span class="carousel-text">받은 버블은 만료 시간이 지나면<br>다시 볼 수 없으니 조심하세요!</span>
           </slide>
           <slide class="carousel-slide">
-            <img class="carousel-image" src="../assets/tutorial_07.png" alt=""><br>
+            <img class="carousel-image" src="../assets/tutorial_07.png" alt=""><br><br>
             <span class="carousel-text">마이페이지로 이동해<br>내가 보낸 버블을 확인해보세요</span>
           </slide>
         </carousel>
