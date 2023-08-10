@@ -15,8 +15,6 @@ public interface MemberService {
 
 	MemberDto updateLastVisitedTime(MemberDto memberDto);
 
-	void validateDuplicateMember(MemberDto memberDto);
-
 	Optional<MemberDto> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType);
 
 	MemberDto getMemberByShareId(Long shareId);
