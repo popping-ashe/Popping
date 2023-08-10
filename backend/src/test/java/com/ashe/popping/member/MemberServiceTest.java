@@ -108,7 +108,7 @@ public class MemberServiceTest {
 		Assertions.assertEquals("feel my rhythm", member2.getBio());
 		Assertions.assertEquals("wendy", member2.getNickname());
 		Assertions.assertEquals("velvet", member2.getSocialLoginId());
-		Assertions.assertEquals(MemberType.GOOGLE, member1.getMemberType());
+		Assertions.assertEquals(MemberType.GOOGLE, member2.getMemberType());
 		Assertions.assertEquals(1234567891L, member2.getShareId());
 		Assertions.assertEquals(Role.ADMIN, member2.getRole());
 	}
@@ -119,6 +119,30 @@ public class MemberServiceTest {
 	void getMemberByShareId() {
 		MemberDto member1 = memberService.getMemberByShareId(1234567890L);
 		MemberDto member2 = memberService.getMemberByShareId(1234567891L);
+
+		Assertions.assertEquals(1L, member1.getMemberId());
+		Assertions.assertEquals("russian roulette", member1.getBio());
+		Assertions.assertEquals("irene", member1.getNickname());
+		Assertions.assertEquals("red", member1.getSocialLoginId());
+		Assertions.assertEquals(MemberType.KAKAO, member1.getMemberType());
+		Assertions.assertEquals(1234567890L, member1.getShareId());
+		Assertions.assertEquals(Role.USER, member1.getRole());
+
+		Assertions.assertEquals(2L, member2.getMemberId());
+		Assertions.assertEquals("feel my rhythm", member2.getBio());
+		Assertions.assertEquals("wendy", member2.getNickname());
+		Assertions.assertEquals("velvet", member2.getSocialLoginId());
+		Assertions.assertEquals(MemberType.GOOGLE, member2.getMemberType());
+		Assertions.assertEquals(1234567891L, member2.getShareId());
+		Assertions.assertEquals(Role.ADMIN, member2.getRole());
+	}
+
+	@Test
+	@DisplayName("get member by social login id")
+	@Order(4)
+	void getMemberByKakaoId() {
+		MemberDto member1 = memberService.getMemberBySocialLoginIdAndMemberType("red", MemberType.KAKAO).get();
+		MemberDto member2 = memberService.getMemberBySocialLoginIdAndMemberType("velvet", MemberType.GOOGLE).get();
 
 		Assertions.assertEquals(1L, member1.getMemberId());
 		Assertions.assertEquals("russian roulette", member1.getBio());
