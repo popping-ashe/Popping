@@ -21,7 +21,7 @@ public interface MemberService {
 
 	Long deleteMember(Long memberId);
 
-	void updateWithdrawalDate(Long memberId);
+	void updateWithdrawalDate(Long memberId, boolean withDrawal);
 
 	MemberDto updateBio(MemberDto memberDto);
 

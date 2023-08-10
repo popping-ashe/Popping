@@ -21,11 +21,11 @@ public class SignoutController {
 	private final MemberService memberService;
 
 	@PostMapping("/signout")
-	public ResponseEntity<String> deleteMember(@MemberInfo MemberInfoDto memberInfoDto){
+	public ResponseEntity<String> deleteMember(@MemberInfo MemberInfoDto memberInfoDto) {
 		MemberDto memberDto = memberService.getMemberByMemberId(memberInfoDto.getMemberId());
-		if(MemberType.KAKAO.equals(memberDto.getMemberType()))
+		if (MemberType.KAKAO.equals(memberDto.getMemberType()))
 			signoutService.disconnectKakao(memberDto.getSocialLoginId());
-		memberService.updateWithdrawalDate(memberInfoDto.getMemberId());
+		memberService.updateWithdrawalDate(memberInfoDto.getMemberId(), true);
 
 		return ResponseEntity.ok(null);
 	}

@@ -103,6 +103,8 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		// 2. 가입된 회원
 		else {
 			MemberDto oauthMember = optionalMember.get();
+			if (oauthMember.getWithdrawalDate() != null) // 틸퇴 이력이 있는 회원이라면
+				memberService.updateWithdrawalDate(oauthMember.getMemberId(), false);
 			// 토큰 생성
 			jwtTokenDto = tokenManager.createJwtTokenDto(oauthMember.getMemberId(), oauthMember.getRole());
 		}
