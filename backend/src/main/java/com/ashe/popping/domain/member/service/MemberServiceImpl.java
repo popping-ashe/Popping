@@ -45,11 +45,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto updateLastVisitedTime(MemberDto memberDto) {
-		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
+		Optional<Member> member = memberRepository.findByMemberId(memberDto.getMemberId());
 
-		member.updateLastVisitedTime(memberDto.getLastVisitedTime());
+		if (member.isEmpty())
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 
-		return MemberDto.from(member);
+		member.get().updateLastVisitedTime(memberDto.getLastVisitedTime());
+
+		return MemberDto.from(member.get());
 	}
 
 	@Override
