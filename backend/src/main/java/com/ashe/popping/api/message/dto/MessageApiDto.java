@@ -33,12 +33,12 @@ public class MessageApiDto {
 			this.replyAvailable = replyAvailable;
 		}
 
-		public static Request of(String content, String nickname, Long retentionTime){
+		public static Request of(String content, String nickname, Long retentionTime) {
 			return Request.builder()
 				.content(content)
 				.nickname(nickname)
 				.retentionTime(retentionTime)
-				.replyAvailable("NO")
+				.replyAvailable("N")
 				.build();
 		}
 	}
@@ -108,6 +108,7 @@ public class MessageApiDto {
 		}
 
 	}
+
 	@Getter
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 	public static class CountResponse {
@@ -122,7 +123,7 @@ public class MessageApiDto {
 			this.expiredMessagesCount = expiredMessagesCount;
 		}
 
-		public static CountResponse from(MessageCountDto messageCountDto){
+		public static CountResponse from(MessageCountDto messageCountDto) {
 			return CountResponse.builder()
 				.receivedMessagesCount(messageCountDto.getReceivedMessagesCount())
 				.sentMessagesCount(messageCountDto.getSentMessagesCount())
