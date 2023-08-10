@@ -14,7 +14,6 @@ import com.ashe.popping.api.message.dto.MessageApiDto;
 import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
-import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.service.MemberService;
 import com.ashe.popping.domain.message.dto.MessageDto;
 import com.ashe.popping.domain.message.service.MessageService;
@@ -81,7 +80,7 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		OAuthAttributes memberInfo = socialLoginApiService.getMemberInfo(
 			GrantType.BEARER.getType() + " " + oAuthToken.getAccessToken());
 		JwtTokenDto jwtTokenDto;
-		Optional<Member> optionalMember = memberService.getMemberBySocialLoginIdAndMemberType(memberInfo.getId(),
+		Optional<MemberDto> optionalMember = memberService.getMemberBySocialLoginIdAndMemberType(memberInfo.getId(),
 			memberInfo.getMemberType());
 
 		// 1. 신규 회원
@@ -103,7 +102,7 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		}
 		// 2. 가입된 회원
 		else {
-			Member oauthMember = optionalMember.get();
+			MemberDto oauthMember = optionalMember.get();
 			// 토큰 생성
 			jwtTokenDto = tokenManager.createJwtTokenDto(oauthMember.getMemberId(), oauthMember.getRole());
 		}
