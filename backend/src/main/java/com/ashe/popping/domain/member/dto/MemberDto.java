@@ -22,6 +22,7 @@ public class MemberDto {
 	private Role role;
 	private Long shareId;
 	private String bio;
+	private LocalDateTime withdrawalDate;
 
 	public static MemberDto of(String socialLoginId, String nickname, Role role, Long shareId, MemberType memberType) {
 		return MemberDto.builder()
@@ -64,6 +65,7 @@ public class MemberDto {
 			.memberType(member.getMemberType())
 			.shareId(member.getShareId())
 			.createdTime(member.getCreatedTime())
+			.withdrawalDate(member.getWithdrawalDate())
 			.role(member.getRole())
 			.bio(member.getBio())
 			.build();
@@ -80,15 +82,6 @@ public class MemberDto {
 		return MemberDto.builder()
 			.memberId(memberId)
 			.bio(request.getBio())
-			.build();
-	}
-
-	public static MemberDto deletedMemberDto() {
-		return MemberDto.builder()
-			.memberId(0L)
-			.nickname("탈퇴한 회원")
-			.shareId(0L)
-			.bio("")
 			.build();
 	}
 
