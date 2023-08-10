@@ -20,7 +20,6 @@ import com.ashe.popping.domain.message.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
 
@@ -29,6 +28,7 @@ public class MessageServiceImpl implements MessageService {
 	private final MessageRepository messageRepository;
 	private final MemberService memberService;
 
+	@Transactional
 	@Override
 	public MessageDto saveMessage(MessageDto messageDto, MemberDto memberDto) {
 		Message message = Message.of(messageDto, memberDto);
@@ -37,6 +37,7 @@ public class MessageServiceImpl implements MessageService {
 		return MessageDto.from(message);
 	}
 
+	@Transactional
 	@Override
 	public MessageDto saveMessage(MessageDto messageDto) {
 		Message message = messageRepository.findByMessageId(messageDto.getMessageId());
@@ -45,6 +46,7 @@ public class MessageServiceImpl implements MessageService {
 		return MessageDto.from(newMessage);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public List<MessageDto> loadReceiveMessage(Long receiver, Pageable pageable) {
 		LocalDateTime now = LocalDateTime.now();
@@ -60,10 +62,22 @@ public class MessageServiceImpl implements MessageService {
 	public List<MessageDto> loadSendMessage(Long sender, Pageable pageable) {
 		List<Message> messages = messageRepository.findBySender(sender, pageable);
 		return messages.stream()
-			.map(m -> MessageDto.of(m, memberService.getMemberByMemberId(m.getReceiver()).getNickname()))
-			.toList();
+			.map(
+				m -> {
+					String nickname = "";
+					try {
+						MemberDto optionalMemberDto = memberService.getMemberByMemberId(m.getReceiver());
+						nickname = optionalMemberDto.getNickname();
+					} catch (Exception e) {
+						nickname = "탈퇴한 회원";
+					}
+					return MessageDto.of(m, nickname);
+
+				}
+			).toList();
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public Long countExpireMessage(Long receiver, LocalDateTime lastVisitedTime) {
 		return messageRepository
@@ -71,6 +85,7 @@ public class MessageServiceImpl implements MessageService {
 				MessageState.READ);
 	}
 
+	@Transactional
 	@Override
 	public MessageDto updateMessageStateToRead(Long messageId) {
 		Message message = messageRepository.findByMessageId(messageId);
@@ -78,6 +93,7 @@ public class MessageServiceImpl implements MessageService {
 		return MessageDto.from(message);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public void updateMessageStateToExpired(Long messageId) {
 		Message message = messageRepository.findByMessageId(messageId);

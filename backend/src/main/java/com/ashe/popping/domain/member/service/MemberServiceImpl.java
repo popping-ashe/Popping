@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.entity.Member;
 import com.ashe.popping.domain.member.repository.MemberRepository;
@@ -27,10 +28,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDto getMemberByMemberId(Long memberId) {
 		Optional<Member> member = memberRepository.findByMemberId(memberId);
-		if (member.isEmpty()) {
-			return MemberDto.deletedMemberDto();
-		}
-		return MemberDto.from(member.get());
+
+		return MemberDto.from(member.orElseThrow(() -> new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER)));
 	}
 
 	@Override
@@ -54,15 +53,18 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void validateDuplicateMember(MemberDto memberDto) {
 		Member member = Member.from(memberDto);
-		Optional<Member> optionalMember = memberRepository.findBySocialLoginId(member.getSocialLoginId());
+		Optional<Member> optionalMember = memberRepository.findBySocialLoginIdAndMemberType(member.getSocialLoginId(),
+			member.getMemberType());
 		if (optionalMember.isPresent()) {
 			throw new BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER);
 		}
 	}
 
 	@Override
-	public Optional<Member> getMemberBySocialLoginId(String socialLoginId) {
-		return memberRepository.findBySocialLoginId(socialLoginId);
+	public Optional<MemberDto> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType) {
+		Optional<Member> optionalMember = memberRepository.findBySocialLoginIdAndMemberType(socialLoginId,
+			memberType);
+		return optionalMember.map(MemberDto::from).or(() -> Optional.ofNullable(null));
 	}
 
 	@Override
