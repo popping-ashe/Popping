@@ -26,4 +26,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	@Modifying(clearAutomatically = true)
 	@Transactional
 	int deleteByWithdrawalDateBefore(LocalDateTime now);
+
+	List<Member> findByWithdrawalDateBefore(LocalDateTime now);
 }
