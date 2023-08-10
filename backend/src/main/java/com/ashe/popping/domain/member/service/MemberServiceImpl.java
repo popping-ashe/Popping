@@ -93,13 +93,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberDto updateWithdrawalDate(Long memberId) {
+	public void updateWithdrawalDate(Long memberId) {
 		Optional<Member> member = memberRepository.findByMemberId(memberId);
 		if (member.isEmpty()) {
 			throw new BusinessException(ErrorCode.NOT_EXIST_MEMBER);
 		}
 		member.get().updateWithdrawalDate(LocalDateTime.now().plusMonths(1));
-		return MemberDto.from(member.get());
 	}
 
 	@Override

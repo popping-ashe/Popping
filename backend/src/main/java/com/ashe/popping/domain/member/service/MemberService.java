@@ -23,7 +23,7 @@ public interface MemberService {
 
 	Long deleteMember(Long memberId);
 
-	MemberDto updateWithdrawalDate(Long memberId);
+	void updateWithdrawalDate(Long memberId);
 
 	MemberDto updateBio(MemberDto memberDto);
 
