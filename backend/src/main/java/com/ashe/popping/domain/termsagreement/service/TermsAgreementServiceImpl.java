@@ -64,4 +64,9 @@ public class TermsAgreementServiceImpl implements TermsAgreementService {
 		return termsAgreementRepository.deleteByTermsId(termsId);
 	}
 
+	@Override
+	public Long deleteTermsAgreementByMemberId(Long memberId) {
+		return termsAgreementRepository.deleteByTermsId(memberId);
+	}
+
 }

@@ -13,4 +13,6 @@ public interface TermsAgreementService {
 	TermsAgreementDto updateTermsAgreement(TermsAgreementDto termsAgreementDto);
 
 	Long deleteTermsAgreementByTermsId(Long termsId);
+
+	Long deleteTermsAgreementByMemberId(Long memberId);
 }
