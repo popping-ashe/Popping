@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ashe.popping.api.termsagreement.dto.TermsAgreementApiDto;
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.constant.Role;
 import com.ashe.popping.domain.member.dto.MemberDto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -22,13 +23,15 @@ public class MemberApiDto {
 	private String nickname;
 	private LocalDateTime lastVisitedTime;
 	private String socialLoginId;
+	private MemberType memberType;
 	private LocalDateTime createdTime;
 	private Role role;
 	private String bio;
 
-	public static MemberApiDto of(String socialLoginId, String nickname, Role role) {
+	public static MemberApiDto of(String socialLoginId, String nickname, Role role, MemberType memberType) {
 		return MemberApiDto.builder()
 			.nickname(nickname)
+			.memberType(memberType)
 			.socialLoginId(socialLoginId)
 			.role(role)
 			.build();
