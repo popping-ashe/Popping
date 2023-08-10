@@ -350,7 +350,7 @@ export default {
       }
     },
     toHome() {
-      location.href = `http://dev.pop-ping.com/main/${this.getshareid}`;
+      location.href = `${process.env.VUE_APP_BASE_URL}/main/${this.getshareid}`;
     },
 
     calLeftTime(index) {
