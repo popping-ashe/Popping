@@ -64,17 +64,17 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		String contentType = "application/x-www-form-urlencoded;charset=utf-8";
 
 		String type = memberType.name().toLowerCase();
-		redirectUri = redirectUri + type + "/callback";
+		StringBuilder redirect = new StringBuilder().append(redirectUri).append(type).append("/callback");
 
 		OAuthTokenDto.Response oAuthToken = null;
 		if (MemberType.KAKAO.equals(memberType)) {
 			OAuthTokenDto.Request oAuthRequestDto = OAuthTokenDto.Request.of(kakaoClientId, kakaoClientSecret, code,
-				redirectUri);
+				redirect.toString());
 			oAuthToken = kakaoTokenClient.requestKakaoToken(contentType, oAuthRequestDto);
 		}
 		if (MemberType.GOOGLE.equals(memberType)) {
 			OAuthTokenDto.Request oAuthRequestDto = OAuthTokenDto.Request.of(googleClientId, googleClientSecret, code,
-				redirectUri);
+				redirect.toString());
 			oAuthToken = googleTokenClient.requestGoogleToken(contentType, oAuthRequestDto);
 		}
 
