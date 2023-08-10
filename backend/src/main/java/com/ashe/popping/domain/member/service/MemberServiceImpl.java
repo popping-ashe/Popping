@@ -91,9 +91,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto updateBio(MemberDto memberDto) {
-		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
-		member.updateBio(memberDto.getBio());
-		return MemberDto.from(member);
+		Optional<Member> member = memberRepository.findByMemberId(memberDto.getMemberId());
+		if (member.isEmpty())
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
+
+		member.get().updateBio(memberDto.getBio());
+		return MemberDto.from(member.get());
 	}
 
 	@Override
