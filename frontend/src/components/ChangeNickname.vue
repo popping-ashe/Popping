@@ -9,7 +9,7 @@
         프로필 수정
       </div>
       <div class="new-button font-eng" style="margin-right: 6%">
-        <div class="back-button font-eng" @click="stopEditing()">Done</div>
+        <div class="back-button font-eng" @click="[stopEditing(), analyticsNickname()]">Done</div>
       </div>
     </div>
     <br /><br /><br /><br />

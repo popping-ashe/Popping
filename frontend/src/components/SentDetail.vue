@@ -13,7 +13,7 @@
       <div class="upper-bar">
         <div class="sent-time">{{ messagedetailProps.create_time.substr(11, 5) }}</div>
         <div class="nickname-box">
-          <div>&nbsp;&nbsp;&nbsp;{{ messagedetailProps.nickname }}&nbsp;&nbsp;&nbsp;</div>
+          <div>&nbsp;&nbsp;&nbsp;<span v-html="messagedetailProps.nickname"></span>&nbsp;&nbsp;&nbsp;</div>
         </div>
       </div>
       <div class="content-box">
@@ -74,14 +74,14 @@ export default {
   background-size: 100%;
   background-repeat: no-repeat;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-wrap: wrap;
   z-index: 999;
 }
 
 .close-button {
-  width: 100%;
-  height: 16%;
+  width: 35%;
+  height: 15%;
   /* border: 1px solid black; */
 }
 

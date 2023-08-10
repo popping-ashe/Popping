@@ -108,6 +108,10 @@ const userStore = {
                 if (response.status == 200) {
                   commit("SET_USER_INFO", response.data);
                   localStorage.setItem("userinfo", JSON.stringify(response.data));
+                  router.push({
+                    name: "MainView",
+                    params: { pageid: this.state.userStore.shareid.share_id },
+                  });
                 } else {
                   console.log("유저 정보 없음");
                 }
@@ -148,10 +152,10 @@ const userStore = {
               (response) => {
                 if (response.status == 200) {
                   commit("SET_RECEIVED_MESSAGES", response.data);
-                  router.push({
-                    name: "MainView",
-                    params: { pageid: this.state.userStore.shareid.share_id },
-                  });
+                  // router.push({
+                  //   name: "MainView",
+                  //   params: { pageid: this.state.userStore.shareid.share_id },
+                  // });
                 } else {
                   console.log("받은 메세지 없음");
                 }
@@ -328,6 +332,7 @@ const userStore = {
         async (error) => {
           console.log(error);
           localStorage.clear();
+          commit("SET_IS_LOGIN", false);
           router.push({ name: "LoginView" });
         }
       );

@@ -25,7 +25,7 @@
           <div style="display: flex; justify-content: space-evenly">
             <div class="received">받음</div>
             <div class="sent">보냄</div>
-            <div class="unread">안읽음</div>
+            <div class="unread">만료됨</div>
           </div>
           <div style="display: flex; justify-content: center">
             <hr style="width: 85%" />
@@ -34,22 +34,8 @@
         <div class="sent-bubble-frame1" style="margin-top: 5%">
           <div class="sent-bubble-text-frame">
             <div class="sent-bubble-text font-stardust">보낸 버블</div>
-            <div class="selector-frame font-stardust">
-              <div
-                class="selector-read"
-                :style="{ color: readOption === 'read' ? 'black' : 'gray' }"
-                @click="showReadOnly()"
-              >
-                읽음
-              </div>
-              |
-              <div
-                class="selector-unread"
-                :style="{ color: readOption === 'unread' ? 'black' : 'gray' }"
-                @click="showUnreadOnly()"
-              >
-                안읽음
-              </div>
+            <div class="selector-frame font-stardust" @click="changeReadOption">
+              {{ readOption }}
             </div>
           </div>
         </div>
@@ -62,7 +48,7 @@
               v-for="(article, index) in nowShowing"
               :key="index"
               class="sent-message-box"
-              @click="sentDetail(index)"
+              @click="[sentDetail(index),analyticsBubble()]"
             >
               <div class="sent-message-ellipse font-kor">
                 <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
@@ -111,7 +97,7 @@ export default {
 
       sentmessages: "",
       nowShowing: "",
-      readOption: "all",
+      readOption: "전체",
       messageDetail: "",
       unreadMessageCount: "",
       toShowMessage: "",
@@ -143,37 +129,59 @@ export default {
       this.$store.commit("SHOW_SENT_DETAIL", !this.showSentDetail);
     },
 
-    showReadOnly() {
-      if (this.readOption == "all" || this.readOption == "unread") {
-        this.readOption = "read";
+    // showReadOnly() {
+    //   if (this.readOption == "all" || this.readOption == "unread") {
+    //     this.readOption = "read";
+    //     this.nowShowing = this.sentmessages.filter((article) => article.state === "읽음");
+    //   } else {
+    //     this.readOption = "all";
+    //     this.nowShowing = this.sentmessages;
+    //   }
+
+    //   if (this.nowShowing.length == 0) {
+    //     this.pleaseShare = true;
+    //   } else {
+    //     this.pleaseShare = false;
+    //   }
+    // },
+
+    // showUnreadOnly() {
+    //   if (this.readOption == "all" || this.readOption == "read") {
+    //     this.readOption = "unread";
+    //     this.nowShowing = this.sentmessages.filter((article) => article.state === "안읽음");
+    //   } else {
+    //     this.readOption = "all";
+    //     this.nowShowing = this.sentmessages;
+    //   }
+
+    //   if (this.nowShowing.length == 0) {
+    //     this.pleaseShare = true;
+    //   } else {
+    //     this.pleaseShare = false;
+    //   }
+    // },
+
+
+    changeReadOption() {
+      if (this.readOption == "전체") {
+        this.readOption = "읽음"
         this.nowShowing = this.sentmessages.filter((article) => article.state === "읽음");
-      } else {
-        this.readOption = "all";
-        this.nowShowing = this.sentmessages;
-      }
-
-      if (this.nowShowing.length == 0) {
-        this.pleaseShare = true;
-      } else {
-        this.pleaseShare = false;
-      }
-    },
-
-    showUnreadOnly() {
-      if (this.readOption == "all" || this.readOption == "read") {
-        this.readOption = "unread";
+      } else if (this.readOption == "읽음") {
+        this.readOption = "안읽음"
         this.nowShowing = this.sentmessages.filter((article) => article.state === "안읽음");
-      } else {
-        this.readOption = "all";
-        this.nowShowing = this.sentmessages;
+      } else if (this.readOption == "안읽음") {
+        this.readOption = "전체"
+        this.nowShowing = this.sentmessages
       }
-
+      
       if (this.nowShowing.length == 0) {
         this.pleaseShare = true;
       } else {
         this.pleaseShare = false;
       }
     },
+
+
     analyticsRead(){
       this.$gtag.event('click', {
         event_category: 'mypage',
@@ -208,7 +216,7 @@ export default {
         if (response.status == 200) {
           this.receivedmessagescount = response.data.received_messages_count;
           this.sentmessagescount = response.data.sent_messages_count;
-          this.unreadMessageCount = response.data.unread_messages_count;
+          this.unreadMessageCount = response.data.expired_messages_count;
         } else {
           // console.log("메세지 없음");
         }
@@ -471,8 +479,9 @@ export default {
   line-height: 21px;
   /* or 210% */
   letter-spacing: -0.32px;
-  color: gray;
+  /* color: gray; */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
 }
 
 .selector-read {

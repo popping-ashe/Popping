@@ -1,7 +1,7 @@
 <template>
   <div class="message-frame animate__animated animate__fadeIn">
     <div class="window font-pre" v-click-outside="closeDetail">
-      <div class="close-button" @click="closeDetail()"></div>
+      <div class="close-button" @click="[closeDetail(),analyticsCancel()]"></div>
       <div class="upper-bar">
         <input
           class="nickname-input"
@@ -29,8 +29,8 @@
       </div>
       <!-- <input class="content-input" type="text" v-model="contents"> -->
       <div class="button-box">
-        <div class="cancel-button" @click="closeDetail()">취소</div>
-        <div class="send-button" @click="sendMessage()">전송</div>
+        <div class="cancel-button" @click="[closeDetail(), analyticsCancel()]">취소</div>
+        <div class="send-button" @click="[sendMessage(),analyticsSend()]">전송</div>
       </div>
     </div>
   </div>
@@ -55,7 +55,8 @@ export default {
         sender: null,
         share_id: this.$route.params.pageid,
         nickname: "",
-        retentionTime: 1,
+        retentionTime: 24,
+        reply_available: "YES",
       },
     };
   },
@@ -67,21 +68,31 @@ export default {
   },
   methods: {
     sendMessage() {
-      sendUserMessage(
-        this.messageData,
-        (response) => {
-          if (response.status == 200) {
-            this.$store.commit("SHOW_MAKE_WINDOW", !this.showMakeWindow);
-            this.$parent.sendmessageupdate(response.data);
-            this.$toast.center("버블을 보냈습니다.");
-          } else {
-            // console.log("잘못");
+      // 빈칸일때 익명, 내용없음으로 가짐
+      if (this.messageData.nickname.trim() === "") {
+        this.messageData.nickname = "익명"
+      }
+      // 내용 없을때 안보내지게
+      if (this.messageData.content == "")
+      {
+        this.$toast.center("내용을 입력해주세요.")
+      } else {
+        sendUserMessage(
+          this.messageData,
+          (response) => {
+            if (response.status == 200) {
+              this.$store.commit("SHOW_MAKE_WINDOW", !this.showMakeWindow);
+              this.$parent.sendmessageupdate(response.data);
+              this.$toast.center("버블을 보냈습니다.");
+            } else {
+              // console.log("잘못");
+            }
+          },
+          (error) => {
+            console.log(error);
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        );
+      }
     },
 
     closeDetail() {
@@ -156,13 +167,13 @@ export default {
   background-size: 100%;
   background-repeat: no-repeat;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-wrap: wrap;
 }
 
 .close-button {
-  width: 100%;
-  height: 16%;
+  width: 35%;
+  height: 15%;
   /* border: 1px solid black; */
 }
 

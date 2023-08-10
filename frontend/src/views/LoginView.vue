@@ -17,7 +17,8 @@
 <script>
 // import Vue from 'vue';
 // import ClickMessage from '../components/ClickMessage.vue';
-
+import { mapState } from "vuex";
+const userStore = "userStore";
 export default {
   name: "LoginView",
   components: {
@@ -37,7 +38,7 @@ export default {
 
     //카카오 로그인
     kakaologin() {
-      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=https://www.pop-ping.com/oauth/kakao/callback&response_type=code`;
+      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.VUE_APP_BASE_URL}/oauth/kakao/callback&response_type=code`;
     },
 
     updateProgressBar() {
@@ -55,12 +56,19 @@ export default {
   },
   mounted() {
     // Start the progress bar animation on component mount (just for demonstration purposes)
-    const shareid = this.$store.getters["userStore/checkShareId"]?.share_id;
-    if (localStorage.getItem("shareid")) {
-      this.$router.push(`main/${shareid}`);
+    if (this.isLogin) {
+
+      const shareid = this.$store.getters["userStore/checkShareId"]?.share_id;
+  
+      if (localStorage.getItem("shareid")) {
+        this.$router.push(`main/${shareid}`).catch(()=>{});
+      }
+      this.updateProgressBar();
     }
-    this.updateProgressBar();
   },
+  computed: {
+    ...mapState(userStore, ["isLogin"]),
+  }
 };
 </script>
 

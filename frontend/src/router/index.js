@@ -6,6 +6,8 @@ import MypageView from "../views/MypageView.vue";
 import LoginCallBack from "../views/LoginCallBack.vue";
 import SettingView from "../views/SettingView.vue";
 import ErrorView from "../views/ErrorView.vue";
+import TermsofUse from "../views/TermsofUse.vue";
+
 // import userStore from "@/store/modules/userStore";
 
 Vue.use(VueRouter);
@@ -35,6 +37,11 @@ const routes = [
     path: "/settings",
     name: "SettingView",
     component: SettingView,
+  },
+  {
+    path: "/terms",
+    name: "TermsofUse",
+    component: TermsofUse,
   },
   {
     path: "/error",
