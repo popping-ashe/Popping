@@ -81,7 +81,8 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		OAuthAttributes memberInfo = socialLoginApiService.getMemberInfo(
 			GrantType.BEARER.getType() + " " + oAuthToken.getAccessToken());
 		JwtTokenDto jwtTokenDto;
-		Optional<Member> optionalMember = memberService.getMemberBySocialLoginId(memberInfo.getId());
+		Optional<Member> optionalMember = memberService.getMemberBySocialLoginIdAndMemberType(memberInfo.getId(),
+			memberInfo.getMemberType());
 
 		// 1. 신규 회원
 		if (optionalMember.isEmpty()) {
@@ -134,7 +135,7 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 			+ "친구의 링크를 공유받아 버블을 남겨보세요\uD83D\uDD17";
 		String nickname = "popping";
 		Long retentionTime = 24L;
-		MessageApiDto.Request request = MessageApiDto.Request.from(content, nickname, retentionTime);
+		MessageApiDto.Request request = MessageApiDto.Request.of(content, nickname, retentionTime);
 		return MessageDto.from(request);
 	}
 }

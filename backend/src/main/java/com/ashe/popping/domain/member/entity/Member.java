@@ -43,7 +43,7 @@ public class Member {
 
 	private LocalDateTime lastVisitedTime;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String socialLoginId;
 
 	@Column(nullable = false, unique = true)

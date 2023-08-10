@@ -5,12 +5,13 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 	Optional<Member> findByMemberId(Long memberId);
 
-	Optional<Member> findBySocialLoginId(String Id);
+	Optional<Member> findBySocialLoginIdAndMemberType(String Id, MemberType memberType);
 
 	Optional<Member> findByShareId(Long shareId);
 

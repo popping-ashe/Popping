@@ -11,8 +11,10 @@ import com.ashe.popping.domain.member.dto.MemberDto;
 import com.ashe.popping.domain.member.service.MemberService;
 import com.ashe.popping.domain.message.dto.MessageCountDto;
 import com.ashe.popping.domain.message.dto.MessageDto;
+import com.ashe.popping.domain.message.dto.MessageRedisDto;
 import com.ashe.popping.domain.message.dto.MessageState;
 import com.ashe.popping.domain.message.entity.Message;
+import com.ashe.popping.domain.message.repository.MessageRedisRepository;
 import com.ashe.popping.domain.message.repository.MessageRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
 
+	private final MessageRedisRepository messageRedisRepository;
+
 	private final MessageRepository messageRepository;
 	private final MemberService memberService;
 
@@ -29,6 +33,7 @@ public class MessageServiceImpl implements MessageService {
 	public MessageDto saveMessage(MessageDto messageDto, MemberDto memberDto) {
 		Message message = Message.of(messageDto, memberDto);
 		messageRepository.save(message);
+		messageRedisRepository.save(MessageRedisDto.of(message.getMessageId(), message.getExpirationTime()));
 		return MessageDto.from(message);
 	}
 
@@ -36,6 +41,7 @@ public class MessageServiceImpl implements MessageService {
 	public MessageDto saveMessage(MessageDto messageDto) {
 		Message message = messageRepository.findByMessageId(messageDto.getMessageId());
 		Message newMessage = messageRepository.save(Message.of(messageDto, message.getSender(), message.getReceiver()));
+		messageRedisRepository.save(MessageRedisDto.of(newMessage.getMessageId(), newMessage.getExpirationTime()));
 		return MessageDto.from(newMessage);
 	}
 
@@ -70,6 +76,14 @@ public class MessageServiceImpl implements MessageService {
 		Message message = messageRepository.findByMessageId(messageId);
 		message.updateStateToRead();
 		return MessageDto.from(message);
+	}
+
+	@Override
+	public void updateMessageStateToExpired(Long messageId) {
+		Message message = messageRepository.findByMessageId(messageId);
+		if (!message.getState().equals(MessageState.UNREAD))
+			return;
+		message.updateStateToExpired();
 	}
 
 	@Override
