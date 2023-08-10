@@ -21,6 +21,8 @@ public interface MemberService {
 
 	Long deleteMember(Long memberId);
 
+	void updateWithdrawalDate(Long memberId);
+
 	MemberDto updateBio(MemberDto memberDto);
 
 	List<MemberDto> getAllMember();

@@ -1,7 +1,7 @@
 package com.ashe.popping.api.signout.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ashe.popping.api.signout.service.SignoutService;
@@ -20,12 +20,12 @@ public class SignoutController {
 	private final SignoutService signoutService;
 	private final MemberService memberService;
 
-	@DeleteMapping("/signout")
+	@PostMapping("/signout")
 	public ResponseEntity<String> deleteMember(@MemberInfo MemberInfoDto memberInfoDto){
 		MemberDto memberDto = memberService.getMemberByMemberId(memberInfoDto.getMemberId());
 		if(MemberType.KAKAO.equals(memberDto.getMemberType()))
 			signoutService.disconnectKakao(memberDto.getSocialLoginId());
-		memberService.deleteMember(memberInfoDto.getMemberId());
+		memberService.updateWithdrawalDate(memberInfoDto.getMemberId());
 
 		return ResponseEntity.ok(null);
 	}

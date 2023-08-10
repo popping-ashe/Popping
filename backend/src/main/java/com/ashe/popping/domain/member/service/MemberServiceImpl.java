@@ -1,5 +1,6 @@
 package com.ashe.popping.domain.member.service;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -86,6 +87,15 @@ public class MemberServiceImpl implements MemberService {
 			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 		}
 		return result;
+	}
+
+	@Override
+	public void updateWithdrawalDate(Long memberId) {
+		Optional<Member> member = memberRepository.findByMemberId(memberId);
+		if (member.isEmpty()) {
+			throw new BusinessException(ErrorCode.NOT_EXIST_MEMBER);
+		}
+		member.get().updateWithdrawalDate(LocalDateTime.now().plusMonths(1));
 	}
 
 	@Override
