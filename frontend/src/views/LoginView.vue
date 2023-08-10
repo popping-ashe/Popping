@@ -17,7 +17,8 @@
 <script>
 // import Vue from 'vue';
 // import ClickMessage from '../components/ClickMessage.vue';
-
+import { mapState } from "vuex";
+const userStore = "userStore";
 export default {
   name: "LoginView",
   components: {
@@ -55,12 +56,19 @@ export default {
   },
   mounted() {
     // Start the progress bar animation on component mount (just for demonstration purposes)
-    const shareid = this.$store.getters["userStore/checkShareId"]?.share_id;
-    if (localStorage.getItem("shareid")) {
-      this.$router.push(`main/${shareid}`);
+    if (this.isLogin) {
+
+      const shareid = this.$store.getters["userStore/checkShareId"]?.share_id;
+  
+      if (localStorage.getItem("shareid")) {
+        this.$router.push(`main/${shareid}`);
+      }
+      this.updateProgressBar();
     }
-    this.updateProgressBar();
   },
+  computed: {
+    ...mapState(userStore, ["isLogin"]),
+  }
 };
 </script>
 
