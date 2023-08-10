@@ -11,7 +11,7 @@ public interface TermsService {
 
 	TermsDto getTerms(Long termsId);
 
-	TermsDto modifyTerms(TermsDto termsDto);
+	TermsDto updateTerms(TermsDto termsDto);
 
 	Long deleteTerms(Long termsId);
 }

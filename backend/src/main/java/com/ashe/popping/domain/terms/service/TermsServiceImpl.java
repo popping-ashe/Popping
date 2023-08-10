@@ -1,5 +1,6 @@
 package com.ashe.popping.domain.terms.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ public class TermsServiceImpl implements TermsService {
 	}
 
 	@Override
-	public TermsDto modifyTerms(TermsDto termsDto) {
+	public TermsDto updateTerms(TermsDto termsDto) {
 		Optional<Terms> optionalTerms = termsRepository.findByTermsId(termsDto.getTermsId());
 
 		if (optionalTerms.isEmpty())
@@ -56,6 +57,8 @@ public class TermsServiceImpl implements TermsService {
 			terms.updateContent(termsDto.getContent());
 		if (termsDto.getMandatory() != null)
 			terms.updateMandatory(termsDto.getMandatory());
+
+		terms.updateUpdatedTime(LocalDateTime.now());
 
 		return TermsDto.from(terms);
 	}
