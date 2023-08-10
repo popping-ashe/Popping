@@ -1,6 +1,7 @@
 package com.ashe.popping.member;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -140,7 +141,7 @@ public class MemberServiceTest {
 	@Test
 	@DisplayName("get member by social login id")
 	@Order(4)
-	void getMemberByKakaoId() {
+	void getMemberBySocialLoginId() {
 		MemberDto member1 = memberService.getMemberBySocialLoginIdAndMemberType("red", MemberType.KAKAO).get();
 		MemberDto member2 = memberService.getMemberBySocialLoginIdAndMemberType("velvet", MemberType.GOOGLE).get();
 
@@ -159,5 +160,21 @@ public class MemberServiceTest {
 		Assertions.assertEquals(MemberType.GOOGLE, member2.getMemberType());
 		Assertions.assertEquals(1234567891L, member2.getShareId());
 		Assertions.assertEquals(Role.ADMIN, member2.getRole());
+	}
+
+	@Test
+	@DisplayName("update nickname")
+	@Order(5)
+	void updateNickname() {
+		MemberDto member1 = MemberDto.builder().memberId(1L).nickname("joy").build();
+		MemberDto member2 = MemberDto.builder().memberId(2L).nickname("seulgi").build();
+		MemberDto updatedMember1 = memberService.updateNickname(member1);
+		MemberDto updatedMember2 = memberService.updateNickname(member2);
+
+		Assertions.assertEquals(member1.getMemberId(), updatedMember1.getMemberId());
+		Assertions.assertEquals(member1.getNickname(), updatedMember1.getNickname());
+
+		Assertions.assertEquals(member2.getMemberId(), updatedMember2.getMemberId());
+		Assertions.assertEquals(member2.getNickname(), updatedMember2.getNickname());
 	}
 }
