@@ -13,15 +13,15 @@
           </slide>
           <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_02.png" alt=""><br><br>
-            <span class="carousel-text">친구의 파핑 페이지에서<br>버블 만들기 버튼을 눌러 버블을 보내세요</span>
+            <span class="carousel-text">친구의 파핑 페이지에서<br>버블 만들기를 눌러 버블을 보내보세요</span>
           </slide>
           <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_03.png" alt=""><br><br>
-            <span class="carousel-text">버블 만료시간과<br>답장받기 희망 여부를 정하고<br>닉네임, 내용을 작성해주세요</span>
+            <span class="carousel-text">버블 만료시간을 정하고<br>닉네임, 내용을 작성해주세요</span>
           </slide>
           <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_04.png" alt=""><br>
-            <span class="carousel-text">닉네임을 작성하지 않으면<br>익명으로 발송됩니다</span>
+            <span class="carousel-text">닉네임을 작성하지 않으면<br>'익명'으로 발송됩니다</span>
           </slide>
           <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_05.png" alt=""><br>
