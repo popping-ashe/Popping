@@ -15,5 +15,5 @@ public interface TermsAgreementRepository extends JpaRepository<TermsAgreement, 
 
 	Long deleteByTermsId(Long termsId);
 
-	Long deleteByMemberId(Long termsId);
+	Long deleteByMemberId(Long memberId);
 }
