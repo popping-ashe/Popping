@@ -134,7 +134,7 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 			+ "친구의 링크를 공유받아 버블을 남겨보세요\uD83D\uDD17";
 		String nickname = "popping";
 		Long retentionTime = 24L;
-		MessageApiDto.Request request = MessageApiDto.Request.from(content, nickname, retentionTime);
+		MessageApiDto.Request request = MessageApiDto.Request.of(content, nickname, retentionTime);
 		return MessageDto.from(request);
 	}
 }

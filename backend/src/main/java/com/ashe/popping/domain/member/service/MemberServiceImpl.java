@@ -60,10 +60,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Optional<MemberDto> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType) {
-		Optional<Member> optionalMember = memberRepository.findBySocialLoginIdAndMemberType(socialLoginId,
-			memberType);
-		return optionalMember.map(MemberDto::from).or(() -> Optional.ofNullable(null));
+	public Optional<Member> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType) {
+		return memberRepository.findBySocialLoginIdAndMemberType(socialLoginId, memberType);
 	}
 
 	@Override
