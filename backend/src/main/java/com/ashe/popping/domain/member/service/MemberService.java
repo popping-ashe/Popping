@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import com.ashe.popping.domain.member.constant.MemberType;
 import com.ashe.popping.domain.member.dto.MemberDto;
-import com.ashe.popping.domain.member.entity.Member;
 
 public interface MemberService {
 	MemberDto createMember(MemberDto memberDto);
@@ -18,7 +17,7 @@ public interface MemberService {
 
 	void validateDuplicateMember(MemberDto memberDto);
 
-	Optional<Member> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType);
+	Optional<MemberDto> getMemberBySocialLoginIdAndMemberType(String socialLoginId, MemberType memberType);
 
 	MemberDto getMemberByShareId(Long shareId);
 
