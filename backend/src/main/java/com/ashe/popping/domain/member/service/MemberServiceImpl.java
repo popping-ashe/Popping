@@ -33,11 +33,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto updateNickname(MemberDto memberDto) {
-		Member member = memberRepository.findByMemberId(memberDto.getMemberId()).get();
+		Optional<Member> member = memberRepository.findByMemberId(memberDto.getMemberId());
 
-		member.updateNickname(memberDto.getNickname());
+		if (member.isEmpty())
+			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
 
-		return MemberDto.from(member);
+		member.get().updateNickname(memberDto.getNickname());
+
+		return MemberDto.from(member.get());
 	}
 
 	@Override
