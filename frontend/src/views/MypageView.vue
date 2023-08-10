@@ -48,7 +48,7 @@
               v-for="(article, index) in nowShowing"
               :key="index"
               class="sent-message-box"
-              @click="sentDetail(index)"
+              @click="[sentDetail(index),analyticsBubble()]"
             >
               <div class="sent-message-ellipse font-kor">
                 <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
