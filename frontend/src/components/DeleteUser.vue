@@ -11,7 +11,7 @@
         </div>
       <div class="button-box">
         <div class="cancel-button" @click="closeshare">취소</div>
-        <div class="send-button" @click="deleteuser">탈퇴</div>
+        <div class="send-button" @click="[deleteuser(), analyticsSignout()]">탈퇴</div>
       </div>
     </div>
   </div>
@@ -34,6 +34,13 @@ export default {
     },
     closeshare() {
       this.$emit("close"); // 이벤트를 부모 컴포넌트에 전달하여 닫히도록 함
+    },
+    analyticsSignout(){
+      this.$gtag.event('click', {
+        event_category: 'settings',
+        event_label: 'signout',
+        value: 'signout',
+      }); 
     },
   }
 

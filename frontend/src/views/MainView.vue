@@ -103,7 +103,7 @@
 
         <!-- 로그인 상태에 따라 동적으로 메세지 보내기 버튼 활성화/비활성화 -->
         <div class="bubble-make-btn-tutorial-frame">
-          <div class="tutorial-button font-eng" style="margin-left: 6%" @click="openTutorialComponent()">
+          <div class="tutorial-button font-eng" style="margin-left: 6%" @click="[openTutorialComponent(),analyticsTutorial()]">
             i
           </div>
         <div class="bubble-make-btn font-kor" v-if="pageid == getshareid" @click="[refresh(),analyticsRefresh()]">
@@ -413,6 +413,13 @@ export default {
         event_category: 'main',
         event_label: 'makeBubble',
         value: 'makeBubble',
+      }); 
+    },
+    analyticsTutorial(){
+      this.$gtag.event('click', {
+        event_category: 'main',
+        event_label: 'tutorial',
+        value: 'tutorial',
       }); 
     },
 
