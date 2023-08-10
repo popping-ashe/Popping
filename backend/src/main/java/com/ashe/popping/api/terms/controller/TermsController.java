@@ -53,9 +53,9 @@ public class TermsController {
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<TermsApiDto.Response> modifyTerms(@PathVariable("id") Long termsId,
+	public ResponseEntity<TermsApiDto.Response> updateTerms(@PathVariable("id") Long termsId,
 		@RequestBody TermsApiDto.Request request) {
-		TermsDto terms = termsService.modifyTerms(TermsDto.of(request, termsId));
+		TermsDto terms = termsService.updateTerms(TermsDto.of(request, termsId));
 
 		return ResponseEntity.ok(TermsApiDto.Response.from(terms));
 	}
