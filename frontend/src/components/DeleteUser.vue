@@ -5,8 +5,8 @@
         <div class="upper-bar">
           <div class="share-text font-kor">
             <div style="margin-bottom:10px;">정말로 탈퇴하시겠습니까?</div>
-            <div style="font-size:70%;">회원 정보는 한 달 동안 유지되며
-기간내에 다시 로그인하면 계정이 복구됩니다.</div>
+            <div style="font-size:70%;">회원 정보는 한 달 동안 유지되며 <br>
+기간 내에 다시 로그인하면 계정이 복구됩니다.</div>
           </div>
         </div>
       <div class="button-box">
