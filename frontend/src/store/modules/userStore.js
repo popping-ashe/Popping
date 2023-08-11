@@ -10,6 +10,7 @@ import {
   sentUserMessage,
   receivedUserMessage,
   logout,
+  googlelogin
 } from "@/api/user";
 import CryptoJS from "crypto-js";
 
@@ -77,6 +78,106 @@ const userStore = {
     // 로그인 시 유저 정보 불러오기
     async kakao({ commit }, code) {
       await kakaologin(
+        code,
+        (response) => {
+          if (response.status === 200) {
+            let accessToken = response.data["accessToken"];
+            let refreshToken = response.data["refreshToken"];
+            commit("SET_IS_LOGIN", true);
+            commit("SET_IS_LOGIN_ERROR", false);
+            commit("SET_IS_VALID_TOKEN", true);
+            const encryptAccessToken = CryptoJS.AES.encrypt(
+              accessToken,
+              CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+              {
+                iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+                mode: CryptoJS.mode.CBC,
+              }
+            ).toString();
+            const encryptRefreshToken = CryptoJS.AES.encrypt(
+              refreshToken,
+              CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+              {
+                iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+                mode: CryptoJS.mode.CBC,
+              }
+            ).toString();
+            localStorage.setItem("access-token", encryptAccessToken);
+            localStorage.setItem("refresh-token", encryptRefreshToken);
+            getUserInfo(
+              (response) => {
+                if (response.status == 200) {
+                  commit("SET_USER_INFO", response.data);
+                  localStorage.setItem("userinfo", JSON.stringify(response.data));
+                  router.push({
+                    name: "MainView",
+                    params: { pageid: this.state.userStore.shareid.share_id },
+                  });
+                } else {
+                  console.log("유저 정보 없음");
+                }
+              },
+              async (error) => {
+                console.log(error);
+                commit("SET_IS_VALID_TOKEN", false);
+                router.push({ name: "LoginView" });
+              }
+            );
+            getshareid(
+              (response) => {
+                if (response.status == 200) {
+                  commit("SET_SHAREID", response.data);
+                  localStorage.setItem("shareid", JSON.stringify(response.data));
+                } else {
+                  console.log("shareid 없음");
+                }
+              },
+              async (error) => {
+                console.log(error);
+                router.push({ name: "LoginView" });
+              }
+            );
+            sentUserMessage(
+              (response) => {
+                if (response.status == 200) {
+                  commit("SET_SENT_MESSAGES", response.data);
+                } else {
+                  console.log("보낸 메세지 없음");
+                }
+              },
+              async (error) => {
+                console.log(error);
+              }
+            );
+            receivedUserMessage(
+              (response) => {
+                if (response.status == 200) {
+                  commit("SET_RECEIVED_MESSAGES", response.data);
+                  // router.push({
+                  //   name: "MainView",
+                  //   params: { pageid: this.state.userStore.shareid.share_id },
+                  // });
+                } else {
+                  console.log("받은 메세지 없음");
+                }
+              },
+              async (error) => {
+                console.log(error);
+              }
+            );
+          } else {
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true);
+            commit("SET_IS_VALID_TOKEN", false);
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    async google({ commit }, code) {
+      await googlelogin(
         code,
         (response) => {
           if (response.status === 200) {
@@ -333,7 +434,7 @@ const userStore = {
           console.log(error);
           localStorage.clear();
           commit("SET_IS_LOGIN", false);
-          router.push({ name: "LoginView" });
+          router.push({ name: "LoginView" }).catch(()=>{});
         }
       );
     },

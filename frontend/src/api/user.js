@@ -7,6 +7,10 @@ const api = apiInstance();
 async function kakaologin(code, success, fail) {
   await api.get(`/oauth/kakao/callback?code=${code}`).then(success).catch(fail);
 }
+//구글 로그인
+async function googlelogin(code, success, fail) {
+  await api.get(`/oauth/google/callback?code=${code}`).then(success).catch(fail);
+}
 
 //유저 정보 받아오기
 async function getUserInfo(success, fail) {
@@ -219,5 +223,6 @@ export {
   logout,
   changenickname,
   gettoken,
-  changeagree
+  changeagree,
+  googlelogin
 };
