@@ -333,7 +333,7 @@ const userStore = {
           console.log(error);
           localStorage.clear();
           commit("SET_IS_LOGIN", false);
-          router.push({ name: "LoginView" });
+          router.push({ name: "LoginView" }).catch(()=>{});
         }
       );
     },
