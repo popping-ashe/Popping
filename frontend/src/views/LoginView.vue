@@ -11,6 +11,15 @@
         <div>카카오 로그인</div>
       </div>
     </div>
+
+    <div class="google">
+      <div class="box-behind"></div>
+      <div class="box-front-google font-pre" @click="googlelogin()">
+        <img class="google-logo" src="../assets/google_login.png" alt="" />
+        <div>구글 로그인</div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -39,6 +48,10 @@ export default {
     //카카오 로그인
     kakaologin() {
       location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.VUE_APP_BASE_URL}/oauth/kakao/callback&response_type=code`;
+    },
+    // 구글 로그인
+    googlelogin() {
+      location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=profile&client_id=${process.env.VUE_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.VUE_APP_BASE_URL}/oauth/google/callback&response_type=code`;
     },
 
     updateProgressBar() {
@@ -142,12 +155,23 @@ export default {
   position: relative;
   display: flex;
   justify-content: center;
-  top: 43%;
+  top: 47%;
   width: 100%;
 }
-
+.google {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  top: 38%;
+  width: 100%;
+}
 .kakao-image {
   background-color: #fee500;
+  width: 68%;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+.google-image {
+  background-color: #ffffff;
   width: 68%;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
@@ -186,8 +210,31 @@ export default {
   font-weight: 800;
   box-shadow: inset 0px -3px 3px rgba(0, 0, 0, 6%);
 }
+.box-front-google {
+  position: absolute;
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 70%;
+  height: 42px;
+
+  background: #ffffff;
+  border: 0.1px solid #8c9799;
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  box-shadow: inset 0px -3px 3px rgba(0, 0, 0, 6%);
+}
 
 .kakao-logo {
   width: 30px;
+}
+.google-logo {
+  width: 18px;
+  height: 18px;
+  margin-right : 5px;
 }
 </style>
