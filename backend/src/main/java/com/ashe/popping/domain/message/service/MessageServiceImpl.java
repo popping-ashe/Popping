@@ -93,7 +93,7 @@ public class MessageServiceImpl implements MessageService {
 		return MessageDto.from(message);
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	@Override
 	public void updateMessageStateToExpired(Long messageId) {
 		Message message = messageRepository.findByMessageId(messageId);
@@ -102,6 +102,7 @@ public class MessageServiceImpl implements MessageService {
 		message.updateStateToExpired();
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public MessageCountDto countMessagesByType(Long memberId) {
 		Long receivedMessagesCount = messageRepository.countByReceiver(memberId);
