@@ -41,7 +41,7 @@ public class ShareController {
 		MemberDto member = memberService.getMemberByShareId(shareId);
 		List<MessageDto> messages = messageService.loadReceiveMessage(member.getMemberId(), pageable);
 		List<ShareApiDto.MessageResponse> messageResponse = toMessageResponse(messages);
-		return ResponseEntity.ok(ShareApiResultDto.of(member.getNickname(), messageResponse));
+		return ResponseEntity.ok(ShareApiResultDto.of(member.getNickname(), member.getBio(),messageResponse));
 	}
 
 	private static List<ShareApiDto.MessageResponse> toMessageResponse(List<MessageDto> messages) {
