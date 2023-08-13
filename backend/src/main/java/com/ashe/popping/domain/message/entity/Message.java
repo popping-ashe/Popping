@@ -96,8 +96,8 @@ public class Message {
 			.state(messageDto.getState())
 			.content(messageDto.getContent())
 			.expirationTime(messageDto.getExpirationTime())
-			.sender(senderId)
-			.receiver(receiverId)
+			.sender(receiverId)
+			.receiver(senderId)
 			.nickname(messageDto.getNickname())
 			.replyAvailable(messageDto.getReplyAvailable())
 			.build();
