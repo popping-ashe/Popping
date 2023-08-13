@@ -33,12 +33,12 @@ public class MessageApiDto {
 			this.replyAvailable = replyAvailable;
 		}
 
-		public static Request of(String content, String nickname, Long retentionTime) {
+		public static Request of(String content, String nickname, Long retentionTime, String replyAvailable) {
 			return Request.builder()
 				.content(content)
 				.nickname(nickname)
 				.retentionTime(retentionTime)
-				.replyAvailable("N")
+				.replyAvailable(replyAvailable)
 				.build();
 		}
 	}
