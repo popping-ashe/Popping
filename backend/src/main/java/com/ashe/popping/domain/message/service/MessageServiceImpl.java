@@ -39,7 +39,7 @@ public class MessageServiceImpl implements MessageService {
 
 	@Transactional
 	@Override
-	public MessageDto saveMessage(MessageDto messageDto) {
+	public MessageDto saveReplyMessage(MessageDto messageDto) {
 		Message message = messageRepository.findByMessageId(messageDto.getMessageId());
 		Message newMessage = messageRepository.save(Message.of(messageDto, message.getSender(), message.getReceiver()));
 		messageRedisRepository.save(MessageRedisDto.of(newMessage.getMessageId(), newMessage.getExpirationTime()));

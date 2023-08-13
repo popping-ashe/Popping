@@ -13,7 +13,7 @@ public interface MessageService {
 
 	MessageDto saveMessage(MessageDto messageDto, MemberDto memberDto);
 
-	MessageDto saveMessage(MessageDto messageDto);
+	MessageDto saveReplyMessage(MessageDto messageDto);
 
 	List<MessageDto> loadReceiveMessage(Long receiver, Pageable pageable);
 
