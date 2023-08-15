@@ -4,10 +4,13 @@
     <div class="window font-pre" v-click-outside="closeDetail">
       <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
+        <div class="nickname-and-time">
         <div class="nickname-box">
           <div>&nbsp;&nbsp;&nbsp;<span v-html="bubbledetailProps.nickname"></span>&nbsp;&nbsp;&nbsp;</div>
         </div>
         <div class="sent-time">{{ bubbledetailProps.create_time.substr(11, 5) }}</div>
+        </div>
+        <div class="reply-button font-kor" v-if="bubbledetailProps.reply_available === 'Y'" @click="openReply">&nbsp;&nbsp;&nbsp;답장하기&nbsp;&nbsp;&nbsp;</div>
       </div>
       <div class="content-box">
         <span v-html="bubbledetailProps.content"></span>
@@ -22,6 +25,13 @@ import vClickOutside from "v-click-outside";
 
 export default {
   name: "MessageDetail",
+  components: {
+  },
+  data() {
+    return {
+
+    };
+  },
   directives: {
     clickOutside: vClickOutside.directive,
   },
@@ -30,6 +40,13 @@ export default {
       this.$store.commit("SHOW_DETAIL", !this.showReceivedDetail);
       // this.$router.push({ name: "MainView", params: { pageid: this.state.userStore.shareid.share_id } })
     },
+    
+    openReply() {
+      this.closeDetail()
+      this.$emit("openReply");
+      this.$emit("replyID", this.bubbledetailProps.message_id)
+
+    }
   },
   props: ["bubbledetailProps"],
 
@@ -78,6 +95,13 @@ export default {
   width: 100%;
   height: 10%;
   display: flex;
+  justify-content: space-between;
+  margin-left: 6.5%;
+  margin-right: 11.5%;
+}
+
+.nickname-and-time {
+  display: flex;
 }
 
 .nickname-box {
@@ -91,7 +115,7 @@ export default {
   background: linear-gradient(180deg, #ffffff 0%, #b9d7eb 99.99%, #b9d7eb 100%);
   display: flex;
   align-items: center;
-  margin-left: 6.5%;
+
 }
 
 .sent-time {
@@ -101,6 +125,20 @@ export default {
   color: gray;
   width: auto;
   font-size: 10px;
+}
+
+.reply-button {
+  display: flex;
+  width: auto;
+  height: 100%;
+  border: 1px solid darkslategray;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  font-size: 74%;
+  margin-top: 1%;
+  /* margin-right: 11%; */
+  background: rgba(255, 0, 149, 0.136);
 }
 
 .content-box {
