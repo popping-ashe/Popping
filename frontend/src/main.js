@@ -9,7 +9,6 @@ import Toast from "vue2-toast";
 import VueClipboard from "vue-clipboard2";
 import VueCarousel from "vue-carousel";
 import VueGtag from 'vue-gtag'
-import VueInputAutowidth from 'vue-input-autowidth'
 
 
 VueClipboard.config.autoSetContainer = true;
@@ -17,7 +16,6 @@ Vue.use(VueClipboard);
 
 Vue.use(Toast);
 Vue.use(VueCarousel);
-Vue.use(VueInputAutowidth)
 
 Vue.config.productionTip = false;
 

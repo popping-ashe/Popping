@@ -73,20 +73,20 @@
         </div>
 
         <div class="upper-bar2">
-          <div v-if="pageid == getshareid && isLogin" :class="{ 'disabled': !editingBio }">
-              <input
-                ref="bioInput"
-                class="bio-input font-kor"
-                type="text"
-                v-autowidth="{maxWidth: '960px', minWidth: '20px', comfortZone: 0}"
-                v-model="newBio.bio"
-                @keyup.enter="[updateBio(), toggleEdit()]"
-                :placeholder="member_bio"
-                :readonly="!editingBio"
-                :style="{ outline: editingBio ? '' : 'none' }"
-                >
+          <div class="font-kor" v-if="isLogin && pageid == getshareid && editingBio">
+            <input
+              ref="bioInput"
+              class="bio-input"
+              type="text"
+              maxlength="30"
+              v-model="newBio.bio"
+              placeholder="친구에게 보여줄 상태메시지를 입력하세요"
+              @keyup.esc="toggleEdit"
+              @keyup.enter="[updateBio(), toggleEdit()]"
+              @keyup="checkBioLength()"
+              >
           </div>
-          <div class="bio-input font-kor" v-if="pageid != getshareid || !isLogin">
+          <div class="bio-input font-kor" style="margin-top: 1.8px;" v-else>
             {{ member_bio }}
           </div>
         </div>
@@ -260,7 +260,7 @@ export default {
               }
 
             if (this.member_bio == '') {
-              this.member_bio = '친구에게 보여줄 상태메세지를 입력하세요'
+              this.member_bio = '친구에게 보여줄 상태메시지를 입력하세요'
             }
 
             } else {
@@ -505,6 +505,11 @@ export default {
     },
 
     updateBio() {
+      if (this.newBio.bio == '') {
+        this.member_bio = '친구에게 보여줄 상태메시지를 입력하세요'
+      } else {
+        this.member_bio = this.newBio.bio
+      }
       bio(
           this.newBio,
           (response) => {
@@ -523,8 +528,10 @@ export default {
     },
 
     toggleEdit() {
-      this.editingBio = !this.editingBio;
+      this.editingBio = !this.editingBio
       if (this.editingBio) {
+        this.$toast.center('변경 후 엔터 혹은 체크버튼을 터치하세요')
+        this.newBio.bio = this.member_bio
         this.$nextTick(() => {
           this.$refs.bioInput.focus();
         });
@@ -550,6 +557,13 @@ export default {
     replyID(value) {
       this.replyIDProp = value
     },
+
+    checkBioLength() {
+      if (this.newBio.bio.length == 30) {
+        this.$toast.center("상태메시지 최대 길이는 30글자입니다.");
+      }
+    },
+
 
     analyticsShare(){
       this.$gtag.event('click', {
@@ -670,13 +684,11 @@ export default {
 .bio-input {
   font-size: 14px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-  padding-left: 20px;
-  padding-right: 20px;
+  text-align: center;
+  outline: none;
+  width: 10000px;
 }
 
-input::placeholder {
-  color: black;
-}
 
 .new-button {
   width: 65px;
