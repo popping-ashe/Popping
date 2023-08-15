@@ -1,6 +1,11 @@
 <template>
   <div class="page-container">
     <div class="page" :class="slideClass">
+      {{ new_fav }}
+      <!-- {{ fav_res }}<br>
+      <div>{{ fav_toggle }}</div>
+      <div class="new_fav">{{ new_fav }}</div> -->
+      <!-- {{ fav_res_new[1].share_id }} -->
       <div class="frame" style="z-index: 0">
         <SentDetail :messagedetail-props="messageDetail" v-if="showSentDetail" />
         <div class="upper-bar">
@@ -31,46 +36,113 @@
             <hr style="width: 85%" />
           </div>
         </div>
-        <div class="sent-bubble-frame1" style="margin-top: 5%">
+        <div class="sent-bubble-frame2">
+          
           <div class="sent-bubble-text-frame">
-            <div class="sent-bubble-text font-stardust">보낸 버블</div>
-            <div class="selector-frame font-stardust" @click="changeReadOption">
+            <div class="sent-or-fav">
+              <div
+                class="sent-bubble-text font-stardust"
+                @click="changeTabBubble"
+                :class="{ 'sent-bubble-text-no' : selectedTab ==='즐겨찾기'}"
+                >
+                <span v-if="selectedTab === '보낸버블'">
+                  &nbsp;&nbsp;&nbsp;&nbsp;보낸버블 &nbsp;&nbsp;
+                </span>
+                <span v-else>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"/></svg>&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+              </div>
+              <div
+                class="sent-bubble-text font-stardust"
+                @click="changeTabFav"
+                :class="{ 'sent-bubble-text-no' : selectedTab ==='보낸버블' }"
+              >
+                <span v-if="selectedTab === '즐겨찾기'">
+                  &nbsp;&nbsp;&nbsp;&nbsp;즐겨찾기&nbsp;&nbsp;&nbsp;
+                </span>
+                <span v-else>
+                  &nbsp;&nbsp;&nbsp;&nbsp;즐겨찾기&nbsp;&nbsp;
+                </span>
+              </div>
+            </div>
+            
+            <div class="selector-frame font-stardust" v-if="selectedTab == '보낸버블'" @click="changeReadOption">
               {{ readOption }}
             </div>
           </div>
-        </div>
-        <div class="sent-bubble-frame2" style="margin-top: 5%">
-          <div class="sent-message-frame">
-            <div class="font-kor" v-if="pleaseShare" style="margin-top: 40px; font-size: 13px">
-              친구의 페이지를 공유받아 버블을 보내보세요
+
+
+          <div class="sent-message-frame" :style="{ borderRadius: selectedTab === '보낸버블' ? '0px 25px 25px 25px' : '25px 25px 25px 25px'}">
+            
+            <!-- 보낸메세지 -->
+            <div v-if="selectedTab == '보낸버블'">
+              <div
+                v-for="(article, index) in nowShowing"
+                :key="index"
+                class="sent-message-box"
+              @click="[sentDetail(index),analyticsBubble()]"
+              >
+                <div class="sent-message-ellipse font-kor">
+                  <div class="initial">{{ article.receiver_nickname.substr(0, 1) }}</div>
+                </div>
+                <div class="sent-bubble-info-frame">
+                  <div class="sent-upper font-pre">
+                    <div class="sent-upper-left">
+                      <div class="sent-mynickname">{{ article.nickname.substr(0, 10) }}</div>
+                      <div class="sent-datetime">
+                        {{ article.create_time.substr(5, 2) }}/{{ article.create_time.substr(8, 2) }}
+                        {{ article.create_time.substr(11, 5) }}
+                      </div>
+                    </div>
+                    <div class="sent-state">{{ article.state }}</div>
+                  </div>
+                  <div class="sent-lower font-pre">
+                    {{ article.content }}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div
-              v-for="(article, index) in nowShowing"
+
+
+            <!-- 즐겨찾기 -->
+            <div v-else>
+              <div v-for="(fav, index) in fav_res"
               :key="index"
               class="sent-message-box"
-              @click="[sentDetail(index),analyticsBubble()]"
-            >
-              <div class="sent-message-ellipse font-kor">
-                <!-- 유저 아이디 첫글자 -> 이미지로 변경-->
-                <div class="initial">{{ article.receiver_nickname.substr(0, 1) }}</div>
-              </div>
-              <div class="sent-bubble-info-frame">
-                <div class="sent-upper font-pre">
-                  <div class="sent-upper-left">
-                    <div class="sent-mynickname">{{ article.nickname.substr(0, 10) }}</div>
-                    <div class="sent-datetime">
-                      {{ article.create_time.substr(5, 2) }}/{{ article.create_time.substr(8, 2) }}
-                      {{ article.create_time.substr(11, 5) }}
-                    </div>
-                  </div>
-                  <div class="sent-state">{{ article.state }}</div>
+              >
+                <div class="sent-message-ellipse font-kor">
+                  <div class="initial" @click="$router.push(`/main/${fav.share_id}`)">{{ fav.nickname.substr(0, 1) }}</div>
                 </div>
-                <div class="sent-lower font-pre">
-                  {{ article.content }}
+                <div class="sent-bubble-info-frame">
+                  <div class="sent-upper font-pre">
+                    <div class="sent-upper-left">
+                      <div class="sent-mynickname">{{ fav.nickname.substr(0, 10) }}</div>
+                    </div>
+                    <div class="sent-state">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg>
+                    </div>
+                    <!-- <div class="sent-state">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"/></svg>
+                    </div> -->
+                  </div>
+                  <div class="sent-lower font-pre">
+                    {{ fav.bio }}
+                    <!-- {{ fav_res[index].share_id }} -->
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="font-kor" v-if="pleaseShare && selectedTab == '보낸버블'" style="margin-top: 40px; font-size: 13px">
+              친구의 페이지를 공유받아 버블을 보내보세요
+            </div>
+
+            <div class="font-kor" v-if="fav_res == '' && selectedTab == '즐겨찾기'" style="margin-top: 40px; font-size: 13px">
+              친구의 페이지를 공유받아 즐겨찾기에 등록해보세요
+            </div>
+
           </div>
+
         </div>
       </div>
     </div>
@@ -82,7 +154,7 @@ import SentDetail from "@/components/SentDetail.vue";
 
 import { mapState, mapActions } from "vuex";
 const userStore = "userStore";
-import { sentUserMessage, receivedUserMessageCount } from "@/api/user";
+import { sentUserMessage, receivedUserMessageCount, getfavorite, postfavorite, deletefavorite} from "@/api/user";
 
 export default {
   name: "MypageView",
@@ -103,6 +175,10 @@ export default {
       toShowMessage: "",
       slideClass: "",
       pleaseShare: false,
+      fav_res: null,
+      selectedTab: "보낸버블",
+      fav_toggle: '',
+      new_fav : '',
     };
   },
   methods: {
@@ -129,39 +205,6 @@ export default {
       this.$store.commit("SHOW_SENT_DETAIL", !this.showSentDetail);
     },
 
-    // showReadOnly() {
-    //   if (this.readOption == "all" || this.readOption == "unread") {
-    //     this.readOption = "read";
-    //     this.nowShowing = this.sentmessages.filter((article) => article.state === "읽음");
-    //   } else {
-    //     this.readOption = "all";
-    //     this.nowShowing = this.sentmessages;
-    //   }
-
-    //   if (this.nowShowing.length == 0) {
-    //     this.pleaseShare = true;
-    //   } else {
-    //     this.pleaseShare = false;
-    //   }
-    // },
-
-    // showUnreadOnly() {
-    //   if (this.readOption == "all" || this.readOption == "read") {
-    //     this.readOption = "unread";
-    //     this.nowShowing = this.sentmessages.filter((article) => article.state === "안읽음");
-    //   } else {
-    //     this.readOption = "all";
-    //     this.nowShowing = this.sentmessages;
-    //   }
-
-    //   if (this.nowShowing.length == 0) {
-    //     this.pleaseShare = true;
-    //   } else {
-    //     this.pleaseShare = false;
-    //   }
-    // },
-
-
     changeReadOption() {
       if (this.readOption == "전체") {
         this.readOption = "읽음"
@@ -181,6 +224,78 @@ export default {
       }
     },
 
+    like() {
+      postfavorite(
+        this.id,
+        (response) => {
+          if (response.status == 200) {
+            // console.log(response.data.favorite_id)
+            this.favorite_ids.push(response.data.favorite_id)
+            // console.log(this.favorite_ids)
+          } else {
+            // console.log("잘못");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    },
+
+    dislike(idx) {
+      this.new_fav[idx] = "N"
+      deletefavorite(
+        this.fav_res[idx].share_id,
+        (response) => {
+          if (response.status == 200) {
+            // console.log(response.data)
+            // const indexToRemove = this.favorite_ids.indexOf(parseInt(this.pageid));
+            // console.log(this.favorite_ids)
+            // console.log(indexToRemove)
+            // console.log(this.pageid)
+            // this.favorite_ids.splice(indexToRemove, 1)
+            // if (this.favorite_ids.length < 2) {
+            //   this.favorite_ids = []
+            // } else {
+            //   this.favorite_ids.splice(indexToRemove, 1)
+            // }
+
+            // if (indexToRemove != -1) {
+            //   const newfav = this.favorite_ids.splice(indexToRemove, 1)
+            //   this.favorite_ids = newfav
+            //   // this.favorite_ids.splice(indexToRemove, 1);
+            // }
+            // console.log(this.favorite_ids)
+          } else {
+            // console.log("잘못");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    },
+    
+    // addToggleToFav() {
+    //   if (this.fav_res) {
+    //     this.new_fav = new Array(this.fav_res.length).fill('Y')
+
+    //     for (var i=0; i < this.fav_res.length; i++) {
+    //       this.new_fav[i].push(this.fav_res[i])
+    //       this.fav_res_new.push(this.fav_res[i])
+    //     }
+    //   }
+    //     this.fav_res_new = this.fav_res
+        
+    // },
+
+    changeTabBubble() {
+      this.selectedTab = "보낸버블"
+    },
+
+    changeTabFav() {
+      this.selectedTab = "즐겨찾기"
+    },
 
     analyticsRead(){
       this.$gtag.event('click', {
@@ -224,6 +339,21 @@ export default {
       async (error) => {
         console.log(error);
         await this.getnewaccesstoken();
+      }
+    );
+    getfavorite(
+      (response) => {
+        if (response.status == 200) {
+          // console.log(response.data)
+          this.fav_res = response.data.favorites
+          // this.fav_res_new = response.data.favorites
+          // this.fav_toggle = new Array(this.fav_res.length).fill('Y')
+        } else {
+          // console.log("메세지 없음");
+        }
+      },
+      async (error) => {
+        console.log(error);
       }
     );
 
@@ -455,18 +585,43 @@ export default {
   justify-content: space-between;
 }
 
+.sent-or-fav {
+  display: flex;
+
+}
+
 .sent-bubble-text {
   position: relative;
-  left: 4%;
-
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
   line-height: 21px;
   /* or 117% */
   letter-spacing: -0.32px;
   color: #000000;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+
+  padding-top : 10px;
+  padding-bottom: 10px;
+  border-radius: 12px 12px 0px 0px;
+  background-color: rgba(255, 255, 255, 0.4);
+  font-size: 20px;
+}
+
+.sent-bubble-text-no {
+  position: relative;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21px;
+  /* or 117% */
+  letter-spacing: -0.32px;
+  color: #000000;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+
+  padding-top : 10px;
+  padding-bottom: 10px;
+  border-radius: 12px 12px 0px 0px;
+  background-color: transparent;
+  font-size: 15px;
 }
 
 .selector-frame {
@@ -481,7 +636,9 @@ export default {
   letter-spacing: -0.32px;
   /* color: gray; */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  margin-top: 4px;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 4px;
 }
 
 .selector-read {
@@ -497,33 +654,41 @@ export default {
 .sent-bubble-frame2 {
   position: absolute;
   width: 85%;
-  height: 59%;
-  top: 32.2%;
+  height: 61%;
+  top: 29%;
   align-items: center;
-  overflow: scroll;
+
+
+  
 }
 
 .sent-message-frame {
   position: absolute;
   width: 100%;
-  height: 72px;
+  height: 100%;
   text-align: center;
   padding-right: 4px;
   padding-left: 4px;
+  padding-bottom: 15px;
+
+  background-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 6px 6px 4px -4px rgba(0, 0, 0, 0.3);
+  overflow: scroll;
 }
 
 .sent-message-box {
   position: relative;
-  width: 100%;
+  width: 96%;
   height: 75px;
   background: rgba(255, 255, 255, 0.7);
-  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.35);
-  border-radius: 30px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+  border-radius: 25px;
   text-align: center;
-  margin-bottom: 18px;
+  margin-top: 15px;
   display: flex;
   align-items: center;
   opacity: 100%;
+  margin-left: 1.5%;
 }
 
 .profile-area {
@@ -592,7 +757,8 @@ export default {
 .sent-state {
   font-weight: bold;
   font-size: 12px;
-  padding-right: 24px;
+  padding-right: 22px;
+  padding-bottom: 1px;
 }
 
 .sent-lower {
