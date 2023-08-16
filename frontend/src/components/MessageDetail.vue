@@ -136,6 +136,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 74%;
+  margin-top: 0.5%;
   /* margin-right: 11%; */
   background: rgba(158, 216, 245, 0.25);
   

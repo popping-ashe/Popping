@@ -461,6 +461,7 @@ export default {
           if (response.status == 200) {
             // console.log(response.data.favorite_id)
             this.favorite_ids.push(response.data.favorite_id)
+            this.$toast.center("즐겨찾기에 등록되었습니다.")
             // console.log(this.favorite_ids)
           } else {
             // console.log("잘못");
@@ -478,6 +479,7 @@ export default {
           if (response.status == 200) {
             const indexToRemove = this.favorite_ids.indexOf(parseInt(this.pageid));
             this.favorite_ids.splice(indexToRemove, 1)
+            this.$toast.center("즐겨찾기에서 해제되었습니다.")
           } else {
             // console.log("잘못");
           }
