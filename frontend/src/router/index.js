@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import MainView from "../views/MainView.vue";
 import LoginView from "../views/LoginView.vue";
 import MypageView from "../views/MypageView.vue";
-import LoginCallBack from "../views/LoginCallBack.vue";
+import GoogleLoginCallBack from "../views/GoogleLoginCallBack.vue";
+import KakaoLoginCallBack from "../views/KakaoLoginCallBack.vue";
 import SettingView from "../views/SettingView.vue";
 import ErrorView from "../views/ErrorView.vue";
 import TermsofUse from "../views/TermsofUse.vue";
@@ -30,8 +31,13 @@ const routes = [
   },
   {
     path: "/oauth/kakao/callback",
-    name: "loginCallBack",
-    component: LoginCallBack,
+    name: "googleLoginCallBack",
+    component: KakaoLoginCallBack,
+  },
+  {
+    path: "/oauth/google/callback",
+    name: "kakaoLoginCallBack",
+    component: GoogleLoginCallBack,
   },
   {
     path: "/settings",

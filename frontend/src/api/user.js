@@ -7,6 +7,10 @@ const api = apiInstance();
 async function kakaologin(code, success, fail) {
   await api.get(`/oauth/kakao/callback?code=${code}`).then(success).catch(fail);
 }
+//구글 로그인
+async function googlelogin(code, success, fail) {
+  await api.get(`/oauth/google/callback?code=${code}`).then(success).catch(fail);
+}
 
 //유저 정보 받아오기
 async function getUserInfo(success, fail) {
@@ -205,6 +209,86 @@ async function changeagree(agree, success, fail) {
   await api.patch(`/terms-agreement`, agree).then(success).catch(fail);
 }
 
+//즐겨찾기 하기
+async function postfavorite(postfavorite, success, fail) {
+  let accessToken = localStorage.getItem("access-token");
+  const cipher = CryptoJS.AES.decrypt(
+    accessToken,
+    CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+    {
+      iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+      mode: CryptoJS.mode.CBC,
+    }
+  );
+  const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
+  let token = "Bearer " + decryptAccessToken;
+  api.defaults.headers["Authorization"] = token;
+  await api.post(`/favorite`, postfavorite).then(success).catch(fail);
+}
+//즐겨찾기 받아오기
+async function getfavorite(success, fail) {
+  let accessToken = localStorage.getItem("access-token");
+  const cipher = CryptoJS.AES.decrypt(
+    accessToken,
+    CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+    {
+      iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+      mode: CryptoJS.mode.CBC,
+    }
+  );
+  const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
+  let token = "Bearer " + decryptAccessToken;
+  api.defaults.headers["Authorization"] = token;
+  await api.get(`/favorite`).then(success).catch(fail);
+}
+//즐겨찾기 취소
+async function deletefavorite(deletefavorite, success, fail) {
+  let accessToken = localStorage.getItem("access-token");
+  const cipher = CryptoJS.AES.decrypt(
+    accessToken,
+    CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+    {
+      iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+      mode: CryptoJS.mode.CBC,
+    }
+  );
+  const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
+  let token = "Bearer " + decryptAccessToken;
+  api.defaults.headers["Authorization"] = token;
+  await api.delete(`/favorite`, { data: deletefavorite}).then(success).catch(fail);
+}
+async function bio(mybio, success, fail) {
+  let accessToken = localStorage.getItem("access-token");
+  const cipher = CryptoJS.AES.decrypt(
+    accessToken,
+    CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+    {
+      iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+      mode: CryptoJS.mode.CBC,
+    }
+  );
+  const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
+  let token = "Bearer " + decryptAccessToken;
+  api.defaults.headers["Authorization"] = token;
+  await api.patch(`members/me/bio`, mybio).then(success).catch(fail);
+}
+//메세지 답장하기
+async function replyUserMessage(replyData, success, fail) {
+  let accessToken = localStorage.getItem("access-token");
+  const cipher = CryptoJS.AES.decrypt(
+    accessToken,
+    CryptoJS.enc.Utf8.parse(process.env.VUE_APP_KEY),
+    {
+      iv: CryptoJS.enc.Utf8.parse(process.env.VUE_APP_IV),
+      mode: CryptoJS.mode.CBC,
+    }
+  );
+  const decryptAccessToken = CryptoJS.enc.Utf8.stringify(cipher).toString();
+  let token = "Bearer " + decryptAccessToken;
+  api.defaults.headers["Authorization"] = token;
+  await api.post(`/messages/reply`, replyData).then(success).catch(fail);
+}
+
 export {
   deleteuser,
   receivedUserMessageCount,
@@ -219,5 +303,11 @@ export {
   logout,
   changenickname,
   gettoken,
-  changeagree
+  changeagree,
+  googlelogin,
+  getfavorite,
+  postfavorite,
+  deletefavorite,
+  bio,
+  replyUserMessage
 };

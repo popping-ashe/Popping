@@ -104,6 +104,13 @@ export default {
         value: 'logout',
       }); 
     },
+    analyticsSignout(){
+      this.$gtag.event('click', {
+        event_category: 'settings',
+        event_label: 'signout',
+        value: 'signout',
+      }); 
+    },
     analyticsQnA(){
       this.$gtag.event('click', {
         event_category: 'settings',

@@ -1,24 +1,16 @@
 <template>
   <div class="message-frame animate__animated animate__fadeIn">
     <div class="window font-pre" v-click-outside="closeDetail">
-      <div class="close-button" @click="[closeDetail(),analyticsCancel()]"></div>
+      <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
-        <input
-          class="nickname-input"
-          maxlength="10"
-          placeholder="닉네임"
-          type="text"
-          v-model="messageData.nickname"
-          @keyup="checkNicknameLength"
-        />
-        <!-- 임시! 답장 가능여부 표시 -->
-        <div class="time-select-box" @click="changeLifeTime()" :style="{ marginRight: isLogin ? '0' : '11%' }">
+        
+        <div class="time-select-box" @click="changeLifeTime()">
           <img class="time-icon" src="../assets/clock.png" alt="" />
           <div class="time-selector">
             <div>{{ messageData.retentionTime }}h</div>
           </div>
         </div>
-        <label v-if="isLogin" class="switch">
+        <label class="switch">
           <input type="checkbox" @click="toggleReplyAvailability()">
           <div class="slider round"></div>
         </label>
@@ -34,17 +26,16 @@
       </div>
       <!-- <input class="content-input" type="text" v-model="contents"> -->
       <div class="button-box">
-        <div class="cancel-button" @click="[closeDetail(), analyticsCancel()]">취소</div>
-        <div class="send-button" @click="[sendMessage(),analyticsSend()]">전송</div>
+        <div class="cancel-button" @click="closeDetail()">취소</div>
+        <div class="send-button" @click="sendMessage()">전송</div>
       </div>
-      
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { sendUserMessage } from "@/api/user";
+import { replyUserMessage } from "@/api/user";
 import vClickOutside from "v-click-outside";
 const userStore = "userStore";
 
@@ -58,21 +49,17 @@ export default {
     return {
       messageData: {
         content: "",
-        sender: null,
-        share_id: this.$route.params.pageid,
-        nickname: "",
+        message_id: this.replyidProps,
         retentionTime: 24,
         reply_available: "N",
       },
     };
   },
+
   created() {
     // 컴포넌트가 생성될 때 로그인 상태를 확인하여 로그인한 경우 sender에 member_id 할당
     if (this.isLogin == true) {
       this.messageData.sender = this.userInfo.member_id;
-      this.reply_available = "Y"
-    } else {
-      this.reply_available = "N"
     }
   },
   methods: {
@@ -86,20 +73,20 @@ export default {
     },
     sendMessage() {
       // 빈칸일때 익명, 내용없음으로 가짐
-      if (this.messageData.nickname.trim() === "") {
-        this.messageData.nickname = "익명"
-      }
+
+      // 보내기 전 message_id에 부모로부터 받은 답장 메세지 ID 저장
+      this.messageData.message_id = this.messageIDTemp
+
       // 내용 없을때 안보내지게
       if (this.messageData.content == "")
       {
         this.$toast.center("내용을 입력해주세요.")
       } else {
-        sendUserMessage(
+        replyUserMessage(
           this.messageData,
           (response) => {
             if (response.status == 200) {
-              this.$store.commit("SHOW_MAKE_WINDOW", !this.showMakeWindow);
-              this.$parent.sendmessageupdate(response.data);
+              this.$emit("close");
               this.$toast.center("버블을 보냈습니다.");
             } else {
               // console.log("잘못");
@@ -113,26 +100,19 @@ export default {
     },
 
     closeDetail() {
-      this.$store.commit("SHOW_MAKE_WINDOW", !this.showMakeWindow);
+      this.$emit("close");
     },
 
     changeLifeTime() {
-      if (this.messageData.retentionTime === 24) {
-        this.messageData.retentionTime = 12;
-      } else if (this.messageData.retentionTime === 12) {
-        this.messageData.retentionTime = 6;
-      } else if (this.messageData.retentionTime === 6) {
+      if (this.messageData.retentionTime === 1) {
         this.messageData.retentionTime = 3;
       } else if (this.messageData.retentionTime === 3) {
         this.messageData.retentionTime = 24;
+      } else if (this.messageData.retentionTime === 24) {
+        this.messageData.retentionTime = 1;
       }
     },
 
-    checkNicknameLength() {
-      if (this.messageData.nickname.length == 10) {
-        this.$toast.center("닉네임 최대 길이는 10글자입니다.");
-      }
-    },
 
     checkContentLength() {
       if (this.messageData.content.length == 200) {
@@ -155,8 +135,15 @@ export default {
       }); 
     },
   },
+
+  // 부모로 부터 받은 답장 메세지 아이디
+  props: ["replyidProps"],
+
   computed: {
-    ...mapState(["showMakeWindow"]),
+    // 메세지 아이디를 변수로 사용
+    messageIDTemp() {
+      return this.replyidProps
+    },
     ...mapState(userStore, ["isLogin", "userInfo"]),
   },
 };
@@ -224,7 +211,7 @@ export default {
   border: 1px solid darkslategray;
   border-radius: 20px;
   align-items: center;
-  /* margin-right: 11%; */
+  margin-left: 6%;
 }
 .time-select-box2 {
   display: flex;
@@ -373,6 +360,8 @@ export default {
 input:checked + .slider {
   background: rgba(158, 216, 245, 0.5)
 }
+
+
 
 input:checked + .slider:before {
   -webkit-transform: translateX(124%);

@@ -4,9 +4,9 @@
       <div class="carousel-close-button" @click="closeTutorial"></div>
       <div class="carousel-frame">
         <carousel class="carousel-main" 
-          :paginationSize="8" :perPage="1" :navigationEnabled="false"
+          :paginationSize="6" :perPage="1" :navigationEnabled="false"
           :autoplayTimeout="4000" :autoplayHoverPause="true"
-          :paginationPadding="8">
+          :paginationPadding="5">
           <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_01.png" alt=""><br><br>
             <span class="carousel-text">공유 버튼을 터치해<br>친구와 파핑 페이지를 주고받으세요</span>
@@ -20,8 +20,12 @@
             <span class="carousel-text">닉네임, 내용을 작성하고<br>버블 만료 시간을 정해주세요</span>
           </slide>
           <slide class="carousel-slide">
+            <img class="carousel-image" src="../assets/tutorial_10.png" alt=""><br><br>
+            <span class="carousel-text">버블을 보낼 때<br>토글 버튼으로 답장을 받을지<br>결정할 수 있습니다</span>
+          </slide>
+          <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_08.png" alt=""><br><br>
-            <span class="carousel-text">기본 만료시간은 24시간으로<br>터치해서 변경할 수 있습니다</span>
+            <span class="carousel-text">기본 만료 시간은 24시간으로<br>터치해서 변경할 수 있습니다</span>
           </slide>
           <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_04.png" alt=""><br><br>
@@ -36,8 +40,12 @@
             <span class="carousel-text">받은 버블은 만료 시간이 지나면<br>다시 볼 수 없으니 조심하세요!</span>
           </slide>
           <slide class="carousel-slide">
-            <img class="carousel-image" src="../assets/tutorial_07.png" alt=""><br><br>
-            <span class="carousel-text">마이페이지로 이동해<br>내가 보낸 버블을 확인해보세요</span>
+            <img class="carousel-image" src="../assets/tutorial_09.png" alt=""><br><br>
+            <span class="carousel-text">편집 버튼을 터치해<br>상태 메시지를 변경해보세요</span>
+          </slide>
+          <slide class="carousel-slide">
+            <img class="carousel-image" src="../assets/tutorial_07.png" style="margin-left: 2px;" alt=""><br><br>
+            <span class="carousel-text">마이페이지로 이동해<br>내가 보낸 버블과<br>친구의 상태 메시지를 확인해보세요</span>
           </slide>
         </carousel>
       </div>

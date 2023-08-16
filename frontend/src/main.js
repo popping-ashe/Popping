@@ -10,6 +10,7 @@ import VueClipboard from "vue-clipboard2";
 import VueCarousel from "vue-carousel";
 import VueGtag from 'vue-gtag'
 
+
 VueClipboard.config.autoSetContainer = true;
 Vue.use(VueClipboard);
 
