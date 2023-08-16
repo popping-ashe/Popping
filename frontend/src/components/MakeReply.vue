@@ -3,14 +3,14 @@
     <div class="window font-pre" v-click-outside="closeDetail">
       <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
-        <input
+        <!-- <input
           class="nickname-input"
           maxlength="10"
           placeholder="닉네임"
           type="text"
           v-model="messageData.nickname"
           @keyup="checkNicknameLength"
-        />
+        /> -->
         <!-- <div class="time-select-box2" @click="toggleReplyAvailability()">{{ messageData.reply_available === 'Y' ? '답장 가능' : '답장 불가능' }}</div> -->
         <div class="time-select-box" @click="changeLifeTime()">
           <img class="time-icon" src="../assets/clock.png" alt="" />
@@ -58,7 +58,6 @@ export default {
       messageData: {
         content: "",
         message_id: this.replyidProps,
-        nickname: "",
         retentionTime: 24,
         reply_available: "N",
       },
@@ -228,7 +227,7 @@ export default {
   border: 1px solid darkslategray;
   border-radius: 20px;
   align-items: center;
-  /* margin-right: 11%; */
+  margin-left: 6%;
 }
 .time-select-box2 {
   display: flex;
