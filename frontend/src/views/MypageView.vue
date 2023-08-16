@@ -190,7 +190,7 @@ export default {
       slideClass: "",
       pleaseShare: false,
       fav_res: null,
-      selectedTab: "즐겨찾기",
+      selectedTab: "보낸버블",
       fav_toggle: '',
       new_fav : '',
     };
@@ -488,7 +488,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 7%;
-  top: 15.5%;
+  top: 14%;
 }
 
 .received-count {
@@ -668,12 +668,9 @@ export default {
 .sent-bubble-frame2 {
   position: absolute;
   width: 85%;
-  height: 61%;
-  top: 29%;
+  height: 63%;
+  top: 28.3%;
   align-items: center;
-
-
-  
 }
 
 .sent-message-frame {
