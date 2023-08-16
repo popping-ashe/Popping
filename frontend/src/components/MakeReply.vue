@@ -3,15 +3,7 @@
     <div class="window font-pre" v-click-outside="closeDetail">
       <div class="close-button" @click="closeDetail()"></div>
       <div class="upper-bar">
-        <!-- <input
-          class="nickname-input"
-          maxlength="10"
-          placeholder="닉네임"
-          type="text"
-          v-model="messageData.nickname"
-          @keyup="checkNicknameLength"
-        /> -->
-        <!-- <div class="time-select-box2" @click="toggleReplyAvailability()">{{ messageData.reply_available === 'Y' ? '답장 가능' : '답장 불가능' }}</div> -->
+        
         <div class="time-select-box" @click="changeLifeTime()">
           <img class="time-icon" src="../assets/clock.png" alt="" />
           <div class="time-selector">
@@ -81,9 +73,6 @@ export default {
     },
     sendMessage() {
       // 빈칸일때 익명, 내용없음으로 가짐
-      if (this.messageData.nickname.trim() === "") {
-        this.messageData.nickname = "익명"
-      }
 
       // 보내기 전 message_id에 부모로부터 받은 답장 메세지 ID 저장
       this.messageData.message_id = this.messageIDTemp
@@ -124,11 +113,6 @@ export default {
       }
     },
 
-    checkNicknameLength() {
-      if (this.messageData.nickname.length == 10) {
-        this.$toast.center("닉네임 최대 길이는 10글자입니다.");
-      }
-    },
 
     checkContentLength() {
       if (this.messageData.content.length == 200) {
