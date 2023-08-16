@@ -86,7 +86,7 @@
               @keyup="checkBioLength()"
               >
           </div>
-          <div class="bio-input font-kor" style="margin-top: 1.8px;" v-else>
+          <div class="bio-input font-kor" style="margin-top: 4.5px;" v-else>
             {{ member_bio }}
           </div>
         </div>
@@ -514,7 +514,7 @@ export default {
           this.newBio,
           (response) => {
             if (response.status == 200) {
-              console.log(response.data.bio)
+              // console.log(response.data.bio)
               const userinfo = JSON.parse(localStorage.getItem("userinfo"))
               userinfo.bio = response.data.bio
               localStorage.setItem("userinfo", JSON.stringify(userinfo));
