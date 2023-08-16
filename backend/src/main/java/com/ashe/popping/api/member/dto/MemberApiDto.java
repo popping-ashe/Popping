@@ -28,15 +28,6 @@ public class MemberApiDto {
 	private Role role;
 	private String bio;
 
-	public static MemberApiDto of(String socialLoginId, String nickname, Role role, MemberType memberType) {
-		return MemberApiDto.builder()
-			.nickname(nickname)
-			.memberType(memberType)
-			.socialLoginId(socialLoginId)
-			.role(role)
-			.build();
-	}
-
 	public static MemberApiDto of(MemberApiDto.Request request, Long memberId) {
 		return MemberApiDto.builder()
 			.memberId(memberId)

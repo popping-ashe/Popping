@@ -82,15 +82,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Long deleteMember(Long memberId) {
-		long result = memberRepository.deleteByMemberId(memberId);
-		if (result != 1) {
-			throw new AuthenticationException(ErrorCode.NOT_EXIST_MEMBER);
-		}
-		return result;
-	}
-
-	@Override
 	public void updateWithdrawalDate(Long memberId, boolean withDrawal) {
 		Optional<Member> member = memberRepository.findByMemberId(memberId);
 		if (member.isEmpty()) {
