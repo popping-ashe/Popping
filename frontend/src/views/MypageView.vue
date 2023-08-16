@@ -32,9 +32,6 @@
             <div class="sent">보냄</div>
             <div class="unread">만료됨</div>
           </div>
-          <div style="display: flex; justify-content: center">
-            <hr style="width: 85%" />
-          </div>
         </div>
         <div class="sent-bubble-frame2">
           
@@ -488,7 +485,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 7%;
-  top: 14%;
+  top: 15%;
 }
 
 .received-count {
@@ -585,13 +582,6 @@ export default {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.sent-bubble-frame1 {
-  position: absolute;
-  width: 85%;
-  top: 26.3%;
-  display: flex;
-}
-
 .sent-bubble-text-frame {
   position: relative;
   width: 100%;
@@ -668,8 +658,8 @@ export default {
 .sent-bubble-frame2 {
   position: absolute;
   width: 85%;
-  height: 63%;
-  top: 28.3%;
+  height: 64.8%;
+  top: 25.8%;
   align-items: center;
 }
 

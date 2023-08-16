@@ -109,10 +109,18 @@ const userStore = {
                 if (response.status == 200) {
                   commit("SET_USER_INFO", response.data);
                   localStorage.setItem("userinfo", JSON.stringify(response.data));
-                  router.push({
-                    name: "MainView",
-                    params: { pageid: this.state.userStore.shareid.share_id },
-                  });
+                  if (localStorage.getItem("pageid")) {
+                    router.push({
+                      name: "MainView",
+                      params: { pageid: localStorage.getItem("pageid") },
+                    });
+                    localStorage.removeItem("pageid")
+                  } else {
+                    router.push({
+                      name: "MainView",
+                      params: { pageid: this.state.userStore.shareid.share_id },
+                    });
+                  }
                 } else {
                   console.log("유저 정보 없음");
                 }

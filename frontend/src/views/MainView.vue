@@ -47,7 +47,7 @@
             v-else
             class="new-button font-eng link-button"
             style="margin-right: 6%"
-            @click="$router.push('/')"
+            @click="[$router.push('/'), pageidstore()]"
           >
             Login
           </div>
@@ -476,24 +476,8 @@ export default {
         this.id,
         (response) => {
           if (response.status == 200) {
-            // console.log(response.data)
             const indexToRemove = this.favorite_ids.indexOf(parseInt(this.pageid));
-            // console.log(this.favorite_ids)
-            // console.log(indexToRemove)
-            // console.log(this.pageid)
             this.favorite_ids.splice(indexToRemove, 1)
-            // if (this.favorite_ids.length < 2) {
-            //   this.favorite_ids = []
-            // } else {
-            //   this.favorite_ids.splice(indexToRemove, 1)
-            // }
-
-            // if (indexToRemove != -1) {
-            //   const newfav = this.favorite_ids.splice(indexToRemove, 1)
-            //   this.favorite_ids = newfav
-            //   // this.favorite_ids.splice(indexToRemove, 1);
-            // }
-            // console.log(this.favorite_ids)
           } else {
             // console.log("잘못");
           }
@@ -565,6 +549,9 @@ export default {
       if (this.newBio.bio.length == 30) {
         this.$toast.center("상태메시지 최대 길이는 30글자입니다.");
       }
+    },
+    pageidstore() {
+      localStorage.setItem("pageid", this.pageid)
     },
 
 
