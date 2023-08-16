@@ -1,4 +1,4 @@
-package com.ashe.popping.domain.termsagreement.dto;
+package com.ashe.popping.domain.termsagreement.constant;
 
 import lombok.Getter;
 

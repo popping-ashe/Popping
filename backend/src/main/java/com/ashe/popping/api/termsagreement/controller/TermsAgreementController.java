@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ashe.popping.api.termsagreement.dto.TermsAgreementApiDto;
 import com.ashe.popping.domain.terms.service.TermsService;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
-import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
+import com.ashe.popping.domain.termsagreement.constant.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.service.TermsAgreementService;
 
 import lombok.RequiredArgsConstructor;

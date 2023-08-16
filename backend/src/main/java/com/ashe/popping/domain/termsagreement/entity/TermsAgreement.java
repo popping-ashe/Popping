@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
-import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
+import com.ashe.popping.domain.termsagreement.constant.TermsAgreementState;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

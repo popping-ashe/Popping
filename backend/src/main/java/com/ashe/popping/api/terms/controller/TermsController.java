@@ -17,7 +17,7 @@ import com.ashe.popping.domain.member.service.MemberService;
 import com.ashe.popping.domain.terms.dto.TermsDto;
 import com.ashe.popping.domain.terms.service.TermsService;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
-import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
+import com.ashe.popping.domain.termsagreement.constant.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.service.TermsAgreementService;
 
 import lombok.RequiredArgsConstructor;
