@@ -4,9 +4,9 @@
       <div class="carousel-close-button" @click="closeTutorial"></div>
       <div class="carousel-frame">
         <carousel class="carousel-main" 
-          :paginationSize="8" :perPage="1" :navigationEnabled="false"
+          :paginationSize="6" :perPage="1" :navigationEnabled="false"
           :autoplayTimeout="4000" :autoplayHoverPause="true"
-          :paginationPadding="8">
+          :paginationPadding="5">
           <slide class="carousel-slide">
             <img class="carousel-image" src="../assets/tutorial_01.png" alt=""><br><br>
             <span class="carousel-text">공유 버튼을 터치해<br>친구와 파핑 페이지를 주고받으세요</span>
