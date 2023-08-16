@@ -70,18 +70,6 @@ public class Message {
 		this.receiverNickname = receiverNickname;
 	}
 
-	public static Message from(MessageDto messageDto) {
-		return Message.builder()
-			.state(messageDto.getState())
-			.content(messageDto.getContent())
-			.expirationTime(messageDto.getExpirationTime())
-			.sender(messageDto.getSender())
-			.receiver(messageDto.getReceiver())
-			.nickname(messageDto.getNickname())
-			.replyAvailable(messageDto.getReplyAvailable())
-			.build();
-	}
-
 	public static Message of(MessageDto messageDto, MemberDto memberDto) {
 		return Message.builder()
 			.state(messageDto.getState())
@@ -92,18 +80,6 @@ public class Message {
 			.nickname(messageDto.getNickname())
 			.replyAvailable(messageDto.getReplyAvailable())
 			.receiverNickname(memberDto.getNickname())
-			.build();
-	}
-
-	public static Message of(MessageDto messageDto, Long senderId, Long receiverId) {
-		return Message.builder()
-			.state(messageDto.getState())
-			.content(messageDto.getContent())
-			.expirationTime(messageDto.getExpirationTime())
-			.sender(receiverId)
-			.receiver(senderId)
-			.nickname(messageDto.getNickname())
-			.replyAvailable(messageDto.getReplyAvailable())
 			.build();
 	}
 
