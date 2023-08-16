@@ -19,8 +19,6 @@ public interface MemberService {
 
 	MemberDto getMemberByShareId(Long shareId);
 
-	Long deleteMember(Long memberId);
-
 	void updateWithdrawalDate(Long memberId, boolean withDrawal);
 
 	MemberDto updateBio(MemberDto memberDto);
