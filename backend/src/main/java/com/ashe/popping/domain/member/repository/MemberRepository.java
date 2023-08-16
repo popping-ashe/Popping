@@ -19,8 +19,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	Optional<Member> findByShareId(Long shareId);
 
-	Long deleteByMemberId(Long memberId);
-
 	List<Member> findAll();
 
 	@Modifying(clearAutomatically = true)
