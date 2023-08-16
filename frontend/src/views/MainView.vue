@@ -80,7 +80,7 @@
               type="text"
               maxlength="30"
               v-model="newBio.bio"
-              placeholder="친구에게 보여줄 상태메시지를 입력하세요"
+              placeholder="친구에게 보여줄 상태 메시지를 입력하세요"
               @keyup.esc="toggleEdit"
               @keyup.enter="[updateBio(), toggleEdit()]"
               @keyup="checkBioLength()"
@@ -260,7 +260,7 @@ export default {
               }
 
             if (this.member_bio == '') {
-              this.member_bio = '친구에게 보여줄 상태메시지를 입력하세요'
+              this.member_bio = '친구에게 보여줄 상태 메시지를 입력하세요'
             }
 
             } else {
@@ -490,7 +490,7 @@ export default {
 
     updateBio() {
       if (this.newBio.bio == '') {
-        this.member_bio = '친구에게 보여줄 상태메시지를 입력하세요'
+        this.member_bio = '친구에게 보여줄 상태 메시지를 입력하세요'
       } else {
         this.member_bio = this.newBio.bio
       }
