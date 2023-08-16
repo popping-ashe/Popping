@@ -117,16 +117,14 @@ export default {
     },
 
     changeLifeTime() {
-      if (this.messageData.retentionTime === 1) {
-        this.messageData.retentionTime = 3;
-      } else if (this.messageData.retentionTime === 3) {
-        this.messageData.retentionTime = 6;
-      } else if (this.messageData.retentionTime === 6) {
+      if (this.messageData.retentionTime === 24) {
         this.messageData.retentionTime = 12;
       } else if (this.messageData.retentionTime === 12) {
+        this.messageData.retentionTime = 6;
+      } else if (this.messageData.retentionTime === 6) {
+        this.messageData.retentionTime = 3;
+      } else if (this.messageData.retentionTime === 3) {
         this.messageData.retentionTime = 24;
-      } else if (this.messageData.retentionTime === 24) {
-        this.messageData.retentionTime = 1;
       }
     },
 
