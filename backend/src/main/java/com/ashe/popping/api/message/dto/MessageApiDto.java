@@ -48,7 +48,6 @@ public class MessageApiDto {
 	public static class ReplyRequest {
 		private String content;
 		private Long messageId;
-		private String nickname;
 		private Long retentionTime;
 		private String replyAvailable;
 
@@ -57,7 +56,6 @@ public class MessageApiDto {
 			String replyAvailable) {
 			this.content = content;
 			this.messageId = messageId;
-			this.nickname = nickname;
 			this.retentionTime = retentionTime;
 			this.replyAvailable = replyAvailable;
 		}
