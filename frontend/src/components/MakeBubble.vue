@@ -79,9 +79,9 @@ export default {
     toggleReplyAvailability() {
       this.messageData.reply_available = this.messageData.reply_available === 'Y' ? 'N' : 'Y';
       if (this.messageData.reply_available == 'Y') {
-        this.$toast.center("답장을 받을 수 있습니다.")
+        this.$toast.top("답장을 받을 수 있습니다.")
       } else {
-        this.$toast.center("답장을 받을 수 없습니다.")
+        this.$toast.top("답장을 받을 수 없습니다.")
       }
     },
     sendMessage() {
@@ -303,7 +303,7 @@ export default {
   border-radius: 24px;
   border: 1px solid darkslategray;
   color: #f7a2bd;
-  margin-left: 10px;
+  margin-left: 5%;
 }
 
 .send-button {
@@ -316,7 +316,7 @@ export default {
   background-color: white;
   border-radius: 24px;
   border: 1px solid darkslategray;
-  margin-right: 8%;
+  margin-right: 10%;
 }
 
 ::placeholder {
@@ -371,10 +371,8 @@ export default {
 }
 
 input:checked + .slider {
-  background: #b9ebcc7b;
+  background: rgba(158, 216, 245, 0.5)
 }
-
-
 
 input:checked + .slider:before {
   -webkit-transform: translateX(124%);
