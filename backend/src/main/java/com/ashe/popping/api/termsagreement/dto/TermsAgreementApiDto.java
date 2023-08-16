@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import com.ashe.popping.domain.terms.dto.TermsDto;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
-import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
+import com.ashe.popping.domain.termsagreement.constant.TermsAgreementState;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
