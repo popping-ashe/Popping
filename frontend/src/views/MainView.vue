@@ -514,8 +514,8 @@ export default {
     toggleEdit() {
       this.editingBio = !this.editingBio
       if (this.editingBio) {
-        this.$toast.center('변경 후 엔터 혹은 체크버튼을 터치하세요')
-        if (this.member_bio == '친구에게 보여줄 상태메시지를 입력하세요') {
+        this.$toast.center('변경 후 엔터 혹은 체크 버튼을 터치하세요')
+        if (this.member_bio == '친구에게 보여줄 상태 메시지를 입력하세요') {
           this.member_bio = ''
         }
         this.newBio.bio = this.member_bio
@@ -527,10 +527,6 @@ export default {
 
     refresh() {
       window.location.reload();
-    },
-
-    willBeUpdatedSoon() {
-      this.$toast.center("해당 기능은 추후 업데이트될 예정입니다.");
     },
 
     openReplyWindow() {
@@ -547,7 +543,7 @@ export default {
 
     checkBioLength() {
       if (this.newBio.bio.length == 30) {
-        this.$toast.center("상태메시지 최대 길이는 30글자입니다.");
+        this.$toast.center("상태 메시지 최대 길이는 30글자입니다.");
       }
     },
     pageidstore() {
