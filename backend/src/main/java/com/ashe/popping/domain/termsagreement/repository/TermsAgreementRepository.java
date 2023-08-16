@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
+import com.ashe.popping.domain.termsagreement.constant.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.entity.TermsAgreement;
 
 public interface TermsAgreementRepository extends JpaRepository<TermsAgreement, Long> {
@@ -14,6 +14,4 @@ public interface TermsAgreementRepository extends JpaRepository<TermsAgreement, 
 	Optional<TermsAgreement> findByTermsIdAndMemberId(Long termsId, Long memberId);
 
 	Long deleteByTermsId(Long termsId);
-
-	Long deleteByMemberId(Long memberId);
 }

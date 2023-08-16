@@ -70,7 +70,7 @@ public class MessageController {
 
 	@PostMapping("/reply")
 	public ResponseEntity<MessageApiDto.Response> replyMessage(@RequestBody MessageApiDto.ReplyRequest request) {
-		MessageDto messageDto = messageService.saveMessage(MessageDto.from(request));
+		MessageDto messageDto = messageService.saveReplyMessage(MessageDto.from(request));
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
 	}
 

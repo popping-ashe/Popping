@@ -3,6 +3,7 @@ package com.ashe.popping.domain.termsagreement.dto;
 import java.time.LocalDateTime;
 
 import com.ashe.popping.api.termsagreement.dto.TermsAgreementApiDto;
+import com.ashe.popping.domain.termsagreement.constant.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.entity.TermsAgreement;
 
 import lombok.Builder;

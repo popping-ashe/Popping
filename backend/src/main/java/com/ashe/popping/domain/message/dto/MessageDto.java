@@ -96,7 +96,6 @@ public class MessageDto {
 			.createTime(LocalDateTime.now())
 			.messageId(request.getMessageId())
 			.expirationTime(LocalDateTime.now().plusHours(request.getRetentionTime()))
-			.nickname(request.getNickname())
 			.replyAvailable(request.getReplyAvailable())
 			.build();
 	}

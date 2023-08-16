@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
-import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
+import com.ashe.popping.domain.termsagreement.constant.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.entity.TermsAgreement;
 import com.ashe.popping.domain.termsagreement.repository.TermsAgreementRepository;
 import com.ashe.popping.global.error.ErrorCode;

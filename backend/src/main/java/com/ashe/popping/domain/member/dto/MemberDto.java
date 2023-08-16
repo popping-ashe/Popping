@@ -71,13 +71,6 @@ public class MemberDto {
 			.build();
 	}
 
-	public static MemberDto of(MemberApiDto.Request request, Long memberId) {
-		return MemberDto.builder()
-			.memberId(memberId)
-			.nickname(request.getNickname())
-			.build();
-	}
-
 	public static MemberDto of(MemberApiDto.UpdateBioRequest request, Long memberId) {
 		return MemberDto.builder()
 			.memberId(memberId)

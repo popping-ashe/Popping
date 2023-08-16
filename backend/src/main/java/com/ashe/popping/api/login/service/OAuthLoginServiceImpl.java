@@ -20,7 +20,7 @@ import com.ashe.popping.domain.message.service.MessageService;
 import com.ashe.popping.domain.terms.dto.TermsDto;
 import com.ashe.popping.domain.terms.service.TermsService;
 import com.ashe.popping.domain.termsagreement.dto.TermsAgreementDto;
-import com.ashe.popping.domain.termsagreement.dto.TermsAgreementState;
+import com.ashe.popping.domain.termsagreement.constant.TermsAgreementState;
 import com.ashe.popping.domain.termsagreement.service.TermsAgreementService;
 import com.ashe.popping.external.oauth.model.OAuthAttributes;
 import com.ashe.popping.external.oauth.service.SocialLoginApiService;
@@ -139,7 +139,8 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 			+ "친구의 링크를 공유받아 버블을 남겨보세요\uD83D\uDD17";
 		String nickname = "popping";
 		Long retentionTime = 24L;
-		MessageApiDto.Request request = MessageApiDto.Request.of(content, nickname, retentionTime);
+		String replyAvailable = "N";
+		MessageApiDto.Request request = MessageApiDto.Request.of(content, nickname, retentionTime, replyAvailable);
 		return MessageDto.from(request);
 	}
 }

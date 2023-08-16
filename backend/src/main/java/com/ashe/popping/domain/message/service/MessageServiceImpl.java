@@ -39,9 +39,9 @@ public class MessageServiceImpl implements MessageService {
 
 	@Transactional
 	@Override
-	public MessageDto saveMessage(MessageDto messageDto) {
+	public MessageDto saveReplyMessage(MessageDto messageDto) {
 		Message message = messageRepository.findByMessageId(messageDto.getMessageId());
-		Message newMessage = messageRepository.save(Message.of(messageDto, message.getSender(), message.getReceiver()));
+		Message newMessage = messageRepository.save(Message.of(messageDto, message));
 		messageRedisRepository.save(MessageRedisDto.of(newMessage.getMessageId(), newMessage.getExpirationTime()));
 		return MessageDto.from(newMessage);
 	}
@@ -64,15 +64,16 @@ public class MessageServiceImpl implements MessageService {
 		return messages.stream()
 			.map(
 				m -> {
-					String nickname = "";
-					try {
-						MemberDto optionalMemberDto = memberService.getMemberByMemberId(m.getReceiver());
-						nickname = optionalMemberDto.getNickname();
-					} catch (Exception e) {
-						nickname = "탈퇴한 회원";
+					String nickname = m.getReceiverNickname();
+					if (nickname == null){
+						try {
+							MemberDto optionalMemberDto = memberService.getMemberByMemberId(m.getReceiver());
+							nickname = optionalMemberDto.getNickname();
+						} catch (Exception e) {
+							nickname = "탈퇴한 회원";
+						}
 					}
 					return MessageDto.of(m, nickname);
-
 				}
 			).toList();
 	}
