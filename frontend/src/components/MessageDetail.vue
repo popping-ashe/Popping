@@ -136,9 +136,9 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 74%;
-  margin-top: 1%;
   /* margin-right: 11%; */
-  background: rgba(255, 0, 149, 0.136);
+  background: rgba(158, 216, 245, 0.25);
+  
 }
 
 .content-box {
