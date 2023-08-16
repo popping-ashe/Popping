@@ -109,9 +109,10 @@
               <div v-for="(fav, index) in fav_res"
               :key="index"
               class="sent-message-box"
+              @click="$router.push(`/main/${fav.share_id}`)"
               >
                 <div class="sent-message-ellipse font-kor">
-                  <div class="initial" @click="$router.push(`/main/${fav.share_id}`)">{{ fav.nickname.substr(0, 1) }}</div>
+                  <div class="initial">{{ fav.nickname.substr(0, 1) }}</div>
                 </div>
                 <div class="sent-bubble-info-frame">
                   <div class="sent-upper font-pre">
@@ -743,6 +744,7 @@ export default {
 .sent-mynickname {
   font-weight: bold;
   font-size: 12px;
+  margin-left: 1px;
 }
 
 .sent-datetime {
@@ -769,5 +771,6 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 12px;
+  margin-left: 1px;
 }
 </style>

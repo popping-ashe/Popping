@@ -12,13 +12,13 @@
           @keyup="checkNicknameLength"
         />
         <!-- 임시! 답장 가능여부 표시 -->
-        <div class="time-select-box" @click="changeLifeTime()">
+        <div class="time-select-box" @click="changeLifeTime()" :style="{ marginRight: isLogin ? '0' : '11%' }">
           <img class="time-icon" src="../assets/clock.png" alt="" />
           <div class="time-selector">
             <div>{{ messageData.retentionTime }}h</div>
           </div>
         </div>
-        <label class="switch">
+        <label v-if="isLogin" class="switch">
           <input type="checkbox" @click="toggleReplyAvailability()">
           <div class="slider round"></div>
         </label>
