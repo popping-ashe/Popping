@@ -36,8 +36,12 @@
             <span class="carousel-text">받은 버블은 만료 시간이 지나면<br>다시 볼 수 없으니 조심하세요!</span>
           </slide>
           <slide class="carousel-slide">
-            <img class="carousel-image" src="../assets/tutorial_07.png" alt=""><br><br>
-            <span class="carousel-text">마이페이지로 이동해<br>내가 보낸 버블을 확인해보세요</span>
+            <img class="carousel-image" src="../assets/tutorial_09.png" alt=""><br><br>
+            <span class="carousel-text">편집 버튼을 터치해<br>상태메시지를 변경해보세요</span>
+          </slide>
+          <slide class="carousel-slide">
+            <img class="carousel-image" src="../assets/tutorial_07.png" style="margin-left: 2px;" alt=""><br><br>
+            <span class="carousel-text">마이페이지로 이동해<br>내가 보낸 버블과<br>친구의 상태메시지를 확인해보세요</span>
           </slide>
         </carousel>
       </div>

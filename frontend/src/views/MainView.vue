@@ -676,7 +676,7 @@ export default {
   position: relative;
   width: 100%;
   height: 5.6%;
-  top: 3.5%;
+  top: 3.3%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -685,7 +685,7 @@ export default {
 }
 
 .bio-input {
-  font-size: 14px;
+  font-size: 12.5px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   text-align: center;
   outline: none;
@@ -745,8 +745,8 @@ export default {
 .bubble-area {
   position: absolute;
   width: 95%;
-  height: 70%;
-  top: 15%;
+  height: 69%;
+  top: 16.5%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
