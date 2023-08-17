@@ -106,7 +106,7 @@
               <div v-for="(fav, index) in fav_res"
               :key="index"
               class="sent-message-box"
-              @click="$router.push(`/main/${fav.share_id}`)"
+              @click="[analyticsFavorite(), $router.push(`/main/${fav.share_id}`)]"
               >
                 <div class="sent-message-ellipse font-kor">
                   <div class="initial">{{ fav.nickname.substr(0, 1) }}</div>
@@ -317,11 +317,11 @@ export default {
         value: 'unreadButton',
       }); 
     },
-    analyticsBubble(){
+    analyticsFavorite(){
       this.$gtag.event('click', {
         event_category: 'mypage',
-        event_label: 'sentBubble',
-        value: 'sentBubble',
+        event_label: 'favorite',
+        value: 'favorite',
       }); 
     },
   },
