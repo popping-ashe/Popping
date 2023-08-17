@@ -10,7 +10,7 @@
         </div>
         <div class="sent-time">{{ bubbledetailProps.create_time.substr(11, 5) }}</div>
         </div>
-        <div class="reply-button font-kor" v-if="bubbledetailProps.reply_available === 'Y'" @click="openReply">&nbsp;&nbsp;&nbsp;답장하기&nbsp;&nbsp;&nbsp;</div>
+        <div class="reply-button font-kor" v-if="bubbledetailProps.reply_available === 'Y'" @click="openReply">&nbsp;&nbsp;&nbsp;답장&nbsp;&nbsp;&nbsp;</div>
       </div>
       <div class="content-box">
         <span v-html="bubbledetailProps.content"></span>
@@ -110,7 +110,10 @@ export default {
   border: 1px solid darkslategray;
   border-radius: 0px 20px 20px 20px;
   outline: none;
-  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
+  font-size: 12px;
   font-weight: 600;
   background: linear-gradient(180deg, #ffffff 0%, #b9d7eb 99.99%, #b9d7eb 100%);
   display: flex;
@@ -122,6 +125,7 @@ export default {
   display: flex;
   align-items: flex-end;
   margin-left: 5px;
+  margin-right: 3px;
   color: gray;
   width: auto;
   font-size: 10px;
@@ -135,7 +139,8 @@ export default {
   border-radius: 20px;
   align-items: center;
   justify-content: center;
-  font-size: 74%;
+  font-size: 10px;
+  white-space: nowrap;
   margin-top: 0.5%;
   /* margin-right: 11%; */
   background: rgba(158, 216, 245, 0.25);
