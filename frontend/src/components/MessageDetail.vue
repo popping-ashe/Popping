@@ -10,7 +10,7 @@
         </div>
         <div class="sent-time">{{ bubbledetailProps.create_time.substr(11, 5) }}</div>
         </div>
-        <div class="reply-button font-kor" v-if="bubbledetailProps.reply_available === 'Y'" @click="openReply">&nbsp;&nbsp;&nbsp;답장하기&nbsp;&nbsp;&nbsp;</div>
+        <div class="reply-button font-kor" v-if="bubbledetailProps.reply_available === 'Y'" @click="openReply">&nbsp;&nbsp;&nbsp;답장&nbsp;&nbsp;&nbsp;</div>
       </div>
       <div class="content-box">
         <span v-html="bubbledetailProps.content"></span>
