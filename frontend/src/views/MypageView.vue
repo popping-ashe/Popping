@@ -68,7 +68,6 @@
             </div>
           </div>
 
-
           <div class="sent-message-frame" :style="{ borderRadius: selectedTab === '보낸버블' ? '0px 25px 25px 25px' : '25px 25px 25px 25px'}">
             
             <!-- 보낸메세지 -->
@@ -100,7 +99,6 @@
               </div>
             </div>
 
-
             <!-- 즐겨찾기 -->
             <div v-else>
               <div v-for="(fav, index) in fav_res"
@@ -111,8 +109,6 @@
                 <div class="sent-message-ellipse font-kor">
                   <div class="initial">{{ fav.nickname.substr(0, 1) }}</div>
                 </div>
-
-
 
                 <div v-if="fav.bio != ''" class="fav-frame font-pre">
                   <div class="fav-left">
@@ -126,8 +122,6 @@
                   </div>
                 </div>
 
-
-                
                 <div v-else class="fav-frame font-pre">
                   <div class="fav-left-nobio">
                     <div class="fav-nickname-nobio">{{ fav.nickname.substr(0, 10) }}</div>
@@ -351,7 +345,7 @@ export default {
       (response) => {
         if (response.status == 200) {
           // console.log(response.data)
-          this.fav_res = response.data.favorites
+          this.fav_res = response.data.favorites.reverse()
           // this.fav_res_new = response.data.favorites
           // this.fav_toggle = new Array(this.fav_res.length).fill('Y')
         } else {
