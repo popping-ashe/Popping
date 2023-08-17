@@ -758,7 +758,7 @@ export default {
 .sent-state {
   font-weight: bold;
   font-size: 12px;
-  padding-right: 22px;
+  padding-right: 16px;
   padding-bottom: 1px;
 }
 
@@ -769,7 +769,7 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-right: 12px;
+  margin-right: 16px;
   margin-left: 1px;
 }
 
