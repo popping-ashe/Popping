@@ -104,7 +104,7 @@ export default {
 						member_id: member,
 						state: term.state,
 					})}
-				console.log(agree)
+				// console.log(agree)
 				changeagree(
 					agree,
 					(response) => {
