@@ -107,7 +107,6 @@ const userStore = {
             getUserInfo(
               async (response) => {
                 if (response.status == 200) {
-                  console.log(5)
                   commit("SET_USER_INFO", response.data);
                   // localStorage.setItem("userinfo", JSON.stringify(response.data));
                   try {
@@ -115,7 +114,6 @@ const userStore = {
                     await getshareid(
                       (response) => {
                         if (response.status == 200) {
-                          console.log(2)
                           commit("SET_SHAREID", response.data);
                           localStorage.setItem("shareid", JSON.stringify(response.data));
                         } else {
@@ -128,14 +126,12 @@ const userStore = {
                       }
                     );
                     if (localStorage.getItem("pageid")) {
-                      console.log(1)
                       router.push({
                         name: "MainView",
                         params: { pageid: localStorage.getItem("pageid") },
                       });
                       localStorage.removeItem("pageid");
                     } else {
-                      console.log(1)
                       router.push({
                         name: "MainView",
                         params: { pageid: this.state.userStore.shareid.share_id },
