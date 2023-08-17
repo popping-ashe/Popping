@@ -32,12 +32,13 @@ const routes = [
   {
     path: "/oauth/kakao/callback",
     name: "googleLoginCallBack",
-    component: KakaoLoginCallBack,
+    component: GoogleLoginCallBack,
+
   },
   {
     path: "/oauth/google/callback",
     name: "kakaoLoginCallBack",
-    component: GoogleLoginCallBack,
+    component: KakaoLoginCallBack,
   },
   {
     path: "/settings",
