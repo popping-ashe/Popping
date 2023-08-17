@@ -243,9 +243,6 @@ export default {
       // const nickname = this.$store.getters["userStore/checkUserInfo"].nickname;
       const nickname = JSON.parse(localStorage.getItem("userinfo")).nickname
       const bio = JSON.parse(localStorage.getItem("userinfo")).bio
-      this.nickname = nickname;
-      this.member_bio = bio;
-
 
       if (this.getshareid == this.pageid) {
         receivedUserMessage(
@@ -256,6 +253,8 @@ export default {
               this.generateRandomSizes();
               this.generateRandomPosition();
               this.firstlength = this.receivedmessages.length
+              this.nickname = nickname;
+              this.member_bio = bio;
 
               if (receivedmessages.length == 0) {
                 this.showPleaseShare = true;
