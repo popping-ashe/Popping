@@ -407,6 +407,7 @@ const userStore = {
 
     // 새로운 access Token 발급
     async getnewaccesstoken({ commit }) {
+      commit("SET_IS_LOGIN", false);
       gettoken(
         (response) => {
           if (response.status == 200) {
@@ -442,6 +443,7 @@ const userStore = {
           console.log(error);
           localStorage.clear();
           commit("SET_IS_LOGIN", false);
+          router.go(0)
           router.push({ name: "LoginView" }).catch(()=>{});
         }
       );
