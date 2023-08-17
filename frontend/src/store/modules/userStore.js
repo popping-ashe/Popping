@@ -107,19 +107,26 @@ const userStore = {
             getUserInfo(
               (response) => {
                 if (response.status == 200) {
+                  console.log(response.data)
                   commit("SET_USER_INFO", response.data);
-                  localStorage.setItem("userinfo", JSON.stringify(response.data));
-                  if (localStorage.getItem("pageid")) {
-                    router.push({
-                      name: "MainView",
-                      params: { pageid: localStorage.getItem("pageid") },
-                    });
-                    localStorage.removeItem("pageid")
-                  } else {
-                    router.push({
-                      name: "MainView",
-                      params: { pageid: this.state.userStore.shareid.share_id },
-                    });
+                  // localStorage.setItem("userinfo", JSON.stringify(response.data));
+                  try {
+                    localStorage.setItem("userinfo", JSON.stringify(response.data));
+          
+                    if (localStorage.getItem("pageid")) {
+                      router.push({
+                        name: "MainView",
+                        params: { pageid: localStorage.getItem("pageid") },
+                      });
+                      localStorage.removeItem("pageid");
+                    } else {
+                      router.push({
+                        name: "MainView",
+                        params: { pageid: this.state.userStore.shareid.share_id },
+                      });
+                    }
+                  } catch (error) {
+                    console.error("An error occurred while setting localStorage:", error);
                   }
                 } else {
                   console.log("유저 정보 없음");
