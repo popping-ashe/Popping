@@ -102,9 +102,13 @@
             :style="{ width: randomBubbleSize[index], height: randomBubbleSize[index], margin: randomX[index] }"
           >
 
-            <div class="time-left" :style="{ fontSize: randomFontSize[index], color: message.state === '읽음' ? 'darkgray' : '#83add6'  }" >
+            <div v-if="message.reply == 'N'" class="time-left" :style="{ fontSize: randomFontSize[index], color: message.state === '읽음' ? 'darkgray' : '#83add6'  }" >
               {{ calLeftTime(index) }}
               <img class="bubble" :style="message.state === '읽음' ? 'filter: grayscale(1)' : 'filter: none' " src="../assets/bubble.png"  />
+            </div>
+            <div v-if="message.reply == 'Y'" class="time-left" :style="{ fontSize: randomFontSize[index], color: message.state === '읽음' ? 'darkgray' : '#F79BD3'  }" >
+              {{ calLeftTime(index) }}
+              <img class="bubble" :style="message.state === '읽음' ? 'filter: grayscale(1)' : 'filter: sepia(100%) brightness(100%) saturate(200%) hue-rotate(640deg)' " src="../assets/bubble.png"  />
             </div>
             <!-- <div v-if="message.state == '읽음'" class="time-left" :style="{ fontSize: randomFontSize[index] } " style="color: darkgray !important;">
               {{ calLeftTime(index) }}
