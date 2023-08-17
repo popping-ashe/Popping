@@ -57,9 +57,12 @@ public class Message {
 
 	private String receiverNickname;
 
+	@Column(nullable = false, length = 1)
+	private String reply;
+
 	@Builder
 	public Message(MessageState state, String content, LocalDateTime expirationTime, Long sender, Long receiver,
-		String nickname, String replyAvailable, String receiverNickname) {
+		String nickname, String replyAvailable, String receiverNickname, String reply) {
 		this.state = state;
 		this.content = content;
 		this.expirationTime = expirationTime;
@@ -68,6 +71,7 @@ public class Message {
 		this.nickname = nickname;
 		this.replyAvailable = replyAvailable;
 		this.receiverNickname = receiverNickname;
+		this.reply = reply;
 	}
 
 	public static Message of(MessageDto messageDto, MemberDto memberDto) {
@@ -80,6 +84,7 @@ public class Message {
 			.nickname(messageDto.getNickname())
 			.replyAvailable(messageDto.getReplyAvailable())
 			.receiverNickname(memberDto.getNickname())
+			.reply(messageDto.getReply())
 			.build();
 	}
 
@@ -93,6 +98,7 @@ public class Message {
 			.nickname(message.getReceiverNickname())
 			.receiverNickname(message.getNickname())
 			.replyAvailable(messageDto.getReplyAvailable())
+			.reply(messageDto.getReply())
 			.build();
 	}
 

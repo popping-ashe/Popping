@@ -31,10 +31,12 @@ public class MessageDto {
 
 	private String replyAvailable;
 
+	private String reply;
+
 	@Builder
 	public MessageDto(Long messageId, MessageState state, String content, LocalDateTime createTime,
 		LocalDateTime expirationTime, Long sender, Long receiver, String nickname, String receiverNickname,
-		String replyAvailable) {
+		String replyAvailable, String reply) {
 		this.messageId = messageId;
 		this.state = state;
 		this.content = content;
@@ -45,6 +47,7 @@ public class MessageDto {
 		this.nickname = nickname;
 		this.receiverNickname = receiverNickname;
 		this.replyAvailable = replyAvailable;
+		this.reply = reply;
 	}
 
 	public static MessageDto from(Message message) {
@@ -58,6 +61,7 @@ public class MessageDto {
 			.receiver(message.getReceiver())
 			.nickname(message.getNickname())
 			.replyAvailable(message.getReplyAvailable())
+			.reply(message.getReply())
 			.build();
 	}
 
@@ -73,10 +77,11 @@ public class MessageDto {
 			.nickname(message.getNickname())
 			.receiverNickname(receiverNickname)
 			.replyAvailable(message.getReplyAvailable())
+			.reply(message.getReply())
 			.build();
 	}
 
-	public static MessageDto from(MessageApiDto.Request request) {
+	public static MessageDto of(MessageApiDto.Request request, String reply) {
 		return MessageDto.builder()
 			.state(MessageState.UNREAD)
 			.content(request.getContent())
@@ -86,16 +91,18 @@ public class MessageDto {
 			.receiver(request.getShareId())
 			.nickname(request.getNickname())
 			.replyAvailable(request.getReplyAvailable())
+			.reply(reply)
 			.build();
 	}
 
-	public static MessageDto from(MessageApiDto.ReplyRequest request) {
+	public static MessageDto of(MessageApiDto.ReplyRequest request, String reply) {
 		return MessageDto.builder()
 			.state(MessageState.UNREAD)
 			.content(request.getContent())
 			.createTime(LocalDateTime.now())
 			.messageId(request.getMessageId())
 			.expirationTime(LocalDateTime.now().plusHours(request.getRetentionTime()))
+			.reply(reply)
 			.replyAvailable(request.getReplyAvailable())
 			.build();
 	}
