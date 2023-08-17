@@ -646,7 +646,7 @@ export default {
 
 .sent-bubble-frame2 {
   position: absolute;
-  width: 85%;
+  width: 88.3%;
   height: 64.8%;
   top: 25.8%;
   align-items: center;
