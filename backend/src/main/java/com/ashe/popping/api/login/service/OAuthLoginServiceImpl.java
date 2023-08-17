@@ -141,6 +141,6 @@ public class OAuthLoginServiceImpl implements OAuthLoginService {
 		Long retentionTime = 24L;
 		String replyAvailable = "N";
 		MessageApiDto.Request request = MessageApiDto.Request.of(content, nickname, retentionTime, replyAvailable);
-		return MessageDto.from(request, "N");
+		return MessageDto.of(request, "N");
 	}
 }

@@ -81,7 +81,7 @@ public class MessageDto {
 			.build();
 	}
 
-	public static MessageDto from(MessageApiDto.Request request, String reply) {
+	public static MessageDto of(MessageApiDto.Request request, String reply) {
 		return MessageDto.builder()
 			.state(MessageState.UNREAD)
 			.content(request.getContent())
@@ -95,7 +95,7 @@ public class MessageDto {
 			.build();
 	}
 
-	public static MessageDto from(MessageApiDto.ReplyRequest request, String reply) {
+	public static MessageDto of(MessageApiDto.ReplyRequest request, String reply) {
 		return MessageDto.builder()
 			.state(MessageState.UNREAD)
 			.content(request.getContent())

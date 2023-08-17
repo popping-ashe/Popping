@@ -33,7 +33,7 @@ public class MessageController {
 
 	@PostMapping
 	public ResponseEntity<MessageApiDto.Response> sendMessage(@RequestBody MessageApiDto.Request request) {
-		MessageDto messageDto = messageService.saveMessage(MessageDto.from(request, "N"), memberService.getMemberByShareId(
+		MessageDto messageDto = messageService.saveMessage(MessageDto.of(request, "N"), memberService.getMemberByShareId(
 			request.getShareId()));
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
 	}
@@ -70,7 +70,7 @@ public class MessageController {
 
 	@PostMapping("/reply")
 	public ResponseEntity<MessageApiDto.Response> replyMessage(@RequestBody MessageApiDto.ReplyRequest request) {
-		MessageDto messageDto = messageService.saveReplyMessage(MessageDto.from(request, "Y"));
+		MessageDto messageDto = messageService.saveReplyMessage(MessageDto.of(request, "Y"));
 		return ResponseEntity.ok(MessageApiDto.Response.from(messageDto));
 	}
 
