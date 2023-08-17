@@ -75,11 +75,12 @@ public class MessageApiDto {
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 		private LocalDateTime expirationTime;
 		private String replyAvailable;
+		private String reply;
 
 		@Builder
 		public Response(Long messageId, String content, String state, Long receiver, String nickname,
 			String receiverNickname, LocalDateTime createTime, LocalDateTime expirationTime,
-			String replyAvailable) {
+			String replyAvailable, String reply) {
 			this.messageId = messageId;
 			this.content = content;
 			this.state = state;
@@ -89,6 +90,7 @@ public class MessageApiDto {
 			this.createTime = createTime;
 			this.expirationTime = expirationTime;
 			this.replyAvailable = replyAvailable;
+			this.reply = reply;
 		}
 
 		public static Response from(MessageDto messageDto) {
@@ -102,6 +104,7 @@ public class MessageApiDto {
 				.createTime(messageDto.getCreateTime())
 				.expirationTime(messageDto.getExpirationTime())
 				.replyAvailable(messageDto.getReplyAvailable())
+				.reply(messageDto.getReply())
 				.build();
 		}
 
