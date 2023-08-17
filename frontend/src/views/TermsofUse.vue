@@ -5,7 +5,7 @@
       <div class="frame" style="z-index: 0">
         <div class="upper-bar">
           <div class="new-button font-eng">
-            <div @click="goBackPage(-1)">Back</div>
+            <div @click="logoutUser()">Back</div>
           </div>
           <div class="username font-kor">
 
@@ -44,9 +44,10 @@
 
 <script>
 import termsDetail from '../components/termsDetail.vue';
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { changeagree } from "@/api/user";
 import router from '../router';
+const userStore = "userStore";
 
 export default {
   name: "TermsofUse",
@@ -64,6 +65,7 @@ export default {
   },
   methods: {
     // mandatory: Y, N으로 넘어오는거 글자로 변환
+    ...mapActions(userStore,  ["logoutUser"]),
     getMandatoryLabel(mandatory) {
       return mandatory === "Y" ? "(필수)" : "(선택)";
     },
@@ -126,6 +128,9 @@ export default {
     }
     
 
+  },
+  async logoutUser() {
+    this.logoutUser;
   },
     computed: {
     // 가입하기 버튼 색
