@@ -79,7 +79,7 @@ const userStore = {
     async kakao({ commit }, code) {
       await kakaologin(
         code,
-        (response) => {
+        async (response) => {
           if (response.status === 200) {
             let accessToken = response.data["accessToken"];
             let refreshToken = response.data["refreshToken"];
@@ -105,29 +105,47 @@ const userStore = {
             localStorage.setItem("access-token", encryptAccessToken);
             localStorage.setItem("refresh-token", encryptRefreshToken);
             getUserInfo(
-              (response) => {
+              async (response) => {
                 if (response.status == 200) {
-                  console.log(response.data)
+                  console.log(5)
                   commit("SET_USER_INFO", response.data);
                   // localStorage.setItem("userinfo", JSON.stringify(response.data));
                   try {
                     localStorage.setItem("userinfo", JSON.stringify(response.data));
-          
+                    await getshareid(
+                      (response) => {
+                        if (response.status == 200) {
+                          console.log(2)
+                          commit("SET_SHAREID", response.data);
+                          localStorage.setItem("shareid", JSON.stringify(response.data));
+                        } else {
+                          console.log("shareid 없음");
+                        }
+                      },
+                      async (error) => {
+                        console.log(error);
+                        router.push({ name: "LoginView" });
+                      }
+                    );
                     if (localStorage.getItem("pageid")) {
+                      console.log(1)
                       router.push({
                         name: "MainView",
                         params: { pageid: localStorage.getItem("pageid") },
                       });
                       localStorage.removeItem("pageid");
                     } else {
+                      console.log(1)
                       router.push({
                         name: "MainView",
                         params: { pageid: this.state.userStore.shareid.share_id },
                       });
                     }
+                    // console(0)
                   } catch (error) {
                     console.error("An error occurred while setting localStorage:", error);
                   }
+                  
                 } else {
                   console.log("유저 정보 없음");
                 }
@@ -138,58 +156,19 @@ const userStore = {
                 router.push({ name: "LoginView" });
               }
             );
-            getshareid(
-              (response) => {
-                if (response.status == 200) {
-                  commit("SET_SHAREID", response.data);
-                  localStorage.setItem("shareid", JSON.stringify(response.data));
-                } else {
-                  console.log("shareid 없음");
-                }
-              },
-              async (error) => {
-                console.log(error);
-                router.push({ name: "LoginView" });
-              }
-            );
-            sentUserMessage(
-              (response) => {
-                if (response.status == 200) {
-                  commit("SET_SENT_MESSAGES", response.data);
-                } else {
-                  console.log("보낸 메세지 없음");
-                }
-              },
-              async (error) => {
-                console.log(error);
-              }
-            );
-            receivedUserMessage(
-              (response) => {
-                if (response.status == 200) {
-                  commit("SET_RECEIVED_MESSAGES", response.data);
-                  // router.push({
-                  //   name: "MainView",
-                  //   params: { pageid: this.state.userStore.shareid.share_id },
-                  // });
-                } else {
-                  console.log("받은 메세지 없음");
-                }
-              },
-              async (error) => {
-                console.log(error);
-              }
-            );
+            
           } else {
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
             commit("SET_IS_VALID_TOKEN", false);
           }
+          
         },
         (error) => {
           console.log(error);
         }
       );
+      
     },
     async google({ commit }, code) {
       await googlelogin(
