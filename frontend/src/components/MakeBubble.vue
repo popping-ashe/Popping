@@ -62,7 +62,7 @@ export default {
         share_id: this.$route.params.pageid,
         nickname: "",
         retentionTime: 24,
-        reply_available: "N",
+        reply_available: "Y",
       },
     };
   },
@@ -350,7 +350,8 @@ export default {
   right: 0;
   bottom: 0;
   /* background: linear-gradient(180deg, #ffffff 0%, #b9d7eb 99.99%, #b9d7eb 100%); */
-  background: lightgray;
+  
+  background: rgba(158, 216, 245, 0.5);
   border: 1px solid darkslategray;
   -webkit-transition: 0.4s;
   transition: 0.4s;
@@ -361,7 +362,7 @@ export default {
   content: "";
   height: 75%;
   width: 33%;
-  left: 12.5%;
+  right: 12.5%;
   bottom: 12%;
   border: 1px solid darkslategray;
   background: white;
@@ -370,14 +371,15 @@ export default {
   filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
 }
 
+
 input:checked + .slider {
-  background: rgba(158, 216, 245, 0.5)
+  background: lightgray;
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(124%);
-  -ms-transform: translateX(124%);
-  transform: translateX(124%);
+  -webkit-transform: translateX(-124%);
+  -ms-transform: translateX(-124%);
+  transform: translateX(-124%);
 }
 
 .slider.round {
