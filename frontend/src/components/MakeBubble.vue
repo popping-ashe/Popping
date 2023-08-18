@@ -62,7 +62,7 @@ export default {
         share_id: this.$route.params.pageid,
         nickname: "",
         retentionTime: 24,
-        reply_available: "Y",
+        reply_available: "N",
       },
     };
   },
@@ -74,6 +74,10 @@ export default {
     } else {
       this.reply_available = "N"
     }
+    if (this.isLogin) {
+      this.messageData.reply_available = "Y"
+    }
+    
   },
   methods: {
     toggleReplyAvailability() {
