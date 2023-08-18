@@ -192,6 +192,6 @@
     <tr>
       <td align="center"><a href="https://github.com/gns9541" target="_blank">@gns9541</a></td>
       <td align="center"><a href="https://github.com/Jeong-Hoon-Yang" target="_blank" width="160">@Jeong-Hoon-Yang</a></td>
-      <td align="center"><a href="https://github.com/js-yim" target="_blank">@js-yim</a></td>
+      <td align="center"><a href="https://github.com/YJS96" target="_blank">@yjs96</a></td>
     </tr>
   </table>
