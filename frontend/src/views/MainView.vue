@@ -31,9 +31,11 @@
             <div class="new-button font-eng" v-if="isLogin" @click="toHome()">Home</div>
             <div class="none-button" v-else></div>
           </div>
-          <div class="username font-kor" @click="generateRandomSizes()">
-            <!-- 본인페이지 여부에 따라 표시 -->
-            {{ this.nickname }}'s BUBBLE
+          <div class="username font-kor">
+            <div v-html="nickname"></div>
+            <div>
+            's BUBBLE
+            </div>
           </div>
           <div
             v-if="isLogin"
@@ -86,8 +88,7 @@
               @keyup="checkBioLength()"
               >
           </div>
-          <div class="bio-input font-kor" style="margin-top: 4.5px;" v-else>
-            {{ member_bio }}
+          <div class="bio-input font-kor" style="margin-top: 4.5px;" v-html="member_bio" v-else>
           </div>
         </div>
 
@@ -508,6 +509,7 @@ export default {
               userinfo.bio = response.data.bio
               localStorage.setItem("userinfo", JSON.stringify(userinfo));
               // console.log(JSON.parse(localStorage.getItem("userinfo")).bio)
+              this.$toast.center("상태 메시지를 변경했습니다")
             }
           },
           (error) => {

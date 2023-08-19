@@ -5,12 +5,12 @@
         <DeleteUser v-if="openshare" @close="closeshare" />
         <transition name="slide">
           <div v-if="showNicknameEdit" class="nickname-edit-overlay">
-            <ChangeNickname @close="closeNicknameEdit" @nickname-updated="updateNickname" />
+            <ChangeNickname @close="closeNicknameEdit" @nickname-updated="updateNickname" @bio-updated="updateBio" />
           </div>
         </transition>
         <div class="upper-bar">
-          <div class="new-button font-eng">
-            <div class="link-button" @click="goBackPage(-1)">Back</div>
+          <div class="new-button font-eng" @click="goBackPage(-1)">
+            <div class="link-button">Back</div>
           </div>
           <div class="username font-kor">
             <!-- 본인페이지 여부에 따라 표시 -->
@@ -21,7 +21,11 @@
 
         <div class="article-counts font-pre" style="margin-left: 8%; margin-right: 8%">
           <div style="display: flex">
-            <div class="nickname">{{ nickname }}</div>
+            <div class="nickname" v-html="nickname"></div>
+          </div>
+          <!-- <br /> -->
+          <div style="display: flex">
+            <div class="bio" v-html="bio"></div>
           </div>
           <br />
           <div style="display: flex" class="changenickname" @click="toggleNicknameEdit">
@@ -49,12 +53,14 @@ export default {
   name: "SettingView",
   components: {
     ChangeNickname,
-    DeleteUser
+    DeleteUser,
   },
   data() {
     return {
-      nickname: this.$store.getters["userStore/checkUserInfo"].nickname,
+      nickname: JSON.parse(localStorage.getItem("userinfo")).nickname,
+      bio: JSON.parse(localStorage.getItem("userinfo")).bio,
       showNicknameEdit: false,
+      showBioEdit: false,
       slideClass: "",
       openshare: false,
     };
@@ -80,12 +86,21 @@ export default {
     toggleNicknameEdit() {
       this.showNicknameEdit = !this.showNicknameEdit; // true와 false를 토글
     },
+    toggleBioEdit() {
+      this.showBioEdit = !this.showBioEdit; // true와 false를 토글
+    },
     closeNicknameEdit() {
       this.showNicknameEdit = false;
+    },
+    closeBioEdit() {
+      this.showBioEdit = false;
     },
     // ChangeNickname 컴포넌트로부터 전달받은 nickname 업데이트
     updateNickname(newNickname) {
       this.nickname = newNickname;
+    },
+    updateBio(newBio) {
+      this.bio = newBio;
     },
     tocenter() {
       location.href = `http://pf.kakao.com/_IjYZG`
@@ -227,13 +242,20 @@ export default {
   line-height: 21px;
   color: blue;
   display: flex;
-  margin-top: -20px;
+  margin-top: -10px;
 }
 
 .nickname {
   font-weight: bold;
   font-size: 20px;
 }
+
+.bio {
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+
 .logout {
   font-weight: bold;
   font-size: 15px;

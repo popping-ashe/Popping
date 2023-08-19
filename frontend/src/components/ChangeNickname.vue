@@ -1,15 +1,15 @@
 <template>
   <div class="frame" style="z-index: 2">
     <div class="upper-bar">
-      <div class="new-button font-eng" style="margin-left: 6%">
-        <div class="back-button font-eng" @click="closeNicknameEdit">Back</div>
+      <div class="new-button font-eng" @click="closeNicknameEdit" style="margin-left: 6%">
+        <div class="back-button font-eng" >Back</div>
       </div>
       <div class="username font-kor">
         <!-- 본인페이지 여부에 따라 표시 -->
         프로필 수정
       </div>
-      <div class="new-button font-eng" style="margin-right: 6%">
-        <div class="back-button font-eng" @click="[stopEditing(), analyticsNickname()]">Done</div>
+      <div class="new-button font-eng" @click="[stopEditing(), analyticsNickname()]" style="margin-right: 6%">
+        <div class="back-button font-eng">Done</div>
       </div>
     </div>
     <br /><br /><br /><br />
@@ -34,6 +34,26 @@
         </div>
         <!-- <button @click="stopEditing">수정</button> -->
         <div style="font-size: 12px">{{ changednickname.length }} / 10</div>
+      </div><br>
+      <div>
+        <div style="font-size: 13px">상태 메시지 수정</div>
+        <div v-if="!isEditing" class="input-container">
+          <!-- <br> -->
+          <div class="input-wrapper">
+            <input
+              class="edit-input"
+              type="text"
+              :placeholder="bioFirst"
+              v-model="changedBio"
+              ref="editInput"
+              @keydown.enter="stopEditing"
+              @input="handleInputBio"
+            />
+            <span class="clear-button" v-if="changedBio" @click="clearInputBio">X</span>
+          </div>
+        </div>
+        <!-- <button @click="stopEditing">수정</button> -->
+        <div style="font-size: 12px">{{ changedBio.length }} / 30</div>
       </div>
       <br />
     </div>
@@ -42,15 +62,17 @@
 
 <script>
 import { mapActions } from "vuex";
-import { changenickname } from "@/api/user";
+import { bio, changenickname } from "@/api/user";
 const userStore = "userStore";
 
 export default {
   name: "ChangeNickname",
   data() {
     return {
-      nickname: this.$store.getters["userStore/checkUserInfo"].nickname,
+      bioFirst: JSON.parse(localStorage.getItem("userinfo")).bio,
+      nickname: JSON.parse(localStorage.getItem("userinfo")).nickname,
       changednickname: "",
+      changedBio: '',
       isEditing: false,
     };
   },
@@ -62,6 +84,11 @@ export default {
     handleInput() {
       if (this.changednickname.length > 10) {
         this.changednickname = this.changednickname.slice(0, 10);
+      }
+    },
+    handleInputBio() {
+      if (this.changedBio.length > 30) {
+        this.changedBio = this.changedBio.slice(0, 30);
       }
     },
     startEditing() {
@@ -77,14 +104,18 @@ export default {
         this.change();
         const userinfo = JSON.parse(localStorage.getItem("userinfo"));
         userinfo.nickname = this.changednickname;
+        userinfo.bio = this.changedBio;
         localStorage.setItem("userinfo", JSON.stringify(userinfo));
       }
     },
     clearInput() {
       this.changednickname = "";
     },
+    clearInputBio() {
+      this.changedBio = "";
+    },
     async change() {
-      if (!this.changednickname) {
+      if (!this.changednickname || !this.changedBio) {
         this.isEditing = false;
         return;
       }
@@ -103,7 +134,21 @@ export default {
           this.isEditing = false;
         }
       );
+      bio(
+        this.changedBio,
+        (response) => {
+          if (response.status == 200) {
+            // console.log(response.data.bio)
+            this.bioFirst = this.changedBio;
+            // console.log(JSON.parse(localStorage.getItem("userinfo")).bio)
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
       this.$emit("nickname-updated", this.changednickname);
+      this.$emit("bio-updated", this.changedBio);
       this.closeNicknameEdit();
     },
     analyticsNickname(){
@@ -262,7 +307,6 @@ export default {
   outline: none;
   font-size: 16px;
   font-weight: bold;
-  padding-left: 5px;
   width: 100%;
 }
 .input-container {
