@@ -813,11 +813,12 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  padding-left: 76px;
+  padding-left: 77px;
+  justify-content: space-between;
 }
 
 .fav-left {
-  width: 87%;
+  width: 86%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -844,6 +845,7 @@ export default {
   font-weight: bold;
   font-size: 12px;
   margin-top: 15px;
+  margin-right: 20px;
 }
 
 .fav-left-nobio {
