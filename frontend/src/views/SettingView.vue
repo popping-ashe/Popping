@@ -21,7 +21,7 @@
 
         <div class="article-counts font-pre" style="margin-left: 8%; margin-right: 8%">
           <div style="display: flex">
-            <div class="nickname">{{ nickname }}</div>
+            <div class="nickname" v-html="nickname"></div>
           </div>
           <br />
           <div style="display: flex" class="changenickname" @click="toggleNicknameEdit">
@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      nickname: this.$store.getters["userStore/checkUserInfo"].nickname,
+      nickname: JSON.parse(localStorage.getItem("userinfo")).nickname,
       showNicknameEdit: false,
       slideClass: "",
       openshare: false,

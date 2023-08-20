@@ -49,7 +49,7 @@ export default {
   name: "ChangeNickname",
   data() {
     return {
-      nickname: this.$store.getters["userStore/checkUserInfo"].nickname,
+      nickname: JSON.parse(localStorage.getItem("userinfo")).nickname,
       changednickname: "",
       isEditing: false,
     };
@@ -262,7 +262,6 @@ export default {
   outline: none;
   font-size: 16px;
   font-weight: bold;
-  padding-left: 5px;
   width: 100%;
 }
 .input-container {
