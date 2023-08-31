@@ -6,7 +6,7 @@
 </h2>
 <p>
 💌사랑이 담긴 메세지  🍎사과가 담긴 메세지<br>
-🔒비밀이 담긴 메세지 🤣웃음이ㅏ 담긴 메세지<br>
+🔒비밀이 담긴 메세지 🤣웃음이 담긴 메세지<br>
 <br>
 💙익명으로 진심을 전해보세요!💙
 </p>
@@ -157,7 +157,9 @@
 
 ## 🎥 UCC
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/fMUzQTPCpe8?si=Uehp8vnPTwcnTA4i" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+- [익명 메세지 서비스, Popping 소개 영상 💙](https://youtu.be/fMUzQTPCpe8)
+
 
 <br />
 
